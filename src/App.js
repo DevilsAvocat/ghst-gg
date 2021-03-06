@@ -27,18 +27,18 @@ export default function App() {
             container
             className={classes.wrap}
         >
-            <Grid item container>
+            <BrowserRouter>
                 <Header />
-                <Container>
-                    <BrowserRouter>
+                <Grid item container>
+                    <Container>
                         <Switch>
                             <Route exact path='/' component={ Main } />
                             <Route exact path='/404' component={ NotFound } />
                             <Redirect from='*' to='/404' />
                         </Switch>
-                    </BrowserRouter>
-                </Container>
-            </Grid>
+                    </Container>
+                </Grid>
+            </BrowserRouter>
         </Grid>
     );
 }
