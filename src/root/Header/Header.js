@@ -72,7 +72,7 @@ export default function Header() {
                         <img src={ discord } alt="" />
                     </IconButton>
                 </Link>
-                <Link href='https://t.me/ghst_gg_bot'>
+                <Link href='https://t.me/joinchat/hTAWLbZgrKI4YWJk'>
                     <IconButton className={classes.iconButton} aria-label="add an alarm">
                         <TelegramIcon />
                     </IconButton>
