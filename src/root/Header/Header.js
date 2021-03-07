@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from '../../assets/images/logo.png';
-import {AppBar, Toolbar, Typography} from "@material-ui/core";
+import {AppBar, Link, Toolbar, Typography} from "@material-ui/core";
 import IconButton from '@material-ui/core/IconButton';
 import TelegramIcon from '@material-ui/icons/Telegram';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -67,15 +67,21 @@ export default function Header() {
                     {/*    <Typography className={classes.navLinkText}>Team</Typography>*/}
                     {/*</NavLink>*/}
                 </nav>
-                <IconButton className={classes.iconButton} aria-label="add an alarm">
-                    <img src={ discord } alt="" />
-                </IconButton>
-                <IconButton className={classes.iconButton} color="secondary" aria-label="add an alarm">
-                    <TelegramIcon />
-                </IconButton>
-                <IconButton className={classes.iconButton} color="secondary" aria-label="add an alarm">
-                    <TwitterIcon />
-                </IconButton>
+                <Link href='https://discord.gg/9FqxjDTYYE'>
+                    <IconButton className={classes.iconButton} aria-label="add an alarm">
+                        <img src={ discord } alt="" />
+                    </IconButton>
+                </Link>
+                <Link href='https://t.me/ghst_gg_bot'>
+                    <IconButton className={classes.iconButton} aria-label="add an alarm">
+                        <TelegramIcon />
+                    </IconButton>
+                </Link>
+                <Link href='https://twitter.com/ghst_gg'>
+                    <IconButton className={classes.iconButton} aria-label="add an alarm">
+                        <TwitterIcon />
+                    </IconButton>
+                </Link>
             </Toolbar>
         </Grid>
     )
