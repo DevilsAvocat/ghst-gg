@@ -82,11 +82,12 @@ class Portals extends Component {
             justify={'center'}
             xs={12}
             spacing={2}
+            style={{marginTop: '50px'}}
         >
             <Grid item xs={4}>
-              <Typography style={{ fontSize: '30px' }}>{10000 - this.state.portals} out of 10000</Typography>
+                <Typography style={{ fontSize: '30px', textAlign: 'center' }}>{10000 - this.state.portals} out of 10000 <br /> Are opened!</Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid style={{textAlign: 'center'}} item xs={2}>
                 <img
                   src={PortalOpenedImage}
                   style={{ width: '150px', cursor: 'pointer' }}
@@ -95,10 +96,7 @@ class Portals extends Component {
                 />
             </Grid>
             <Grid item xs={4}>
-              <Typography style={{ fontSize: '30px' }}>Are opened!</Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <Typography style={{ fontSize: '24px' }}>{this.state.portals} portals left <br /> Hurry up to get your gotchi!</Typography>
+                <Typography align={"center"} style={{ fontSize: '24px' }}>{this.state.portals} portals left <br /> Hurry up to get your gotchi!</Typography>
             </Grid>
         </Grid>
       )
