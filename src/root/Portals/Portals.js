@@ -44,8 +44,6 @@ class Portals extends Component {
         loading: true,
         portals: 0
       }
-
-      this.componentDidMount.bind(this);
     }
 
     componentDidMount = async () => {
