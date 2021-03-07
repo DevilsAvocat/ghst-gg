@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.common.white
     },
     iconButton: {
+        color: '#fd9af9',
         '& img': {
             width: 24,
             height: 24
@@ -66,7 +67,7 @@ export default function Header() {
                     {/*    <Typography className={classes.navLinkText}>Team</Typography>*/}
                     {/*</NavLink>*/}
                 </nav>
-                <IconButton className={classes.iconButton} color="secondary" aria-label="add an alarm">
+                <IconButton className={classes.iconButton} aria-label="add an alarm">
                     <img src={ discord } alt="" />
                 </IconButton>
                 <IconButton className={classes.iconButton} color="secondary" aria-label="add an alarm">

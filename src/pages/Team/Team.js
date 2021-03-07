@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 5,
         boxShadow: 'none',
         '& img': {
-            filter: 'drop-shadow( 0px 0px 10px rgba(253,255,209,1))'
+            filter: 'drop-shadow( 0px 0px 10px rgba(255,255,209,.8))'
         }
     },
     aavegotchiName: {

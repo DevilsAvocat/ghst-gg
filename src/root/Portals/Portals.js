@@ -3,7 +3,8 @@ import Web3 from 'web3'
 import Grid from '@material-ui/core/Grid';
 import Loader from 'react-loader-spinner';
 
-import PortalOpenedImage from '../../assets/images/portal-opened.gif';
+import openedPortal from '../../assets/images/portal-opened.gif';
+import sealedPortal from '../../assets/images/portal-sealed.svg';
 import { Typography } from '@material-ui/core';
 
 class Portals extends Component {
@@ -41,8 +42,8 @@ class Portals extends Component {
       this.contract = new this.web3.eth.Contract(this.minABI, this.tokenAddress);
 
       this.state = {
-        loading: true,
-        portals: 0
+        portals: 0,
+        showEasterEgg: false
       }
     }
 
@@ -51,28 +52,19 @@ class Portals extends Component {
 
       this.contract.methods.balanceOf(this.walletAddress).call()
         .then(function (value) {
-          let balance = _this.web3.utils.fromWei(value) * 10000;
-          _this.setState({ loading: false, portals: balance })
+          let balance = Math.round(_this.web3.utils.fromWei(value) * 10000);
+          _this.setState({ portals: balance });
         })
         .catch(function (error) {
           console.log(error);
         });
     }
 
-    togglePortalsInfo = () => {
-      console.log('toggle portals info');
+    toggleEasterEgg = () => {
+      this.setState({ showEasterEgg: !this.state.showEasterEgg });
     }
 
     render () {
-      if (this.state.loading) return (
-        <Loader
-          type='Rings'
-          color='#e83e8c'
-          height={80}
-          width={80}
-        />
-      )
-  
       return (
         <Grid
             item
@@ -82,21 +74,25 @@ class Portals extends Component {
             justify={'center'}
             xs={12}
             spacing={2}
-            style={{marginTop: '50px'}}
+            style={{marginTop: '50px', marginBottom: '30px'}}
         >
             <Grid item xs={4}>
-                <Typography style={{ fontSize: '30px', textAlign: 'center' }}>{10000 - this.state.portals} out of 10000 <br /> Are opened!</Typography>
+                <Typography style={{ fontSize: '30px', textAlign: 'center' }}>
+                  <span style={{ color: '#fd9af9' }}>{this.state.showEasterEgg ? this.state.portals : 10000 - this.state.portals }</span> out of <span style={{ color: '#fd9af9' }}>10000</span><br /> Are {this.state.showEasterEgg ? 'sealed' : 'opened' }!
+                </Typography>
             </Grid>
             <Grid style={{textAlign: 'center'}} item xs={2}>
                 <img
-                  src={PortalOpenedImage}
+                  src={this.state.showEasterEgg ? sealedPortal : openedPortal }
                   style={{ width: '150px', cursor: 'pointer' }}
-                  onClick={() => this.togglePortalsInfo()}
+                  onClick={() => this.toggleEasterEgg()}
                   alt='Opened Portal'
                 />
             </Grid>
             <Grid item xs={4}>
-                <Typography align={"center"} style={{ fontSize: '24px' }}>{this.state.portals} portals left <br /> Hurry up to get your gotchi!</Typography>
+                <Typography align={"center"} style={{ fontSize: '30px' }}>
+                  {this.state.showEasterEgg ? 'Metaverse population' : `Hero's are incoming!` }
+                </Typography>
             </Grid>
         </Grid>
       )
