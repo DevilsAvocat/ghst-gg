@@ -91,7 +91,7 @@ class Portals extends Component {
             </Grid>
             <Grid item xs={4}>
                 <Typography align={"center"} style={{ fontSize: '30px' }}>
-                  {this.state.showEasterEgg ? 'Metaverse population' : `Hero's are incoming!` }
+                  {this.state.showEasterEgg ? 'More are incoming...' : 'Ghosts spawned!' }
                 </Typography>
             </Grid>
         </Grid>
