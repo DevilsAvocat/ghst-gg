@@ -15,17 +15,8 @@
 ## Test
     npm test
 
-## Install/Reinstall cloud configs
-    './google-cloud-sdk/bin/gcloud init' inside of downloaded sdk folder (not from root of project)
-    'Pick configuration to use:
-      [1] Re-initialize this configuration [default] with new settings'
-    'Select your e-mail from the list'
-    'Select pre-created project from Google Cloud (etc. learned-battery-299610)'
-
-## Google cloud deploy running
-    'gcloud auth login' // to log in with google account
-    'npm run build'
-    'gcloud app deploy'
+## Production Deploy
+    [frontend_deploy](https://ghst-gg.atlassian.net/wiki/spaces/GHSTGG/pages/66261/Frontend+Deploy)
 
 ## Links
     https://morioh.com/p/656381bcb059
