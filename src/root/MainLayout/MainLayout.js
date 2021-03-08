@@ -30,7 +30,7 @@ export default function Account() {
                 <Grid item container>
                     <Switch>
                         <Route exact path={`${url}/`} component={ Team } />
-                        <Route exact path='/404' component={ NotFound } />
+                        <Route exact path={`${url}/404`} component={ NotFound } />
                         <Redirect from='*' to='/404' />
                     </Switch>
                 </Grid>
