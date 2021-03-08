@@ -88,7 +88,7 @@ export default function Team() {
                 </Link>
             </Grid>
             <Grid item xs={2}>
-                <Link href='https://www.aavegotchi.com/' target='_blank' className={classes.teamMember}>
+                <Link href='https://aavegotchi.com/gotchi/2104' target='_blank' className={classes.teamMember}>
                     <Typography className={classes.aavegotchiName} variant={'h3'}>Arwen</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ arwen } />
                 </Link>
