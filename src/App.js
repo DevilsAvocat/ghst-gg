@@ -8,7 +8,6 @@ import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 // components
 import Header from './root/Header/Header';
-import Main from './pages/Main/Main';
 import NotFound from './pages/NotFound/NotFound';
 import Team from './pages/Team/Team';
 

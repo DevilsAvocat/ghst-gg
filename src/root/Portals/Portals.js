@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Web3 from 'web3'
 import Grid from '@material-ui/core/Grid';
-import Loader from 'react-loader-spinner';
+import { Typography } from '@material-ui/core';
 
 import openedPortal from '../../assets/images/portal-opened.gif';
 import sealedPortal from '../../assets/images/portal-sealed.svg';
-import { Typography } from '@material-ui/core';
 
 class Portals extends Component {
     constructor (props) {
@@ -91,7 +90,7 @@ class Portals extends Component {
             </Grid>
             <Grid item xs={4}>
                 <Typography align={"center"} style={{ fontSize: '30px' }}>
-                  {this.state.showEasterEgg ? 'Metaverse population' : `Hero's are incoming!` }
+                  {this.state.showEasterEgg ? 'More are incoming...' : 'Ghosts spawned!' }
                 </Typography>
             </Grid>
         </Grid>
