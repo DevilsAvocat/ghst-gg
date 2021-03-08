@@ -4,18 +4,18 @@ const Constants = {
     WALLET_ADDRESS: '0x86935F11C86623deC8a25696E1C19a8659CbF95d',
     MIN_ABI: [
         {
-            'constant':true,
-            'inputs':[{'name':'_owner','type':'address'}],
-            'name':'balanceOf',
-            'outputs':[{'name':'balance','type':'uint256'}],
-            'type':'function'
+            'constant': true,
+            'inputs': [{'name':'_owner','type':'address'}],
+            'name': 'balanceOf',
+            'outputs': [{'name':'balance','type':'uint256'}],
+            'type': 'function'
         },
         {
-            'constant':true,
-            'inputs':[],
-            'name':'decimals',
-            'outputs':[{'name':'','type':'uint8'}],
-            'type':'function'
+            'constant': true,
+            'inputs': [],
+            'name': 'decimals',
+            'outputs': [{'name':'','type':'uint8'}],
+            'type': 'function'
         }
     ]
 }
