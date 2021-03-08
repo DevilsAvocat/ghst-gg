@@ -34,9 +34,9 @@ export default function App() {
                     <Grid item container>
                         <Switch>
                             {/*<Route exact path='/main' component={ Main } />*/}
-                            <Route exact path='/team' component={ Team } />
+                            <Route exact path='/' component={ Team } />
                             <Route exact path='/404' component={ NotFound } />
-                            <Redirect from='/' to='/team' />
+                            {/*<Redirect from='/' to='/team' />*/}
                             <Redirect from='*' to='/404' />
                         </Switch>
                     </Grid>
