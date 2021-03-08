@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@material-ui/core/styles';
+import { CssBaseline } from '@material-ui/core';
 import { theme } from './themes/ghst';
 
 const apiUrl = process.env.REACT_APP_BASE_URL;
@@ -15,6 +16,7 @@ axios.defaults.baseURL = apiUrl;
 ReactDOM.render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             <App/>
         </ThemeProvider>
     </React.StrictMode>,

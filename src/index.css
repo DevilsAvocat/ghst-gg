@@ -4,7 +4,6 @@ html, body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height: 100%;
-  color: #c3c5cb;
 }
 
 
@@ -12,6 +11,4 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-
-  background-color: rgb(44, 47, 54);
 }
