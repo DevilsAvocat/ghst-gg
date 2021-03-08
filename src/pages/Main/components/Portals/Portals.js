@@ -3,8 +3,8 @@ import Web3 from 'web3'
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
 
-import openedPortal from '../../assets/images/portal-opened.gif';
-import sealedPortal from '../../assets/images/portal-sealed.svg';
+import openedPortal from '../../../../assets/images/portal-opened.gif';
+import sealedPortal from '../../../../assets/images/portal-sealed.svg';
 
 class Portals extends Component {
     constructor (props) {

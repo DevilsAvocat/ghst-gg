@@ -2,13 +2,12 @@ import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from '@material-ui/core/styles';
 import { Avatar, Link, Typography } from '@material-ui/core';
-import hoax from '../../assets/images/avatars/hoax.svg';
-import theDude from '../../assets/images/avatars/the-dude.svg';
-import bitchin from '../../assets/images/avatars/bitchin.svg';
-import hopeUp from '../../assets/images/avatars/hope_up.svg';
-import butch from '../../assets/images/avatars/butch.svg';
-import arwen from '../../assets/images/avatars/arwen.svg';
-import Portals from '../../root/Portals/Portals';
+import hoax from '../../../../assets/images/avatars/hoax.svg';
+import theDude from '../../../../assets/images/avatars/the-dude.svg';
+import bitchin from '../../../../assets/images/avatars/bitchin.svg';
+import hopeUp from '../../../../assets/images/avatars/hope_up.svg';
+import butch from '../../../../assets/images/avatars/butch.svg';
+import arwen from '../../../../assets/images/avatars/arwen.svg';
 
 const useStyles = makeStyles((theme) => ({
     mainTitle: {
@@ -18,8 +17,6 @@ const useStyles = makeStyles((theme) => ({
     teamMember: {
         width: '100%',
         height: '100%',
-
-        // borderColor: theme.palette.primary.main,
         color: theme.palette.common.white,
         borderWidth: 0,
         background: 'transparent',
@@ -63,9 +60,6 @@ export default function Team() {
 
     return (
         <Grid item container spacing={3}>
-            <Grid item xs={12}>
-                <Portals />
-            </Grid>
             <Grid item xs={12}>
                 <Typography className={classes.mainTitle} variant={'h4'}>CITADEL MEMBERS</Typography>
             </Grid>

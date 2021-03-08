@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useRouteMatch } from "react-router-dom";
 import {Redirect, Route, Switch} from 'react-router';
 import Grid from '@material-ui/core/Grid';
-import Team from "../../pages/Team/Team";
+import Main from "../../pages/Main/Main";
 import NotFound from "../../pages/NotFound/NotFound";
 import Header from "../Header/Header";
 import Container from "@material-ui/core/Container";
@@ -31,7 +31,7 @@ export default function Account() {
             <Container maxWidth='lg'>
                 <Grid item container>
                     <Switch>
-                        <Route exact path={`${url}/`} component={ Team } />
+                        <Route exact path={`${url}/`} component={ Main } />
                         <Route exact path={`${url}/404`} component={ NotFound } />
                         <Redirect from='*' to='/404' />
                     </Switch>
