@@ -1,102 +1,66 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import Constants from "./constants.js";
 import Web3 from 'web3'
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
 import openedPortal from '../../../../assets/images/portal-opened.gif';
 import sealedPortal from '../../../../assets/images/portal-sealed.svg';
 
-class Portals extends Component {
-    constructor (props) {
-      super(props);
+const web3 = new Web3(Constants.RPC_URL);
+const contract = new web3.eth.Contract(Constants.MIN_ABI, Constants.TOKEN_ADDRESS);
 
-      // Init Web3
-      this.rpcUrl = 'https://rpc-mainnet.maticvigil.com/v1/de9ab922c0ff3e6d6e2863750dd2ca68fd01a267';
-      this.web3 = new Web3(this.rpcUrl);
-      
-      // Token/wallet address
-      this.tokenAddress = '0xb0897686c545045aFc77CF20eC7A532E3120E0F1';
-      this.walletAddress = '0x86935F11C86623deC8a25696E1C19a8659CbF95d';
-      
-      // The minimum ABI to get ERC20 Token balance
-      this.minABI = [
-        // BalanceOf
-        {
-          'constant':true,
-          'inputs':[{'name':'_owner','type':'address'}],
-          'name':'balanceOf',
-          'outputs':[{'name':'balance','type':'uint256'}],
-          'type':'function'
-        },
-        // Decimals
-        {
-          'constant':true,
-          'inputs':[],
-          'name':'decimals',
-          'outputs':[{'name':'','type':'uint8'}],
-          'type':'function'
-        }
-      ];
-      
-      this.contract = new this.web3.eth.Contract(this.minABI, this.tokenAddress);
+const useStyles = makeStyles(() => ({
+    wrap: {
+        padding: '50px 0'
+    }
+}));
 
-      this.state = {
-        portals: 0,
-        showEasterEgg: false
-      }
+export default function Portals() {
+    const classes = useStyles();
+    const [portals, setPortals] = useState(0);
+    const [eegg, setEegg] = useState(false);
+
+    useEffect(() => {
+        contract.methods.balanceOf(Constants.WALLET_ADDRESS).call()
+            .then(function (value) {
+                var portalsNumber = Math.round(web3.utils.fromWei(value) * 10000);
+                setPortals(portalsNumber);
+            });
+    });
+
+    function onPortalClick() {
+        setEegg(!eegg);
     }
 
-    componentDidMount = async () => {
-      let _this = this;
-
-      this.contract.methods.balanceOf(this.walletAddress).call()
-        .then(function (value) {
-          let balance = Math.round(_this.web3.utils.fromWei(value) * 10000);
-          _this.setState({ portals: balance });
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-
-    toggleEasterEgg = () => {
-      this.setState({ showEasterEgg: !this.state.showEasterEgg });
-    }
-
-    render () {
-      return (
+    return (
         <Grid
-            item
             container
             direction={'row'}
             alignItems={'center'}
             justify={'center'}
-            xs={12}
             spacing={2}
-            style={{marginTop: '50px', marginBottom: '30px'}}
+            className={classes.wrap}
         >
             <Grid item xs={4}>
                 <Typography style={{ fontSize: '30px', textAlign: 'center' }}>
-                  <span style={{ color: '#fd9af9' }}>{this.state.showEasterEgg ? this.state.portals : 10000 - this.state.portals }</span> out of <span style={{ color: '#fd9af9' }}>10000</span><br /> Are {this.state.showEasterEgg ? 'sealed' : 'opened' }!
+                  <span style={{ color: '#fd9af9' }}>{ eegg ? portals : 10000 - portals }</span> out of <span style={{ color: '#fd9af9' }}>10000</span><br /> Are {eegg ? 'sealed' : 'opened' }!
                 </Typography>
             </Grid>
             <Grid style={{textAlign: 'center'}} item xs={2}>
                 <img
-                  src={this.state.showEasterEgg ? sealedPortal : openedPortal }
+                  src={eegg ? sealedPortal : openedPortal }
                   style={{ width: '150px', cursor: 'pointer' }}
-                  onClick={() => this.toggleEasterEgg()}
-                  alt='Opened Portal'
+                  onClick={onPortalClick}
+                  alt='Portal'
                 />
             </Grid>
             <Grid item xs={4}>
                 <Typography align={"center"} style={{ fontSize: '30px' }}>
-                  {this.state.showEasterEgg ? 'More are incoming...' : 'Ghosts spawned!' }
+                  {eegg ? 'More are incoming...' : 'Ghosts spawned!' }
                 </Typography>
             </Grid>
         </Grid>
-      )
-    }
-        
+    );
 }
-
-export default Portals
