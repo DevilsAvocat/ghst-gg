@@ -1,10 +1,8 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
-import { NavLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import logo from '../../assets/images/logo.png';
-import {AppBar, Link, Toolbar, Typography} from "@material-ui/core";
-import IconButton from '@material-ui/core/IconButton';
+import {Box, Button, Link, Toolbar, Typography} from "@material-ui/core";
 import TelegramIcon from '@material-ui/icons/Telegram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import discord from '../../assets/images/discord.svg';
@@ -42,12 +40,20 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 18,
         color: theme.palette.common.white
     },
+    socialLink: {
+        '&:hover': {
+            textDecoration: 'none'
+        }
+    },
     iconButton: {
         color: '#fd9af9',
         '& img': {
-            width: 24,
-            height: 24
+            width: 26,
+            height: 26
         }
+    },
+    iconButtonText: {
+        marginLeft: '8px'
     }
 }));
 
@@ -67,20 +73,23 @@ export default function Header() {
                     {/*    <Typography className={classes.navLinkText}>Team</Typography>*/}
                     {/*</NavLink>*/}
                 </nav>
-                <Link href='https://discord.gg/9FqxjDTYYE'>
-                    <IconButton className={classes.iconButton} aria-label="add an alarm">
+                <Link href='https://discord.gg/9FqxjDTYYE' className={classes.socialLink} target='_blank'>
+                    <Button className={classes.iconButton} aria-label="add an alarm">
                         <img src={ discord } alt="" />
-                    </IconButton>
+                        <Box component="span" className={classes.iconButtonText}>4</Box>
+                    </Button>
                 </Link>
-                <Link href='https://t.me/joinchat/hTAWLbZgrKI4YWJk'>
-                    <IconButton className={classes.iconButton} aria-label="add an alarm">
+                <Link href='https://t.me/joinchat/hTAWLbZgrKI4YWJk' className={classes.socialLink} target='_blank'>
+                    <Button className={classes.iconButton} aria-label="add an alarm">
                         <TelegramIcon />
-                    </IconButton>
+                        <Box component="span" className={classes.iconButtonText}>20</Box>
+                    </Button>
                 </Link>
-                <Link href='https://twitter.com/ghst_gg'>
-                    <IconButton className={classes.iconButton} aria-label="add an alarm">
+                <Link href='https://twitter.com/ghst_gg' className={classes.socialLink} target='_blank'>
+                    <Button className={classes.iconButton} aria-label="add an alarm">
                         <TwitterIcon />
-                    </IconButton>
+                        <Box component="span" className={classes.iconButtonText}>7</Box>
+                    </Button>
                 </Link>
             </Toolbar>
         </Grid>
