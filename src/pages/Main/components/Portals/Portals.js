@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Web3 from 'web3'
 import Constants from "./constants.js";
@@ -56,7 +56,10 @@ export default function Portals() {
         >
             <Grid item xs={4}>
                 <Typography className={classes.portalsDescr}>
-                  <span className={classes.highlight}>{ eegg ? portals : 10000 - portals }</span> out of <span className={classes.highlight}>10000</span><br /> Are {eegg ? 'sealed' : 'opened' }!
+                    <Box component="span" className={classes.highlight}>{ eegg ? portals : 10000 - portals }</Box>
+                    <Box component="span" m={2}>out of</Box>
+                    <Box component="span" className={classes.highlight}>10000</Box>
+                    <Box>Are {eegg ? 'sealed' : 'opened' }!</Box>
                 </Typography>
             </Grid>
             <Grid className={classes.portalsDescr} item xs={2}>
