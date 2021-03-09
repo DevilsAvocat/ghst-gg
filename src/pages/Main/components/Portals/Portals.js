@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Web3 from 'web3'
@@ -36,6 +37,7 @@ export default function Portals() {
     const classes = useStyles();
     const [portals, setPortals] = useState(0);
     const [eegg, setEegg] = useState(false);
+    const history = useHistory();
 
     useEffect(() => {
         contract.methods.balanceOf(Constants.WALLET_ADDRESS).call()
@@ -80,6 +82,7 @@ export default function Portals() {
                     color='primary'
                     size='large'
                     className={classes.portalsButton}
+                    onClick={() => history.push('/explorer')}
                 >
                     Ghosts Explorer
                 </Button>
