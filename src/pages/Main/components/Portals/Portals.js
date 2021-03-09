@@ -59,7 +59,7 @@ export default function Portals() {
                     <Box component="span" className={classes.highlight}>{ eegg ? portals : 10000 - portals }</Box>
                     <Box component="span" m={2}>out of</Box>
                     <Box component="span" className={classes.highlight}>10000</Box>
-                    <Box>Are {eegg ? 'sealed' : 'opened' }!</Box>
+                    <Box component="span" display="inline-block">Are {eegg ? 'sealed' : 'opened' }!</Box>
                 </Typography>
             </Grid>
             <Grid className={classes.portalsDescr} item xs={2}>
