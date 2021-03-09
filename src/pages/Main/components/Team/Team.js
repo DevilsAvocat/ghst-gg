@@ -1,9 +1,10 @@
 import React from 'react';
-import Grid from "@material-ui/core/Grid";
 import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Link, Typography } from '@material-ui/core';
+import { Avatar, Grid, Link, Typography } from '@material-ui/core';
+import classNames from 'classnames';
+
 import hoax from '../../../../assets/images/avatars/hoax.svg';
-import theDude from '../../../../assets/images/avatars/the-dude.svg';
+import dudendy from '../../../../assets/images/avatars/dudendy.svg';
 import bitchin from '../../../../assets/images/avatars/bitchin.svg';
 import hopeUp from '../../../../assets/images/avatars/hope_up.svg';
 import butch from '../../../../assets/images/avatars/butch.svg';
@@ -12,7 +13,7 @@ import arwen from '../../../../assets/images/avatars/arwen.svg';
 const useStyles = makeStyles((theme) => ({
     mainTitle: {
         textAlign: 'center',
-        margin: '30px 0'
+        marginBottom: '50px'
     },
     teamMember: {
         width: '100%',
@@ -47,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
     aavegotchiAvatar: {
         width: 150,
         height: 150,
-        marginBottom: 25,
         '& > img': {
             width: 100,
             height: 100
@@ -59,7 +59,7 @@ export default function Team() {
     const classes = useStyles();
 
     return (
-        <Grid item container spacing={3}>
+        <Grid container>
             <Grid item xs={12}>
                 <Typography className={classes.mainTitle} variant={'h4'}>CITADEL MEMBERS</Typography>
             </Grid>
@@ -70,9 +70,9 @@ export default function Team() {
                 </Link>
             </Grid>
             <Grid item xs={2}>
-                <Link href='https://www.aavegotchi.com/gotchi/824' target='_blank' className={classes.teamMember}>
-                    <Typography className={classes.aavegotchiName} variant={'h3'}>The Dude</Typography>
-                    <Avatar className={classes.aavegotchiAvatar} variant='square' src={ theDude } />
+                <Link href='https://www.aavegotchi.com/gotchi/8005' target='_blank' className={classes.teamMember}>
+                    <Typography className={classes.aavegotchiName} variant={'h3'}>Dudendy</Typography>
+                    <Avatar className={classes.aavegotchiAvatar} variant='square' src={ dudendy } />
                 </Link>
             </Grid>
             <Grid item xs={2}>
@@ -95,7 +95,7 @@ export default function Team() {
             </Grid>
             <Grid item xs={2}>
                 <Link href='https://discord.gg/9FqxjDTYYE' target='_blank' className={classes.teamMember}>
-                    <Typography className={`${classes.aavegotchiName} ${classes.aavegotchiYouName}`} variant={'h3'}>You!</Typography>
+                    <Typography className={classNames(classes.aavegotchiName, classes.aavegotchiYouName)} variant={'h3'}>You!</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ hopeUp } />
                 </Link>
             </Grid>
