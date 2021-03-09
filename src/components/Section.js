@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
             right: 0,
             left: 0,
             height: 1,
-            background: 'linear-gradient(to right, transparent 0%, rgba(253, 154, 249, .4) 50%, transparent 100%)'
+            background: 'linear-gradient(to right, transparent 0%, rgba(253, 154, 249, .25) 50%, transparent 100%)',
+            zIndex: 9
         }
     }
 }));

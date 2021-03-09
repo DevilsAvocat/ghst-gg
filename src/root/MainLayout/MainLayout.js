@@ -6,6 +6,7 @@ import {Redirect, Route, Switch} from 'react-router';
 import Main from "../../pages/Main/Main";
 import NotFound from "../../pages/NotFound/NotFound";
 import Header from "../Header/Header";
+import Footer from '../Footer/Footer';
 
 const useStyles = makeStyles(() => ({
     wrap: {
@@ -32,6 +33,7 @@ export default function Account() {
                 <Route exact path={`${url}/404`} component={ NotFound } />
                 <Redirect from='*' to='/404' />
             </Switch>
+            <Footer />
         </Grid>
     );
 }
