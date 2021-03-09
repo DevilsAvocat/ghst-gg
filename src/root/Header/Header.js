@@ -1,15 +1,14 @@
 import React from 'react';
-import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import logo from '../../assets/images/logo.png';
-import {Box, Button, Link, Toolbar, Typography} from "@material-ui/core";
+import {Box, Button, Grid, Link, Toolbar, Typography} from "@material-ui/core";
+
 import TelegramIcon from '@material-ui/icons/Telegram';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import logo from '../../assets/images/logo.png';
 import discord from '../../assets/images/discord.svg';
 
 const useStyles = makeStyles((theme) => ({
     headerWrapper: {
-        borderBottom: '1px solid rgba(0,0,0, .3)',
         padding: '5px 30px'
     },
     toolbar: {

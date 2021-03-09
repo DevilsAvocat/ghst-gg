@@ -12,11 +12,8 @@ const web3 = new Web3(Constants.RPC_URL);
 const contract = new web3.eth.Contract(Constants.MIN_ABI, Constants.TOKEN_ADDRESS);
 
 const useStyles = makeStyles((theme) => ({
-    wrap: {
-        padding: '50px 0'
-    },
     portalsDescr: {
-        fontSize: '30px',
+        fontSize: 30,
         textAlign: 'center'
     },
     portalsImage: {
@@ -51,8 +48,6 @@ export default function Portals() {
             direction={'row'}
             alignItems={'center'}
             justify={'center'}
-            spacing={2}
-            className={classes.wrap}
         >
             <Grid item xs={4}>
                 <Typography className={classes.portalsDescr}>
