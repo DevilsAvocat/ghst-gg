@@ -9,17 +9,35 @@ import discord from '../../assets/images/discord.svg';
 
 const useStyles = makeStyles((theme) => ({
     headerWrapper: {
-        padding: '5px 30px'
+        // padding: '5px 30px'
     },
     toolbar: {
         width: '100%',
+        flexWrap: 'wrap',
         justifyContent: 'space-between',
-        padding: 0
+        padding: '12px 32px',
+        [theme.breakpoints.up('sm')]: {
+            flexWrap: 'nowrap'
+        }
+    },
+    highlight: {
+        color: theme.palette.primary.main
     },
     logo: {
         width: 50,
         height: 50,
         marginRight: 15
+    },
+    logoText: {
+        whiteSpace: 'nowrap'
+    },
+    logoWrapper: {
+        justifyContent: 'center',
+        marginBottom: 12,
+        [theme.breakpoints.up('sm')]: {
+            justifyContent: 'flex-start',
+            marginBottom: 0
+        }
     },
     navigation: {
         display: 'flex',
@@ -38,6 +56,12 @@ const useStyles = makeStyles((theme) => ({
     navLinkText: {
         fontSize: 18,
         color: theme.palette.common.white
+    },
+    socialLinkList: {
+        justifyContent: 'center',
+        [theme.breakpoints.up('sm')]: {
+            justifyContent: 'flex-end'
+        }
     },
     socialLink: {
         '&:hover': {
@@ -60,18 +84,24 @@ export default function Header() {
     const classes = useStyles();
 
     return (
-        <Grid item container className={classes.headerWrapper}>
-            <Toolbar className={classes.toolbar}>
+        <Toolbar className={classes.toolbar}>
+            <Grid className={classes.logoWrapper} container alignItems='center'>
                 <img className={classes.logo} src={logo} alt='logo' />
-                <Typography>GHST_GG</Typography>
-                <nav className={classes.navigation}>
-                    {/*<NavLink className={classes.navLink} to='/main' href='#'>*/}
-                    {/*    <Typography className={classes.navLinkText}>Main</Typography>*/}
-                    {/*</NavLink>*/}
-                    {/*<NavLink className={classes.navLink} to='/team' href='#'>*/}
-                    {/*    <Typography className={classes.navLinkText}>Team</Typography>*/}
-                    {/*</NavLink>*/}
-                </nav>
+                <Typography className={classes.logoText}>
+                    <Box component='span'>GHST</Box>
+                    <Box component='span' className={classes.highlight}>_</Box>
+                    <Box component='span'>GG</Box>
+                </Typography>
+            </Grid>
+            {/* <nav className={classes.navigation}>
+                <NavLink className={classes.navLink} to='/main' href='#'>
+                    <Typography className={classes.navLinkText}>Main</Typography>
+                </NavLink>
+                <NavLink className={classes.navLink} to='/team' href='#'>
+                    <Typography className={classes.navLinkText}>Team</Typography>
+                </NavLink>
+            </nav> */}
+            <Grid className={classes.socialLinkList} container>
                 <Link href='https://discord.gg/9FqxjDTYYE' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
                         <img src={ discord } alt='' />
@@ -90,7 +120,7 @@ export default function Header() {
                         <Box component='span' className={classes.iconButtonText}>7</Box>
                     </Button>
                 </Link>
-            </Toolbar>
-        </Grid>
+            </Grid>
+        </Toolbar>
     )
 }

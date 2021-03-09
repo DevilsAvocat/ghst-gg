@@ -13,7 +13,12 @@ import arwen from '../../../../assets/images/avatars/arwen.svg';
 const useStyles = makeStyles((theme) => ({
     mainTitle: {
         textAlign: 'center',
-        marginBottom: '50px'
+        fontSize: 28,
+        marginBottom: 30,
+        [theme.breakpoints.up('md')]: {
+            fontSize: 34,
+            marginBottom: 50
+        }
     },
     teamMember: {
         width: '100%',
@@ -37,9 +42,13 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     aavegotchiName: {
-        fontSize: 25,
+        fontSize: 18,
         textAlign: 'center',
-        padding: '25px 0'
+        padding: '25px 0 0',
+        [theme.breakpoints.up('md')]: {
+            fontSize: 25,
+            padding: '25px 0 10px',
+        }
     },
     aavegotchiYouName: {
         color: theme.palette.primary.main,
@@ -63,37 +72,37 @@ export default function Team() {
             <Grid item xs={12}>
                 <Typography className={classes.mainTitle} variant={'h4'}>CITADEL MEMBERS</Typography>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={6} sm={4} md={2}>
                 <Link href='https://www.aavegotchi.com/gotchi/590' target='_blank' className={classes.teamMember}>
                     <Typography className={classes.aavegotchiName} variant={'h3'}>Hoax</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ hoax } />
                 </Link>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={6} sm={4} md={2}>
                 <Link href='https://www.aavegotchi.com/gotchi/8005' target='_blank' className={classes.teamMember}>
                     <Typography className={classes.aavegotchiName} variant={'h3'}>Dudendy</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ dudendy } />
                 </Link>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={6} sm={4} md={2}>
                 <Link href='https://www.aavegotchi.com/gotchi/1083' target='_blank' className={classes.teamMember}>
                     <Typography className={classes.aavegotchiName} variant={'h3'}>Butch</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ butch } />
                 </Link>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={6} sm={4} md={2}>
                 <Link href='https://aavegotchi.com/gotchi/2104' target='_blank' className={classes.teamMember}>
                     <Typography className={classes.aavegotchiName} variant={'h3'}>Arwen</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ arwen } />
                 </Link>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={6} sm={4} md={2}>
                 <Link href='https://www.aavegotchi.com/gotchi/4282' target='_blank' className={classes.teamMember}>
                     <Typography className={classes.aavegotchiName} variant={'h3'}>Bitchin'</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ bitchin } />
                 </Link>
             </Grid>
-            <Grid item xs={2}>
+            <Grid item xs={6} sm={4} md={2}>
                 <Link href='https://discord.gg/9FqxjDTYYE' target='_blank' className={classes.teamMember}>
                     <Typography className={classNames(classes.aavegotchiName, classes.aavegotchiYouName)} variant={'h3'}>You!</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ hopeUp } />

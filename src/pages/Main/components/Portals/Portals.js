@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Grid from '@material-ui/core/Grid';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Web3 from 'web3'
 import Constants from './constants.js';
@@ -12,9 +11,17 @@ const web3 = new Web3(Constants.RPC_URL);
 const contract = new web3.eth.Contract(Constants.MIN_ABI, Constants.TOKEN_ADDRESS);
 
 const useStyles = makeStyles((theme) => ({
+    portalsColumn: {
+        marginBottom: 30,
+        [theme.breakpoints.up('md')]: {
+            marginBottom: 0
+        }
+    },
     portalsDescr: {
-        fontSize: 30,
-        textAlign: 'center'
+        fontSize: 24,
+        [theme.breakpoints.up('md')]: {
+            fontSize: 30
+        }
     },
     portalsImage: {
         cursor: 'pointer',
@@ -49,15 +56,17 @@ export default function Portals() {
             alignItems={'center'}
             justify={'center'}
         >
-            <Grid item xs={4}>
-                <Typography className={classes.portalsDescr}>
+            <Grid className={classes.portalsColumn} item xs={12} md={4}>
+                <Typography align='center' className={classes.portalsDescr}>
                     <Box component='span' className={classes.highlight}>{ eegg ? portals : 10000 - portals }</Box>
                     <Box component='span' m={2}>out of</Box>
                     <Box component='span' className={classes.highlight}>10000</Box>
-                    <Box component='span' display='inline-block'>Are {eegg ? 'sealed' : 'opened' }!</Box>
+                </Typography>
+                <Typography align='center' className={classes.portalsDescr}>
+                    Are {eegg ? 'sealed' : 'opened' }!
                 </Typography>
             </Grid>
-            <Grid className={classes.portalsDescr} item xs={2}>
+            <Grid className={classes.portalsColumn} container item justify='center' xs={12} md={2}>
                 <img
                   src={eegg ? sealedPortal : openedPortal }
                   className={classes.portalsImage}
@@ -65,10 +74,15 @@ export default function Portals() {
                   alt='Portal'
                 />
             </Grid>
-            <Grid item xs={4}>
-                <Typography className={classes.portalsDescr}>
-                  {eegg ? 'More are incoming...' : 'Ghosts spawned!' }
-                </Typography>
+            <Grid container item justify='center' xs={12} md={4}>
+                <Button
+                    variant='contained'
+                    color='primary'
+                    size='large'
+                    className={classes.portalsButton}
+                >
+                    Ghosts Explorer
+                </Button>
             </Grid>
         </Grid>
     );

@@ -4,7 +4,7 @@ import { Container, Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     section: {
-        padding: '75px 0',
+        padding: '50px 0',
         position: 'relative',
         '&::after': {
             content: '""',
@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
             height: 1,
             background: 'linear-gradient(to right, transparent 0%, rgba(253, 154, 249, .25) 50%, transparent 100%)',
             zIndex: 9
+        },
+        [theme.breakpoints.up('md')]: {
+            padding: '75px 0',
         }
     }
 }));
