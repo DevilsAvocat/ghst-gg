@@ -19,9 +19,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Section(props) {
+export default function Section({children, backgroundColor}) {
     const classes = useStyles();
-    const {children, backgroundColor} = props;
 
     return (
         <Grid container className={classes.section} style={{ backgroundColor: backgroundColor }}>
