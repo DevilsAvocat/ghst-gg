@@ -26,7 +26,8 @@ const useStyles = makeStyles((theme) => ({
     },
     portalsImage: {
         cursor: 'pointer',
-        width: '150px'
+        width: 150,
+        height: 150
     },
     highlight: {
         color: theme.palette.primary.main
