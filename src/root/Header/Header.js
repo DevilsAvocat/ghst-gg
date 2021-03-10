@@ -102,7 +102,7 @@ export default function Header() {
                 </NavLink>
             </nav> */}
             <Grid className={classes.socialLinkList} container>
-                <Link href='https://discord.gg/9FqxjDTYYE' className={classes.socialLink} target='_blank'>
+                <Link href='https://discord.gg/NXEEETxSkC' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
                         <img src={ discord } alt='' />
                         <Box component='span' className={classes.iconButtonText}>4</Box>

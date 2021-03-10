@@ -103,7 +103,7 @@ export default function Team() {
                 </Link>
             </Grid>
             <Grid item xs={6} sm={4} md={2}>
-                <Link href='https://discord.gg/9FqxjDTYYE' target='_blank' className={classes.teamMember}>
+                <Link href='https://discord.gg/NXEEETxSkC' target='_blank' className={classes.teamMember}>
                     <Typography className={classNames(classes.aavegotchiName, classes.aavegotchiYouName)} variant={'h3'}>You!</Typography>
                     <Avatar className={classes.aavegotchiAvatar} variant='square' src={ hopeUp } />
                 </Link>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import { useRouteMatch } from "react-router-dom";
 import {Redirect, Route, Switch} from 'react-router';
 import Main from "../../pages/Main/Main";
 import NotFound from "../../pages/NotFound/NotFound";
@@ -20,7 +19,6 @@ const useStyles = makeStyles(() => ({
 
 export default function Account() {
     const classes = useStyles();
-    let { url } = useRouteMatch();
 
     return (
         <Grid
@@ -29,8 +27,8 @@ export default function Account() {
         >
             <Header />
             <Switch>
-                <Route exact path={`${url}/`} component={ Main } />
-                <Route exact path={`${url}/404`} component={ NotFound } />
+                <Route exact path={`/`} component={ Main } />
+                <Route exact path={`/404`} component={ NotFound } />
                 <Redirect from='*' to='/404' />
             </Switch>
             <Footer />
