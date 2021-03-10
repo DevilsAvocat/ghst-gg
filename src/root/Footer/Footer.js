@@ -23,7 +23,7 @@ export default function Footer() {
         <Grid item container className={classes.footerWrapper}>
             <Toolbar className={classes.toolbar}>
                 <Typography>
-                    <Box component='span' className={classes.highlight}>v0</Box>
+                    <Box component='span' className={classes.highlight}>v1</Box>
                     <Box component='span'>the most entertaining outcome is the most likely</Box>
                 </Typography>
             </Toolbar>
