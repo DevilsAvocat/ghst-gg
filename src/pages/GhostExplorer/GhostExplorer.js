@@ -101,7 +101,7 @@ export default function GhostExplorer() {
         try {
             return require(`../../assets/svgs/${ghst}.svg`).default;
         } catch (error) {
-            return require(`../../assets/svgs/portal_sealed.svg`).default;
+            return null;
         }
     };
 
@@ -138,29 +138,33 @@ export default function GhostExplorer() {
         >
             {
                 gotchies.map((ghst, index) => {
-                    return <Box
-                        key={index}
-                        className={classNames(classes.gotchi, ghst === 2 ? classes.gotchiSale : '')}
-                    >
-                        <Typography
-                            align={'center'}
-                            className={classes.gotchiName}
-                            variant={'h5'}
+                    const img = getSVG(ghst);
+
+                    if (img) {
+                        return <Box
+                            key={index}
+                            className={classNames(classes.gotchi, ghst === 2 ? classes.gotchiSale : '')}
                         >
-                            Unnamed
-                        </Typography>
-                        <Box h={90}>
-                            <img alt={ghst} src={getSVG(ghst)} />
+                            {/*<Typography*/}
+                            {/*    align={'center'}*/}
+                            {/*    className={classes.gotchiName}*/}
+                            {/*    variant={'h5'}*/}
+                            {/*>*/}
+                            {/*    Unnamed*/}
+                            {/*</Typography>*/}
+                            <Box h={90}>
+                                <img alt={ghst} src={img} />
+                            </Box>
+                            <Link href={`https://aavegotchi.com/gotchi/${ghst}`} target="_blank">
+                                <Typography
+                                    align={'center'}
+                                    variant={'h6'}
+                                >
+                                    {ghst}
+                                </Typography>
+                            </Link>
                         </Box>
-                        <Link href={`https://aavegotchi.com/gotchi/${ghst}`} target="_blank">
-                            <Typography
-                                align={'center'}
-                                variant={'h6'}
-                            >
-                                {ghst}
-                            </Typography>
-                        </Link>
-                    </Box>
+                    }
                 })
             }
             <Box className={classes.goBack}>
