@@ -19,6 +19,14 @@ export const theme = createMuiTheme({
         },
         text: {
             primary: '#c3c5cb'
+        },
+        rarity: {
+            common: 'rgb(128, 100, 255)',
+            uncommon: 'rgb(51, 186, 204)',
+            rare: 'rgb(89, 188, 255)',
+            legendary: 'rgb(255, 195, 107)',
+            mythical: 'rgb(255, 150, 255)',
+            godlike: 'rgb(81, 255, 168)'
         }
     },
     typography: {

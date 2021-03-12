@@ -14,12 +14,10 @@ const apiUrl = process.env.REACT_APP_BASE_URL;
 axios.defaults.baseURL = apiUrl;
 
 ReactDOM.render(
-    <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <App/>
-        </ThemeProvider>
-    </React.StrictMode>,
+    <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <App/>
+    </ThemeProvider>,
     document.getElementById('root')
 );
 

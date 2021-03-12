@@ -6,6 +6,7 @@ import Main from "../../pages/Main/Main";
 import NotFound from "../../pages/NotFound/NotFound";
 import Header from "../Header/Header";
 import Footer from '../Footer/Footer';
+import Baazaar from "../../pages/Baazaar/Baazaar";
 
 const useStyles = makeStyles(() => ({
     wrap: {
@@ -28,6 +29,7 @@ export default function Account() {
             <Header />
             <Switch>
                 <Route exact path={`/`} component={ Main } />
+                <Route exact path={`/baazaar`} component={ Baazaar } />
                 <Route exact path={`/404`} component={ NotFound } />
                 <Redirect from='*' to='/404' />
             </Switch>
