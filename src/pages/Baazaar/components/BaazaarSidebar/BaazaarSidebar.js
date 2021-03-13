@@ -131,8 +131,8 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                         <MenuItem className={classes.common} value={'common'}>Common</MenuItem>
                         <MenuItem className={classes.uncommon} value={'uncommon'}>Uncommon</MenuItem>
                         <MenuItem className={classes.rare} value={'rare'}>Rare</MenuItem>
-                        <MenuItem className={classes.mythical} value={'mythical'}>Mythical</MenuItem>
                         <MenuItem className={classes.legendary} value={'legendary'}>Legendary</MenuItem>
+                        <MenuItem className={classes.mythical} value={'mythical'}>Mythical</MenuItem>
                         <MenuItem className={classes.godlike} value={'godlike'}>Godlike</MenuItem>
                     </Select>
                 </FormControl>

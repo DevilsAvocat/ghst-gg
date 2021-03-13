@@ -93,33 +93,39 @@ const getWearableImg = (item) => {
     return typeMap[item._type]();
 };
 
-const getClassForBaazaarItem = (item) => {
+const getItemRarity = (item) => {
     if (item._type === 'wearable') {
-        return item.token.rarity;
+        return item?.token?.rarity || 'No_rarity';
     } else {
-        return 'none';
+        return 'No_rarity';
     }
-}
+};
+
+const getItemRarityTitle = (item) => {
+    if (item._type === 'wearable') {
+        return item?.token?.rarity || ' ';
+    } else {
+        return '';
+    }
+};
 
 export default function BaazaarItem({item}) {
     const classes = useStyles();
 
     return (
         <Grid item xs={6} sm={6} md={4} lg={3} xl={2} key={item.listing_id}>
-            <Box className={classNames(classes.baazaarItem, getClassForBaazaarItem(item))}>
+            <Box className={classNames(classes.baazaarItem, getItemRarity(item))}>
                 <Grid container>
                     <Grid item xs={12}>
                         <Typography
-                            className={classNames(classes.itemRarity, item.token.rarity)}
+                            className={classNames(classes.itemRarity, getItemRarity(item))}
                             variant={'caption'}
                         >
-                            {
-                                item._type === 'wearable' ? item.token.rarity : ''
-                            }
+                            {getItemRarityTitle(item)}
                         </Typography>
                     </Grid>
                     <Grid className={classes.itemImg} item xs={12}>
-                        <img src={getWearableImg(item)} alt={item.token.item_id} />
+                        <img src={getWearableImg(item)} alt={item.listing_id} />
                     </Grid>
                     <Grid item xs={6}>
                         <Typography
