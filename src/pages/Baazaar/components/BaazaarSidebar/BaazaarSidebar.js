@@ -61,26 +61,24 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
 
     return (
         <Grid className={classes.sidebar} container item xs={12} sm={4} md={3} lg={2} spacing={2}>
-            <Grid item xs={12}>
-                <Typography variant={'caption'}>Sort by</Typography>
-            </Grid>
-            <Grid item xs={12}>
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Sort by</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
-                        label="Sort by"
-                        ref={rarityRef}
-                        value={sortBy}
-                        onChange={onRarityChange}
-                    >
-                        <MenuItem className={classes.common} value={'asc'}>Price: lowest first</MenuItem>
-                        <MenuItem className={classes.uncommon} value={'desc'}>Price: highest first</MenuItem>
-                        <MenuItem className={classes.rare} value={'last'}>Last added</MenuItem>
-                    </Select>
-                </FormControl>
-            </Grid>
+            {/*<Grid item xs={12}>*/}
+            {/*    <Typography variant={'caption'}>Sort by</Typography>*/}
+            {/*</Grid>*/}
+            {/*<Grid item xs={12}>*/}
+            {/*    <FormControl variant="outlined" className={classes.formControl}>*/}
+            {/*        <InputLabel>Sort by</InputLabel>*/}
+            {/*        <Select*/}
+            {/*            label="Sort by"*/}
+            {/*            ref={rarityRef}*/}
+            {/*            value={sortBy}*/}
+            {/*            onChange={onRarityChange}*/}
+            {/*        >*/}
+            {/*            <MenuItem value={'asc'}>Price: lowest first</MenuItem>*/}
+            {/*            <MenuItem value={'desc'}>Price: highest first</MenuItem>*/}
+            {/*            <MenuItem value={'last'}>Last added</MenuItem>*/}
+            {/*        </Select>*/}
+            {/*    </FormControl>*/}
+            {/*</Grid>*/}
             <Grid item xs={12}>
                 <Typography variant={'caption'}>Price</Typography>
             </Grid>
@@ -95,10 +93,8 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
             </Grid>
             <Grid item xs={12}>
                 <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Type</InputLabel>
+                    <InputLabel>Type</InputLabel>
                     <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
                         label="Type"
                         ref={typeRef}
                         value={type}
@@ -118,10 +114,8 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
             </Grid>
             <Grid item xs={12}>
                 <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-outlined-label">Rarity</InputLabel>
+                    <InputLabel>Rarity</InputLabel>
                     <Select
-                        labelId="demo-simple-select-outlined-label"
-                        id="demo-simple-select-outlined"
                         label="Rarity"
                         ref={rarityRef}
                         value={rarity}
