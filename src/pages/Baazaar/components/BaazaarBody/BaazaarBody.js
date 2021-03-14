@@ -14,7 +14,8 @@ const useStyles = makeStyles((theme) => ({
         alignContent: 'center',
         justifyContent: 'center',
         '& nav': {
-            maxWidth: 400
+            marginTop: 15,
+            fontSize: '1.2rem'
         }
     },
     warning: {
@@ -47,6 +48,8 @@ export default function BaazaarBody({goods, paginationCount, onPageChange, setPa
                     color="primary"
                     page={page}
                     onChange={onPaginationClick}
+                    shape="rounded"
+                    size={'large'}
                 />
             </Grid>
         </Grid>
