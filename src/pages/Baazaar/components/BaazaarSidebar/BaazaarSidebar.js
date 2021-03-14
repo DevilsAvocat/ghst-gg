@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import Grid from "@material-ui/core/Grid";
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,8 +35,8 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
     const classes = useStyles();
     const [type, setType] = useState('');
     const [rarity, setRarity] = useState('');
-    const [sortBy, setSortBy] = useState('asc');
-    const sortByRef = useRef();
+    // const [sortBy, setSortBy] = useState('asc');
+    // const sortByRef = useRef();
     const fromRef = useRef();
     const toRef = useRef();
     const typeRef = useRef();
