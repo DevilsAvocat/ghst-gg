@@ -12,9 +12,10 @@ const useStyles = makeStyles((theme) => ({
     toolbar: {
         width: '100%',
         flexWrap: 'wrap',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: '12px 32px',
         [theme.breakpoints.up('sm')]: {
+            justifyContent: 'flex-start ',
             flexWrap: 'nowrap'
         }
     },
@@ -45,10 +46,16 @@ const useStyles = makeStyles((theme) => ({
     navigation: {
         display: 'flex',
         flexDirection: 'row',
-        marginLeft: 'auto',
+        justifyContent: 'center',
+        marginBottom: 10,
+        width: '100%',
         '& > *': {
             margin: '0 15px',
             textDecoration: 'none'
+        },
+        [theme.breakpoints.up('sm')]: {
+            justifyContent: 'flex-start',
+            marginBottom: 0
         }
     },
     navLink: {
