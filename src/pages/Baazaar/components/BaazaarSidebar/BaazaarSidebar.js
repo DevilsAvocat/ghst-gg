@@ -60,7 +60,7 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
     }
 
     return (
-        <Grid className={classes.sidebar} container item xs={12} sm={4} md={3} lg={3} spacing={2}>
+        <Grid className={classes.sidebar} container item xs={12} sm={4} md={3} lg={3} xl={2} spacing={2}>
             {/*<Grid item xs={12}>*/}
             {/*    <Typography variant={'caption'}>Sort by</Typography>*/}
             {/*</Grid>*/}
