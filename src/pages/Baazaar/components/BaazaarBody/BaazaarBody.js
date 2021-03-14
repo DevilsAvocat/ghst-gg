@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import BaazaarItem from "../BaazaarItem/BaazaarItem";
 import Pagination from '@material-ui/lab/Pagination';
 import {Alert} from "@material-ui/lab";
+import {Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
     baazaarBody: {
@@ -20,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     },
     warning: {
         marginBottom: '15px'
+    },
+    noGoods: {
+        fontSize: "1rem"
     }
 }));
 
@@ -42,15 +46,18 @@ export default function BaazaarBody({goods, paginationCount, onPageChange, setPa
                 })
             }
             <Grid className={classes.pagination} item xs={12}>
-                <Pagination
-                    count={paginationCount}
-                    variant="outlined"
-                    color="primary"
-                    page={page}
-                    onChange={onPaginationClick}
-                    shape="rounded"
-                    size={'large'}
-                />
+                {
+                    goods.length ? <Pagination
+                            count={paginationCount}
+                            variant="outlined"
+                            color="primary"
+                            page={page}
+                            onChange={onPaginationClick}
+                            shape="rounded"
+                            size={'large'}
+                        /> :
+                        <Typography className={classes.noGoods} variant={'caption'}>Spooky Market has no such goods :(</Typography>
+                }
             </Grid>
         </Grid>
     );
