@@ -7,7 +7,7 @@
 
 
 svg {
-  animation-name:down;
+  
   animation-duration:0.5s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
@@ -15,8 +15,8 @@ svg {
 }
 
 .gotchi-shadow {
-  animation: up 0.5s infinite linear steps(2);
-   animation-name:up;
+  
+   
    animation-duration:0.5s;
    animation-iteration-count: infinite;
    animation-timing-function: linear;
@@ -24,7 +24,7 @@ svg {
 }
 
 .gotchi-wearable {
-  animation-name:down;
+  
   animation-duration:0.5s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
@@ -34,7 +34,7 @@ svg {
 
 
 .gotchi-handsDownClosed, .gotchi-handsUp, .gotchi-handsDownOpen, .gotchi-handsDownClosed, .gotchi-body, .gotchi-eyeColor, .gotchi-collateral, .gotchi-cheek, .gotchi-primary-mouth, .gotchi-wearable   {
-   animation-name:down;
+   
    animation-duration:0.5s;
    animation-iteration-count: infinite;
    animation-timing-function: linear;
@@ -42,7 +42,7 @@ svg {
 }
 
 .wearable-hand {
-  animation-name:down !important;
+  
   animation-duration:0.5s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
