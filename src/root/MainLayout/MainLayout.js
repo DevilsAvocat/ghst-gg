@@ -29,7 +29,7 @@ export default function Account() {
             <Header />
             <Switch>
                 <Route exact path={`/`} component={ Main } />
-                <Route exact path={`/baazaar`} component={ Baazaar } />
+                <Route exact path={`/market`} component={ Baazaar } />
                 <Route exact path={`/404`} component={ NotFound } />
                 <Redirect from='*' to='/404' />
             </Switch>

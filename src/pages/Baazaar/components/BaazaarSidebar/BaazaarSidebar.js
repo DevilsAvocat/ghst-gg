@@ -100,7 +100,7 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                         value={type}
                         onChange={onTypeChange}
                     >
-                        <MenuItem value={''}><em>None</em></MenuItem>
+                        <MenuItem value={''}><em>All</em></MenuItem>
                         <MenuItem value={'wearable'}>Wearable</MenuItem>
                         <MenuItem value={'closed_portal'}>Closed portal</MenuItem>
                         <MenuItem value={'open_portal'}>Open portal</MenuItem>
@@ -121,7 +121,7 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                         value={rarity}
                         onChange={onRarityChange}
                     >
-                        <MenuItem value={''}><em>None</em></MenuItem>
+                        <MenuItem value={''}><em>All</em></MenuItem>
                         <MenuItem className={classes.common} value={'common'}>Common</MenuItem>
                         <MenuItem className={classes.uncommon} value={'uncommon'}>Uncommon</MenuItem>
                         <MenuItem className={classes.rare} value={'rare'}>Rare</MenuItem>
