@@ -15,6 +15,9 @@ const useStyles = makeStyles(() => ({
         backgroundImage: 'radial-gradient(50% 50% at 50% 50%, rgba(253, 154, 249, 0.1) 0%, rgba(33, 36, 41, 0) 100%)',
         flexDirection: 'column',
         minHeight: '100%'
+    },
+    content: {
+        flexGrow: 1
     }
 }));
 
@@ -27,12 +30,14 @@ export default function Account() {
             className={classes.wrap}
         >
             <Header />
-            <Switch>
-                <Route exact path={`/`} component={ Main } />
-                <Route exact path={`/market`} component={ Baazaar } />
-                <Route exact path={`/404`} component={ NotFound } />
-                <Redirect from='*' to='/404' />
-            </Switch>
+            <Grid item className={classes.content}>
+                <Switch>
+                    <Route exact path={`/`} component={ Main } />
+                    <Route exact path={`/market`} component={ Baazaar } />
+                    <Route exact path={`/404`} component={ NotFound } />
+                    <Redirect from='*' to='/404' />
+                </Switch>
+            </Grid>
             <Footer />
         </Grid>
     );
