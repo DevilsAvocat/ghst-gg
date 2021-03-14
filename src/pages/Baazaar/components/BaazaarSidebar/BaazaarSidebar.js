@@ -83,10 +83,10 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                 <Typography variant={'caption'}>Price</Typography>
             </Grid>
             <Grid item xs={6}>
-                <TextField inputRef={fromRef} label="From" variant="outlined" />
+                <TextField fullWidth inputRef={fromRef} label="From" variant="outlined" />
             </Grid>
             <Grid item xs={6}>
-                <TextField inputRef={toRef} label="To" variant="outlined" />
+                <TextField fullWidth inputRef={toRef} label="To" variant="outlined" />
             </Grid>
             <Grid item xs={12}>
                 <Typography variant={'caption'}>Type</Typography>
