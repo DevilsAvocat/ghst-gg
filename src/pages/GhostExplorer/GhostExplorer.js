@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Link, Typography } from '@material-ui/core';
+import { Box, Button, fade, Link, Typography } from '@material-ui/core';
 import classNames from 'classnames';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -14,11 +14,17 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-around'
     },
     gotchi: {
+        borderRadius: 4,
         width: 150,
         padding: 30,
+        transition: 'background-color .3s ease-in-out',
         '& img': {
             height: 90,
             filter: 'drop-shadow( 0px 0px 7px rgba(255,255,209,.5))'
+        },
+        '&:hover': {
+            textDecoration: 'none',
+            backgroundColor: fade(theme.palette.primary.main, .1)
         }
     },
     gotchiName: {
@@ -29,26 +35,17 @@ const useStyles = makeStyles((theme) => ({
         textOverflow: 'ellipsis',
         paddingBottom: 15
     },
-    gotchiSale: {
-        '& img': {
-            filter: 'drop-shadow( 0px 0px 15px rgba(255,0,0,.7))'
-        }
-    },
     goBack: {
+        borderTopLeftRadius: 0,
+        borderBottomLeftRadius: 0,
         position: "fixed",
         bottom: 20,
-        left: 0,
-        width: 120,
-        height: 80,
-        padding: '15px 0px 15px 5px',
-        background: theme.palette.primary.main,
-        borderWidth: '2px 2px 2px 0',
-        borderRadius: '0px 25px 25px 0',
-        borderStyle: 'solid',
-        borderLeft: 0
+        left: 0
     },
     goBackButtonText: {
-        textTransform: 'uppercase'
+        textTransform: 'uppercase',
+        marginLeft: 8,
+        fontWeight: 500
     }
 }));
 
@@ -141,9 +138,11 @@ export default function GhostExplorer() {
                     const img = getSVG(ghst);
 
                     if (img) {
-                        return <Box
+                        return <Link
                             key={index}
-                            className={classNames(classes.gotchi, ghst === 2 ? classes.gotchiSale : '')}
+                            className={classNames(classes.gotchi)}
+                            href={`https://aavegotchi.com/gotchi/${ghst}`}
+                            target="_blank"
                         >
                             {/*<Typography*/}
                             {/*    align={'center'}*/}
@@ -155,35 +154,26 @@ export default function GhostExplorer() {
                             <Box h={90}>
                                 <img alt={ghst} src={img} />
                             </Box>
-                            <Link href={`https://aavegotchi.com/gotchi/${ghst}`} target="_blank">
-                                <Typography
-                                    align={'center'}
-                                    variant={'h6'}
-                                >
-                                    {ghst}
-                                </Typography>
-                            </Link>
-                        </Box>
+                            <Typography
+                                align={'center'}
+                                variant={'h6'}
+                            >
+                                {ghst}
+                            </Typography>
+                        </Link>
                     }
                 })
             }
-            <Box className={classes.goBack}>
-                <Grid container alignItems={'center'}>
-                    <Grid item xs={6}>
-                        <IconButton
-                            aria-label="add an alarm"
-                            onClick={() => goBack()}
-                            color={'secondary'}
-                        >
-                            <ArrowBackIcon />
-                        </IconButton>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Typography className={classes.goBackButtonText} color={'secondary'}>Home</Typography>
-                    </Grid>
-                </Grid>
-
-            </Box>
+            <Button
+                variant='contained'
+                color='primary'
+                size='large'
+                className={classes.goBack}
+                onClick={() => goBack()}
+            >
+                <ArrowBackIcon fontSize='inherit' />
+                <Typography className={classes.goBackButtonText}>Home</Typography>
+            </Button>
         </Grid>
     );
 }
