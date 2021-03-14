@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Box, Button, Grid, Link, Toolbar, Typography} from '@material-ui/core';
+import { NavLink } from 'react-router-dom';
 
 import TelegramIcon from '@material-ui/icons/Telegram';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -8,9 +9,6 @@ import logo from '../../assets/images/logo.png';
 import discord from '../../assets/images/discord.svg';
 
 const useStyles = makeStyles((theme) => ({
-    headerWrapper: {
-        // padding: '5px 30px'
-    },
     toolbar: {
         width: '100%',
         flexWrap: 'wrap',
@@ -32,10 +30,15 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'nowrap'
     },
     logoWrapper: {
+        display: 'inline-flex',
+        alignItems: 'center',
         justifyContent: 'center',
+        color: theme.palette.text.primary,
+        textDecoration: 'none',
         marginBottom: 12,
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'flex-start',
+            marginRight: 40,
             marginBottom: 0
         }
     },
@@ -49,13 +52,27 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     navLink: {
-        '&.active': {
-            textDecoration: 'underline'
+        fontSize: 16,
+        color: theme.palette.primary.main,
+        position: 'relative',
+        '&::after': {
+            content: '""',
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+            left: '50%',
+            opacity: .3,
+            transform: 'translateX(-50%)',
+            transition: 'all .3s ease-in-out',
+            width: 0,
+            height: 1,
+            borderRadius: 4,
+            backgroundColor: theme.palette.primary.main
+        },
+        '&:hover::after, &.active::after': {
+            opacity: 1,
+            width: '100%'
         }
-    },
-    navLinkText: {
-        fontSize: 18,
-        color: theme.palette.common.white
     },
     socialLinkList: {
         justifyContent: 'center',
@@ -85,22 +102,22 @@ export default function Header() {
 
     return (
         <Toolbar className={classes.toolbar}>
-            <Grid className={classes.logoWrapper} container alignItems='center'>
+            <NavLink className={classes.logoWrapper} to='/'>
                 <img className={classes.logo} src={logo} alt='logo' />
                 <Typography className={classes.logoText}>
                     <Box component='span'>GHST</Box>
                     <Box component='span' className={classes.highlight}>_</Box>
                     <Box component='span'>GG</Box>
                 </Typography>
-            </Grid>
-            {/* <nav className={classes.navigation}>
-                <NavLink className={classes.navLink} to='/main' href='#'>
-                    <Typography className={classes.navLinkText}>Main</Typography>
+            </NavLink>
+            <nav className={classes.navigation}>
+                <NavLink className={classes.navLink} to='/market'>
+                    Market
                 </NavLink>
-                <NavLink className={classes.navLink} to='/team' href='#'>
-                    <Typography className={classes.navLinkText}>Team</Typography>
+                <NavLink className={classes.navLink} to='/explorer'>
+                    Explorer
                 </NavLink>
-            </nav> */}
+            </nav>
             <Grid className={classes.socialLinkList} container>
                 <Link href='https://discord.gg/NXEEETxSkC' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
