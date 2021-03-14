@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     warning: {
-        margin: '0 10px 15px'
+        marginBottom: '15px'
     }
 }));
 

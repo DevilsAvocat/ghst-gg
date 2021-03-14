@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Web3 from 'web3'
@@ -19,15 +19,36 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     portalsDescr: {
-        fontSize: 24,
-        [theme.breakpoints.up('md')]: {
-            fontSize: 30
-        }
+        fontSize: 24
     },
     portalsImage: {
         cursor: 'pointer',
         width: 150,
         height: 150
+    },
+    explorerLink: {
+        display: 'inline-block',
+        color: theme.palette.primary.main,
+        textDecoration: 'none',
+        position: 'relative',
+        '&::after': {
+            content: '""',
+            position: 'absolute',
+            right: 0,
+            bottom: 0,
+            left: '50%',
+            opacity: .3,
+            transform: 'translateX(-50%)',
+            transition: 'all .3s ease-in-out',
+            width: 0,
+            height: 1,
+            borderRadius: 4,
+            backgroundColor: theme.palette.primary.main
+        },
+        '&:hover::after': {
+            opacity: 1,
+            width: '100%'
+        }
     },
     highlight: {
         color: theme.palette.primary.main
@@ -47,6 +68,15 @@ export default function Portals() {
                 setPortals(portalsNumber);
             });
     });
+    
+    const getOpenedPortals = () => {
+        return 10000 - portals;
+    };
+    
+    const getPortalsPerc = () => {
+        var num = (getOpenedPortals() / 10000 * 100).toFixed(2);
+        return num + '%';
+    };
 
     function onPortalClick() {
         setEegg(!eegg);
@@ -61,12 +91,8 @@ export default function Portals() {
         >
             <Grid className={classes.portalsColumn} item xs={12} md={4}>
                 <Typography align='center' className={classes.portalsDescr}>
-                    <Box component='span' className={classes.highlight}>{ eegg ? portals : 10000 - portals }</Box>
-                    <Box component='span' m={2}>out of</Box>
-                    <Box component='span' className={classes.highlight}>10000</Box>
-                </Typography>
-                <Typography align='center' className={classes.portalsDescr}>
-                    Are {eegg ? 'sealed' : 'opened' }!
+                    <Box component='span' className={classes.highlight}>{ eegg ? portals : getPortalsPerc() }</Box>
+                    <Box component='span'>{ eegg ? '/10000 are sealed!' : ' portals are opened!' }</Box>
                 </Typography>
             </Grid>
             <Grid className={classes.portalsColumn} container item justify='center' xs={12} md={2}>
@@ -77,16 +103,12 @@ export default function Portals() {
                   alt='Portal'
                 />
             </Grid>
-            <Grid container item justify='center' xs={12} md={4}>
-                <Button
-                    variant='contained'
-                    color='primary'
-                    size='large'
-                    className={classes.portalsButton}
-                    onClick={() => history.push('/explorer')}
-                >
-                    Ghosts Explorer
-                </Button>
+            <Grid item justify='center' xs={12} md={4}>
+                <Typography align='center' className={classes.portalsDescr}>
+                    <Box component='span' className={classes.highlight}>4 619</Box>
+                    <Box component='span'> gotchis are sumonned </Box>
+                    <Link className={classes.explorerLink} onClick={() => history.push('/explorer')}>Aavegotchi Explorer</Link>
+                </Typography>
             </Grid>
         </Grid>
     );
