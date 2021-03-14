@@ -36,9 +36,9 @@ export default function BaazaarBody({goods, paginationCount, onPageChange, setPa
     };
 
     return (
-        <Grid className={classes.baazaarBody} container item xs={12} sm={8} md={9} lg={9} spacing={2}>
+        <Grid className={classes.baazaarBody} container item xs={12} sm={8} md={9} lg={9} xl={10} spacing={2}>
             <Grid item xs={12}>
-                <Alert className={classes.warning} variant="outlined" severity="warning">Spooky Market is in beta version. Some items may be out of sync for up to 15 min.</Alert>
+                <Alert className={classes.warning} variant="outlined" severity="warning">Spooky Market is in beta version. Some items may be out of sync for up to 5 min.</Alert>
             </Grid>
             {
                 goods.map((item) => {
