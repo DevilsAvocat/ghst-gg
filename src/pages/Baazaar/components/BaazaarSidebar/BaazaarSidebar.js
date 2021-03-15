@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import Grid from "@material-ui/core/Grid";
-import {Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from "@material-ui/core";
+import Grid from '@material-ui/core/Grid';
+import {Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -67,10 +67,10 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                 <Typography variant={'caption'}>Sort by</Typography>
             </Grid>
             <Grid item xs={12}>
-                <FormControl variant="outlined" className={classes.formControl}>
+                <FormControl variant='outlined' className={classes.formControl}>
                     <InputLabel>Sort by</InputLabel>
                     <Select
-                        label="Sort by"
+                        label='Sort by'
                         value={ordering}
                         onChange={onSortByChange}
                     >
@@ -85,19 +85,19 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                 <Typography variant={'caption'}>Price</Typography>
             </Grid>
             <Grid item xs={6}>
-                <TextField fullWidth inputRef={fromRef} label="From" variant="outlined" />
+                <TextField fullWidth inputRef={fromRef} label='From' variant='outlined' />
             </Grid>
             <Grid item xs={6}>
-                <TextField fullWidth inputRef={toRef} label="To" variant="outlined" />
+                <TextField fullWidth inputRef={toRef} label='To' variant='outlined' />
             </Grid>
             <Grid item xs={12}>
                 <Typography variant={'caption'}>Type</Typography>
             </Grid>
             <Grid item xs={12}>
-                <FormControl variant="outlined" className={classes.formControl}>
+                <FormControl variant='outlined' className={classes.formControl}>
                     <InputLabel>Type</InputLabel>
                     <Select
-                        label="Type"
+                        label='Type'
                         value={type}
                         onChange={onTypeChange}
                     >
@@ -114,10 +114,10 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                 <Typography variant={'caption'}>Rarity</Typography>
             </Grid>
             <Grid item xs={12}>
-                <FormControl variant="outlined" className={classes.formControl}>
+                <FormControl variant='outlined' className={classes.formControl}>
                     <InputLabel>Rarity</InputLabel>
                     <Select
-                        label="Rarity"
+                        label='Rarity'
                         value={rarity}
                         onChange={onRarityChange}
                     >
