@@ -109,6 +109,16 @@ const getItemRarityTitle = (item) => {
     }
 };
 
+const getItemUrl = (url) => {
+    const splittedUrl = url.split('www.');
+
+    if (splittedUrl.length > 1) {
+        return splittedUrl.join('');
+    } else {
+        return url;
+    }
+};
+
 export default function BaazaarItem({item}) {
     const classes = useStyles();
 
@@ -156,7 +166,7 @@ export default function BaazaarItem({item}) {
                         <Grid item xs={6}>
                             <Button
                                 fullWidth
-                                href={item.url}
+                                href={getItemUrl(item.url)}
                                 color={'primary'}
                                 variant={'contained'}
                                 target={'_blank'}
