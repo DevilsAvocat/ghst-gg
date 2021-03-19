@@ -7,6 +7,7 @@ import NotFound from "../../pages/NotFound/NotFound";
 import Header from "../Header/Header";
 import Footer from '../Footer/Footer';
 import Baazaar from "../../pages/Baazaar/Baazaar";
+import Raffle from '../../pages/Raffle/Raffle';
 
 const useStyles = makeStyles(() => ({
     wrap: {
@@ -34,6 +35,7 @@ export default function Account() {
                 <Switch>
                     <Route exact path={`/`} component={ Main } />
                     <Route exact path={`/market`} component={ Baazaar } />
+                    <Route exact path={`/raffle-calculator`} component={ Raffle } />
                     <Route exact path={`/404`} component={ NotFound } />
                     <Redirect from='*' to='/404' />
                 </Switch>

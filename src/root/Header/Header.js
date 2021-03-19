@@ -124,6 +124,9 @@ export default function Header() {
                 <NavLink className={classes.navLink} to='/explorer'>
                     Explorer
                 </NavLink>
+                <NavLink className={classes.navLink} to='/raffle-calculator'>
+                    Raffle Calculator
+                </NavLink>
             </nav>
             <Grid className={classes.socialLinkList} container>
                 <Link href='https://discord.gg/NXEEETxSkC' className={classes.socialLink} target='_blank'>
