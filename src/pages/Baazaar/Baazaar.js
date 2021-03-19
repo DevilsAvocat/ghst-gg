@@ -31,7 +31,6 @@ export default function Baazaar() {
 
 
     const onLoadBaazaarItemsClick = (params) => {
-        console.log(params)
         const validParams = validateParams(params);
 
         if (validParams) {

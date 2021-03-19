@@ -41,8 +41,13 @@ export default function BaazaarBody({goods, paginationCount, onPageChange, setPa
                 <Alert className={classes.warning} variant="outlined" severity="warning">Spooky Market is in beta version. Some items may be out of sync for up to 5 min.</Alert>
             </Grid>
             {
-                goods.map((item) => {
-                    return <BaazaarItem key={item.listing_id} item={item} />
+                // eslint-disable-next-line array-callback-return
+                goods.filter((item) => {
+                    if (item.token && item._type && item.price) {
+                        return item;
+                    }
+                }).map((item) => {
+                     return <BaazaarItem key={item.listing_id} item={item} />
                 })
             }
             <Grid className={classes.pagination} item xs={12}>
