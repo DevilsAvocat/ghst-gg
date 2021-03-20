@@ -170,11 +170,27 @@ export const useStyles = makeStyles((theme) => ({
         }
     },
     count: {
+        position: 'relative',
+        zIndex: 5,
         '&.common': { color: theme.palette.rarity.common },
         '&.uncommon': { color: theme.palette.rarity.uncommon },
         '&.rare': { color: theme.palette.rarity.rare },
         '&.legendary': { color: theme.palette.rarity.legendary },
         '&.mythical': { color: theme.palette.rarity.mythical },
         '&.godlike': { color: theme.palette.rarity.godlike }
+    },
+    ticketBg: {
+        position: 'relative',
+        marginBottom: 4,
+        '& img': {
+            height: '100%',
+            width: '100%',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            opacity: 0.1,
+            pointerEvent: 'none'
+        }
     }
 }));

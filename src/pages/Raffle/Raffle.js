@@ -4,16 +4,23 @@ import classNames from 'classnames';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { useStyles } from './styles';
 
+import commonIcon from '../../assets/tickets/common.svg';
+import uncommonIcon from '../../assets/tickets/uncommon.svg';
+import rareIcon from '../../assets/tickets/rare.svg';
+import legendaryIcon from '../../assets/tickets/legendary.svg';
+import mythicalIcon from '../../assets/tickets/mythical.svg';
+import godlikeIcon from '../../assets/tickets/godlike.svg';
+
 export default function Raffle() {
     const classes = useStyles();
 
     const [tickets, setTickets] = useState([
-        { type: 'common', items: 6000, supply: 51713, chance: 0 },
-        { type: 'uncommon', items: 3250, supply: 14200, chance: 0 },
-        { type: 'rare', items: 1625, supply: 19180, chance: 0 },
-        { type: 'legendary', items: 450, supply: 11153, chance: 0 },
-        { type: 'mythical', items: 175, supply: 6455, chance: 0 },
-        { type: 'godlike', items: 12, supply: 2836, chance: 0 }
+        { type: 'common', icon: commonIcon, items: 6000, supply: 61201, chance: 0 },
+        { type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 16095, chance: 0 },
+        { type: 'rare', icon: rareIcon, items: 1625, supply: 19382, chance: 0 },
+        { type: 'legendary', icon: legendaryIcon, items: 450, supply: 11648, chance: 0 },
+        { type: 'mythical', icon: mythicalIcon, items: 175, supply: 6545, chance: 0 },
+        { type: 'godlike', icon: godlikeIcon, items: 12, supply: 2863, chance: 0 }
     ]);
 
     const onFieldChange = (event, i) => {
@@ -96,7 +103,8 @@ export default function Raffle() {
                 <Grid container item spacing={1} xs={12} md={8}>
                     {
                         tickets.map((ticket, i) => {
-                            return <Grid item xs={4} sm={true} key={i}>
+                            return <Grid item xs={4} sm={true} key={i} className={classes.ticketBg}>
+                                <img src={ticket.icon} alt={'ticket-' + ticket.type} />
                                 <Typography
                                     variant='h6'
                                     align='center'
