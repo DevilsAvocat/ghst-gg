@@ -229,7 +229,7 @@ export default function Raffle() {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
                                 <TextField
-                                    type="number"
+                                    type='number'
                                     variant='outlined'
                                     fullWidth
                                     className={classNames(classes.input, ticket.type)}
@@ -297,7 +297,20 @@ export default function Raffle() {
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={3}>
-                    <Typography variant='h6' className={classes.subtitle}>Chance (items amount)</Typography>
+                    <Tooltip
+                            placement='right'
+                            arrow
+                            title={
+                                <React.Fragment>
+                                    <Typography>Chance is represented by amount of items that you can get</Typography>
+                                </React.Fragment>
+                            }
+                        >
+                            <Typography variant='h6' className={classes.subtitle}>
+                                Items chance
+                                <HelpOutlineIcon fontSize='small' color='error' className={classes.subtitleIcon} />
+                            </Typography>
+                    </Tooltip>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8}>
                     {
