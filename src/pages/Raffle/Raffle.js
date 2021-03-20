@@ -1,6 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Container, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
 import classNames from 'classnames';
+
+// import Web3 from 'web3'
+// import { OpenSeaPort, Network } from 'opensea-js'
+
+// const provider = new Web3.providers.HttpProvider('https://mainnet.infura.io');
+
+// const seaport = new OpenSeaPort(provider, {
+//   networkName: Network.Main
+// });
 
 const useStyles = makeStyles((theme) => ({
     raffle: {
@@ -28,8 +37,14 @@ const useStyles = makeStyles((theme) => ({
             fontSize: 40,
         }
     },
+    subtitle: {
+        textAlign: 'center',
+        [theme.breakpoints.up('md')]: {
+            textAlign: 'right'
+        }
+    },
     row: {
-        marginBottom: 20
+        marginBottom: 32
     },
     input: {
         '& input ': {
@@ -179,14 +194,27 @@ export default function Raffle() {
     const mythicalField = useRef();
     const godlikeField = useRef();
 
-    const tickets = [
-        { type: 'common', items: 6000 },
-        { type: 'uncommon', items: 3250 },
-        { type: 'rare', items: 1625 },
-        { type: 'legendary', items: 450 },
-        { type: 'mythical', items: 175 },
-        { type: 'godlike', items: 12 },
-    ];
+    const [tickets, setTickets] = useState([
+        { type: 'common', items: 6000, minted: 51713 },
+        { type: 'uncommon', items: 3250, minted: 14200 },
+        { type: 'rare', items: 1625, minted: 19180 },
+        { type: 'legendary', items: 450, minted: 11153 },
+        { type: 'mythical', items: 175, minted: 6455 },
+        { type: 'godlike', items: 12, minted: 2836 }
+    ]);
+
+    useEffect(() => {
+        // const fetchData = async () => {
+        //     const data = await seaport.api.getAsset({
+        //         tokenAddress: '0xa02d547512bb90002807499f05495fe9c4c3943f',
+        //         tokenId: 0
+        //     });
+
+        //     console.log(data);
+        // };
+    
+        // fetchData();
+    }, []);
 
     const onFieldChange = (event) => {
         console.log(event.target.value);
@@ -194,17 +222,17 @@ export default function Raffle() {
 
     return (
         <Container maxWidth='lg' className={classes.raffle}>
-            <Grid container alignItems={'center'} spacing={2} className={classes.row}>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12}>
                     <Typography variant='h1' align='center' className={classes.title}>Raffle #4 Calculator</Typography>
                 </Grid>
-                <Grid item xs={12} md={4}>
-                    <Typography variant='h5' align='center'>Your Tickets</Typography>
+                <Grid item xs={12} md={3}>
+                    <Typography variant='h6' className={classes.subtitle}>Your Tickets</Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8}>
                     {
-                        tickets.map((ticket) => {
-                            return <Grid item xs={4} sm={true}>
+                        tickets.map((ticket, i) => {
+                            return <Grid item xs={4} sm={true} key={i}>
                                 <TextField
                                     type="number"
                                     variant='outlined'
@@ -212,26 +240,67 @@ export default function Raffle() {
                                     className={classNames(classes.input, ticket.type)}
                                     inputRef={commonField}
                                     label={ticket.type}
-                                    onChange={onFieldChange} />
+                                    onChange={onFieldChange}
+                                />
                             </Grid>
                         })
                     }
                 </Grid>
             </Grid>
-            <Grid container alignItems={'center'} spacing={2}>
-                <Grid item xs={12} md={4}>
-                    <Typography variant='h5' align='center'>Items in Raffle</Typography>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+                <Grid item xs={12} md={3}>
+                    <Typography variant='h6' className={classes.subtitle}>Items in Raffle</Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8}>
                     {
-                        tickets.map((ticket) => {
-                            return <Grid item xs={4} sm={true}>
+                        tickets.map((ticket, i) => {
+                            return <Grid item xs={4} sm={true} key={i}>
                                 <Typography
                                     variant='h6'
                                     align='center'
                                     className={classNames(classes.count, ticket.type)}
                                 >
                                     {ticket.items}
+                                </Typography>
+                            </Grid>
+                        })
+                    }
+                </Grid>
+            </Grid>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+                <Grid item xs={12} md={3}>
+                    <Typography variant='h6' className={classes.subtitle}>Minted tickets</Typography>
+                </Grid>
+                <Grid container item spacing={1} xs={12} md={8}>
+                    {
+                        tickets.map((ticket, i) => {
+                            return <Grid item xs={4} sm={true} key={i}>
+                                <Typography
+                                    variant='h6'
+                                    align='center'
+                                    className={classNames(classes.count, ticket.type)}
+                                >
+                                    {ticket.minted}
+                                </Typography>
+                            </Grid>
+                        })
+                    }
+                </Grid>
+            </Grid>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+                <Grid item xs={12} md={3}>
+                    <Typography variant='h6' className={classes.subtitle}>Chance</Typography>
+                </Grid>
+                <Grid container item spacing={1} xs={12} md={8}>
+                    {
+                        tickets.map((ticket, i) => {
+                            return <Grid item xs={4} sm={true} key={i}>
+                                <Typography
+                                    variant='h6'
+                                    align='center'
+                                    className={classNames(classes.count, ticket.type)}
+                                >
+                                    0
                                 </Typography>
                             </Grid>
                         })
