@@ -204,7 +204,8 @@ export default function Raffle() {
 
     const onFieldChange = (event, i) => {
         var ticketsRef = [...tickets];
-        var formula = event.target.value / ticketsRef[i].supply * ticketsRef[i].items;
+        var supply = ticketsRef[i].supply * 0.8; // 80% of current supply amount
+        var formula = event.target.value / supply * ticketsRef[i].items;
         var ticket = {
             ...ticketsRef[i],
             chance: formula.toFixed(3)
