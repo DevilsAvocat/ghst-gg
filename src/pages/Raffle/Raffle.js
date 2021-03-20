@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Grid, makeStyles, TextField, Typography } from '@material-ui/core';
+import { Container, Grid, makeStyles, TextField, Tooltip, Typography, Zoom } from '@material-ui/core';
 import classNames from 'classnames';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 // import Web3 from 'web3'
 // import { OpenSeaPort, Network } from 'opensea-js'
@@ -38,10 +39,15 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     subtitle: {
-        textAlign: 'center',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         [theme.breakpoints.up('md')]: {
-            textAlign: 'right'
+            justifyContent: 'flex-end',
         }
+    },
+    subtitleIcon: {
+        marginLeft: 8
     },
     row: {
         marginBottom: 32
@@ -195,12 +201,12 @@ export default function Raffle() {
     const godlikeField = useRef();
 
     const [tickets, setTickets] = useState([
-        { type: 'common', items: 6000, minted: 51713 },
-        { type: 'uncommon', items: 3250, minted: 14200 },
-        { type: 'rare', items: 1625, minted: 19180 },
-        { type: 'legendary', items: 450, minted: 11153 },
-        { type: 'mythical', items: 175, minted: 6455 },
-        { type: 'godlike', items: 12, minted: 2836 }
+        { type: 'common', items: 6000, supply: 51713 },
+        { type: 'uncommon', items: 3250, supply: 14200 },
+        { type: 'rare', items: 1625, supply: 19180 },
+        { type: 'legendary', items: 450, supply: 11153 },
+        { type: 'mythical', items: 175, supply: 6455 },
+        { type: 'godlike', items: 12, supply: 2836 }
     ]);
 
     useEffect(() => {
@@ -269,7 +275,21 @@ export default function Raffle() {
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={3}>
-                    <Typography variant='h6' className={classes.subtitle}>Minted tickets</Typography>
+                    <Tooltip
+                        placement='right-center'
+                        arrow
+                        title={
+                            <React.Fragment>
+                                <Typography>80% of the current total number of tickets in circulation, since not all tickets will be submitted to the ruffle</Typography>
+                            </React.Fragment>
+                        }
+                    >
+                        <Typography variant='h6' className={classes.subtitle}>
+                            Tickets Supply
+                            <HelpOutlineIcon className={classes.subtitleIcon} />
+                        </Typography>
+                        
+                    </Tooltip>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8}>
                     {
@@ -280,7 +300,7 @@ export default function Raffle() {
                                     align='center'
                                     className={classNames(classes.count, ticket.type)}
                                 >
-                                    {ticket.minted}
+                                    {ticket.supply}
                                 </Typography>
                             </Grid>
                         })
