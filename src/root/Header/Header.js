@@ -15,7 +15,10 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         padding: '12px 32px',
         [theme.breakpoints.up('sm')]: {
-            justifyContent: 'flex-start ',
+            justifyContent: 'space-between'
+        },
+        [theme.breakpoints.up('md')]: {
+            justifyContent: 'flex-start',
             flexWrap: 'nowrap'
         }
     },
@@ -37,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.text.primary,
         textDecoration: 'none',
         marginBottom: 12,
+        order: 0,
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'flex-start',
             marginRight: 40,
@@ -47,20 +51,23 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
-        marginBottom: 10,
         width: '100%',
+        margin: '12px 0',
+        order: 2,
         '& > *': {
             margin: '0 15px',
             textDecoration: 'none'
         },
-        [theme.breakpoints.up('sm')]: {
+        [theme.breakpoints.up('md')]: {
             justifyContent: 'flex-start',
-            marginBottom: 0
+            margin: 0,
+            order: 1
         }
     },
     navLink: {
         fontSize: 16,
         color: theme.palette.primary.main,
+        whiteSpace: 'nowrap',
         position: 'relative',
         '&::after': {
             content: '""',
@@ -83,8 +90,15 @@ const useStyles = makeStyles((theme) => ({
     },
     socialLinkList: {
         justifyContent: 'center',
+        order: 1,
+        flexWrap: 'nowrap',
         [theme.breakpoints.up('sm')]: {
-            justifyContent: 'flex-end'
+            justifyContent: 'flex-end',
+            width: '65%'
+        },
+        [theme.breakpoints.up('md')]: {
+            width: 'unset',
+            order: 2
         }
     },
     socialLink: {
@@ -132,19 +146,19 @@ export default function Header() {
                 <Link href='https://discord.gg/NXEEETxSkC' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
                         <img src={ discord } alt='' />
-                        <Box component='span' className={classes.iconButtonText}>62</Box>
+                        <Box component='span' className={classes.iconButtonText}>88</Box>
                     </Button>
                 </Link>
                 <Link href='https://t.me/joinchat/hTAWLbZgrKI4YWJk' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
                         <TelegramIcon />
-                        <Box component='span' className={classes.iconButtonText}>19</Box>
+                        <Box component='span' className={classes.iconButtonText}>21</Box>
                     </Button>
                 </Link>
                 <Link href='https://twitter.com/ghst_gg' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
                         <TwitterIcon />
-                        <Box component='span' className={classes.iconButtonText}>63</Box>
+                        <Box component='span' className={classes.iconButtonText}>72</Box>
                     </Button>
                 </Link>
             </Grid>
