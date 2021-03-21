@@ -11,26 +11,34 @@ import rareIcon from '../../assets/tickets/rare.svg';
 import legendaryIcon from '../../assets/tickets/legendary.svg';
 import mythicalIcon from '../../assets/tickets/mythical.svg';
 import godlikeIcon from '../../assets/tickets/godlike.svg';
+import ghst from '../../assets/images/ghst-doubleside.gif';
 
 export default function Raffle() {
     const classes = useStyles();
 
     const [tickets, setTickets] = useState([
-        { type: 'common', icon: commonIcon, items: 6000, supply: 61201, chance: 0 },
-        { type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 16095, chance: 0 },
-        { type: 'rare', icon: rareIcon, items: 1625, supply: 19382, chance: 0 },
-        { type: 'legendary', icon: legendaryIcon, items: 450, supply: 11648, chance: 0 },
-        { type: 'mythical', icon: mythicalIcon, items: 175, supply: 6545, chance: 0 },
-        { type: 'godlike', icon: godlikeIcon, items: 12, supply: 2863, chance: 0 }
+        { type: 'common', icon: commonIcon, items: 6000, supply: 61201, price: 0.23, cost: 0.23, chance: 0 },
+        { type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 16095, price: 0.91, cost: 0.91, chance: 0 },
+        { type: 'rare', icon: rareIcon, items: 1625, supply: 19382, price: 1.52, cost: 1.52, chance: 0 },
+        { type: 'legendary', icon: legendaryIcon, items: 450, supply: 11648, price: 8.17, cost: 8.17, chance: 0 },
+        { type: 'mythical', icon: mythicalIcon, items: 175, supply: 6545, price: 32.43, cost: 32.43, chance: 0 },
+        { type: 'godlike', icon: godlikeIcon, items: 12, supply: 2863, price: 125.27, cost: 125.27, chance: 0 }
     ]);
 
     const onFieldChange = (event, i) => {
         var ticketsRef = [...tickets];
-        var supply = ticketsRef[i].supply * 0.8; // 80% of current supply amount
-        var formula = event.target.value / supply * ticketsRef[i].items;
+        var chance = event.target.value / ticketsRef[i].supply * ticketsRef[i].items;
+        var percentage = (chance * 100).toFixed(1);
+        var price = ticketsRef[i].price;
+        var cost = event.target.value * price;
+
+        console.log(price)
+        console.log(cost)
+
         var ticket = {
             ...ticketsRef[i],
-            chance: formula.toFixed(3)
+            chance: chance > 1 ? chance.toFixed(2) : chance > 0 ? `${percentage}% for 1` : 0,
+            cost: cost > price ? cost.toFixed(2) : price
         };
 
         ticketsRef[i] = ticket;
@@ -38,7 +46,7 @@ export default function Raffle() {
     };
 
     return (
-        <Container maxWidth='lg' className={classes.raffle}>
+        <Container maxWidth='xl' className={classes.raffle}>
             <Helmet>
                 <title>Raffle #4 Calculator</title>
             </Helmet>
@@ -93,7 +101,7 @@ export default function Raffle() {
                         arrow
                         title={
                             <React.Fragment>
-                                <Typography>80% of the current total number of tickets in circulation, since not all tickets will be submitted to the ruffle</Typography>
+                                <Typography>There is still a time before the ruffle meaning more tickets will be minted</Typography>
                             </React.Fragment>
                         }
                     >
@@ -148,6 +156,40 @@ export default function Raffle() {
                                     className={classNames(classes.count, ticket.type)}
                                 >
                                     {ticket.chance}
+                                </Typography>
+                            </Grid>
+                        })
+                    }
+                </Grid>
+            </Grid>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+                <Grid item xs={12} md={3}>
+                    <Tooltip
+                            placement='right'
+                            arrow
+                            title={
+                                <React.Fragment>
+                                    <Typography>Avarenge ticket selling price from Baazar listings</Typography>
+                                </React.Fragment>
+                            }
+                        >
+                            <Typography variant='h6' className={classes.subtitle}>
+                                Marketplace price
+                                <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
+                            </Typography>
+                    </Tooltip>
+                </Grid>
+                <Grid container item spacing={1} xs={12} md={8}>
+                    {
+                        tickets.map((ticket, i) => {
+                            return <Grid item xs={4} sm={true} key={i}>
+                                <Typography
+                                    variant='h6'
+                                    align='center'
+                                    className={classNames(classes.count, classes.price, ticket.type)}
+                                >
+                                    {ticket.cost}
+                                    <img src={ghst} width='26' alt='GHST Token Icon' />
                                 </Typography>
                             </Grid>
                         })

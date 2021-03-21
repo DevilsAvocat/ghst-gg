@@ -192,5 +192,10 @@ export const useStyles = makeStyles((theme) => ({
             opacity: 0.1,
             pointerEvent: 'none'
         }
+    },
+    price: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 }));
