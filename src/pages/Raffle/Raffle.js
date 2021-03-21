@@ -32,9 +32,6 @@ export default function Raffle() {
         var price = ticketsRef[i].price;
         var cost = event.target.value * price;
 
-        console.log(price)
-        console.log(cost)
-
         var ticket = {
             ...ticketsRef[i],
             chance: chance > 1 ? chance.toFixed(2) : chance > 0 ? `${percentage}% for 1` : 0,
@@ -183,7 +180,7 @@ export default function Raffle() {
                 <Grid container item spacing={1} xs={12} md={8}>
                     {
                         tickets.map((ticket, i) => {
-                            return <Grid item xs={4} sm={true} key={i} className={classNames(classes.chance, ticket.type, ticket.chance != 0 ? 'highlighted' : '')}>
+                            return <Grid item xs={4} sm={true} key={i} className={classNames(classes.chance, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>
                                 <Typography
                                     variant='h6'
                                     align='center'

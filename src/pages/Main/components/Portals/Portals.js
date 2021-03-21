@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Box, Grid, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Web3 from 'web3'
@@ -59,7 +59,6 @@ export default function Portals() {
     const classes = useStyles();
     const [portals, setPortals] = useState(0);
     const [eegg, setEegg] = useState(false);
-    const history = useHistory();
 
     useEffect(() => {
         contract.methods.balanceOf(Constants.WALLET_ADDRESS).call()
@@ -85,9 +84,8 @@ export default function Portals() {
     return (
         <Grid
             container
-            direction={'row'}
-            alignItems={'center'}
-            justify={'center'}
+            alignItems='center'
+            justify='center'
         >
             <Grid className={classes.portalsColumn} item xs={12} md={4}>
                 <Typography align='center' className={classes.portalsDescr}>
@@ -103,11 +101,11 @@ export default function Portals() {
                   alt='Portal'
                 />
             </Grid>
-            <Grid item justify='center' xs={12} md={4}>
+            <Grid item xs={12} md={4}>
                 <Typography align='center' className={classes.portalsDescr}>
                     <Box component='span' className={classes.highlight}>4 619</Box>
                     <Box component='span'> gotchis are sumonned </Box>
-                    <Link className={classes.explorerLink} onClick={() => history.push('/explorer')}>Aavegotchi Explorer</Link>
+                    <Link className={classes.explorerLink} to='/explorer'>Aavegotchi Explorer</Link>
                 </Typography>
             </Grid>
         </Grid>
