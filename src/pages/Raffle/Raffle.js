@@ -3,6 +3,7 @@ import { Container, Grid, TextField, Tooltip, Typography } from '@material-ui/co
 import classNames from 'classnames';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { useStyles } from './styles';
+import { Helmet } from "react-helmet";
 
 import commonIcon from '../../assets/tickets/common.svg';
 import uncommonIcon from '../../assets/tickets/uncommon.svg';
@@ -38,6 +39,9 @@ export default function Raffle() {
 
     return (
         <Container maxWidth='lg' className={classes.raffle}>
+            <Helmet>
+                <title>Raffle #4 Calculator</title>
+            </Helmet>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12}>
                     <Typography variant='h1' align='center' className={classes.title}>Raffle #4 Calculator</Typography>

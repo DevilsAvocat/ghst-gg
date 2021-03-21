@@ -12,3 +12,7 @@ html, body {
   padding: 0;
   height: 100%;
 }
+
+::selection {
+  background: rgba(253, 154, 249, .1);
+}

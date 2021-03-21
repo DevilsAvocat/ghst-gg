@@ -8,6 +8,7 @@ import Header from "../Header/Header";
 import Footer from '../Footer/Footer';
 import Baazaar from "../../pages/Baazaar/Baazaar";
 import Raffle from '../../pages/Raffle/Raffle';
+import { Helmet } from 'react-helmet';
 
 const useStyles = makeStyles(() => ({
     wrap: {
@@ -30,6 +31,9 @@ export default function Account() {
             container
             className={classes.wrap}
         >
+            <Helmet>
+                <title>GHST_gg</title>
+            </Helmet>
             <Header />
             <Grid item className={classes.content}>
                 <Switch>
