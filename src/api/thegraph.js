@@ -9,7 +9,7 @@ var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-cor
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    async getItems(query) {
+    async getData(query) {
         return await client
             .query({
                 query: gql`${query}`
