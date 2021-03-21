@@ -38,7 +38,7 @@ export default function Raffle() {
         var ticket = {
             ...ticketsRef[i],
             chance: chance > 1 ? chance.toFixed(2) : chance > 0 ? `${percentage}% for 1` : 0,
-            cost: cost > price ? cost.toFixed(2) : price
+            cost: cost > price ? cost.toFixed(0) : price
         };
 
         ticketsRef[i] = ticket;
@@ -136,40 +136,7 @@ export default function Raffle() {
                         arrow
                         title={
                             <React.Fragment>
-                                <Typography>How many items you will get on average</Typography>
-                            </React.Fragment>
-                        }
-                    >
-                        <Typography variant='h6' className={classes.subtitle}>
-                            Your items
-                            <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
-                        </Typography>
-                    </Tooltip>
-                </Grid>
-                <Grid container item spacing={1} xs={12} md={8}>
-                    {
-                        tickets.map((ticket, i) => {
-                            return <Grid item xs={4} sm={true} key={i}>
-                                <Typography
-                                    variant='h6'
-                                    align='center'
-                                    className={classNames(classes.count, ticket.type)}
-                                >
-                                    {ticket.chance}
-                                </Typography>
-                            </Grid>
-                        })
-                    }
-                </Grid>
-            </Grid>
-            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
-                    <Tooltip
-                        placement='right'
-                        arrow
-                        title={
-                            <React.Fragment>
-                                <Typography>Сheapest tickets on the market</Typography>
+                                <Typography>Average ticket price on Baazaar</Typography>
                             </React.Fragment>
                         }
                     >
@@ -190,6 +157,39 @@ export default function Raffle() {
                                 >
                                     {ticket.cost}
                                     <img src={ghst} width='26' alt='GHST Token Icon' />
+                                </Typography>
+                            </Grid>
+                        })
+                    }
+                </Grid>
+            </Grid>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+                <Grid item xs={12} md={3}>
+                    <Tooltip
+                        placement='right'
+                        arrow
+                        title={
+                            <React.Fragment>
+                                <Typography>How many items you will get on average</Typography>
+                            </React.Fragment>
+                        }
+                    >
+                        <Typography variant='h6' className={classes.subtitle}>
+                            Your items
+                            <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
+                        </Typography>
+                    </Tooltip>
+                </Grid>
+                <Grid container item spacing={1} xs={12} md={8}>
+                    {
+                        tickets.map((ticket, i) => {
+                            return <Grid item xs={4} sm={true} key={i} className={classNames(classes.chance, ticket.type, ticket.chance != 0 ? 'highlighted' : '')}>
+                                <Typography
+                                    variant='h6'
+                                    align='center'
+                                    className={classNames(classes.count, ticket.type)}
+                                >
+                                    {ticket.chance}
                                 </Typography>
                             </Grid>
                         })

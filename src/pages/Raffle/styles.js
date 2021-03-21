@@ -1,5 +1,5 @@
 
-import { makeStyles } from '@material-ui/core/styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles((theme) => ({
     raffle: {
@@ -197,5 +197,13 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    chance: {
+        '&.common.highlighted': { backgroundColor: fade(theme.palette.rarity.common, .05) },
+        '&.uncommon.highlighted': { backgroundColor: fade(theme.palette.rarity.uncommon, .05) },
+        '&.rare.highlighted': { backgroundColor: fade(theme.palette.rarity.rare, .05) },
+        '&.legendary.highlighted': { backgroundColor: fade(theme.palette.rarity.legendary, .05) },
+        '&.mythical.highlighted': { backgroundColor: fade(theme.palette.rarity.mythical, .05) },
+        '&.godlike.highlighted': { backgroundColor: fade(theme.palette.rarity.godlike, .05) }
     }
 }));
