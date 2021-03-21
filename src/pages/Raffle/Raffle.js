@@ -17,12 +17,12 @@ export default function Raffle() {
     const classes = useStyles();
 
     const [tickets, setTickets] = useState([
-        { type: 'common', icon: commonIcon, items: 6000, supply: 61201, price: 0.23, cost: 0.23, chance: 0 },
-        { type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 16095, price: 0.91, cost: 0.91, chance: 0 },
-        { type: 'rare', icon: rareIcon, items: 1625, supply: 19382, price: 1.52, cost: 1.52, chance: 0 },
-        { type: 'legendary', icon: legendaryIcon, items: 450, supply: 11648, price: 8.17, cost: 8.17, chance: 0 },
-        { type: 'mythical', icon: mythicalIcon, items: 175, supply: 6545, price: 32.43, cost: 32.43, chance: 0 },
-        { type: 'godlike', icon: godlikeIcon, items: 12, supply: 2863, price: 125.27, cost: 125.27, chance: 0 }
+        { type: 'common', icon: commonIcon, items: 6000, supply: 75320, price: 0.23, cost: 0.23, chance: 0 },
+        { type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 19513, price: 0.91, cost: 0.91, chance: 0 },
+        { type: 'rare', icon: rareIcon, items: 1625, supply: 20264, price: 1.51, cost: 1.51, chance: 0 },
+        { type: 'legendary', icon: legendaryIcon, items: 450, supply: 12320, price: 7.18, cost: 7.18, chance: 0 },
+        { type: 'mythical', icon: mythicalIcon, items: 175, supply: 7603, price: 29.16, cost: 29.16, chance: 0 },
+        { type: 'godlike', icon: godlikeIcon, items: 12, supply: 2969, price: 115.24, cost: 115.24, chance: 0 }
     ]);
 
     const onFieldChange = (event, i) => {
@@ -132,18 +132,18 @@ export default function Raffle() {
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={3}>
                     <Tooltip
-                            placement='right'
-                            arrow
-                            title={
-                                <React.Fragment>
-                                    <Typography>How many items you will get on average</Typography>
-                                </React.Fragment>
-                            }
-                        >
-                            <Typography variant='h6' className={classes.subtitle}>
-                                Your items
-                                <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
-                            </Typography>
+                        placement='right'
+                        arrow
+                        title={
+                            <React.Fragment>
+                                <Typography>How many items you will get on average</Typography>
+                            </React.Fragment>
+                        }
+                    >
+                        <Typography variant='h6' className={classes.subtitle}>
+                            Your items
+                            <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
+                        </Typography>
                     </Tooltip>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8}>
@@ -165,18 +165,18 @@ export default function Raffle() {
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={3}>
                     <Tooltip
-                            placement='right'
-                            arrow
-                            title={
-                                <React.Fragment>
-                                    <Typography>Avarenge ticket selling price from Baazar listings</Typography>
-                                </React.Fragment>
-                            }
-                        >
-                            <Typography variant='h6' className={classes.subtitle}>
-                                Marketplace price
-                                <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
-                            </Typography>
+                        placement='right'
+                        arrow
+                        title={
+                            <React.Fragment>
+                                <Typography>Сheapest tickets on the market</Typography>
+                            </React.Fragment>
+                        }
+                    >
+                        <Typography variant='h6' className={classes.subtitle}>
+                            Baazaar price
+                            <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
+                        </Typography>
                     </Tooltip>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8}>
