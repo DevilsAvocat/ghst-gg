@@ -98,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
         order: 1,
         flexWrap: 'nowrap',
         fontSize: '1rem',
+        position: 'relative',
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'flex-end',
             width: '65%'
@@ -112,6 +113,19 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             textDecoration: 'none'
         }
+    },
+    socialLinkJoin: {
+        position: 'absolute',
+        display: 'none',
+        bottom: -11,
+        right: 5,
+        '& > span': {
+            fontSize: '0.55rem',
+            letterSpacing: '1px'
+        },
+        [theme.breakpoints.up('sm')]: {
+            display: 'block'
+        },
     },
     iconButton: {
         color: '#fd9af9',
@@ -168,6 +182,9 @@ export default function Header() {
                         <Box component='span' className={classes.iconButtonText}>109</Box>
                     </Button>
                 </Link>
+                <Box className={classes.socialLinkJoin}>
+                    <Typography variant={'caption'}>Join our community!</Typography>
+                </Box>
             </Grid>
         </Toolbar>
     )
