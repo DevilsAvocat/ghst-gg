@@ -114,6 +114,7 @@ export default function Raffle() {
                     <Tooltip
                         placement='right'
                         arrow
+                        enterTouchDelay={false}
                         title={
                             <React.Fragment>
                                 <Typography>There is still a time before the ruffle meaning more tickets will be minted</Typography>
@@ -149,6 +150,7 @@ export default function Raffle() {
                     <Tooltip
                         placement='right'
                         arrow
+                        enterTouchDelay={false}
                         title={
                             <React.Fragment>
                                 <Typography>Average ticket price on Baazaar</Typography>
@@ -183,6 +185,7 @@ export default function Raffle() {
                     <Tooltip
                         placement='right'
                         arrow
+                        enterTouchDelay={false}
                         title={
                             <React.Fragment>
                                 <Typography>How many items you will get on average</Typography>
