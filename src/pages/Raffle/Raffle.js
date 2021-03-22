@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Container, Grid, TextField, Tooltip, Typography } from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
+import {Backdrop, CircularProgress, Container, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
 import classNames from 'classnames';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { useStyles } from './styles';
@@ -15,15 +15,33 @@ import ghst from '../../assets/images/ghst-doubleside.gif';
 
 export default function Raffle() {
     const classes = useStyles();
+    const [backdropIsOpen, showBackdrop] = useState(false);
 
     const [tickets, setTickets] = useState([
-        { type: 'common', icon: commonIcon, items: 6000, supply: 75320, price: 0.23, cost: 0.23, chance: 0 },
-        { type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 19513, price: 0.91, cost: 0.91, chance: 0 },
-        { type: 'rare', icon: rareIcon, items: 1625, supply: 20264, price: 1.51, cost: 1.51, chance: 0 },
-        { type: 'legendary', icon: legendaryIcon, items: 450, supply: 12320, price: 7.18, cost: 7.18, chance: 0 },
-        { type: 'mythical', icon: mythicalIcon, items: 175, supply: 7603, price: 29.16, cost: 29.16, chance: 0 },
-        { type: 'godlike', icon: godlikeIcon, items: 12, supply: 2969, price: 115.24, cost: 115.24, chance: 0 }
+        { type: 'common', icon: commonIcon, items: 6000, supply: 0, price: 0.23, cost: 0.23, chance: 0 },
+        { type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 0, price: 0.91, cost: 0.91, chance: 0 },
+        { type: 'rare', icon: rareIcon, items: 1625, supply: 0, price: 1.51, cost: 1.51, chance: 0 },
+        { type: 'legendary', icon: legendaryIcon, items: 450, supply: 0, price: 7.18, cost: 7.18, chance: 0 },
+        { type: 'mythical', icon: mythicalIcon, items: 175, supply: 0, price: 29.16, cost: 29.16, chance: 0 },
+        { type: 'godlike', icon: godlikeIcon, items: 12, supply: 0, price: 115.24, cost: 115.24, chance: 0 }
     ]);
+
+    useEffect(() => {
+        showBackdrop(true);
+        fetch('https://api.ghst.gg/baazaar/tickets')
+            .then(response => response.json())
+            .then((data) => {
+                let ticketsActualSupply = Object.values(data);
+                let ticketsRef = [...tickets];
+
+                ticketsActualSupply.forEach((supply, i) => {
+                    ticketsRef[i].supply = supply;
+                });
+
+                setTickets(ticketsRef);
+                showBackdrop(false);
+            });
+    },[]);
 
     const onFieldChange = (event, i) => {
         var ticketsRef = [...tickets];
@@ -193,6 +211,9 @@ export default function Raffle() {
                     }
                 </Grid>
             </Grid>
+            <Backdrop className={classes.backdrop} open={backdropIsOpen}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </Container>
     );
 }
