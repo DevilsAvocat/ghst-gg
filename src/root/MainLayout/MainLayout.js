@@ -14,7 +14,6 @@ const useStyles = makeStyles(() => ({
     wrap: {
         backgroundPosition: '0px -30vh',
         backgroundRepeat: 'no-repeat',
-        backgroundImage: 'radial-gradient(50% 50% at 50% 50%, rgba(253, 154, 249, 0.1) 0%, rgba(33, 36, 41, 0) 100%)',
         flexDirection: 'column',
         minHeight: '100%'
     },

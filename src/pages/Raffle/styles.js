@@ -8,18 +8,6 @@ export const useStyles = makeStyles((theme) => ({
     },
     raffle: {
         padding: '50px 16px',
-        position: 'relative',
-        '&::after': {
-            content: '""',
-            position: 'absolute',
-            display: 'block',
-            bottom: '100%',
-            right: 0,
-            left: 0,
-            height: 1,
-            background: 'linear-gradient(to right, transparent 0%, rgba(253, 154, 249, .25) 50%, transparent 100%)',
-            zIndex: 9
-        },
         [theme.breakpoints.up('sm')]: {
             padding: '50px 24px',
         }
@@ -46,6 +34,7 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: 32
     },
     input: {
+        overflow: 'hidden',
         '& input ': {
             fontWeight: 500
         },

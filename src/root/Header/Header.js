@@ -13,25 +13,29 @@ const useStyles = makeStyles((theme) => ({
         width: '100%',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        padding: '12px 32px',
+        padding: '11px 32px',
+        background: theme.palette.background.default,
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'space-between'
         },
         [theme.breakpoints.up('md')]: {
             justifyContent: 'flex-start',
             flexWrap: 'nowrap'
-        }
+        },
+        boxShadow: '0px 4px 16px rgba(29, 32, 37, 0.67)'
     },
     highlight: {
         color: theme.palette.primary.main
     },
     logo: {
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         marginRight: 15
     },
     logoText: {
-        whiteSpace: 'nowrap'
+        whiteSpace: 'nowrap',
+        fontSize: '1.125rem',
+        letterSpacing: '0.04em'
     },
     logoWrapper: {
         display: 'inline-flex',
@@ -49,56 +53,59 @@ const useStyles = makeStyles((theme) => ({
     },
     navigation: {
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: 'column',
         justifyContent: 'center',
         width: '100%',
+        height: 28,
+        lineHeight: 'unset',
         margin: '12px 0',
         order: 2,
+        padding: '25px 0',
+        textAlign: 'center',
         '& > *': {
             margin: '0 15px',
-            textDecoration: 'none'
+            textDecoration: 'none',
+            textTransform: 'uppercase'
+        },
+        [theme.breakpoints.up('sm')]: {
+            flexDirection: 'row',
+            lineHeight: '28px',
+            padding: 0,
+            textAlign: 'left'
         },
         [theme.breakpoints.up('md')]: {
-            justifyContent: 'flex-start',
+            justifyContent: 'flex-end',
             margin: 0,
-            order: 1
+            order: 1,
+            borderRight: '1px solid #3C404A',
+            paddingRight: 25,
         }
     },
     navLink: {
         fontSize: 16,
-        color: theme.palette.primary.main,
+        color: theme.palette.common.white,
+        fontWeight: 500,
+        letterSpacing: '0.04em',
         whiteSpace: 'nowrap',
         position: 'relative',
-        '&::after': {
-            content: '""',
-            position: 'absolute',
-            right: 0,
-            bottom: 0,
-            left: '50%',
-            opacity: .3,
-            transform: 'translateX(-50%)',
-            transition: 'all .3s ease-in-out',
-            width: 0,
-            height: 1,
-            borderRadius: 4,
-            backgroundColor: theme.palette.primary.main
-        },
-        '&:hover::after, &.active::after': {
-            opacity: 1,
-            width: '100%'
+        transition: '.3s',
+        '&.active, &:hover': {
+            color: theme.palette.primary.main
         }
     },
     socialLinkList: {
         justifyContent: 'center',
         order: 1,
         flexWrap: 'nowrap',
+        fontSize: '1rem',
         [theme.breakpoints.up('sm')]: {
             justifyContent: 'flex-end',
             width: '65%'
         },
         [theme.breakpoints.up('md')]: {
             width: 'unset',
-            order: 2
+            order: 2,
+            paddingLeft: 35
         }
     },
     socialLink: {

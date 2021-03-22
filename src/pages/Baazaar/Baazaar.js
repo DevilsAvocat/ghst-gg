@@ -11,9 +11,6 @@ var paginationConfigs = {
 };
 
 const useStyles = makeStyles((theme) => ({
-    baazaar: {
-        borderTop: '1px solid rgba(253, 154, 249, .25)'
-    },
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff'
@@ -100,7 +97,7 @@ export default function Baazaar() {
     }, [getBaazaarItems]);
 
     return (
-        <Grid container item className={classes.baazaar}>
+        <Grid container item>
             <BaazaarSidebar loadBaazaarGoods={onLoadBaazaarItemsClick} />
             <BaazaarBody goods={goods} paginationCount={paginationCount} page={page} setPage={setPage} onPageChange={onPageChange} />
             <Backdrop className={classes.backdrop} open={backdropIsOpen}>
