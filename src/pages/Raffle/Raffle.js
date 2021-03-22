@@ -1,30 +1,18 @@
 import React, {useEffect, useState} from 'react';
-import {Backdrop, CircularProgress, Container, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
+import {Backdrop, Box, CircularProgress, Container, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
 import classNames from 'classnames';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import { useStyles } from './styles';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 
-import commonIcon from '../../assets/tickets/common.svg';
-import uncommonIcon from '../../assets/tickets/uncommon.svg';
-import rareIcon from '../../assets/tickets/rare.svg';
-import legendaryIcon from '../../assets/tickets/legendary.svg';
-import mythicalIcon from '../../assets/tickets/mythical.svg';
-import godlikeIcon from '../../assets/tickets/godlike.svg';
+import {ticketsData} from './ticketsData';
 import ghst from '../../assets/images/ghst-doubleside.gif';
+
 
 export default function Raffle() {
     const classes = useStyles();
     const [backdropIsOpen, showBackdrop] = useState(false);
-
-    const [tickets, setTickets] = useState([
-        { type: 'common', icon: commonIcon, items: 6000, supply: 0, price: 0.23, cost: 0.23, chance: 0 },
-        { type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 0, price: 0.91, cost: 0.91, chance: 0 },
-        { type: 'rare', icon: rareIcon, items: 1625, supply: 0, price: 1.51, cost: 1.51, chance: 0 },
-        { type: 'legendary', icon: legendaryIcon, items: 450, supply: 0, price: 7.18, cost: 7.18, chance: 0 },
-        { type: 'mythical', icon: mythicalIcon, items: 175, supply: 0, price: 29.16, cost: 29.16, chance: 0 },
-        { type: 'godlike', icon: godlikeIcon, items: 12, supply: 0, price: 115.24, cost: 115.24, chance: 0 }
-    ]);
+    const [tickets, setTickets] = useState(ticketsData);
 
     useEffect(() => {
         showBackdrop(true);
@@ -50,6 +38,8 @@ export default function Raffle() {
         var price = ticketsRef[i].price;
         var cost = event.target.value * price;
 
+        console.log(ticketsRef[i].wearables)
+
         var ticket = {
             ...ticketsRef[i],
             chance: chance > 1 ? chance.toFixed(2) : chance > 0 ? `${percentage}% for 1` : 0,
@@ -58,6 +48,10 @@ export default function Raffle() {
 
         ticketsRef[i] = ticket;
         setTickets(ticketsRef);
+    };
+
+    const countWearablesChance = (wearables) => {
+        console.log(wearables);
     };
 
     return (
@@ -100,7 +94,7 @@ export default function Raffle() {
                                 <Typography
                                     variant='h6'
                                     align='center'
-                                    className={classNames(classes.count, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type)}
                                 >
                                     {ticket.items}
                                 </Typography>
@@ -136,7 +130,7 @@ export default function Raffle() {
                                 <Typography
                                     variant='h6'
                                     align='center'
-                                    className={classNames(classes.count, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type)}
                                 >
                                     {ticket.supply}
                                 </Typography>
@@ -170,7 +164,7 @@ export default function Raffle() {
                                 <Typography
                                     variant='h6'
                                     align='center'
-                                    className={classNames(classes.count, classes.price, ticket.type)}
+                                    className={classNames(classes.textHighlight, classes.price, ticket.type)}
                                 >
                                     {ticket.cost}
                                     <img src={ghst} width='26' alt='GHST Token Icon' />
@@ -205,7 +199,7 @@ export default function Raffle() {
                                 <Typography
                                     variant='h6'
                                     align='center'
-                                    className={classNames(classes.count, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type)}
                                 >
                                     {ticket.chance}
                                 </Typography>
@@ -214,6 +208,32 @@ export default function Raffle() {
                     }
                 </Grid>
             </Grid>
+            {
+                tickets.map((ticket, i) => {
+                    if(ticket.chance !== 0) return <Grid container className={classes.row} key={i}>
+                        <Grid item xs={12}>
+                            <Typography className={classNames(classes.textHighlight, ticket.type)}>
+                                {ticket.type} items chance
+                            </Typography>
+                        </Grid>
+                        <Grid item container spacing={2} xs={12}>
+                            {
+                                ticket.wearables.map((wearable) => {
+                                    return <Grid item xs={4} sm={3} md={2}>
+                                        <Box className={classNames(classes.wearable, ticket.type)}>
+                                            <Typography>{wearable.name}</Typography>
+                                            <Typography>Available: {wearable.amount}</Typography>
+                                            <Typography className={classNames(classes.textHighlight, ticket.type)}>10%</Typography>
+                                        </Box>
+                                    </Grid>
+                                })
+                            }
+                        </Grid>
+                    </Grid>
+
+                    return null;
+                })
+            }
             <Backdrop className={classes.backdrop} open={backdropIsOpen}>
                 <CircularProgress color="inherit" />
             </Backdrop>

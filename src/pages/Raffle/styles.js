@@ -162,16 +162,6 @@ export const useStyles = makeStyles((theme) => ({
             }
         }
     },
-    count: {
-        position: 'relative',
-        zIndex: 5,
-        '&.common': { color: theme.palette.rarity.common },
-        '&.uncommon': { color: theme.palette.rarity.uncommon },
-        '&.rare': { color: theme.palette.rarity.rare },
-        '&.legendary': { color: theme.palette.rarity.legendary },
-        '&.mythical': { color: theme.palette.rarity.mythical },
-        '&.godlike': { color: theme.palette.rarity.godlike }
-    },
     ticketBg: {
         position: 'relative',
         marginBottom: 4,
@@ -198,5 +188,29 @@ export const useStyles = makeStyles((theme) => ({
         '&.legendary.highlighted': { backgroundColor: fade(theme.palette.rarity.legendary, .05) },
         '&.mythical.highlighted': { backgroundColor: fade(theme.palette.rarity.mythical, .05) },
         '&.godlike.highlighted': { backgroundColor: fade(theme.palette.rarity.godlike, .05) }
+    },
+    textHighlight: {
+        position: 'relative',
+        zIndex: 5,
+        '&.common': { color: theme.palette.rarity.common },
+        '&.uncommon': { color: theme.palette.rarity.uncommon },
+        '&.rare': { color: theme.palette.rarity.rare },
+        '&.legendary': { color: theme.palette.rarity.legendary },
+        '&.mythical': { color: theme.palette.rarity.mythical },
+        '&.godlike': { color: theme.palette.rarity.godlike }
+    },
+    wearable: {
+        borderRadius: theme.shape.borderRadius,
+        borderWidth: 1,
+        borderStyle: 'solid',
+        height: '100%',
+        padding: 12,
+        textAlign: 'center',
+        '&.common': { borderColor: theme.palette.rarity.common },
+        '&.uncommon': { borderColor: theme.palette.rarity.uncommon },
+        '&.rare': { borderColor: theme.palette.rarity.rare },
+        '&.legendary': { borderColor: theme.palette.rarity.legendary },
+        '&.mythical': { borderColor: theme.palette.rarity.mythical },
+        '&.godlike': { borderColor: theme.palette.rarity.godlike }
     }
 }));
