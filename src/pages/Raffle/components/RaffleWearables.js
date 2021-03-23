@@ -1,8 +1,8 @@
 
-import React from "react";
-import {Box, Grid, Typography} from "@material-ui/core";
-import classNames from "classnames";
-import {useStyles} from "../styles";
+import React from 'react';
+import {Box, Grid, Typography} from '@material-ui/core';
+import classNames from 'classnames';
+import {useStyles} from '../styles';
 
 export default function RaffleWearables({tickets}) {
     const classes = useStyles();

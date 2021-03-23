@@ -2,8 +2,8 @@ import React, {useEffect, useState} from 'react';
 import {Backdrop, CircularProgress, Container, Typography} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 
-import RaffleTable from "./components/RaffleTable";
-import RaffleWearables from "./components/RaffleWearables";
+import RaffleTable from './components/RaffleTable';
+import RaffleWearables from './components/RaffleWearables';
 import {ticketsData} from './ticketsData';
 import {useStyles} from './styles';
 
@@ -30,15 +30,15 @@ export default function Raffle() {
     },[]);
 
     const onFieldChange = (event, i) => {
-        var ticketsRef = [...tickets];
-        var chance = event.target.value / ticketsRef[i].supply * ticketsRef[i].items;
-        var percentage = (chance * 100).toFixed(1);
-        var price = ticketsRef[i].price;
-        var cost = event.target.value * price;
+        let ticketsRef = [...tickets];
+        let chance = event.target.value / ticketsRef[i].supply * ticketsRef[i].items;
+        let percentage = (chance * 100).toFixed(1);
+        let price = ticketsRef[i].price;
+        let cost = event.target.value * price;
 
         console.log(ticketsRef[i].wearables)
 
-        var ticket = {
+        let ticket = {
             ...ticketsRef[i],
             chance: chance > 1 ? chance.toFixed(2) : chance > 0 ? `${percentage}% for 1` : 0,
             cost: cost > price ? cost.toFixed(0) : price
@@ -61,7 +61,7 @@ export default function Raffle() {
             <RaffleTable tickets={tickets} onFieldChange={onFieldChange}/>
             <RaffleWearables tickets={tickets} />
             <Backdrop className={classes.backdrop} open={backdropIsOpen}>
-                <CircularProgress color="inherit" />
+                <CircularProgress color='inherit' />
             </Backdrop>
         </Container>
     );

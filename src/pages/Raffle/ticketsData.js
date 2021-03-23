@@ -7,7 +7,13 @@ import godlikeIcon from '../../assets/tickets/godlike.svg';
 
 export const ticketsData = [
     {
-        type: 'common', icon: commonIcon, items: 6000, supply: 0, price: 0.23, cost: 0.23, chance: 0,
+        type: 'common',
+        icon: commonIcon,
+        items: 6000,
+        supply: 0,
+        price: 0.23,
+        cost: 0.23,
+        chance: 0,
         wearables: [
             { name: 'Vote Sign', amount: '1000' },
             { name: 'L2 Sign', amount: '1000' },
@@ -18,7 +24,13 @@ export const ticketsData = [
         ]
     },
     {
-        type: 'uncommon', icon: uncommonIcon, items: 3250, supply: 0, price: 0.91, cost: 0.91, chance: 0,
+        type: 'uncommon',
+        icon: uncommonIcon,
+        items: 3250,
+        supply: 0,
+        price: 0.92,
+        cost: 0.92,
+        chance: 0,
         wearables: [
             { name: 'Snapshot Shirt', amount: '500' },
             { name: 'Polygon Shirt', amount: '500' },
@@ -29,8 +41,40 @@ export const ticketsData = [
             { name: 'Common Rofl', amount: '250' }
         ]
     },
-    { type: 'rare', icon: rareIcon, items: 1625, supply: 0, price: 1.51, cost: 1.51, chance: 0 },
-    { type: 'legendary', icon: legendaryIcon, items: 450, supply: 0, price: 7.18, cost: 7.18, chance: 0 },
-    { type: 'mythical', icon: mythicalIcon, items: 175, supply: 0, price: 29.16, cost: 29.16, chance: 0 },
-    { type: 'godlike', icon: godlikeIcon, items: 12, supply: 0, price: 115.24, cost: 115.24, chance: 0 }
+    {
+        type: 'rare',
+        icon: rareIcon,
+        items: 1625,
+        supply: 0,
+        price: 1.73,
+        cost: 1.73,
+        chance: 0
+    },
+    {
+        type: 'legendary',
+        icon: legendaryIcon,
+        items: 450,
+        supply: 0,
+        price: 7.55,
+        cost: 7.55,
+        chance: 0
+    },
+    {
+        type: 'mythical',
+        icon: mythicalIcon,
+        items: 175,
+        supply: 0,
+        price: 29.65,
+        cost: 29.65,
+        chance: 0
+    },
+    {
+        type: 'godlike',
+        icon: godlikeIcon,
+        items: 12,
+        supply: 0,
+        price: 128.20,
+        cost: 128.20,
+        chance: 0
+    }
 ];

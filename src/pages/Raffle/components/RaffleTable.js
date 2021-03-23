@@ -1,11 +1,11 @@
 
-import React from "react";
-import {Grid, TextField, Tooltip, Typography} from "@material-ui/core";
-import classNames from "classnames";
-import {useStyles} from "../styles";
-import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
+import React from 'react';
+import {Grid, TextField, Tooltip, Typography} from '@material-ui/core';
+import classNames from 'classnames';
+import {useStyles} from '../styles';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
-import ghst from "../../../assets/images/ghst-doubleside.gif";
+import ghst from '../../../assets/images/ghst-doubleside.gif';
 
 export default function RaffleTable({tickets, onFieldChange}) {
     const classes = useStyles();
@@ -61,7 +61,7 @@ export default function RaffleTable({tickets, onFieldChange}) {
                         enterTouchDelay={0}
                         title={
                             <React.Fragment>
-                                <Typography>There is still a time before the ruffle meaning more tickets will be minted</Typography>
+                                <Typography>The number of tickets is updated every 3 minutes</Typography>
                             </React.Fragment>
                         }
                     >
