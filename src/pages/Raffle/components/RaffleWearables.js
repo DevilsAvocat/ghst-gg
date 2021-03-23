@@ -20,7 +20,7 @@ export default function RaffleWearables({tickets}) {
                             <Typography variant='h6' className={classNames(classes.textHighlight, classes.wearablesTitle, ticket.type)}>
                                 {ticket.type} chances
                             </Typography>
-                            <Grid container spacing={2} xs={12} >
+                            <Grid container spacing={2}>
                                 {
                                     ticket.wearables.map((wearable, i) => {
                                         return <Grid item xs={6} sm={4} md={2} key={i}>
