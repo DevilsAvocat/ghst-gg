@@ -10,6 +10,10 @@ import ghst from '../../../assets/images/ghst-doubleside.gif';
 export default function RaffleTable({tickets, onFieldChange}) {
     const classes = useStyles();
 
+    const getTicketIconPath = (iconId) => {
+        return require(`../../../assets/tickets/${iconId}.svg`).default;
+    };
+    
     return (
         <Grid item>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
@@ -76,7 +80,7 @@ export default function RaffleTable({tickets, onFieldChange}) {
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i} className={classes.ticketBg}>
-                                <img src={ticket.icon} alt={'ticket-' + ticket.type} />
+                                <img src={getTicketIconPath(ticket.type)} alt={'ticket-' + ticket.type} />
                                 <Typography
                                     variant='h6'
                                     align='center'

@@ -24,9 +24,7 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        [theme.breakpoints.up('md')]: {
-            justifyContent: 'flex-end',
-        }
+        textAlign: 'center'
     },
     subtitleIcon: {
         marginLeft: 8
@@ -192,25 +190,64 @@ export const useStyles = makeStyles((theme) => ({
     textHighlight: {
         position: 'relative',
         zIndex: 5,
-        '&.common': { color: theme.palette.rarity.common },
-        '&.uncommon': { color: theme.palette.rarity.uncommon },
-        '&.rare': { color: theme.palette.rarity.rare },
-        '&.legendary': { color: theme.palette.rarity.legendary },
-        '&.mythical': { color: theme.palette.rarity.mythical },
-        '&.godlike': { color: theme.palette.rarity.godlike }
+        '&.common': {color: theme.palette.rarity.common},
+        '&.uncommon': {color: theme.palette.rarity.uncommon},
+        '&.rare': {color: theme.palette.rarity.rare},
+        '&.legendary': {color: theme.palette.rarity.legendary},
+        '&.mythical': {color: theme.palette.rarity.mythical},
+        '&.godlike': {color: theme.palette.rarity.godlike}
+    },
+    wearablesTitle: {
+        marginBottom: 12,
+        fontSize: 19,
+        textAlign: 'center',
+        '&:first-letter': {
+          textTransform: 'uppercase'
+        },
+        [theme.breakpoints.up('md')]: {
+            textAlign: 'left',
+        }
     },
     wearable: {
         borderRadius: theme.shape.borderRadius,
-        borderWidth: 1,
-        borderStyle: 'solid',
         height: '100%',
-        padding: 12,
+        padding: '16px 12px',
         textAlign: 'center',
-        '&.common': { borderColor: theme.palette.rarity.common },
-        '&.uncommon': { borderColor: theme.palette.rarity.uncommon },
-        '&.rare': { borderColor: theme.palette.rarity.rare },
-        '&.legendary': { borderColor: theme.palette.rarity.legendary },
-        '&.mythical': { borderColor: theme.palette.rarity.mythical },
-        '&.godlike': { borderColor: theme.palette.rarity.godlike }
+        '&.common': {
+            backgroundColor: fade(theme.palette.rarity.common, .1),
+        },
+        '&.uncommon': {
+            backgroundColor: fade(theme.palette.rarity.uncommon, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.uncommon, .15)
+            }
+        },
+        '&.rare': {
+            backgroundColor: fade(theme.palette.rarity.rare, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.rare, .15)
+            }
+        },
+        '&.legendary': {
+            backgroundColor: fade(theme.palette.rarity.legendary, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.legendary, .15)
+            }
+        },
+        '&.mythical': {
+            backgroundColor: fade(theme.palette.rarity.mythical, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.mythical, .15)
+            }
+        },
+        '&.godlike': {
+            backgroundColor: fade(theme.palette.rarity.godlike, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.godlike, .15)
+            }
+        },
+        '&.mystery': {
+            backgroundColor: `${fade(theme.palette.error.light, .2)} !important`,
+        }
     }
 }));
