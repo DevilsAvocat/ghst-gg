@@ -50,8 +50,8 @@ export default function Raffle() {
     const countWearablesChance = (wearables, itemsAmount, chance) => {
         wearables.forEach((wearable, i) => {
             let percentage = (wearable.amount * 100 / itemsAmount).toFixed(2)
-            let wearableChance = (percentage * chance / 100).toFixed(2);
-            wearable.chance = wearableChance > 1 ? wearableChance : `${wearableChance * 100}% for 1`;
+            let wearableChance = percentage * chance / 100;
+            wearable.chance = wearableChance > 1 ? wearableChance.toFixed(2) : `${(wearableChance * 100).toFixed(1)}% for 1`;
         });
         return wearables;
     };
