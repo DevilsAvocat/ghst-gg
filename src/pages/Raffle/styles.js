@@ -34,7 +34,6 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: 32
     },
     input: {
-        overflow: 'hidden',
         '& input ': {
             fontWeight: 500
         },
