@@ -7,7 +7,8 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
-export default function RaffleTable({tickets, onFieldChange}) {
+export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuantity, setRareQuantity,
+                                        setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
     const classes = useStyles();
 
     const getTicketIconPath = (iconId) => {
@@ -21,20 +22,78 @@ export default function RaffleTable({tickets, onFieldChange}) {
                     <Typography variant='h6' className={classes.subtitle}>Your Tickets</Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
-                    {
-                        tickets.map((ticket, i) => {
-                            return <Grid item xs={4} sm={true} key={i}>
-                                <TextField
-                                    type='number'
-                                    variant='outlined'
-                                    fullWidth
-                                    className={classNames(classes.input, ticket.type)}
-                                    label={ticket.type}
-                                    onChange={(e) => onFieldChange(e, i)}
-                                />
-                            </Grid>
-                        })
-                    }
+                    <Grid item xs={4} sm={true}>
+                        <TextField
+                            type='number'
+                            variant='outlined'
+                            fullWidth
+                            className={classNames(classes.input, 'common')}
+                            label={'Common'}
+                            onChange={(event) => {
+                                setCommonQuantity(event.target.value);
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={4} sm={true}>
+                        <TextField
+                            type='number'
+                            variant='outlined'
+                            fullWidth
+                            className={classNames(classes.input, 'uncommon')}
+                            label={'Uncommon'}
+                            onChange={(event) => {
+                                setUncommonQuantity(event.target.value);
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={4} sm={true}>
+                        <TextField
+                            type='number'
+                            variant='outlined'
+                            fullWidth
+                            className={classNames(classes.input, 'rare')}
+                            label={'Rare'}
+                            onChange={(event) => {
+                                setRareQuantity(event.target.value);
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={4} sm={true}>
+                        <TextField
+                            type='number'
+                            variant='outlined'
+                            fullWidth
+                            className={classNames(classes.input, 'legendary')}
+                            label={'Legendary'}
+                            onChange={(event) => {
+                                setLegendaryQuantity(event.target.value);
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={4} sm={true}>
+                        <TextField
+                            type='number'
+                            variant='outlined'
+                            fullWidth
+                            className={classNames(classes.input, 'mythical')}
+                            label={'Mythical'}
+                            onChange={(event) => {
+                                setMythicalQuantity(event.target.value);
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={4} sm={true}>
+                        <TextField
+                            type='number'
+                            variant='outlined'
+                            fullWidth
+                            className={classNames(classes.input, 'godlike')}
+                            label={'Godlike'}
+                            onChange={(event) => {
+                                setGodlikeQuantity(event.target.value);
+                            }}
+                        />
+                    </Grid>
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
