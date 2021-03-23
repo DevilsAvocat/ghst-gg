@@ -13,10 +13,10 @@ export default function RaffleTable({tickets, onFieldChange}) {
     return (
         <Grid item>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={3} lg={2}>
                     <Typography variant='h6' className={classes.subtitle}>Your Tickets</Typography>
                 </Grid>
-                <Grid container item spacing={1} xs={12} md={8}>
+                <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
@@ -34,10 +34,10 @@ export default function RaffleTable({tickets, onFieldChange}) {
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={3} lg={2}>
                     <Typography variant='h6' className={classes.subtitle}>Items in Raffle</Typography>
                 </Grid>
-                <Grid container item spacing={1} xs={12} md={8}>
+                <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
@@ -54,7 +54,7 @@ export default function RaffleTable({tickets, onFieldChange}) {
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={3} lg={2}>
                     <Tooltip
                         placement='right'
                         arrow
@@ -72,7 +72,7 @@ export default function RaffleTable({tickets, onFieldChange}) {
 
                     </Tooltip>
                 </Grid>
-                <Grid container item spacing={1} xs={12} md={8}>
+                <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i} className={classes.ticketBg}>
@@ -90,7 +90,7 @@ export default function RaffleTable({tickets, onFieldChange}) {
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={3} lg={2}>
                     <Tooltip
                         placement='right'
                         arrow
@@ -107,7 +107,7 @@ export default function RaffleTable({tickets, onFieldChange}) {
                         </Typography>
                     </Tooltip>
                 </Grid>
-                <Grid container item spacing={1} xs={12} md={8}>
+                <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
@@ -125,7 +125,7 @@ export default function RaffleTable({tickets, onFieldChange}) {
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={3} lg={2}>
                     <Tooltip
                         placement='right'
                         arrow
@@ -142,7 +142,7 @@ export default function RaffleTable({tickets, onFieldChange}) {
                         </Typography>
                     </Tooltip>
                 </Grid>
-                <Grid container item spacing={1} xs={12} md={8}>
+                <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i} className={classNames(classes.chance, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>

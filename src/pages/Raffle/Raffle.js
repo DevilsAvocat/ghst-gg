@@ -53,7 +53,7 @@ export default function Raffle() {
     };
 
     return (
-        <Container maxWidth='xl' className={classes.raffle}>
+        <Container maxWidth='lg' className={classes.raffle}>
             <Helmet>
                 <title>Raffle #4 Calculator</title>
             </Helmet>

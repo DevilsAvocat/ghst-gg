@@ -14,12 +14,13 @@ export const useStyles = makeStyles((theme) => ({
     },
     title: {
         fontSize: 32,
-        marginBottom: 32,
+        marginBottom: 40,
         [theme.breakpoints.up('md')]: {
-            fontSize: 40,
+            fontSize: 36
         }
     },
     subtitle: {
+        fontSize: 19,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
