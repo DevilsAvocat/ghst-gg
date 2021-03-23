@@ -24,7 +24,7 @@ export default function RaffleWearables({tickets}) {
                                         <Box className={classNames(classes.wearable, ticket.type)}>
                                             <Typography>{wearable.name}</Typography>
                                             <Typography>Available: {wearable.amount}</Typography>
-                                            <Typography className={classNames(classes.textHighlight, ticket.type)}>10%</Typography>
+                                            <Typography className={classNames(classes.textHighlight, ticket.type)}>{wearable.chance}</Typography>
                                         </Box>
                                     </Grid>
                                 })

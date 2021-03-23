@@ -15,12 +15,12 @@ export const ticketsData = [
         cost: 0.23,
         chance: 0,
         wearables: [
-            { name: 'Vote Sign', amount: '1000' },
-            { name: 'L2 Sign', amount: '1000' },
-            { name: 'Fireball', amount: '1000' },
-            { name: 'Elf Ears', amount: '1000' },
-            { name: 'The Imperial Moustache', amount: '1000' },
-            { name: 'Common Rofl', amount: '1000' }
+            { name: 'Vote Sign', amount: 1000 },
+            { name: 'L2 Sign', amount: 1000 },
+            { name: 'Fireball', amount: 1000 },
+            { name: 'Elf Ears', amount: 1000 },
+            { name: 'The Imperial Moustache', amount: 1000 },
+            { name: 'Common Rofl', amount: 1000 }
         ]
     },
     {
@@ -32,13 +32,13 @@ export const ticketsData = [
         cost: 0.92,
         chance: 0,
         wearables: [
-            { name: 'Snapshot Shirt', amount: '500' },
-            { name: 'Polygon Shirt', amount: '500' },
-            { name: 'Dragon Horns', amount: '500' },
-            { name: 'Gemstone Ring', amount: '500' },
-            { name: 'Tiny Crown', amount: '500' },
-            { name: 'Uncommon Rofl', amount: '500' },
-            { name: 'Common Rofl', amount: '250' }
+            { name: 'Snapshot Shirt', amount: 500 },
+            { name: 'Polygon Shirt', amount: 500 },
+            { name: 'Dragon Horns', amount: 500 },
+            { name: 'Gemstone Ring', amount: 500 },
+            { name: 'Tiny Crown', amount: 500 },
+            { name: 'Uncommon Rofl', amount: 500 },
+            { name: 'Lil Pump Goatee', amount: 250 }
         ]
     },
     {
@@ -48,7 +48,16 @@ export const ticketsData = [
         supply: 0,
         price: 1.73,
         cost: 1.73,
-        chance: 0
+        chance: 0,
+        wearables: [
+            { name: 'Snapshot Cap', amount: 250 },
+            { name: 'Polygon Cap', amount: 250 },
+            { name: 'Dragon Wings', amount: 250 },
+            { name: 'Princess Tiara', amount: 250 },
+            { name: 'Royal Scepter', amount: 250 },
+            { name: 'Rare Rofl', amount: 250 },
+            { name: 'Lil Pump Drank', amount: 125 }
+        ]
     },
     {
         type: 'legendary',
@@ -57,7 +66,14 @@ export const ticketsData = [
         supply: 0,
         price: 7.55,
         cost: 7.55,
-        chance: 0
+        chance: 0,
+        wearables: [
+            { name: 'Pointy Horns', amount: 100 },
+            { name: 'Gold Necklace', amount: 100 },
+            { name: 'Royal Crown', amount: 100 },
+            { name: 'Legendary Rofl', amount: 100 },
+            { name: 'Lil Pump Drank', amount: 50 }
+        ]
     },
     {
         type: 'mythical',
@@ -66,7 +82,13 @@ export const ticketsData = [
         supply: 0,
         price: 29.65,
         cost: 29.65,
-        chance: 0
+        chance: 0,
+        wearables: [
+            { name: 'Princess Hair', amount: 50 },
+            { name: 'Royal Robes', amount: 50 },
+            { name: 'Mythical Rofl', amount: 50 },
+            { name: 'Lil Pump Threads', amount: 25 }
+        ]
     },
     {
         type: 'godlike',
@@ -75,6 +97,11 @@ export const ticketsData = [
         supply: 0,
         price: 128.20,
         cost: 128.20,
-        chance: 0
+        chance: 0,
+        wearables: [
+            { name: 'Goldi Locks', amount: 5 },
+            { name: 'Royal Rofl', amount: 5 },
+            { name: 'Lil Pump Dreads', amount: 2 }
+        ]
     }
 ];

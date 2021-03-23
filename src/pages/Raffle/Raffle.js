@@ -36,20 +36,24 @@ export default function Raffle() {
         let price = ticketsRef[i].price;
         let cost = event.target.value * price;
 
-        console.log(ticketsRef[i].wearables)
+        let wearables = countWearablesChance(ticketsRef[i].wearables, ticketsRef[i].items, chance.toFixed(2));
 
-        let ticket = {
+        ticketsRef[i] = {
             ...ticketsRef[i],
             chance: chance > 1 ? chance.toFixed(2) : chance > 0 ? `${percentage}% for 1` : 0,
-            cost: cost > price ? cost.toFixed(0) : price
+            cost: cost > price ? cost.toFixed(0) : price,
+            wearables: wearables
         };
-
-        ticketsRef[i] = ticket;
         setTickets(ticketsRef);
     };
 
-    const countWearablesChance = (wearables) => {
-        console.log(wearables);
+    const countWearablesChance = (wearables, itemsAmount, chance) => {
+        wearables.forEach((wearable, i) => {
+            let percentage = (wearable.amount * 100 / itemsAmount).toFixed(2)
+            let wearableChance = (percentage * chance / 100).toFixed(2);
+            wearable.chance = wearableChance > 1 ? wearableChance : `${wearableChance * 100}% for 1`;
+        });
+        return wearables;
     };
 
     return (

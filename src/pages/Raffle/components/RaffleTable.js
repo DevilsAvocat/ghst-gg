@@ -97,12 +97,12 @@ export default function RaffleTable({tickets, onFieldChange}) {
                         enterTouchDelay={0}
                         title={
                             <React.Fragment>
-                                <Typography>Average ticket price on Baazaar</Typography>
+                                <Typography>Average ticket price on Baazaar for the last 5 trades</Typography>
                             </React.Fragment>
                         }
                     >
                         <Typography variant='h6' className={classes.subtitle}>
-                            Baazaar price
+                            Estimated baazaar price
                             <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
                         </Typography>
                     </Tooltip>
