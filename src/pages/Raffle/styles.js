@@ -14,18 +14,17 @@ export const useStyles = makeStyles((theme) => ({
     },
     title: {
         fontSize: 32,
-        marginBottom: 32,
+        marginBottom: 40,
         [theme.breakpoints.up('md')]: {
-            fontSize: 40,
+            fontSize: 36
         }
     },
     subtitle: {
+        fontSize: 19,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        [theme.breakpoints.up('md')]: {
-            justifyContent: 'flex-end',
-        }
+        textAlign: 'center'
     },
     subtitleIcon: {
         marginLeft: 8
@@ -161,16 +160,6 @@ export const useStyles = makeStyles((theme) => ({
             }
         }
     },
-    count: {
-        position: 'relative',
-        zIndex: 5,
-        '&.common': { color: theme.palette.rarity.common },
-        '&.uncommon': { color: theme.palette.rarity.uncommon },
-        '&.rare': { color: theme.palette.rarity.rare },
-        '&.legendary': { color: theme.palette.rarity.legendary },
-        '&.mythical': { color: theme.palette.rarity.mythical },
-        '&.godlike': { color: theme.palette.rarity.godlike }
-    },
     ticketBg: {
         position: 'relative',
         marginBottom: 4,
@@ -197,5 +186,68 @@ export const useStyles = makeStyles((theme) => ({
         '&.legendary.highlighted': { backgroundColor: fade(theme.palette.rarity.legendary, .05) },
         '&.mythical.highlighted': { backgroundColor: fade(theme.palette.rarity.mythical, .05) },
         '&.godlike.highlighted': { backgroundColor: fade(theme.palette.rarity.godlike, .05) }
+    },
+    textHighlight: {
+        position: 'relative',
+        zIndex: 5,
+        '&.common': {color: theme.palette.rarity.common},
+        '&.uncommon': {color: theme.palette.rarity.uncommon},
+        '&.rare': {color: theme.palette.rarity.rare},
+        '&.legendary': {color: theme.palette.rarity.legendary},
+        '&.mythical': {color: theme.palette.rarity.mythical},
+        '&.godlike': {color: theme.palette.rarity.godlike}
+    },
+    wearablesTitle: {
+        marginBottom: 12,
+        fontSize: 19,
+        textAlign: 'center',
+        '&:first-letter': {
+          textTransform: 'uppercase'
+        },
+        [theme.breakpoints.up('md')]: {
+            textAlign: 'left',
+        }
+    },
+    wearable: {
+        borderRadius: theme.shape.borderRadius,
+        height: '100%',
+        padding: '16px 12px',
+        textAlign: 'center',
+        '&.common': {
+            backgroundColor: fade(theme.palette.rarity.common, .1),
+        },
+        '&.uncommon': {
+            backgroundColor: fade(theme.palette.rarity.uncommon, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.uncommon, .15)
+            }
+        },
+        '&.rare': {
+            backgroundColor: fade(theme.palette.rarity.rare, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.rare, .15)
+            }
+        },
+        '&.legendary': {
+            backgroundColor: fade(theme.palette.rarity.legendary, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.legendary, .15)
+            }
+        },
+        '&.mythical': {
+            backgroundColor: fade(theme.palette.rarity.mythical, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.mythical, .15)
+            }
+        },
+        '&.godlike': {
+            backgroundColor: fade(theme.palette.rarity.godlike, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.godlike, .15)
+            }
+        },
+        '&.mystery': {
+            backgroundColor: `${fade(theme.palette.error.light, .2)} !important`,
+        }
     }
 }));
