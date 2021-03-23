@@ -80,7 +80,7 @@ export const ticketsData = [
     },
     {
         type: 'godlike',
-        items: 12,
+        items: 13,
         supply: 0,
         price: 128.20,
         cost: 128.20,
@@ -88,7 +88,7 @@ export const ticketsData = [
         wearables: [
             { name: 'Goldi Locks', amount: 5, icon: 145 },
             { name: 'Royal Rofl', amount: 5, icon: 156 },
-            { name: 'Lil Pump Dreads', amount: 2, icon: 161, mystery: true }
+            { name: 'Lil Pump Dreads', amount: 3, icon: 161, mystery: true }
         ]
     }
 ];
