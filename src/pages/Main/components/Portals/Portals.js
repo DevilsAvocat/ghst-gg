@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Grid, Typography } from '@material-ui/core';
+import {Box, CircularProgress, Grid, Typography} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import Web3 from 'web3'
 import Constants from './constants.js';
@@ -57,23 +57,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Portals() {
     const classes = useStyles();
+    const [portalsSpinner, setPortalsSpinner] = useState(true);
     const [portals, setPortals] = useState(0);
     const [eegg, setEegg] = useState(false);
 
     useEffect(() => {
+        setPortalsSpinner(true);
         contract.methods.balanceOf(Constants.WALLET_ADDRESS).call()
             .then(function (value) {
-                var portalsNumber = Math.round(web3.utils.fromWei(value) * 10000);
+                let portalsNumber = Math.round(web3.utils.fromWei(value) * 10000);
                 setPortals(portalsNumber);
+                setPortalsSpinner(false);
             });
-    });
+    },[]);
     
     const getOpenedPortals = () => {
         return 10000 - portals;
     };
     
     const getPortalsPerc = () => {
-        var num = (getOpenedPortals() / 10000 * 100).toFixed(2);
+        let num = (getOpenedPortals() / 10000 * 100).toFixed(2);
         return num + '%';
     };
 
@@ -89,7 +92,15 @@ export default function Portals() {
         >
             <Grid className={classes.portalsColumn} item xs={12} md={4}>
                 <Typography align='center' className={classes.portalsDescr}>
-                    <Box component='span' className={classes.highlight}>{ eegg ? portals : getPortalsPerc() }</Box>
+                    {portalsSpinner ? (
+                        <Box component='span' className={classes.highlight}>
+                            <CircularProgress color="inherit" size={22} style={{marginBottom: -5}} />
+                        </Box>
+                    ) : (
+                        <Box component='span' className={classes.highlight}>
+                            { eegg ? portals : getPortalsPerc() }
+                        </Box>
+                    )}
                     <Box component='span'>{ eegg ? '/10000 are sealed!' : ' portals are opened!' }</Box>
                 </Typography>
             </Grid>
