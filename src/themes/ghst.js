@@ -30,7 +30,7 @@ export const theme = createMuiTheme({
         }
     },
     typography: {
-        fontFamily: "'Source Code Pro', monospace"
+        fontFamily: "'Fira Code', monospace"
     },
     breakpoints: {
         values: {

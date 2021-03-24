@@ -1,14 +1,14 @@
 
 import React from 'react';
-import {Grid, TextField, Tooltip, Typography} from '@material-ui/core';
+import {Box, CircularProgress, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
 import classNames from 'classnames';
 import {useStyles} from '../styles';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
-export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuantity, setRareQuantity,
-                                        setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
+export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setCommonQuantity, setUncommonQuantity,
+                                        setRareQuantity, setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
     const classes = useStyles();
 
     const getTicketIconPath = (iconId) => {
@@ -105,9 +105,9 @@ export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuan
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
                                 <Typography
-                                    variant='h6'
+                                    variant='body1'
                                     align='center'
-                                    className={classNames(classes.textHighlight, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
                                 >
                                     {ticket.items}
                                 </Typography>
@@ -124,7 +124,7 @@ export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuan
                         enterTouchDelay={0}
                         title={
                             <React.Fragment>
-                                <Typography>The number of tickets is updated every 3 minutes</Typography>
+                                <Typography>The number of tickets is updated every 3 minutes. There is no need to reload the page</Typography>
                             </React.Fragment>
                         }
                     >
@@ -140,13 +140,19 @@ export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuan
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i} className={classes.ticketBg}>
                                 <img src={getTicketIconPath(ticket.type)} alt={'ticket-' + ticket.type} />
-                                <Typography
-                                    variant='h6'
-                                    align='center'
-                                    className={classNames(classes.textHighlight, ticket.type)}
-                                >
-                                    {ticket.supply}
-                                </Typography>
+                                <Box align='center' className={classNames(classes.textHighlight, ticket.type)}>
+                                    {supplySpinner ? (
+                                        <CircularProgress color="inherit" size={20} style={{marginBottom: -10}} />
+                                    ) : (
+                                        <Typography
+                                            variant='body1'
+                                            align='center'
+                                            className={classNames(classes.tableValue, classes.price)}
+                                        >
+                                            {ticket.supply}
+                                        </Typography>
+                                    )}
+                                </Box>
                             </Grid>
                         })
                     }
@@ -174,14 +180,20 @@ export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuan
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
-                                <Typography
-                                    variant='h6'
-                                    align='center'
-                                    className={classNames(classes.textHighlight, classes.price, ticket.type)}
-                                >
-                                    {ticket.cost}
-                                    <img src={ghst} width='26' alt='GHST Token Icon' />
-                                </Typography>
+                                <Box align='center' className={classNames(classes.textHighlight, ticket.type)}>
+                                    {pricesSpinner ? (
+                                        <CircularProgress color="inherit" size={20} />
+                                    ) : (
+                                        <Typography
+                                            variant='body1'
+                                            align='center'
+                                            className={classNames(classes.tableValue, classes.price)}
+                                        >
+                                            {ticket.cost}
+                                            <img src={ghst} width='26' alt='GHST Token Icon' />
+                                        </Typography>
+                                    )}
+                                </Box>
                             </Grid>
                         })
                     }
@@ -210,9 +222,9 @@ export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuan
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i} className={classNames(classes.chance, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>
                                 <Typography
-                                    variant='h6'
+                                    variant='body1'
                                     align='center'
-                                    className={classNames(classes.textHighlight, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
                                 >
                                     {ticket.chance}
                                 </Typography>

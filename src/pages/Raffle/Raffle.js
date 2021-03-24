@@ -4,9 +4,11 @@ import {Container, Typography} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import RaffleTable from './components/RaffleTable';
 import RaffleWearables from './components/RaffleWearables';
-import {ticketsData} from './ticketsData';
+import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
+import thegraph from '../../api/thegraph';
+import {commonQuery, godlikeQuery, legendaryQuery, mythicalQuery, rareQuery, uncommonQuery} from './data/queries';
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -29,8 +31,11 @@ function useInterval(callback, delay) {
 export default function Raffle() {
     const classes = useStyles();
     const [tickets, setTickets] = useState([...ticketsData]);
+    const [ticketsCache, setTicketsCache] = useState([...tickets]);
     const { showSnackbar } = useContext(SnackbarContext);
     const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
+    const [supplySpinner, setSupplySpinner] = useState(true);
+    const [pricesSpinner, setPricesSpinner] = useState(true);
     const [lastTicketInfo, setLastTicketInfo] = useState('');
     const [commonQuantity, setCommonQuantity] = useState('');
     const [uncommonQuantity, setUncommonQuantity] = useState('');
@@ -69,9 +74,9 @@ export default function Raffle() {
     };
 
     const onFieldChange = () => {
-        let ticketsRef = [...tickets];
+        let ticketsLocalRef = [...tickets];
 
-        ticketsRef.forEach((ticket, i) => {
+        ticketsLocalRef.forEach((ticket, i) => {
             let chance = getTicketQuantity(ticket.type) / ticket.supply * ticket.items;
             let percentage = (chance * 100).toFixed(1);
             let price = ticket.price;
@@ -79,15 +84,15 @@ export default function Raffle() {
 
             let wearables = countWearablesChance(ticket.wearables, ticket.items, chance.toFixed(2));
 
-            ticketsRef[i] = {
+            ticketsLocalRef[i] = {
                 ...ticket,
-                chance: chance > 1 ? chance.toFixed(2) : chance > 0 ? `${percentage}% for 1` : 0,
+                chance: chance > 1 ? `x${chance.toFixed(2)}` : chance > 0 ? `${percentage}% for 1` : 0,
                 cost: cost > price ? cost.toFixed(0) : price,
                 wearables: wearables
             };
         });
 
-        setTickets(ticketsRef);
+        setTickets(ticketsLocalRef);
     };
 
     const countWearablesChance = (wearables, itemsAmount, chance) => {
@@ -100,25 +105,54 @@ export default function Raffle() {
     };
 
     const loadTickets = () => {
+        setSupplySpinner(true);
+
         axios.get('https://api.ghst.gg/baazaar/tickets').then((response) => {
             if (lastTicketInfo !== JSON.stringify(response.data)) {
                 let ticketsActualSupply = Object.values(response.data);
-                let ticketsRef = JSON.parse(JSON.stringify(tickets));
 
                 ticketsActualSupply.forEach((supply, i) => {
-                    ticketsRef[i].supply = supply;
+                    ticketsCache[i].supply = supply;
                 });
 
-                setTickets(ticketsRef);
+                setTicketsCache(ticketsCache);
+                setTickets(ticketsCache);
                 setLastTicketInfo(JSON.stringify(response.data));
                 setSnackbarShowsOnFirstLoading(false);
+                setSupplySpinner(false);
             }
-        });
+        })
     };
+
+    const getAveragePrices = () => {
+        setPricesSpinner(true);
+
+        thegraph.getJoinedData([commonQuery, uncommonQuery, rareQuery, legendaryQuery, mythicalQuery, godlikeQuery])
+            .then((response) => {
+                let averagePrices = response.map((item)=> {
+                    let prices = item.data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
+                    let average = prices.reduce((a,b) => a + b, 0) / prices.length;
+                    let price = average / 10**18;
+                    return price.toFixed(2);
+                });
+
+                averagePrices.forEach((price, i) => {
+                    ticketsCache[i].price = price;
+                    ticketsCache[i].cost = price;
+                });
+
+                setTickets(ticketsCache);
+                setPricesSpinner(false);
+            });
+    }
 
     useEffect(() => {
         loadTickets();
     },[]);
+
+    useEffect(() => {
+        getAveragePrices();
+    },[ticketsCache]);
 
     useEffect(() => {
         onFieldChange();
@@ -143,6 +177,8 @@ export default function Raffle() {
             <Typography variant='h1' align='center' className={classes.title}>Raffle #4 Calculator</Typography>
             <RaffleTable
                 tickets={tickets}
+                supplySpinner={supplySpinner}
+                pricesSpinner={pricesSpinner}
                 setCommonQuantity={setCommonQuantity}
                 setUncommonQuantity={setUncommonQuantity}
                 setRareQuantity={setRareQuantity}
