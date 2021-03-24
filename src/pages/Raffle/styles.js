@@ -161,6 +161,7 @@ export const useStyles = makeStyles((theme) => ({
     ticketBg: {
         position: 'relative',
         marginBottom: 4,
+        minHeight: 40,
         padding: '6px !important',
         '& img': {
             height: '100%',

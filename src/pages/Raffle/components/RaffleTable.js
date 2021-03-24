@@ -140,19 +140,19 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i} className={classes.ticketBg}>
                                 <img src={getTicketIconPath(ticket.type)} alt={'ticket-' + ticket.type} />
-                                <Typography
-                                    variant='body1'
-                                    align='center'
-                                    className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
-                                >
+                                <Box align='center' className={classNames(classes.textHighlight, ticket.type)}>
                                     {supplySpinner ? (
-                                        <CircularProgress color="inherit" size={20} style={{marginBottom: -2}} />
+                                        <CircularProgress color="inherit" size={20} style={{marginBottom: -10}} />
                                     ) : (
-                                        <Box className={classes.price}>
+                                        <Typography
+                                            variant='body1'
+                                            align='center'
+                                            className={classNames(classes.tableValue, classes.price)}
+                                        >
                                             {ticket.supply}
-                                        </Box>
+                                        </Typography>
                                     )}
-                                </Typography>
+                                </Box>
                             </Grid>
                         })
                     }
@@ -180,20 +180,20 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
-                                <Typography
-                                    variant='body1'
-                                    align='center'
-                                    className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
-                                >
+                                <Box align='center' className={classNames(classes.textHighlight, ticket.type)}>
                                     {pricesSpinner ? (
                                         <CircularProgress color="inherit" size={20} />
                                     ) : (
-                                        <Box className={classes.price}>
+                                        <Typography
+                                            variant='body1'
+                                            align='center'
+                                            className={classNames(classes.tableValue, classes.price)}
+                                        >
                                             {ticket.cost}
                                             <img src={ghst} width='26' alt='GHST Token Icon' />
-                                        </Box>
+                                        </Typography>
                                     )}
-                                </Typography>
+                                </Box>
                             </Grid>
                         })
                     }
