@@ -103,7 +103,7 @@ export default function Portals() {
             </Grid>
             <Grid item xs={12} md={4}>
                 <Typography align='center' className={classes.portalsDescr}>
-                    <Box component='span' className={classes.highlight}>4 619</Box>
+                    <Box component='span' className={classes.highlight}>4 944</Box>
                     <Box component='span'> gotchis are sumonned </Box>
                     <Link className={classes.explorerLink} to='/explorer'>Aavegotchi Explorer</Link>
                 </Typography>
