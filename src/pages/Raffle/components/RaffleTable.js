@@ -1,14 +1,14 @@
 
 import React from 'react';
-import {Grid, TextField, Tooltip, Typography} from '@material-ui/core';
+import {Box, CircularProgress, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
 import classNames from 'classnames';
 import {useStyles} from '../styles';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
-export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuantity, setRareQuantity,
-                                        setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
+export default function RaffleTable({tickets, pricesSpinner, setCommonQuantity, setUncommonQuantity,
+                                        setRareQuantity, setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
     const classes = useStyles();
 
     const getTicketIconPath = (iconId) => {
@@ -177,10 +177,16 @@ export default function RaffleTable({tickets, setCommonQuantity, setUncommonQuan
                                 <Typography
                                     variant='h6'
                                     align='center'
-                                    className={classNames(classes.textHighlight, classes.price, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type)}
                                 >
-                                    {ticket.cost}
-                                    <img src={ghst} width='26' alt='GHST Token Icon' />
+                                    {pricesSpinner ? (
+                                        <CircularProgress color="inherit" size={20} />
+                                    ) : (
+                                        <Box className={classes.price}>
+                                            {ticket.cost}
+                                            <img src={ghst} width='26' alt='GHST Token Icon' />
+                                        </Box>
+                                    )}
                                 </Typography>
                             </Grid>
                         })

@@ -4,9 +4,11 @@ import {Container, Typography} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import RaffleTable from './components/RaffleTable';
 import RaffleWearables from './components/RaffleWearables';
-import {ticketsData} from './ticketsData';
+import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
+import thegraph from '../../api/thegraph';
+import {commonQuery, godlikeQuery, legendaryQuery, mythicalQuery, rareQuery, uncommonQuery} from "./data/queries";
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -31,6 +33,7 @@ export default function Raffle() {
     const [tickets, setTickets] = useState([...ticketsData]);
     const { showSnackbar } = useContext(SnackbarContext);
     const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
+    const [pricesSpinner, setPricesSpinner] = useState(true);
     const [lastTicketInfo, setLastTicketInfo] = useState('');
     const [commonQuantity, setCommonQuantity] = useState('');
     const [uncommonQuantity, setUncommonQuantity] = useState('');
@@ -104,6 +107,7 @@ export default function Raffle() {
             if (lastTicketInfo !== JSON.stringify(response.data)) {
                 let ticketsActualSupply = Object.values(response.data);
                 let ticketsRef = JSON.parse(JSON.stringify(tickets));
+                console.log(ticketsRef)
 
                 ticketsActualSupply.forEach((supply, i) => {
                     ticketsRef[i].supply = supply;
@@ -113,8 +117,34 @@ export default function Raffle() {
                 setLastTicketInfo(JSON.stringify(response.data));
                 setSnackbarShowsOnFirstLoading(false);
             }
+        }).then(()=>{
+            getAveragePrices();
         });
     };
+
+    const getAveragePrices = () => {
+        setPricesSpinner(true);
+
+        thegraph.getJoinedData([commonQuery, uncommonQuery, rareQuery, legendaryQuery, mythicalQuery, godlikeQuery])
+            .then((response) => {
+                let ticketsRef = JSON.parse(JSON.stringify(tickets));
+                console.log(ticketsRef)
+                let averagePrices = response.map((item)=> {
+                    let prices = item.data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
+                    let average = prices.reduce((a,b) => a + b, 0) / prices.length;
+                    let price = average / 10**18;
+                    return price.toFixed(2);
+                });
+
+                averagePrices.forEach((price, i) => {
+                    ticketsRef[i].price = price;
+                    ticketsRef[i].cost = price;
+                });
+
+                setTickets(ticketsRef);
+                setPricesSpinner(false);
+            });
+    }
 
     useEffect(() => {
         loadTickets();
@@ -143,6 +173,7 @@ export default function Raffle() {
             <Typography variant='h1' align='center' className={classes.title}>Raffle #4 Calculator</Typography>
             <RaffleTable
                 tickets={tickets}
+                pricesSpinner={pricesSpinner}
                 setCommonQuantity={setCommonQuantity}
                 setUncommonQuantity={setUncommonQuantity}
                 setRareQuantity={setRareQuantity}
