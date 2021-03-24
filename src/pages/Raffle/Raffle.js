@@ -8,7 +8,7 @@ import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
-import {commonQuery, godlikeQuery, legendaryQuery, mythicalQuery, rareQuery, uncommonQuery} from "./data/queries";
+import {commonQuery, godlikeQuery, legendaryQuery, mythicalQuery, rareQuery, uncommonQuery} from './data/queries';
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -31,7 +31,7 @@ function useInterval(callback, delay) {
 export default function Raffle() {
     const classes = useStyles();
     const [tickets, setTickets] = useState([...ticketsData]);
-    const [ticketsRef, setTicketsRef] = useState([...tickets]);
+    const [ticketsRef] = useState([...tickets]);
     const { showSnackbar } = useContext(SnackbarContext);
     const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
     const [supplySpinner, setSupplySpinner] = useState(true);
@@ -119,7 +119,6 @@ export default function Raffle() {
                 setLastTicketInfo(JSON.stringify(response.data));
                 setSnackbarShowsOnFirstLoading(false);
                 setSupplySpinner(false);
-                console.log('supply - done')
             }
         })
     };
@@ -143,7 +142,6 @@ export default function Raffle() {
 
                 setTickets(ticketsRef);
                 setPricesSpinner(false);
-                console.log('prices - done')
             });
     }
 
