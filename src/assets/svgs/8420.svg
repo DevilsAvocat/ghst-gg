@@ -11,7 +11,7 @@ svg {
   animation-duration:0.5s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  animation-timing-function: steps(2);
+  animation-timing-function: steps(1);
 }
 
 .gotchi-shadow {
@@ -28,7 +28,7 @@ svg {
   animation-duration:0.5s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
-  animation-timing-function: steps(2);
+  animation-timing-function: steps(1);
 }
 
 
