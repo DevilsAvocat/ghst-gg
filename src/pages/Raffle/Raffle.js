@@ -31,7 +31,7 @@ function useInterval(callback, delay) {
 export default function Raffle() {
     const classes = useStyles();
     const [tickets, setTickets] = useState([...ticketsData]);
-    const [ticketsRef] = useState([...tickets]);
+    const [ticketsCache, setTicketsCache] = useState([...tickets]);
     const { showSnackbar } = useContext(SnackbarContext);
     const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
     const [supplySpinner, setSupplySpinner] = useState(true);
@@ -112,10 +112,11 @@ export default function Raffle() {
                 let ticketsActualSupply = Object.values(response.data);
 
                 ticketsActualSupply.forEach((supply, i) => {
-                    ticketsRef[i].supply = supply;
+                    ticketsCache[i].supply = supply;
                 });
 
-                setTickets(ticketsRef);
+                setTicketsCache(ticketsCache);
+                setTickets(ticketsCache);
                 setLastTicketInfo(JSON.stringify(response.data));
                 setSnackbarShowsOnFirstLoading(false);
                 setSupplySpinner(false);
@@ -136,11 +137,11 @@ export default function Raffle() {
                 });
 
                 averagePrices.forEach((price, i) => {
-                    ticketsRef[i].price = price;
-                    ticketsRef[i].cost = price;
+                    ticketsCache[i].price = price;
+                    ticketsCache[i].cost = price;
                 });
 
-                setTickets(ticketsRef);
+                setTickets(ticketsCache);
                 setPricesSpinner(false);
             });
     }
@@ -151,7 +152,7 @@ export default function Raffle() {
 
     useEffect(() => {
         getAveragePrices();
-    },[ticketsRef]);
+    },[ticketsCache]);
 
     useEffect(() => {
         onFieldChange();

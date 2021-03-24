@@ -24,7 +24,8 @@ export const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center'
+        textAlign: 'center',
+        fontWeight: 400
     },
     subtitleIcon: {
         marginLeft: 8
@@ -33,9 +34,6 @@ export const useStyles = makeStyles((theme) => ({
         marginBottom: 32
     },
     input: {
-        '& input ': {
-            fontWeight: 500
-        },
         '& label:first-letter': {
             textTransform: 'uppercase'
         },
@@ -163,6 +161,7 @@ export const useStyles = makeStyles((theme) => ({
     ticketBg: {
         position: 'relative',
         marginBottom: 4,
+        padding: '6px !important',
         '& img': {
             height: '100%',
             width: '100%',
@@ -196,6 +195,10 @@ export const useStyles = makeStyles((theme) => ({
         '&.legendary': {color: theme.palette.rarity.legendary},
         '&.mythical': {color: theme.palette.rarity.mythical},
         '&.godlike': {color: theme.palette.rarity.godlike}
+    },
+    tableValue: {
+        fontSize: 19,
+        fontWeight: 400
     },
     wearablesTitle: {
         marginBottom: 12,

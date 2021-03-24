@@ -105,9 +105,9 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
                                 <Typography
-                                    variant='h6'
+                                    variant='body1'
                                     align='center'
-                                    className={classNames(classes.textHighlight, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
                                 >
                                     {ticket.items}
                                 </Typography>
@@ -141,9 +141,9 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                             return <Grid item xs={4} sm={true} key={i} className={classes.ticketBg}>
                                 <img src={getTicketIconPath(ticket.type)} alt={'ticket-' + ticket.type} />
                                 <Typography
-                                    variant='h6'
+                                    variant='body1'
                                     align='center'
-                                    className={classNames(classes.textHighlight, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
                                 >
                                     {supplySpinner ? (
                                         <CircularProgress color="inherit" size={20} style={{marginBottom: -2}} />
@@ -181,9 +181,9 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i}>
                                 <Typography
-                                    variant='h6'
+                                    variant='body1'
                                     align='center'
-                                    className={classNames(classes.textHighlight, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
                                 >
                                     {pricesSpinner ? (
                                         <CircularProgress color="inherit" size={20} />
@@ -222,9 +222,9 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i} className={classNames(classes.chance, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>
                                 <Typography
-                                    variant='h6'
+                                    variant='body1'
                                     align='center'
-                                    className={classNames(classes.textHighlight, ticket.type)}
+                                    className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
                                 >
                                     {ticket.chance}
                                 </Typography>
