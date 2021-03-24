@@ -31,8 +31,10 @@ function useInterval(callback, delay) {
 export default function Raffle() {
     const classes = useStyles();
     const [tickets, setTickets] = useState([...ticketsData]);
+    const [ticketsRef, setTicketsRef] = useState([...tickets]);
     const { showSnackbar } = useContext(SnackbarContext);
     const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
+    const [supplySpinner, setSupplySpinner] = useState(true);
     const [pricesSpinner, setPricesSpinner] = useState(true);
     const [lastTicketInfo, setLastTicketInfo] = useState('');
     const [commonQuantity, setCommonQuantity] = useState('');
@@ -72,9 +74,9 @@ export default function Raffle() {
     };
 
     const onFieldChange = () => {
-        let ticketsRef = [...tickets];
+        let ticketsLocalRef = [...tickets];
 
-        ticketsRef.forEach((ticket, i) => {
+        ticketsLocalRef.forEach((ticket, i) => {
             let chance = getTicketQuantity(ticket.type) / ticket.supply * ticket.items;
             let percentage = (chance * 100).toFixed(1);
             let price = ticket.price;
@@ -82,15 +84,15 @@ export default function Raffle() {
 
             let wearables = countWearablesChance(ticket.wearables, ticket.items, chance.toFixed(2));
 
-            ticketsRef[i] = {
+            ticketsLocalRef[i] = {
                 ...ticket,
-                chance: chance > 1 ? chance.toFixed(2) : chance > 0 ? `${percentage}% for 1` : 0,
+                chance: chance > 1 ? `x${chance.toFixed(2)}` : chance > 0 ? `${percentage}% for 1` : 0,
                 cost: cost > price ? cost.toFixed(0) : price,
                 wearables: wearables
             };
         });
 
-        setTickets(ticketsRef);
+        setTickets(ticketsLocalRef);
     };
 
     const countWearablesChance = (wearables, itemsAmount, chance) => {
@@ -103,11 +105,11 @@ export default function Raffle() {
     };
 
     const loadTickets = () => {
+        setSupplySpinner(true);
+
         axios.get('https://api.ghst.gg/baazaar/tickets').then((response) => {
             if (lastTicketInfo !== JSON.stringify(response.data)) {
                 let ticketsActualSupply = Object.values(response.data);
-                let ticketsRef = JSON.parse(JSON.stringify(tickets));
-                console.log(ticketsRef)
 
                 ticketsActualSupply.forEach((supply, i) => {
                     ticketsRef[i].supply = supply;
@@ -116,10 +118,10 @@ export default function Raffle() {
                 setTickets(ticketsRef);
                 setLastTicketInfo(JSON.stringify(response.data));
                 setSnackbarShowsOnFirstLoading(false);
+                setSupplySpinner(false);
+                console.log('supply - done')
             }
-        }).then(()=>{
-            getAveragePrices();
-        });
+        })
     };
 
     const getAveragePrices = () => {
@@ -127,8 +129,6 @@ export default function Raffle() {
 
         thegraph.getJoinedData([commonQuery, uncommonQuery, rareQuery, legendaryQuery, mythicalQuery, godlikeQuery])
             .then((response) => {
-                let ticketsRef = JSON.parse(JSON.stringify(tickets));
-                console.log(ticketsRef)
                 let averagePrices = response.map((item)=> {
                     let prices = item.data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
                     let average = prices.reduce((a,b) => a + b, 0) / prices.length;
@@ -143,12 +143,17 @@ export default function Raffle() {
 
                 setTickets(ticketsRef);
                 setPricesSpinner(false);
+                console.log('prices - done')
             });
     }
 
     useEffect(() => {
         loadTickets();
     },[]);
+
+    useEffect(() => {
+        getAveragePrices();
+    },[ticketsRef]);
 
     useEffect(() => {
         onFieldChange();
@@ -173,6 +178,7 @@ export default function Raffle() {
             <Typography variant='h1' align='center' className={classes.title}>Raffle #4 Calculator</Typography>
             <RaffleTable
                 tickets={tickets}
+                supplySpinner={supplySpinner}
                 pricesSpinner={pricesSpinner}
                 setCommonQuantity={setCommonQuantity}
                 setUncommonQuantity={setUncommonQuantity}

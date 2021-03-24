@@ -7,7 +7,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
-export default function RaffleTable({tickets, pricesSpinner, setCommonQuantity, setUncommonQuantity,
+export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setCommonQuantity, setUncommonQuantity,
                                         setRareQuantity, setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
     const classes = useStyles();
 
@@ -124,7 +124,7 @@ export default function RaffleTable({tickets, pricesSpinner, setCommonQuantity, 
                         enterTouchDelay={0}
                         title={
                             <React.Fragment>
-                                <Typography>The number of tickets is updated every 3 minutes</Typography>
+                                <Typography>The number of tickets is updated every 3 minutes. There is no need to reload the page</Typography>
                             </React.Fragment>
                         }
                     >
@@ -145,7 +145,13 @@ export default function RaffleTable({tickets, pricesSpinner, setCommonQuantity, 
                                     align='center'
                                     className={classNames(classes.textHighlight, ticket.type)}
                                 >
-                                    {ticket.supply}
+                                    {supplySpinner ? (
+                                        <CircularProgress color="inherit" size={20} style={{marginBottom: -2}} />
+                                    ) : (
+                                        <Box className={classes.price}>
+                                            {ticket.supply}
+                                        </Box>
+                                    )}
                                 </Typography>
                             </Grid>
                         })
