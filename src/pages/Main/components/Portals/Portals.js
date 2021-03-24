@@ -91,10 +91,10 @@ export default function Portals() {
             justify='center'
         >
             <Grid className={classes.portalsColumn} item xs={12} md={4}>
-                <Typography align='center' className={classes.portalsDescr}>
+                <Box align='center' className={classes.portalsDescr}>
                     {portalsSpinner ? (
                         <Box component='span' className={classes.highlight}>
-                            <CircularProgress color="inherit" size={22} style={{marginBottom: -5}} />
+                            <CircularProgress components='span' color="inherit" size={22} style={{marginBottom: -5}} />
                         </Box>
                     ) : (
                         <Box component='span' className={classes.highlight}>
@@ -102,7 +102,7 @@ export default function Portals() {
                         </Box>
                     )}
                     <Box component='span'>{ eegg ? '/10000 are sealed!' : ' portals are opened!' }</Box>
-                </Typography>
+                </Box>
             </Grid>
             <Grid className={classes.portalsColumn} container item justify='center' xs={12} md={2}>
                 <img
