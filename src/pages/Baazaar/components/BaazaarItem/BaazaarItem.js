@@ -1,7 +1,7 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from '@material-ui/core/styles';
-import {Box, Button, Link, Typography} from "@material-ui/core";
+import {Box, Button, Link, MenuItem, Select, Typography} from "@material-ui/core";
 import classNames from 'classnames';
 
 const useStyles = makeStyles((theme) => ({
@@ -61,6 +61,35 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const getItemType = (item) => {
+    const itemMap = {
+        'ERC721Listing': {
+            '0': () => {
+                return 'closed_portal';
+            },
+            '2': () => {
+                return 'open_portal';
+            },
+            '3': () => {
+                return 'aavegotchi';
+            }
+        },
+        'ERC1155Listing': {
+            '0': () => {
+                return 'wearable';
+            },
+            '2': () => {
+                return 'consumable';
+            },
+            '3': () => {
+                return 'ticket';
+            }
+        }
+    };
+
+    return itemMap[item.__typename][item.category]();
+}
+
 const getWearableImg = (item) => {
     const typeMap = {
         wearable: () => returnWearable(),
@@ -71,12 +100,13 @@ const getWearableImg = (item) => {
             return require(`../../../../assets/images/portal-open.svg`).default;
         },
         aavegotchi: () => returnAavegotchi(),
-        consumable: () => returnWearable()
-    }
+        consumable: () => returnWearable(),
+        ticket: () => returnTicket()
+    };
 
     function returnWearable() {
         try {
-            return require(`../../../../assets/wearables/${item.token.item_id}.svg`).default;
+            return require(`../../../../assets/wearables/${item.erc1155TypeId}.svg`).default;
         } catch (error) {
             return require(`../../../../assets/images/no-image2.svg`).default;
         }
@@ -84,20 +114,47 @@ const getWearableImg = (item) => {
 
     function returnAavegotchi() {
         try {
-            return require(`../../../../assets/svgs/${item.token.item_id}.svg`).default;
+            return require(`../../../../assets/svgs/${item.tokenId}.svg`).default;
         } catch (error) {
             return require(`../../../../assets/images/no-image2.svg`).default;
         }
     }
 
-    return typeMap[item._type]();
+    function returnTicket() {
+        try {
+            return require(`../../../../assets/tickets/${getItemRarity(item)}.svg`).default;
+        } catch (error) {
+            return require(`../../../../assets/images/no-image2.svg`).default;
+        }
+    }
+
+    return typeMap[getItemType(item)]();
 };
 
 const getItemRarity = (item) => {
-    if (item._type === 'wearable') {
-        return item?.token?.rarity || 'No_rarity';
+    if (item.__typename === 'ERC1155Listing') {
+        return getRarityName(item.rarityLevel);
     } else {
-        return 'No_rarity';
+        return 'no_rarity';
+    }
+
+    function getRarityName(id) {
+        switch (id) {
+            case '0':
+                return 'common';
+            case '1':
+                return 'uncommon';
+            case '2':
+                return 'rare';
+            case '3':
+                return 'legendary';
+            case '4':
+                return 'mythical';
+            case '5':
+                return 'godlike';
+            default:
+                return 'no-rarity'
+        }
     }
 };
 
@@ -109,13 +166,26 @@ const getItemRarityTitle = (item) => {
     }
 };
 
-const getItemUrl = (url) => {
-    const splittedUrl = url.split('www.');
+const getItemUrl = (item) => {
+   try {
+       return `https://aavegotchi.com/baazaar/${item.__typename === "ERC1155Listing" ? 'erc1155' : 'erc721'}/${item.id}`;
+   } catch (error) {
+       console.error(error);
+       return 'https://aavegotchi.com/baazaar'
+   }
+};
 
-    if (splittedUrl.length > 1) {
-        return splittedUrl.join('');
+const trimPrice = (price) => {
+    if (price % 1 === 0) {
+        return price;
     } else {
-        return url;
+        let cachedPrice = price.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
+
+        while (cachedPrice.charAt(cachedPrice.length-1) === '0') {
+            cachedPrice = cachedPrice.substring(0, cachedPrice.length - 1);
+        }
+
+        return parseFloat(cachedPrice);
     }
 };
 
@@ -135,7 +205,7 @@ export default function BaazaarItem({item}) {
                         </Typography>
                     </Grid>
                     <Grid className={classes.itemImg} item xs={12}>
-                        <img src={getWearableImg(item)} alt={item.listing_id} />
+                        <img src={getWearableImg(item)} alt={item.id} />
                     </Grid>
                     <Grid item xs={6}>
                         <Typography
@@ -160,13 +230,13 @@ export default function BaazaarItem({item}) {
                                 className={classes.price}
                                 variant={'caption'}
                             >
-                                {parseInt(item.price)}
+                                {trimPrice(item.priceInWei/1e18)}
                             </Typography>
                         </Grid>
                         <Grid item xs={6}>
                             <Button
                                 fullWidth
-                                href={getItemUrl(item.url)}
+                                href={getItemUrl(item)}
                                 color={'primary'}
                                 variant={'contained'}
                                 target={'_blank'}

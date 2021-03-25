@@ -31,11 +31,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function BaazaarSidebar({loadBaazaarGoods}) {
+export default function BaazaarSidebar({loadBaazaarGoods, defaultGoodsType, defaultOrdering}) {
     const classes = useStyles();
-    const [type, setType] = useState('');
+    const [type, setType] = useState(defaultGoodsType);
     const [rarity, setRarity] = useState('');
-    const [ordering, setOrdering] = useState('-time_created');
+    const [ordering, setOrdering] = useState(defaultOrdering);
     const fromRef = useRef();
     const toRef = useRef();
 
@@ -74,10 +74,10 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                         value={ordering}
                         onChange={onSortByChange}
                     >
-                        <MenuItem value={'price'}>Price: lowest first</MenuItem>
-                        <MenuItem value={'-price'}>Price: highest first</MenuItem>
-                        <MenuItem value={'-time_created'}>Latest</MenuItem>
-                        <MenuItem value={'time_created'}>Oldest</MenuItem>
+                        <MenuItem value={'priceInWei-asc'}>Price: lowest first</MenuItem>
+                        <MenuItem value={'priceInWei-desc'}>Price: highest first</MenuItem>
+                        <MenuItem value={'timeCreated-desc'}>Latest</MenuItem>
+                        <MenuItem value={'timeCreated-asc'}>Oldest</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>
@@ -101,12 +101,12 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                         value={type}
                         onChange={onTypeChange}
                     >
-                        <MenuItem value={''}><em>All</em></MenuItem>
-                        <MenuItem value={'wearable'}>Wearable</MenuItem>
-                        <MenuItem value={'closed_portal'}>Closed portal</MenuItem>
-                        <MenuItem value={'open_portal'}>Open portal</MenuItem>
-                        <MenuItem value={'aavegotchi'}>Aavegotchi</MenuItem>
-                        <MenuItem value={'consumable'}>Consumable</MenuItem>
+                        <MenuItem value={'erc721Listings-0'}>Closed portal</MenuItem>
+                        <MenuItem value={'erc721Listings-2'}>Open portal</MenuItem>
+                        <MenuItem value={'erc721Listings-3'}>Aavegotchi</MenuItem>
+                        <MenuItem value={'erc1155Listings-0'}>Wearable</MenuItem>
+                        <MenuItem value={'erc1155Listings-2'}>Consumable</MenuItem>
+                        <MenuItem value={'erc1155Listings-3'}>Tickets</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>
@@ -122,12 +122,12 @@ export default function BaazaarSidebar({loadBaazaarGoods}) {
                         onChange={onRarityChange}
                     >
                         <MenuItem value={''}><em>All</em></MenuItem>
-                        <MenuItem className={classes.common} value={'common'}>Common</MenuItem>
-                        <MenuItem className={classes.uncommon} value={'uncommon'}>Uncommon</MenuItem>
-                        <MenuItem className={classes.rare} value={'rare'}>Rare</MenuItem>
-                        <MenuItem className={classes.legendary} value={'legendary'}>Legendary</MenuItem>
-                        <MenuItem className={classes.mythical} value={'mythical'}>Mythical</MenuItem>
-                        <MenuItem className={classes.godlike} value={'godlike'}>Godlike</MenuItem>
+                        <MenuItem className={classes.common} value={'0'}>Common</MenuItem>
+                        <MenuItem className={classes.uncommon} value={'1'}>Uncommon</MenuItem>
+                        <MenuItem className={classes.rare} value={'2'}>Rare</MenuItem>
+                        <MenuItem className={classes.legendary} value={'3'}>Legendary</MenuItem>
+                        <MenuItem className={classes.mythical} value={'4'}>Mythical</MenuItem>
+                        <MenuItem className={classes.godlike} value={'5'}>Godlike</MenuItem>
                     </Select>
                 </FormControl>
             </Grid>
