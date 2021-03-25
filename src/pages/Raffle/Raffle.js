@@ -119,9 +119,9 @@ export default function Raffle() {
                 setTickets(ticketsCache);
                 setLastTicketInfo(JSON.stringify(response.data));
                 setSnackbarShowsOnFirstLoading(false);
-                setSupplySpinner(false);
             }
-        })
+            setSupplySpinner(false);
+        });
     };
 
     const getAveragePrices = () => {
