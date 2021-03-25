@@ -2,8 +2,7 @@ import React from 'react';
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from '@material-ui/core/styles';
 import BaazaarItem from "../BaazaarItem/BaazaarItem";
-import Pagination from '@material-ui/lab/Pagination';
-import {Alert} from "@material-ui/lab";
+import Pagination from '../Pagination/Pagination';
 import {Typography} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,39 +26,25 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function BaazaarBody({goods, paginationCount, onPageChange, setPage, page}) {
+export default function BaazaarBody({goods, page, limit, onNextPageClick, onPrevPageClick}) {
     const classes = useStyles();
-
-    const onPaginationClick = (event, newPage) => {
-        setPage(newPage);
-        onPageChange(newPage);
-    };
 
     return (
         <Grid className={classes.baazaarBody} container item xs={12} sm={8} md={9} lg={9} xl={10} spacing={2}>
-            <Grid item xs={12}>
-                <Alert className={classes.warning} variant="outlined" severity="warning">Spooky Market is in beta version. Some items may be out of sync for up to 5 min.</Alert>
-            </Grid>
             {
                 // eslint-disable-next-line array-callback-return
-                goods.filter((item) => {
-                    if (item.token && item._type && item.price) {
-                        return item;
-                    }
-                }).map((item) => {
-                     return <BaazaarItem key={item.listing_id} item={item} />
+                goods.map((item) => {
+                     return <BaazaarItem key={item.id} item={item} />
                 })
             }
             <Grid className={classes.pagination} item xs={12}>
                 {
                     goods.length ? <Pagination
-                            count={paginationCount}
-                            variant="outlined"
-                            color="primary"
-                            page={page}
-                            onChange={onPaginationClick}
-                            shape="rounded"
-                            size={'large'}
+                        page={page}
+                        prevPageVisibility={page === 1}
+                        nextPageVisibility={goods.length < limit}
+                        onNextPageClick={onNextPageClick}
+                        onPrevPageClick={onPrevPageClick}
                         /> :
                         <Typography className={classes.noGoods} variant={'caption'}>Spooky Market has no such goods :(</Typography>
                 }
