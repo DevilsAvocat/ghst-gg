@@ -12,7 +12,7 @@ var paginationConfigs = {
 
 var defaults = {
     defaultGoodsType: 'erc1155Listings-3',
-    defaultOrdering: 'priceInWei-asc'
+    defaultOrdering: 'timeCreated-desc'
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -157,8 +157,8 @@ export default function Baazaar() {
         const params = {
             skip: (page - 1) * paginationConfigs.limit,
             limit: paginationConfigs.limit,
-            type: 'erc1155Listings-3',
-            ordering: 'priceInWei-asc'
+            type: defaults.defaultGoodsType,
+            ordering: defaults.defaultOrdering
         };
 
         getBaazaarItems(params);
