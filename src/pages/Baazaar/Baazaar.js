@@ -16,6 +16,9 @@ var defaults = {
 };
 
 const useStyles = makeStyles((theme) => ({
+    baazaar: {
+        padding: 24
+    },
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff'
@@ -166,7 +169,7 @@ export default function Baazaar() {
     }, [getBaazaarItems]);
 
     return (
-        <Grid container item>
+        <Grid className={classes.baazaar} container spacing={3}>
             <BaazaarSidebar
                 loadBaazaarGoods={onLoadBaazaarItemsClick}
                 defaultGoodsType={defaults.defaultGoodsType}
