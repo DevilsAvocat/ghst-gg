@@ -19,7 +19,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
     return (
         <Grid item>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={3}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h6' className={classes.subtitle}>Your Tickets</Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
@@ -98,7 +98,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={3}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h6' className={classes.subtitle}>Items in Raffle</Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
@@ -118,7 +118,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={3}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Tickets Supply
                         <Tooltip
@@ -159,7 +159,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={3}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Frens market cap
                         <Tooltip
@@ -199,7 +199,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={3}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Estimated baazaar price
                         <Tooltip
@@ -240,7 +240,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={3}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Your items
                         <Tooltip
