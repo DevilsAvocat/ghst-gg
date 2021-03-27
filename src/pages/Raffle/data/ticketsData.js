@@ -4,6 +4,7 @@ export const ticketsData = [
         items: 6000,
         supply: 0,
         price: 0,
+        priceInFrens: 50,
         cost: 0,
         chance: 0,
         wearables: [
@@ -20,6 +21,7 @@ export const ticketsData = [
         items: 3250,
         supply: 0,
         price: 0,
+        priceInFrens: 250,
         cost: 0,
         chance: 0,
         wearables: [
@@ -37,6 +39,7 @@ export const ticketsData = [
         items: 1625,
         supply: 0,
         price: 0,
+        priceInFrens: 500,
         cost: 0,
         chance: 0,
         wearables: [
@@ -54,6 +57,7 @@ export const ticketsData = [
         items: 450,
         supply: 0,
         price: 0,
+        priceInFrens: 2500,
         cost: 0,
         chance: 0,
         wearables: [
@@ -69,6 +73,7 @@ export const ticketsData = [
         items: 175,
         supply: 0,
         price: 0,
+        priceInFrens: 10000,
         cost: 0,
         chance: 0,
         wearables: [
@@ -83,6 +88,7 @@ export const ticketsData = [
         items: 13,
         supply: 0,
         price: 0,
+        priceInFrens: 50000,
         cost: 0,
         chance: 0,
         wearables: [

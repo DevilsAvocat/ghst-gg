@@ -9,6 +9,7 @@ import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
 import {commonQuery, godlikeQuery, legendaryQuery, mythicalQuery, rareQuery, uncommonQuery} from './data/queries';
+import {formatNumber} from "../../utils/formatNumber";
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -87,7 +88,7 @@ export default function Raffle() {
             ticketsLocalRef[i] = {
                 ...ticket,
                 chance: chance > 1 ? `x${chance.toFixed(2)}` : chance > 0 ? `${percentage}% for 1` : 0,
-                cost: cost > price ? cost.toFixed(0) : price,
+                cost: cost > price ? formatNumber(cost) : price,
                 wearables: wearables
             };
         });

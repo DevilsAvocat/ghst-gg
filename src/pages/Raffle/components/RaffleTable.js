@@ -4,6 +4,7 @@ import {Box, CircularProgress, Grid, TextField, Tooltip, Typography} from '@mate
 import classNames from 'classnames';
 import {useStyles} from '../styles';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import {formatNumber} from '../../../utils/formatNumber';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
@@ -18,7 +19,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
     return (
         <Grid item>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={2}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h6' className={classes.subtitle}>Your Tickets</Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
@@ -97,7 +98,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={2}>
+                <Grid item xs={12} md={3}>
                     <Typography variant='h6' className={classes.subtitle}>Items in Raffle</Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
@@ -109,7 +110,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                     align='center'
                                     className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
                                 >
-                                    {ticket.items}
+                                    {formatNumber(ticket.items)}
                                 </Typography>
                             </Grid>
                         })
@@ -117,39 +118,38 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={2}>
-                    <Tooltip
-                        placement='right'
-                        arrow
-                        enterTouchDelay={0}
-                        title={
-                            <React.Fragment>
-                                <Typography>The number of tickets is updated every 3 minutes. There is no need to reload the page</Typography>
-                            </React.Fragment>
-                        }
-                    >
-                        <Typography variant='h6' className={classes.subtitle}>
-                            Tickets Supply
+                <Grid item xs={12} md={3}>
+                    <Typography variant='h6' className={classes.subtitle}>
+                        Tickets Supply
+                        <Tooltip
+                            placement='right'
+                            arrow
+                            enterTouchDelay={0}
+                            title={
+                                <React.Fragment>
+                                    <Typography>The number of tickets is updated every 3 minutes. There is no need to reload the page</Typography>
+                                </React.Fragment>
+                            }
+                        >
                             <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
-                        </Typography>
-
-                    </Tooltip>
+                        </Tooltip>
+                    </Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
                         tickets.map((ticket, i) => {
                             return <Grid item xs={4} sm={true} key={i} className={classes.ticketBg}>
                                 <img src={getTicketIconPath(ticket.type)} alt={'ticket-' + ticket.type} />
-                                <Box align='center' className={classNames(classes.textHighlight, ticket.type)}>
+                                <Box align='center' className={classNames(classes.textHighlight, ticket.type, classes.ticketVisual)}>
                                     {supplySpinner ? (
-                                        <CircularProgress color="inherit" size={20} style={{marginBottom: -10}} />
+                                        <CircularProgress color="inherit" size={20} style={{bottom: -5, position: 'relative'}}/>
                                     ) : (
                                         <Typography
                                             variant='body1'
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            {ticket.supply}
+                                            {formatNumber(ticket.supply)}
                                         </Typography>
                                     )}
                                 </Box>
@@ -159,22 +159,62 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={2}>
-                    <Tooltip
-                        placement='right'
-                        arrow
-                        enterTouchDelay={0}
-                        title={
-                            <React.Fragment>
-                                <Typography>Average ticket price on Baazaar for the last 5 trades</Typography>
-                            </React.Fragment>
-                        }
-                    >
-                        <Typography variant='h6' className={classes.subtitle}>
-                            Estimated baazaar price
+                <Grid item xs={12} md={3}>
+                    <Typography variant='h6' className={classes.subtitle}>
+                        Frens market cap
+                        <Tooltip
+                            placement='right'
+                            arrow
+                            enterTouchDelay={0}
+                            title={
+                                <React.Fragment>
+                                    <Typography>Total amount of frens spent to the tickets</Typography>
+                                </React.Fragment>
+                            }
+                        >
                             <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
-                        </Typography>
-                    </Tooltip>
+                        </Tooltip>
+                    </Typography>
+                </Grid>
+                <Grid container item spacing={1} xs={12} md={8} lg={9}>
+                    {
+                        tickets.map((ticket, i) => {
+                            return <Grid item xs={4} sm={true} key={i} className={classNames(classes.chance, ticket.type)}>
+                                <Box align='center' className={classNames(classes.textHighlight, ticket.type, classes.ticketVisual)}>
+                                    {supplySpinner ? (
+                                        <CircularProgress color="inherit" size={20} style={{bottom: -5, position: 'relative'}}/>
+                                    ) : (
+                                        <Typography
+                                            variant='body1'
+                                            align='center'
+                                            className={classNames(classes.tableValue, classes.price)}
+                                        >
+                                            {formatNumber(ticket.supply * ticket.priceInFrens)}
+                                        </Typography>
+                                    )}
+                                </Box>
+                            </Grid>
+                        })
+                    }
+                </Grid>
+            </Grid>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+                <Grid item xs={12} md={3}>
+                    <Typography variant='h6' className={classes.subtitle}>
+                        Estimated baazaar price
+                        <Tooltip
+                            placement='right'
+                            arrow
+                            enterTouchDelay={0}
+                            title={
+                                <React.Fragment>
+                                    <Typography>Average ticket price on Baazaar for the last 5 trades</Typography>
+                                </React.Fragment>
+                            }
+                        >
+                            <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
+                        </Tooltip>
+                    </Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
@@ -200,22 +240,22 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3} lg={2}>
-                    <Tooltip
-                        placement='right'
-                        arrow
-                        enterTouchDelay={0}
-                        title={
-                            <React.Fragment>
-                                <Typography>How many items you will get on average</Typography>
-                            </React.Fragment>
-                        }
-                    >
-                        <Typography variant='h6' className={classes.subtitle}>
-                            Your items
+                <Grid item xs={12} md={3}>
+                    <Typography variant='h6' className={classes.subtitle}>
+                        Your items
+                        <Tooltip
+                            placement='right'
+                            arrow
+                            enterTouchDelay={0}
+                            title={
+                                <React.Fragment>
+                                    <Typography>How many items you will get on average</Typography>
+                                </React.Fragment>
+                            }
+                        >
                             <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
-                        </Typography>
-                    </Tooltip>
+                        </Tooltip>
+                    </Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {

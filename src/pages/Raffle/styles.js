@@ -13,19 +13,21 @@ export const useStyles = makeStyles((theme) => ({
         }
     },
     title: {
-        fontSize: 32,
+        fontSize: 30,
         marginBottom: 40,
         [theme.breakpoints.up('md')]: {
-            fontSize: 36
+            fontSize: 34
         }
     },
     subtitle: {
-        fontSize: 19,
+        fontSize: 18,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        textAlign: 'center',
-        fontWeight: 400
+        fontWeight: 400,
+        [theme.breakpoints.up('md')]: {
+            justifyContent: 'flex-start',
+        }
     },
     subtitleIcon: {
         marginLeft: 8
@@ -198,8 +200,20 @@ export const useStyles = makeStyles((theme) => ({
         '&.godlike': {color: theme.palette.rarity.godlike}
     },
     tableValue: {
-        fontSize: 19,
-        fontWeight: 400
+        fontSize: 16,
+        fontWeight: 400,
+        [theme.breakpoints.up('sm')]: {
+            fontSize: 17
+        },
+        [theme.breakpoints.up('md')]: {
+            fontSize: 18
+        }
+    },
+    ticketVisual: {
+        minHeight: 28,
+        display: 'flex',
+        alignContent: 'center',
+        justifyContent: 'center'
     },
     wearablesTitle: {
         marginBottom: 12,

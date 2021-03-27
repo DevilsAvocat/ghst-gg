@@ -167,19 +167,19 @@ export default function Header() {
                 <Link href='https://discord.gg/NXEEETxSkC' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
                         <img src={ discord } alt='' />
-                        <Box component='span' className={classes.iconButtonText}>125</Box>
+                        <Box component='span' className={classes.iconButtonText}>145</Box>
                     </Button>
                 </Link>
                 <Link href='https://t.me/joinchat/hTAWLbZgrKI4YWJk' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
                         <TelegramIcon />
-                        <Box component='span' className={classes.iconButtonText}>40</Box>
+                        <Box component='span' className={classes.iconButtonText}>48</Box>
                     </Button>
                 </Link>
                 <Link href='https://twitter.com/ghst_gg' className={classes.socialLink} target='_blank'>
                     <Button className={classes.iconButton} aria-label='add an alarm'>
                         <TwitterIcon />
-                        <Box component='span' className={classes.iconButtonText}>148</Box>
+                        <Box component='span' className={classes.iconButtonText}>156</Box>
                     </Button>
                 </Link>
                 <Box className={classes.socialLinkJoin}>
