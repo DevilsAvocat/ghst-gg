@@ -1,10 +1,10 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
-import { Box, Button, Link, MenuItem, Select, Typography } from "@material-ui/core";
+import { Box, Button, Link, Typography } from "@material-ui/core";
 import classNames from 'classnames';
 import ghstIcon from '../../../../assets/images/ghsttoken.png';
-import itemUtils from "../../../../utils/itemUtils";
-import commonUtils from "../../../../utils/commonUtils";
+import itemUtils from '../../../../utils/itemUtils';
+import commonUtils from '../../../../utils/commonUtils';
 import useStyles from './styles';
 
 export default function BaazaarItem({item}) {
