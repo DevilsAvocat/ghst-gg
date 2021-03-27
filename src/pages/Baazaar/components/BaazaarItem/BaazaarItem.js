@@ -1,249 +1,95 @@
 import React from 'react';
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from '@material-ui/core/styles';
-import {Box, Button, Link, MenuItem, Select, Typography} from "@material-ui/core";
+import { Box, Button, Link, Typography } from "@material-ui/core";
 import classNames from 'classnames';
-
-const useStyles = makeStyles((theme) => ({
-    baazaarItem: {
-        marginBottom: 0,
-        borderWidth: 2,
-        borderStyle: 'solid',
-        borderColor: theme.palette.text.primary,
-        padding: '17px 7px',
-        borderRadius: 10,
-        '&.common': { borderColor: theme.palette.rarity.common },
-        '&.uncommon': { borderColor: theme.palette.rarity.uncommon },
-        '&.rare': { borderColor: theme.palette.rarity.rare },
-        '&.legendary': { borderColor: theme.palette.rarity.legendary },
-        '&.mythical': { borderColor: theme.palette.rarity.mythical },
-        '&.godlike': { borderColor: theme.palette.rarity.godlike }
-    },
-    itemRarity: {
-        width: '100%',
-        display: 'block',
-        textAlign: 'center',
-        fontSize: 16,
-        textTransform: 'capitalize',
-        height: 26,
-        '&.common': { color: theme.palette.rarity.common },
-        '&.uncommon': { color: theme.palette.rarity.uncommon },
-        '&.rare': { color: theme.palette.rarity.rare },
-        '&.legendary': { color: theme.palette.rarity.legendary },
-        '&.mythical': { color: theme.palette.rarity.mythical },
-        '&.godlike': { color: theme.palette.rarity.godlike }
-    },
-    quantityAndSeller: {
-        width: '100%',
-        display: 'block',
-        padding: '10px 0',
-        color: theme.palette.text.primary,
-        textAlign: 'center'
-    },
-    price: {
-        width: '100%',
-        display: 'block',
-        textAlign: 'center',
-        padding: '4px 0',
-        fontWeight: 700,
-        color: theme.palette.primary.main,
-        fontSize: 16
-    },
-    itemImg: {
-        height: 130,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        '& > img': {
-            maxHeight: 80,
-            filter: 'drop-shadow( 0px 0px 8px rgba(255,255,209,.6))'
-        }
-    }
-}));
-
-const getItemType = (item) => {
-    const itemMap = {
-        'ERC721Listing': {
-            '0': () => {
-                return 'closed_portal';
-            },
-            '2': () => {
-                return 'open_portal';
-            },
-            '3': () => {
-                return 'aavegotchi';
-            }
-        },
-        'ERC1155Listing': {
-            '0': () => {
-                return 'wearable';
-            },
-            '2': () => {
-                return 'consumable';
-            },
-            '3': () => {
-                return 'ticket';
-            }
-        }
-    };
-
-    return itemMap[item.__typename][item.category]();
-}
-
-const getWearableImg = (item) => {
-    const typeMap = {
-        wearable: () => returnWearable(),
-        closed_portal: () => {
-            return require(`../../../../assets/images/portal-sealed.svg`).default;
-        },
-        open_portal: () => {
-            return require(`../../../../assets/images/portal-open.svg`).default;
-        },
-        aavegotchi: () => returnAavegotchi(),
-        consumable: () => returnWearable(),
-        ticket: () => returnTicket()
-    };
-
-    function returnWearable() {
-        try {
-            return require(`../../../../assets/wearables/${item.erc1155TypeId}.svg`).default;
-        } catch (error) {
-            return require(`../../../../assets/images/no-image2.svg`).default;
-        }
-    }
-
-    function returnAavegotchi() {
-        try {
-            return require(`../../../../assets/svgs/${item.tokenId}.svg`).default;
-        } catch (error) {
-            return require(`../../../../assets/images/no-image2.svg`).default;
-        }
-    }
-
-    function returnTicket() {
-        try {
-            return require(`../../../../assets/tickets/${getItemRarity(item)}.svg`).default;
-        } catch (error) {
-            return require(`../../../../assets/images/no-image2.svg`).default;
-        }
-    }
-
-    return typeMap[getItemType(item)]();
-};
-
-const getItemRarity = (item) => {
-    if (item.__typename === 'ERC1155Listing') {
-        return getRarityName(item.rarityLevel);
-    } else {
-        return 'no_rarity';
-    }
-
-    function getRarityName(id) {
-        switch (id) {
-            case '0':
-                return 'common';
-            case '1':
-                return 'uncommon';
-            case '2':
-                return 'rare';
-            case '3':
-                return 'legendary';
-            case '4':
-                return 'mythical';
-            case '5':
-                return 'godlike';
-            default:
-                return 'no-rarity'
-        }
-    }
-};
-
-const getItemRarityTitle = (item) => {
-    if (item._type === 'wearable') {
-        return item?.token?.rarity || ' ';
-    } else {
-        return '';
-    }
-};
-
-const getItemUrl = (item) => {
-   try {
-       return `https://aavegotchi.com/baazaar/${item.__typename === "ERC1155Listing" ? 'erc1155' : 'erc721'}/${item.id}`;
-   } catch (error) {
-       console.error(error);
-       return 'https://aavegotchi.com/baazaar'
-   }
-};
-
-const trimPrice = (price) => {
-    if (price % 1 === 0) {
-        return price;
-    } else {
-        let cachedPrice = price.toString().match(/^-?\d+(?:\.\d{0,3})?/)[0];
-
-        while (cachedPrice.charAt(cachedPrice.length-1) === '0') {
-            cachedPrice = cachedPrice.substring(0, cachedPrice.length - 1);
-        }
-
-        return parseFloat(cachedPrice);
-    }
-};
+import ghstIcon from '../../../../assets/images/ghsttoken.png';
+import itemUtils from '../../../../utils/itemUtils';
+import commonUtils from '../../../../utils/commonUtils';
+import useStyles from './styles';
 
 export default function BaazaarItem({item}) {
     const classes = useStyles();
 
+    const getSellerShortAddress = (item) => {
+        let sellerAddress = item.seller;
+
+        return `${sellerAddress.substring(0, 4)}...${sellerAddress.substring(sellerAddress.length - 4, sellerAddress.length)}`;
+    };
+
     return (
-        <Grid item xs={6} sm={6} md={4} lg={3} xl={2} key={item.listing_id}>
-            <Box className={classNames(classes.baazaarItem, getItemRarity(item))}>
+        <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={item.listing_id}>
+            <Box className={classNames(classes.baazaarItem, itemUtils.getItemRarityName(item))}>
                 <Grid container>
                     <Grid item xs={12}>
                         <Typography
-                            className={classNames(classes.itemRarity, getItemRarity(item))}
+                            className={classNames(classes.itemRarity, itemUtils.getItemRarityName(item))}
                             variant={'caption'}
                         >
-                            {getItemRarityTitle(item)}
+                            {itemUtils.getItemRarityName(item)}
                         </Typography>
                     </Grid>
-                    <Grid className={classes.itemImg} item xs={12}>
-                        <img src={getWearableImg(item)} alt={item.id} />
-                    </Grid>
-                    <Grid item xs={6}>
+                    {
+                        (itemUtils.getItemType(item) === 'wearable' ||
+                        itemUtils.getItemType(item) === 'consumable') && <Grid item xs={12}>
+                            <Typography
+                                className={classes.itemName}
+                                variant={'caption'}
+                            >
+                                {itemUtils.getItemNameById(item.erc1155TypeId)}
+                            </Typography>
+                        </Grid>
+                    }
+                    {
+                        (itemUtils.getItemType(item) === 'wearable' ||
+                            itemUtils.getItemType(item) === 'consumable') && <Grid item xs={12}>
+                            <Typography
+                                className={classes.itemStats}
+                                variant={'caption'}
+                            >
+                                {itemUtils.getItemStatsById(item.erc1155TypeId)}
+                            </Typography>
+                        </Grid>
+                    }
+                    <Grid item xs={12}>
                         <Typography
                             className={classes.quantityAndSeller}
                             variant={'caption'}
                         >
-                            {item.quantity} pcs.
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6}>
-                        <Link
+                            {item.quantity} listed by <Link
                             className={classes.quantityAndSeller}
                             href={`https://aavegotchi.com/baazaar/owner/${item.seller}`}
                             target={'_blank'}
                         >
-                            seller
+                            { getSellerShortAddress(item) }
                         </Link>
+                        </Typography>
                     </Grid>
-                    <Grid item container xs={12} spacing={1}>
-                        <Grid item xs={6}>
-                            <Typography
-                                className={classes.price}
-                                variant={'caption'}
-                            >
-                                {trimPrice(item.priceInWei/1e18)}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Button
-                                fullWidth
-                                href={getItemUrl(item)}
-                                color={'primary'}
-                                variant={'contained'}
-                                target={'_blank'}
-                            >
-                                Buy
-                            </Button>
-                        </Grid>
+                    <Grid className={classes.itemImg} item xs={12}>
+                        <img src={itemUtils.getItemImg(item)} alt={item.id} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Typography
+                            className={classes.price}
+                            variant={'caption'}
+                        >
+                            <Box className={classes.priceImg}><img src={ghstIcon} alt='GHST' /></Box>
+                            <Box className={classes.priceText}>
+                                {
+                                    commonUtils.formatNumberWithCommas(commonUtils.trimPriceToThreeDecimal(item.priceInWei/1e18))
+                                }
+                            </Box>
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} className={classes.goToShopWrap}>
+                        <Button
+                            className={classes.goToShop}
+                            href={itemUtils.getItemUrl(item)}
+                            color={'secondary'}
+                            variant={'contained'}
+                            target={'_blank'}
+                        >
+                            Go to shop
+                        </Button>
                     </Grid>
                 </Grid>
             </Box>

@@ -4,7 +4,7 @@ import {Box, CircularProgress, Grid, TextField, Tooltip, Typography} from '@mate
 import classNames from 'classnames';
 import {useStyles} from '../styles';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import {formatNumber} from '../../../utils/formatNumber';
+import commonUtils from '../../../utils/commonUtils';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
@@ -110,7 +110,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                     align='center'
                                     className={classNames(classes.textHighlight, ticket.type, classes.tableValue)}
                                 >
-                                    {formatNumber(ticket.items)}
+                                    {commonUtils.formatNumber(ticket.items)}
                                 </Typography>
                             </Grid>
                         })
@@ -149,7 +149,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            {formatNumber(ticket.supply)}
+                                            {commonUtils.formatNumber(ticket.supply)}
                                         </Typography>
                                     )}
                                 </Box>
@@ -189,7 +189,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            {formatNumber(ticket.supply * ticket.priceInFrens)}
+                                            {commonUtils.formatNumber(ticket.supply * ticket.priceInFrens)}
                                         </Typography>
                                     )}
                                 </Box>

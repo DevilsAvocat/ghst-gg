@@ -3,7 +3,7 @@ import { createMuiTheme } from '@material-ui/core';
 export const theme = createMuiTheme({
     palette: {
         common: {
-          white: '#c3c5cb'
+          white: '#fff'
         },
         type: "dark",
         primary: {
@@ -18,7 +18,7 @@ export const theme = createMuiTheme({
             default: '#2c2f36'
         },
         text: {
-            primary: '#c3c5cb'
+            primary: '#fff'
         },
         rarity: {
             common: 'rgb(128, 100, 255)',
@@ -27,6 +27,10 @@ export const theme = createMuiTheme({
             legendary: 'rgb(255, 195, 107)',
             mythical: 'rgb(255, 150, 255)',
             godlike: 'rgb(81, 255, 168)'
+        },
+        customColors: {
+            lightGray: '#9A9EAA',
+            grayBorder: '#C3C5CB'
         }
     },
     typography: {

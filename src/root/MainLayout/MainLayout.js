@@ -30,10 +30,12 @@ export default function Account() {
             container
             className={classes.wrap}
         >
-            <Helmet>
-                <title>GHST_gg</title>
-            </Helmet>
-            <Header />
+            <Grid item>
+                <Helmet>
+                    <title>GHST_gg</title>
+                </Helmet>
+                <Header />
+            </Grid>
             <Grid item className={classes.content}>
                 <Switch>
                     <Route exact path={`/`} component={ Main } />
@@ -43,7 +45,9 @@ export default function Account() {
                     <Redirect from='*' to='/404' />
                 </Switch>
             </Grid>
-            <Footer />
+            <Grid>
+                <Footer />
+            </Grid>
         </Grid>
     );
 }

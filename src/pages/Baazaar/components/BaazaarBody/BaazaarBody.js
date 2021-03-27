@@ -1,9 +1,9 @@
 import React from 'react';
-import Grid from "@material-ui/core/Grid";
+import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import BaazaarItem from "../BaazaarItem/BaazaarItem";
+import BaazaarItem from '../BaazaarItem/BaazaarItem';
 import Pagination from '../Pagination/Pagination';
-import {Typography} from "@material-ui/core";
+import {Typography} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     baazaarBody: {
@@ -30,24 +30,26 @@ export default function BaazaarBody({goods, page, limit, onNextPageClick, onPrev
     const classes = useStyles();
 
     return (
-        <Grid className={classes.baazaarBody} container item xs={12} sm={8} md={9} lg={9} xl={10} spacing={2}>
-            {
-                // eslint-disable-next-line array-callback-return
-                goods.map((item) => {
-                     return <BaazaarItem key={item.id} item={item} />
-                })
-            }
-            <Grid className={classes.pagination} item xs={12}>
+        <Grid className={classes.baazaarBody} item xs={12} sm={12} md={9} lg={9} xl={10}>
+            <Grid container spacing={3}>
                 {
-                    goods.length ? <Pagination
-                        page={page}
-                        prevPageVisibility={page === 1}
-                        nextPageVisibility={goods.length < limit}
-                        onNextPageClick={onNextPageClick}
-                        onPrevPageClick={onPrevPageClick}
-                        /> :
-                        <Typography className={classes.noGoods} variant={'caption'}>Spooky Market has no such goods :(</Typography>
+                    // eslint-disable-next-line array-callback-return
+                    goods.map((item) => {
+                        return <BaazaarItem key={item.id} item={item} />
+                    })
                 }
+                <Grid className={classes.pagination} item xs={12}>
+                    {
+                        goods.length ? <Pagination
+                                page={page}
+                                prevPageVisibility={page === 1}
+                                nextPageVisibility={goods.length < limit}
+                                onNextPageClick={onNextPageClick}
+                                onPrevPageClick={onPrevPageClick}
+                            /> :
+                            <Typography className={classes.noGoods} variant={'caption'}>Spooky Market has no such goods :(</Typography>
+                    }
+                </Grid>
             </Grid>
         </Grid>
     );
