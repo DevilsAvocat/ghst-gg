@@ -44,6 +44,7 @@ export default function Raffle() {
     const [legendaryQuantity, setLegendaryQuantity] = useState('');
     const [mythicalQuantity, setMythicalQuantity] = useState('');
     const [godlikeQuantity, setGodlikeQuantity] = useState('');
+    const [enteredSupplyType, setEnteredSupplyType] = useState(true);
 
     const getTicketQuantity = (type) => {
         const map = {
@@ -75,10 +76,18 @@ export default function Raffle() {
     };
 
     const onFieldChange = () => {
+        countTicketsChance();
+    };
+
+    const getTicketSupply = (ticket) => {
+        return enteredSupplyType ? ticket.entered : ticket.supply;
+    }
+
+    const countTicketsChance = () => {
         let ticketsLocalRef = [...tickets];
 
         ticketsLocalRef.forEach((ticket, i) => {
-            let chance = getTicketQuantity(ticket.type) / ticket.supply * ticket.items;
+            let chance = getTicketQuantity(ticket.type) / getTicketSupply(ticket) * ticket.items;
             let percentage = (chance * 100).toFixed(1);
             let price = ticket.price;
             let cost = getTicketQuantity(ticket.type) * price;
@@ -94,7 +103,7 @@ export default function Raffle() {
         });
 
         setTickets(ticketsLocalRef);
-    };
+    }
 
     const countWearablesChance = (wearables, itemsAmount, chance) => {
         wearables.forEach((wearable, i) => {
@@ -109,16 +118,20 @@ export default function Raffle() {
         setSupplySpinner(true);
 
         axios.get('https://api.ghst.gg/baazaar/tickets').then((response) => {
-            if (lastTicketInfo !== JSON.stringify(response.data)) {
-                let ticketsActualSupply = Object.values(response.data);
+            let data = response.data;
+            let supplyArray = [data.common, data.uncommon, data.rare, data.legendary, data.mythical, data.godlike];
+            let enteredArray = [data.common_entered, data.uncommon_entered, data.rare_entered, data.legendary_entered, data.mythical_entered, data.godlike_entered];
 
-                ticketsActualSupply.forEach((supply, i) => {
+            if (lastTicketInfo !== JSON.stringify(supplyArray)) {
+
+                supplyArray.forEach((supply, i) => {
                     ticketsCache[i].supply = supply;
+                    ticketsCache[i].entered = enteredArray[i];
                 });
 
                 setTicketsCache(ticketsCache);
                 setTickets(ticketsCache);
-                setLastTicketInfo(JSON.stringify(response.data));
+                setLastTicketInfo(JSON.stringify(supplyArray));
                 setSnackbarShowsOnFirstLoading(false);
             }
             setSupplySpinner(false);
@@ -152,6 +165,10 @@ export default function Raffle() {
     },[]);
 
     useEffect(() => {
+        countTicketsChance();
+    },[enteredSupplyType]);
+
+    useEffect(() => {
         getAveragePrices();
     },[ticketsCache]);
 
@@ -175,7 +192,7 @@ export default function Raffle() {
             <Helmet>
                 <title>Raffle #4 Calculator</title>
             </Helmet>
-            <Grid container className={classes.titleWrapper}>
+            <Grid container alignContent={'center'} className={classes.titleWrapper}>
                 <Grid item xs={12} md={6}>
                     <Typography variant='h1' className={classes.title}>Raffle #4 Calculator</Typography>
                 </Grid>
@@ -197,6 +214,8 @@ export default function Raffle() {
                 setLegendaryQuantity={setLegendaryQuantity}
                 setMythicalQuantity={setMythicalQuantity}
                 setGodlikeQuantity={setGodlikeQuantity}
+                enteredSupplyType={enteredSupplyType}
+                setEnteredSupplyType={setEnteredSupplyType}
             />
             <RaffleWearables tickets={tickets} />
         </Container>

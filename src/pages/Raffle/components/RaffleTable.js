@@ -9,14 +9,12 @@ import commonUtils from '../../../utils/commonUtils';
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 
-export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setCommonQuantity, setUncommonQuantity,
+export default function RaffleTable({tickets, supplySpinner, pricesSpinner, enteredSupplyType, setEnteredSupplyType, setCommonQuantity, setUncommonQuantity,
                                         setRareQuantity, setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
     const classes = useStyles();
-    const [supplyType, setSupplyType] = useState('entered');
 
-    const handleTicketsSupply = (event, newType) => {
-        console.log(newType)
-        setSupplyType(newType);
+    const handleTicketsSupply = (event, type) => {
+        setEnteredSupplyType(type);
     };
 
     const getTicketIconPath = (iconId) => {
@@ -142,17 +140,17 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                         </Tooltip>
                     </Typography>
                     <ToggleButtonGroup
-                        value={supplyType}
+                        value={enteredSupplyType}
                         exclusive
                         onChange={handleTicketsSupply}
                         aria-label='tickets supply'
                         size='small'
                         className={classes.toggleButtonWrapper}
                     >
-                        <ToggleButton className={classes.toggleButton} value='entered' aria-label='entered supply'>
+                        <ToggleButton className={classes.toggleButton} value={true} aria-label='entered supply'>
                             Entered
                         </ToggleButton>
-                        <ToggleButton className={classes.toggleButton} value='all' aria-label='all supply'>
+                        <ToggleButton className={classes.toggleButton} value={false} aria-label='all supply'>
                             All
                         </ToggleButton>
                     </ToggleButtonGroup>
@@ -171,7 +169,19 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            {commonUtils.formatNumber(ticket.supply)}
+                                            {enteredSupplyType ? (
+                                                <Box component={'span'} className={classes.enteredValue}>
+                                                    <Box component={'span'}>
+                                                        {commonUtils.formatNumber(ticket.entered)}
+                                                    </Box>
+                                                    <Box component={'span'} className={classNames(classes.enteredValuePerc, 'perc')}>
+                                                        {(ticket.entered * 100 / ticket.supply).toFixed(1)} %
+                                                    </Box>
+                                                </Box>
+
+                                            ) : (
+                                                commonUtils.formatNumber(ticket.supply)
+                                            )}
                                         </Typography>
                                     )}
                                 </Box>

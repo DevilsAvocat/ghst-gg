@@ -255,6 +255,26 @@ export const useStyles = makeStyles((theme) => ({
         alignContent: 'center',
         justifyContent: 'center'
     },
+    enteredValue: {
+        position: 'relative',
+        '&:hover .perc': {
+            opacity: '1',
+            visibility: 'visible'
+        }
+    },
+    enteredValuePerc: {
+        color: 'rgba(255, 255, 255, .7) !important',
+        position: 'absolute',
+        bottom: -13,
+        right: 0,
+        left: 0,
+        textAlign: 'center',
+        opacity: 0,
+        visibility: 'hidden',
+        fontSize: 13,
+        whiteSpace: 'nowrap',
+        transition: 'opacity .2s ease-in-out'
+    },
     wearablesTitle: {
         marginBottom: 12,
         fontSize: 19,
