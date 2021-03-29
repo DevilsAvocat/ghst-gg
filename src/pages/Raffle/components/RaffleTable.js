@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, {useState} from 'react';
 import {Box, CircularProgress, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
 import classNames from 'classnames';
 import {useStyles} from '../styles';
@@ -7,10 +7,17 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import commonUtils from '../../../utils/commonUtils';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
+import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 
 export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setCommonQuantity, setUncommonQuantity,
                                         setRareQuantity, setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
     const classes = useStyles();
+    const [supplyType, setSupplyType] = useState('entered');
+
+    const handleTicketsSupply = (event, newType) => {
+        console.log(newType)
+        setSupplyType(newType);
+    };
 
     const getTicketIconPath = (iconId) => {
         return require(`../../../assets/tickets/${iconId}.svg`).default;
@@ -98,7 +105,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>Items in Raffle</Typography>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
@@ -118,7 +125,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={4} lg={3} className={classes.toggleWrapper}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Tickets Supply
                         <Tooltip
@@ -134,6 +141,21 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                             <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
                         </Tooltip>
                     </Typography>
+                    <ToggleButtonGroup
+                        value={supplyType}
+                        exclusive
+                        onChange={handleTicketsSupply}
+                        aria-label='tickets supply'
+                        size='small'
+                        className={classes.toggleButtonWrapper}
+                    >
+                        <ToggleButton className={classes.toggleButton} value='entered' aria-label='entered supply'>
+                            Entered
+                        </ToggleButton>
+                        <ToggleButton className={classes.toggleButton} value='all' aria-label='all supply'>
+                            All
+                        </ToggleButton>
+                    </ToggleButtonGroup>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
@@ -159,7 +181,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Frens market cap
                         <Tooltip
@@ -199,7 +221,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Estimated baazaar price
                         <Tooltip
@@ -240,7 +262,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                 </Grid>
             </Grid>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Your items
                         <Tooltip

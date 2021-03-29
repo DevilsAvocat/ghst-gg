@@ -12,11 +12,17 @@ export const useStyles = makeStyles((theme) => ({
             padding: '50px 24px',
         }
     },
+    titleWrapper: {
+        textAlign: 'center',
+        marginBottom: 40
+    },
     title: {
         fontSize: 30,
-        marginBottom: 40,
+        marginBottom: 20,
         [theme.breakpoints.up('md')]: {
-            fontSize: 34
+            fontSize: 34,
+            marginBottom: 0,
+            textAlign: 'left'
         }
     },
     subtitle: {
@@ -26,11 +32,45 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         fontWeight: 400,
         [theme.breakpoints.up('md')]: {
-            justifyContent: 'flex-start',
+            justifyContent: 'flex-start'
         }
     },
     subtitleIcon: {
         marginLeft: 8
+    },
+    enterButtonWrapper: {
+        textAlign: 'center',
+        [theme.breakpoints.up('md')]: {
+            textAlign: 'right'
+        }
+    },
+    enterButton: {
+        '&:hover': {
+            textDecoration: 'none'
+        }
+    },
+    toggleWrapper: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        [theme.breakpoints.up('md')]: {
+            justifyContent: 'flex-start'
+        },
+        [theme.breakpoints.up('lg')]: {
+            justifyContent: 'space-between'
+        }
+    },
+    toggleButtonWrapper: {
+        marginLeft: 20,
+        '& .MuiToggleButton-sizeSmall': {
+            padding: '4px 6px'
+        },
+        [theme.breakpoints.up('lg')]: {
+            marginLeft: 5
+        }
+    },
+    toggleButton: {
+        textTransform: 'none !important'
     },
     row: {
         marginBottom: 32

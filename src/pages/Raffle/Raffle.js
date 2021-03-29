@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
 import axios from "axios";
-import {Container, Typography} from '@material-ui/core';
+import {Button, Container, Grid, Link, Typography} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import RaffleTable from './components/RaffleTable';
 import RaffleWearables from './components/RaffleWearables';
@@ -175,7 +175,18 @@ export default function Raffle() {
             <Helmet>
                 <title>Raffle #4 Calculator</title>
             </Helmet>
-            <Typography variant='h1' align='center' className={classes.title}>Raffle #4 Calculator</Typography>
+            <Grid container className={classes.titleWrapper}>
+                <Grid item xs={12} md={6}>
+                    <Typography variant='h1' className={classes.title}>Raffle #4 Calculator</Typography>
+                </Grid>
+                <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
+                    <Link href={'https://www.aavegotchi.com/raffle/3'} className={classes.enterButton} target={'_blank'}>
+                        <Button variant={'contained'} color={'primary'} size={'large'}>
+                            Enter Raffle
+                        </Button>
+                    </Link>
+                </Grid>
+            </Grid>
             <RaffleTable
                 tickets={tickets}
                 supplySpinner={supplySpinner}
