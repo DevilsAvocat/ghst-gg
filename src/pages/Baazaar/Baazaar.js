@@ -147,7 +147,6 @@ export default function Baazaar() {
     const onPaginationClick = (newPage) => {
         const params = {
             ...lastValidParams,
-            ordering: defaults.defaultOrdering,
             skip: (newPage - 1) * paginationConfigs.limit,
             limit: paginationConfigs.limit
         };
