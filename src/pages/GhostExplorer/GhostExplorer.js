@@ -1,16 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, fade, Link, Typography } from '@material-ui/core';
+import { Box, fade, Link, Typography } from '@material-ui/core';
 import classNames from 'classnames';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '100%',
         overflowY: 'auto',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
+        paddingTop: 67
     },
     gotchi: {
         borderRadius: 4,
@@ -53,7 +52,6 @@ var loadNewItemsAfterThisScrollHeight = 2000;
 
 export default function GhostExplorer() {
     const classes = useStyles();
-    const history = useHistory();
     const [gotchies, setGotchies] = useState([]);
     // scrolling
     const scrollingContainerRef = useRef();
@@ -88,10 +86,6 @@ export default function GhostExplorer() {
 
         return scrollDown;
     }
-
-    const goBack = () => {
-        history.push('/');
-    };
 
     const getSVG = (ghst) => {
         try {
@@ -163,16 +157,6 @@ export default function GhostExplorer() {
                     }
                 })
             }
-            <Button
-                variant='contained'
-                color='primary'
-                size='large'
-                className={classes.goBack}
-                onClick={() => goBack()}
-            >
-                <ArrowBackIcon fontSize='inherit' />
-                <Typography className={classes.goBackButtonText}>Home</Typography>
-            </Button>
         </Grid>
     );
 }

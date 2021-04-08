@@ -1,7 +1,8 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {Box, Button, Grid, Link, Toolbar, Typography} from '@material-ui/core';
-import { NavLink } from 'react-router-dom';
+import {NavLink, useLocation} from 'react-router-dom';
+import classNames from 'classnames';
 
 import TelegramIcon from '@material-ui/icons/Telegram';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -22,7 +23,12 @@ const useStyles = makeStyles((theme) => ({
             justifyContent: 'flex-start',
             flexWrap: 'nowrap'
         },
-        boxShadow: '0px 4px 16px rgba(29, 32, 37, 0.67)'
+        boxShadow: '0px 4px 16px rgba(29, 32, 37, 0.67)',
+        '&.sticky': {
+            position: 'fixed',
+            top: 0,
+            zIndex: theme.zIndex.appBar
+        }
     },
     highlight: {
         color: theme.palette.primary.main
@@ -141,9 +147,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Header() {
     const classes = useStyles();
+    const location = useLocation();
 
     return (
-        <Toolbar className={classes.toolbar}>
+        <Toolbar className={classNames(classes.toolbar, location.pathname === '/explorer' ? 'sticky' : 'default')}>
             <NavLink className={classes.logoWrapper} to='/'>
                 <img className={classes.logo} src={logo} alt='logo' />
                 <Typography className={classes.logoText}>

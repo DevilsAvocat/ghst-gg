@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import { theme } from './themes/ghst';
+import {BrowserRouter} from 'react-router-dom';
 
 const apiUrl = process.env.REACT_APP_BASE_URL;
 
@@ -14,10 +15,12 @@ const apiUrl = process.env.REACT_APP_BASE_URL;
 axios.defaults.baseURL = apiUrl;
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App/>
-    </ThemeProvider>,
+    <BrowserRouter>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <App/>
+        </ThemeProvider>
+    </BrowserRouter>,
     document.getElementById('root')
 );
 
