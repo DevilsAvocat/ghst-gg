@@ -4,6 +4,7 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import {useLocation} from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import classNames from 'classnames';
 
 import SnackbarContextProvider from "./contexts/SnackbarContext";
 import Header from './root/Header/Header';
@@ -20,10 +21,16 @@ const useStyles = makeStyles(() => ({
         backgroundPosition: '0px -30vh',
         backgroundRepeat: 'no-repeat',
         flexDirection: 'column',
-        minHeight: '100%'
+        minHeight: '100%',
+        '&.explorer': {
+            height: '100%'
+        }
     },
     content: {
-        flexGrow: 1
+        flexGrow: 1,
+        '&.explorer': {
+            height: '100%'
+        }
     }
 }));
 
@@ -38,10 +45,10 @@ export default function App() {
             </Helmet>
             <Grid
                 container
-                className={classes.wrap}
+                className={classNames(classes.wrap, location.pathname === '/explorer' ? 'explorer' : '')}
             >
                 <Header />
-                <Grid item className={classes.content}>
+                <Grid item className={classNames(classes.content, location.pathname === '/explorer' ? 'explorer' : '')}>
                     <Switch>
                         <Route exact path={`/`} component={ Main } />
                         <Route exact path={`/market`} component={ Baazaar } />
