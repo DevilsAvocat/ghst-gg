@@ -12,7 +12,13 @@ function Alert(props) {
 const useStyles = makeStyles((theme) => ({
     footerWrapper: {
         backgroundColor: theme.palette.secondary.dark,
-        padding: '5px 30px'
+        padding: '5px 24px',
+        [theme.breakpoints.up('md')]: {
+            padding: '5px 32px'
+        }
+    },
+    toolbar: {
+        padding: 0
     },
     highlight: {
         backgroundColor: 'rgba(0, 0, 0, .3)',

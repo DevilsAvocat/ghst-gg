@@ -8,8 +8,7 @@ const useStyles = makeStyles((theme) => ({
     root: {
         height: '100%',
         overflowY: 'auto',
-        justifyContent: 'space-around',
-        paddingTop: 67
+        justifyContent: 'space-around'
     },
     gotchi: {
         borderRadius: 4,

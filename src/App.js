@@ -22,6 +22,7 @@ const useStyles = makeStyles(() => ({
         backgroundRepeat: 'no-repeat',
         flexDirection: 'column',
         minHeight: '100%',
+        paddingTop: 70,
         '&.explorer': {
             height: '100%'
         }
