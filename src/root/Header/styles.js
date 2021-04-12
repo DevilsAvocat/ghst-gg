@@ -102,7 +102,10 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             fontSize: 16,
             margin: '0 15px',
-            padding: 0
+            padding: 0,
+            '&.active': {
+                background: 'transparent'
+            },
         },
     },
     navHamburger: {
