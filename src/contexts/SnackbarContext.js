@@ -14,7 +14,7 @@ const SnackbarContextProvider = (props) => {
     };
 
     const onSnackbarClose = () => {
-        setType('success');
+        setType(type);
         setMessage('');
         setToOpen(false);
     };

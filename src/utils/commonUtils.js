@@ -25,5 +25,11 @@ export default {
         };
 
         return Number(number).toLocaleString('en', options);
+    },
+
+    formatTraits(traits) {
+        let traitsKeys = ['NRG', 'AGG', 'SPK', 'BRN', 'EYS', 'EYC'];
+
+        return traits.reduce((item, val, i) => ({...item,[traitsKeys[i]]:val}),{});
     }
 }
