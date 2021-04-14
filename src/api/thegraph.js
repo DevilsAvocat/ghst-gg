@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
+import {gotchiesQuery} from './common/queries';
 
 var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic',
     client = new ApolloClient({
@@ -24,10 +25,11 @@ async function graphJoin(queries) {
 
         return responseArray;
     } catch (error) {
-        console.error(error);
         return [];
     }
 }
+
+
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -40,6 +42,20 @@ export default {
 
     async getJoinedData(queries) {
         return await graphJoin(queries);
+    },
+
+    async getAllGotchies() {
+        // TODO: resolve hardcoded gotchies max amount, current - 6000 (if you enter more queries, response will be broken)
+        return await graphJoin([gotchiesQuery(0), gotchiesQuery(1000), gotchiesQuery(2000), gotchiesQuery(3000), gotchiesQuery(4000), gotchiesQuery(5000)])
+            .then((response)=> {
+                let combinedArray = [];
+
+                for (let i=0; i < response.length; i++) {
+                    combinedArray = [...response[i].data.aavegotchis, ...combinedArray];
+                }
+
+                return combinedArray;
+            });
     }
 }
 

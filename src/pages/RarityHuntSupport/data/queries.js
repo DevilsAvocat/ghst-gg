@@ -7,6 +7,8 @@ export const ownedGotchiesQuery = (user) => {
                 numericTraits
                 baseRarityScore
                 modifiedRarityScore
+                kinship
+                experience
                 equippedWearables
             }
         }

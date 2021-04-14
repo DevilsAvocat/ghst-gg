@@ -1,0 +1,28 @@
+// eslint-disable-next-line import/no-anonymous-default-export
+export default {
+    sortGotchies(array, sortType) {
+        // Possible sortType values: id, baseRarityScore, modifiedRarityScore, kinship, experience
+        return [...array].sort((a, b) => b[sortType] - a[sortType]);
+    },
+
+    calculateRewards(position, type) {
+        const BRSformula = {y: 0.97, k: 95338.67};
+        const KINformula = {y: 0.76, k: 9800.93};
+        const EXPformula = {y: 0.65, k: 2592.58};
+
+        if(position > 5000) {
+            return 0;
+        }
+
+        switch(type) {
+            case 'BRS':
+                return ((Math.pow(1 / position, BRSformula.y)) * BRSformula.k).toFixed(1);
+            case 'KIN':
+                return ((Math.pow(1 / position, KINformula.y)) * KINformula.k).toFixed(1);
+            case 'EXP':
+                return ((Math.pow(1 / position, EXPformula.y)) * EXPformula.k).toFixed(1);
+            default:
+                return 0;
+        }
+    }
+}
