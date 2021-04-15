@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
         transition: 'background-color .3s ease-in-out',
         '& img': {
             height: 90,
+            width: 90,
             filter: 'drop-shadow( 0px 0px 7px rgba(255,255,209,.5))'
         },
         '&:hover': {
