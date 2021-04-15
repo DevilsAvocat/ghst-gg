@@ -18,12 +18,12 @@ export default function RHSGotchi({gotchi}) {
         <Grid item className={classes.gotchi}>
             <img className={classes.gotchiPlaceholder} src={gotchiPlaceholder} alt='logo' width={'50px'} />
             <Typography variant={'body1'}>{gotchi.name}</Typography>
-            <Typography variant={'body2'}>
-                BRS: {gotchi.modifiedRarityScore}({gotchi.baseRarityScore})
-                Rew: {gotchi.brsRew}
-            </Typography>
-            <Typography variant={'body2'}>Kin: {gotchi.kinship} Rew: {gotchi.kinRew}</Typography>
-            <Typography variant={'body2'}>Exp: {gotchi.experience} Rew: {gotchi.expRew}</Typography>
+            {/*<Typography variant={'body2'}>*/}
+            {/*    BRS: {gotchi.modifiedRarityScore}({gotchi.baseRarityScore})*/}
+            {/*    Rew: {gotchi.brsRew}*/}
+            {/*</Typography>*/}
+            {/*<Typography variant={'body2'}>Kin: {gotchi.kinship} Rew: {gotchi.kinRew}</Typography>*/}
+            {/*<Typography variant={'body2'}>Exp: {gotchi.experience} Rew: {gotchi.expRew}</Typography>*/}
             <Typography variant={'body2'}>Total reward: {calculateTotalRewrad(gotchi.brsRew, gotchi.kinRew, gotchi.expRew)}</Typography>
             {/*<Grid container>*/}
             {/*    {*/}
