@@ -15,6 +15,7 @@ export default function RarityHuntSupport() {
     const { showSnackbar } = useContext(SnackbarContext);
     const [gotchies, setGotchies] = useState([]);
     const [userGotchies, setUserGotchies] = useState([]);
+    const [validAddresses, setValidAddresses] = useState(['placeholder']);
     const [dataSpinner, setDataSpinner] = useState(false);
 
     useEffect(()=> {
@@ -47,6 +48,7 @@ export default function RarityHuntSupport() {
     const loadData = (addresses) => {
         if(addresses.every((address) => Web3.utils.isAddress(address))) {
             showSnackbar('success', 'Leeroy Jenkins!');
+            setValidAddresses(addresses);
             filterGotchiesByAddresses(addresses);
         } else {
             showSnackbar('error', 'One or more addresses are not correct!');
@@ -71,15 +73,15 @@ export default function RarityHuntSupport() {
             ) : (
                 <Grid>
                     <Typography variant={'body1'} style={{marginBottom: 12}}>Fill up to 10 addresses</Typography>
-                    <RHSFields loadData={loadData} />
+                    <RHSFields loadData={loadData} validAddresses={validAddresses} />
                 </Grid>
             )}
 
-            <Grid container>
+            <Grid container spacing={2}>
                 {
                     userGotchies.map((gotchi, i)=>{
-                        return <Grid item xs={2} key={i} >
-                            <RHSGotchi gotchi={gotchi}  />
+                        return <Grid item xs={2} key={i}>
+                            <RHSGotchi gotchi={gotchi} validAddresses={validAddresses} />
                         </Grid>
                     })
                 }

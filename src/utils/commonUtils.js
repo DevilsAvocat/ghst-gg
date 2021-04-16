@@ -31,5 +31,9 @@ export default {
         let traitsKeys = ['NRG', 'AGG', 'SPK', 'BRN', 'EYS', 'EYC'];
 
         return traits.reduce((item, val, i) => ({...item,[traitsKeys[i]]:val}),{});
+    },
+
+    cutAddress(address) {
+        return address.slice(0, 4) + '~~' + address.slice(38);
     }
 }

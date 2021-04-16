@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import { Grid, TextField, Button, IconButton } from '@material-ui/core';
 import {useStyles} from '../styles';
+import classNames from 'classnames';
 
 import Close from '@material-ui/icons/Close';
 
-export default function RHSFields({loadData}) {
+export default function RHSFields({validAddresses, loadData}) {
     const classes = useStyles();
     const [addresses, setAddresses] = useState(['']);
 
@@ -38,6 +39,8 @@ export default function RHSFields({loadData}) {
                             size={'small'}
                             label={`address ${i + 1}`}
                             value={address}
+                            disabled={address === validAddresses[i]}
+                            className={classNames(classes.addressField, `color-${i + 1}`, address === validAddresses[i] && 'highlighted')}
                             onChange={(event) => {
                                 fillAddress(event.target.value, i);
                             }}
@@ -50,7 +53,7 @@ export default function RHSFields({loadData}) {
                     </Grid>
                 })
             }
-            <Grid item xs={1}>
+            <Grid item xs={1} className={classes.buttonsAlignment}>
                 <Button
                     className={classes.fieldsButton}
                     disabled={addresses.length > 9}

@@ -1,21 +1,35 @@
 import React from 'react';
-import { Grid, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import {useStyles} from '../styles';
+import classNames from 'classnames';
+import commonUtils from '../../../utils/commonUtils';
 import gotchiPlaceholder from '../../../assets/images/logo.png';
 
-export default function RHSGotchi({gotchi}) {
+export default function RHSGotchi({gotchi, validAddresses}) {
     const classes = useStyles();
 
-    const getWearableIconPath = (iconId) => {
-        return require(`../../../assets/wearables/${iconId}.svg`).default;
-    };
+    // const getWearableIconPath = (iconId) => {
+    //     return require(`../../../assets/wearables/${iconId}.svg`).default;
+    // };
 
     const calculateTotalRewrad = (rew, kin, exp) => {
-        return (+rew + +kin + +exp).toFixed(1);
+        return (+rew + +kin + +exp).toFixed(0);
+    };
+
+    const getOwnerIndex = (owner) => {
+        return validAddresses.indexOf(owner) + 1;
     };
 
     return (
-        <Grid item className={classes.gotchi}>
+        <Box
+            className={classNames(classes.gotchi, `color-${getOwnerIndex(gotchi.owner.id)}`)}
+        >
+            <Typography
+                variant={'body2'}
+                className={classNames(classes.gotchiOwner, `color-${getOwnerIndex(gotchi.owner.id)}`)}
+            >
+                {commonUtils.cutAddress(gotchi.owner.id)}
+            </Typography>
             <img className={classes.gotchiPlaceholder} src={gotchiPlaceholder} alt='logo' width={'50px'} />
             <Typography variant={'body1'}>{gotchi.name}</Typography>
             {/*<Typography variant={'body2'}>*/}
@@ -46,6 +60,6 @@ export default function RHSGotchi({gotchi}) {
             {/*        })*/}
             {/*    }*/}
             {/*</Grid>*/}
-        </Grid>
+        </Box>
     );
 }
