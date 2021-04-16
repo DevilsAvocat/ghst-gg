@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style>.gotchi-primary{fill:#64438E;}.gotchi-secondary{fill:#EDD3FD;}.gotchi-cheek{fill:#F696C6;}.gotchi-eyeColor{fill:#0064FF;}.gotchi-sleeves-up{display:none;}.gotchi-handsUp{display:none;}.gotchi-handsDownOpen{display:block;}.gotchi-handsDownClosed{display:none;}
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><style>.gotchi-primary{fill:#64438E;}.gotchi-secondary{fill:#EDD3FD;}.gotchi-cheek{fill:#F696C6;}.gotchi-eyeColor{fill:#0064FF;}.gotchi-primary-mouth{fill:#64438E;}.gotchi-sleeves-up{display:none;}.gotchi-handsUp{display:none;}.gotchi-handsDownOpen{display:block;}.gotchi-handsDownClosed{display:none;}
 .gotchi-bg {
     display:none;
   }
@@ -33,7 +33,7 @@ svg {
 
 
 
-.gotchi-handsDownClosed, .gotchi-handsUp, .gotchi-handsDownOpen, .gotchi-handsDownClosed, .gotchi-body, .gotchi-eyeColor, .gotchi-collateral, .gotchi-cheek, .gotchi-primary-mouth, .gotchi-wearable   {
+.gotchi-handsDownClosed, .gotchi-handsUp, .gotchi-handsDownOpen, .gotchi-handsDownClosed, .gotchi-body, .gotchi-eyeColor, .gotchi-collateral, .gotchi-cheek, .gotchi-primary-mouth, .gotchi-wearable, .gotchi-sleeves   {
    
    animation-duration:0.5s;
    animation-iteration-count: infinite;
