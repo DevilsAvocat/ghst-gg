@@ -1,14 +1,11 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import { Grid, TextField, Button, IconButton } from '@material-ui/core';
 import {useStyles} from '../styles';
-import {SnackbarContext} from '../../../contexts/SnackbarContext';
-import Web3 from 'web3';
 
 import Close from '@material-ui/icons/Close';
 
-export default function RHSFields({setValidAddresses}) {
+export default function RHSFields({loadData}) {
     const classes = useStyles();
-    const { showSnackbar } = useContext(SnackbarContext);
     const [addresses, setAddresses] = useState(['']);
 
     const fillAddress = (value, index) => {
@@ -29,25 +26,6 @@ export default function RHSFields({setValidAddresses}) {
         }
     };
 
-    const loadAddresses = () => {
-        // TODO: handle last input (correct every time)
-        let addressesCorrect = false;
-
-        addresses.forEach((address) => {
-            if(Web3.utils.isAddress(address)) {
-                addressesCorrect = true;
-                showSnackbar('success', 'Leeroy Jenkins!');
-            } else {
-                addressesCorrect = false;
-                showSnackbar('error', 'One or more addresses are not correct!');
-            }
-        });
-
-        if(addressesCorrect) {
-            setValidAddresses(addresses);
-        }
-    };
-
     return (
         <Grid container spacing={2} style={{marginBottom: 20}}>
             {
@@ -64,7 +42,7 @@ export default function RHSFields({setValidAddresses}) {
                                 fillAddress(event.target.value, i);
                             }}
                             InputProps={{
-                                endAdornment: <IconButton size={'small'} onClick={() => deleteField(i)}>
+                                endAdornment: <IconButton disabled={addresses.length === 1} size={'small'} onClick={() => deleteField(i)}>
                                     <Close/>
                                 </IconButton>
                             }}
@@ -90,9 +68,9 @@ export default function RHSFields({setValidAddresses}) {
                     variant={'contained'}
                     color={'primary'}
                     fullWidth
-                    onClick={loadAddresses}
+                    onClick={() => loadData(addresses)}
                 >
-                    Summon data!
+                    Fetch data!
                 </Button>
             </Grid>
         </Grid>

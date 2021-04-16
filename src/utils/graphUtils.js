@@ -16,11 +16,11 @@ export default {
 
         switch(type) {
             case 'BRS':
-                return ((Math.pow(1 / position, BRSformula.y)) * BRSformula.k).toFixed(1);
+                return ((Math.pow(1 / position, BRSformula.y)) * BRSformula.k).toFixed(0);
             case 'KIN':
-                return ((Math.pow(1 / position, KINformula.y)) * KINformula.k).toFixed(1);
+                return ((Math.pow(1 / position, KINformula.y)) * KINformula.k).toFixed(0);
             case 'EXP':
-                return ((Math.pow(1 / position, EXPformula.y)) * EXPformula.k).toFixed(1);
+                return ((Math.pow(1 / position, EXPformula.y)) * EXPformula.k).toFixed(0);
             default:
                 return 0;
         }

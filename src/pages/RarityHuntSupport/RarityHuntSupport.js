@@ -1,27 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { Grid, Container, CircularProgress, Typography } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import {useStyles} from './styles';
+import Web3 from 'web3';
 import thegraph from '../../api/thegraph';
 import graphUtils from '../../utils/graphUtils';
 
 import RHSGotchi from './components/RHSGotchi';
 import RHSFields from './components/RHSFields';
+import {SnackbarContext} from '../../contexts/SnackbarContext';
 
 export default function RarityHuntSupport() {
     const classes = useStyles();
+    const { showSnackbar } = useContext(SnackbarContext);
     const [gotchies, setGotchies] = useState([]);
     const [userGotchies, setUserGotchies] = useState([]);
-    const [validAddresses, setValidAddresses] = useState([]);
     const [dataSpinner, setDataSpinner] = useState(false);
 
     useEffect(()=> {
         getAllGotchies();
     }, []);
-
-    useEffect(()=> {
-        loadData();
-    }, [validAddresses]);
 
     // Get all gotchies from TheGraph and calculate rewards
     const getAllGotchies = () => {
@@ -46,10 +44,17 @@ export default function RarityHuntSupport() {
             });
     }
 
-    const loadData = () => {
-        let filteredGotchies = gotchies.filter((gotchi) => validAddresses.includes(gotchi.owner?.id));
+    const loadData = (addresses) => {
+        if(addresses.every((address) => Web3.utils.isAddress(address))) {
+            showSnackbar('success', 'Leeroy Jenkins!');
+            filterGotchiesByAddresses(addresses);
+        } else {
+            showSnackbar('error', 'One or more addresses are not correct!');
+        }
+    };
 
-        setUserGotchies(filteredGotchies);
+    const filterGotchiesByAddresses = (addresses) => {
+        setUserGotchies(gotchies.filter((gotchi) => addresses.includes(gotchi.owner?.id)));
     };
 
     return (
@@ -60,13 +65,13 @@ export default function RarityHuntSupport() {
 
             {dataSpinner ? (
                 <Grid container justify={'center'}>
-                    <Typography variant={'body2'}>Summoning all ghosts ...</Typography>
+                    <Typography variant={'body1'}>Summoning all ghosts ...</Typography>
                     <CircularProgress color='primary' size={20} style={{marginLeft: 5}} />
                 </Grid>
             ) : (
                 <Grid>
                     <Typography variant={'body1'} style={{marginBottom: 12}}>Fill up to 10 addresses</Typography>
-                    <RHSFields setValidAddresses={setValidAddresses} />
+                    <RHSFields loadData={loadData} />
                 </Grid>
             )}
 
