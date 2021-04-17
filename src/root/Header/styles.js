@@ -108,6 +108,18 @@ export const useStyles = makeStyles((theme) => ({
             },
         },
     },
+    navLinkBox: {
+        display: 'inline-block',
+        position: 'relative',
+        '& span': {
+            position: 'absolute',
+            top: -12,
+            right: 2,
+            fontSize: 10,
+            color: theme.palette.primary.main,
+            textTransform: 'none'
+        }
+    },
     navHamburger: {
         position: 'relative',
         zIndex: theme.zIndex.appBar,

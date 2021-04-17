@@ -56,7 +56,10 @@ export default function Header() {
                         Explorer
                     </NavLink>
                     <NavLink className={classes.navLink} to='/rarity-hunt-support'>
-                        Rarity Hunt Support
+                        <Box className={classes.navLinkBox}>
+                            Rarity Hunt Support
+                            <Typography variant={'caption'}>Beta</Typography>
+                        </Box>
                     </NavLink>
                     <NavLink className={classes.navLink} to='/raffle-calculator'>
                         Raffle Calculator
