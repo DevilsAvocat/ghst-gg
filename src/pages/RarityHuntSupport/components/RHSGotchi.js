@@ -12,10 +12,6 @@ export default function RHSGotchi({gotchi, validAddresses}) {
     //     return require(`../../../assets/wearables/${iconId}.svg`).default;
     // };
 
-    const calculateTotalRewrad = (rew, kin, exp) => {
-        return (+rew + +kin + +exp).toFixed(0);
-    };
-
     const getOwnerIndex = (owner) => {
         return validAddresses.indexOf(owner) + 1;
     };
@@ -32,13 +28,21 @@ export default function RHSGotchi({gotchi, validAddresses}) {
             </Typography>
             <img className={classes.gotchiPlaceholder} src={gotchiPlaceholder} alt='logo' width={'50px'} />
             <Typography variant={'body1'}>{gotchi.name}</Typography>
-            {/*<Typography variant={'body2'}>*/}
-            {/*    BRS: {gotchi.modifiedRarityScore}({gotchi.baseRarityScore})*/}
-            {/*    Rew: {gotchi.brsRew}*/}
-            {/*</Typography>*/}
-            {/*<Typography variant={'body2'}>Kin: {gotchi.kinship} Rew: {gotchi.kinRew}</Typography>*/}
-            {/*<Typography variant={'body2'}>Exp: {gotchi.experience} Rew: {gotchi.expRew}</Typography>*/}
-            <Typography variant={'body2'}>Total reward: {calculateTotalRewrad(gotchi.brsRew, gotchi.kinRew, gotchi.expRew)}</Typography>
+            <Typography variant={'body2'}>
+                BRS: {gotchi.modifiedRarityScore}({gotchi.baseRarityScore})
+                {/*Rew: {gotchi.brsRew}*/}
+            </Typography>
+            <Typography variant={'body2'}>
+                Kin: {gotchi.kinship}
+                {/*Rew: {gotchi.kinRew}*/}
+            </Typography>
+            <Typography variant={'body2'}>
+                Exp: {gotchi.experience}
+                {/*Rew: {gotchi.expRew}*/}
+            </Typography>
+            <Typography variant={'body2'}>
+                Current reward: {gotchi.totalRew}
+            </Typography>
             {/*<Grid container>*/}
             {/*    {*/}
             {/*        Object.entries(commonUtils.formatTraits(gotchi.numericTraits)).map(([key, value], i)=>{*/}

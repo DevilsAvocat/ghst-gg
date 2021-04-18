@@ -5,7 +5,7 @@ export const theme = createMuiTheme({
         common: {
           white: '#fff'
         },
-        type: "dark",
+        type: 'dark',
         primary: {
             main: '#fd9af9'
         },

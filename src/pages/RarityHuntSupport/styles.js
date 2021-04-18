@@ -7,6 +7,10 @@ export const useStyles = makeStyles((theme) => ({
             padding: '50px 32px'
         }
     },
+    textHighlight: {
+        color: theme.palette.primary.main,
+        marginLeft: 10
+    },
     gotchiPlaceholder: {
         filter: 'grayscale(100%)'
     },
@@ -59,34 +63,34 @@ export const useStyles = makeStyles((theme) => ({
         padding: '2px 4px',
         transform: 'translate(50%, -50%)',
         '&.color-1': {
-            backgroundColor: fade(theme.palette.rewards.color1, .6),
+            backgroundColor: theme.palette.rewards.color1,
         },
         '&.color-2': {
-            backgroundColor: fade(theme.palette.rewards.color2, .6),
+            backgroundColor: theme.palette.rewards.color2,
         },
         '&.color-3': {
-            backgroundColor: fade(theme.palette.rewards.color3, .6),
+            backgroundColor: theme.palette.rewards.color3,
         },
         '&.color-4': {
-            backgroundColor: fade(theme.palette.rewards.color4, .6),
+            backgroundColor: theme.palette.rewards.color4,
         },
         '&.color-5': {
-            backgroundColor: fade(theme.palette.rewards.color5, .6),
+            backgroundColor: theme.palette.rewards.color5,
         },
         '&.color-6': {
-            backgroundColor: fade(theme.palette.rewards.color6, .6),
+            backgroundColor: theme.palette.rewards.color6,
         },
         '&.color-7': {
-            backgroundColor: fade(theme.palette.rewards.color7, .6),
+            backgroundColor: theme.palette.rewards.color7,
         },
         '&.color-8': {
-            backgroundColor: fade(theme.palette.rewards.color8, .6),
+            backgroundColor: theme.palette.rewards.color8,
         },
         '&.color-9': {
-            backgroundColor: fade(theme.palette.rewards.color9, .6),
+            backgroundColor: theme.palette.rewards.color9,
         },
         '&.color-10': {
-            backgroundColor: fade(theme.palette.rewards.color10, .6),
+            backgroundColor: theme.palette.rewards.color10,
         }
     },
     addressField: {
