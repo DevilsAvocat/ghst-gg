@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Grid, Container, Box, CircularProgress, Typography, FormControl, Select, InputLabel, MenuItem } from '@material-ui/core';
+import { Grid, Container, Box, CircularProgress, Typography, FormControl, Select, InputLabel, MenuItem, Paper } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import {useStyles} from './styles';
 import Web3 from 'web3';
@@ -113,24 +113,26 @@ function RenderContent({ validAddresses, userGotchies, gotchiesFilter, onGotchie
 
     return (
         <Box>
-            <Grid container spacing={2} style={{marginBottom: 20}}>
-                <Grid item xs={6}>
-                    <Typography align={'center'} variant={'h6'}>
-                        Current Reward >=>
-                        <Box className={classes.textHighlight} component={'span'}>
-                            {currentReward}
-                        </Box>
-                    </Typography>
+            <Paper variant='outlined' style={{marginBottom: 20, padding: '12px 0'}}>
+                <Grid container spacing={2}>
+                    <Grid item xs={6}>
+                        <Typography align={'center'} variant={'h6'}>
+                            Current Reward >=>
+                            <Box className={classes.textHighlight} component={'span'}>
+                                {currentReward}
+                            </Box>
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Typography align={'center'} variant={'h6'}>
+                            Possible Reward >=>
+                            <Box className={classes.textHighlight} component={'span'}>
+                                Coming soon...
+                            </Box>
+                        </Typography>
+                    </Grid>
                 </Grid>
-                <Grid item xs={6}>
-                    <Typography align={'center'} variant={'h6'}>
-                        Possible Reward >=>
-                        <Box className={classes.textHighlight} component={'span'}>
-                            Coming soon...
-                        </Box>
-                    </Typography>
-                </Grid>
-            </Grid>
+            </Paper>
 
             <Grid container spacing={2} style={{marginBottom: 12}}>
                 <Grid item xs={3}>
