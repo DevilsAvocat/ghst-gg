@@ -43,7 +43,7 @@ export default function App() {
     return (
         <SnackbarContextProvider>
             <Helmet>
-                <title>GHST_gg</title>
+                <title>ghst_gg clan</title>
             </Helmet>
             <Grid
                 container

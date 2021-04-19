@@ -7,10 +7,11 @@ import Constants from '../../api/common/constants.js';
 import thegraph from '../../api/thegraph';
 import graphUtils from '../../utils/graphUtils';
 import {SnackbarContext} from '../../contexts/SnackbarContext';
+import classNames from 'classnames';
+import ghst from '../../assets/images/ghst-doubleside.gif';
 
 import RHSGotchi from './components/RHSGotchi';
 import RHSFields from './components/RHSFields';
-import commonUtils from '../../utils/commonUtils';
 import RHSWearable from './components/RHSWearable';
 
 const web3 = new Web3(Constants.RPC_URL);
@@ -222,8 +223,9 @@ function RenderContent({ validAddresses, userGotchies, gotchiesFilter, onGotchie
                     <Paper variant='outlined' style={{padding: '12px 0'}}>
                         <Typography align={'center'} variant={'h6'}>
                             Current Reward >=>
-                            <Box className={classes.textHighlight} component={'span'}>
+                            <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
                                 {currentReward}
+                                <img src={ghst} width='26' alt='GHST Token Icon' />
                             </Box>
                         </Typography>
                     </Paper>

@@ -17,6 +17,10 @@ export const useStyles = makeStyles((theme) => ({
     buttonsAlignment: {
         marginLeft: 'auto'
     },
+    tokenValue: {
+        display: 'inline-flex',
+        alignItems: 'center'
+    },
     gotchi: {
         borderRadius: theme.shape.borderRadius,
         padding: '24px 12px 16px',
