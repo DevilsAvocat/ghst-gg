@@ -31,14 +31,14 @@ export const theme = createMuiTheme({
         rewards: {
             color1: '#E76F51',
             color2: '#2A9D8F',
-            color3: '#FFFF3F',
-            color4: '#219EBC',
-            color5: '#8338EC',
-            color6: '#D00000',
-            color7: '#E79872',
-            color8: '#B8F2E6',
-            color9: '#8AC926',
-            color10: '#E500A4'
+            color3: '#D00000',
+            color4: '#8338EC',
+            color5: '#000000',
+            color6: '#E500A4',
+            color7: '#8AC926',
+            color8: '#5b6d5b',
+            color9: '#161d6f',
+            color10: '#219EBC'
         },
         customColors: {
             lightGray: '#9A9EAA',

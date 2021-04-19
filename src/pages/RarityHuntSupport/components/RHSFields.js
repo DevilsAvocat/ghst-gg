@@ -11,7 +11,7 @@ export default function RHSFields({validAddresses, loadData}) {
 
     const fillAddress = (value, index) => {
         let addressesCache = [...addresses];
-        addressesCache[index] = value.toLowerCase();
+        addressesCache[index] = value;
         setAddresses(addressesCache);
     };
 

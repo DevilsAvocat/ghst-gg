@@ -54,14 +54,10 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.rewards.color10, .2),
         }
     },
-    gotchiOwner: {
+    owner: {
         borderRadius: theme.shape.borderRadius,
-        position: 'absolute',
-        top: 0,
-        right: '50%',
         fontSize: 12,
         padding: '2px 4px',
-        transform: 'translate(50%, -50%)',
         '&.color-1': {
             backgroundColor: theme.palette.rewards.color1,
         },
@@ -92,6 +88,12 @@ export const useStyles = makeStyles((theme) => ({
         '&.color-10': {
             backgroundColor: theme.palette.rewards.color10,
         }
+    },
+    gotchiOwner: {
+        position: 'absolute',
+        top: 0,
+        right: '50%',
+        transform: 'translate(50%, -50%)',
     },
     addressField: {
         '&.highlighted.color-1': {
@@ -254,6 +256,52 @@ export const useStyles = makeStyles((theme) => ({
                 },
             },
         }
+    },
+    wearable: {
+        borderRadius: theme.shape.borderRadius,
+        backgroundColor: theme.palette.secondary.dark,
+        padding: '16px 12px',
+        textAlign: 'center',
+        height: '100%',
+        position: 'relative',
+        '&.common': {
+            backgroundColor: fade(theme.palette.rarity.common, .1)
+        },
+        '&.uncommon': {
+            backgroundColor: fade(theme.palette.rarity.uncommon, .1)
+        },
+        '&.rare': {
+            backgroundColor: fade(theme.palette.rarity.rare, .1)
+        },
+        '&.legendary': {
+            backgroundColor: fade(theme.palette.rarity.legendary, .1)
+        },
+        '&.mythical': {
+            backgroundColor: fade(theme.palette.rarity.mythical, .1)
+        },
+        '&.godlike': {
+            backgroundColor: fade(theme.palette.rarity.godlike, .1)
+        },
+    },
+    wearableTitle: {
+        '&.common': {
+            color: theme.palette.rarity.common
+        },
+        '&.uncommon': {
+            color: theme.palette.rarity.uncommon
+        },
+        '&.rare': {
+            color: theme.palette.rarity.rare
+        },
+        '&.legendary': {
+            color: theme.palette.rarity.legendary
+        },
+        '&.mythical': {
+            color: theme.palette.rarity.mythical
+        },
+        '&.godlike': {
+            color: theme.palette.rarity.godlike
+        },
     },
     fieldsButton: {
         padding: '7px 15px'

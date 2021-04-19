@@ -13,6 +13,7 @@ export const gotchiesQuery = (skip) => {
           modifiedRarityScore
           kinship
           experience
+          equippedWearables
           owner {
             id
           }
