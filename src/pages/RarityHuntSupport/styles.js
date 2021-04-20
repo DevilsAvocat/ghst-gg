@@ -18,9 +18,6 @@ export const useStyles = makeStyles((theme) => ({
     gotchiPlaceholder: {
         filter: 'grayscale(100%)'
     },
-    buttonsAlignment: {
-        marginLeft: 'auto'
-    },
     tokenValue: {
         display: 'inline-flex',
         alignItems: 'center'
