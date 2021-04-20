@@ -42,9 +42,9 @@ export default function Header() {
             <NavLink className={classes.logoWrapper} to='/'>
                 <img className={classes.logo} src={logo} alt='logo' />
                 <Typography className={classes.logoText}>
-                    <Box component='span'>GHST</Box>
+                    <Box component='span'>ghst</Box>
                     <Box component='span' className={classes.highlight}>_</Box>
-                    <Box component='span'>GG</Box>
+                    <Box component='span'>gg</Box>
                 </Typography>
             </NavLink>
             <Grid item className={classNames(classes.navWrapper, navOpen ? 'opened' : 'closed')} ref={navRef}>
@@ -54,6 +54,12 @@ export default function Header() {
                     </NavLink>
                     <NavLink className={classes.navLink} to='/explorer'>
                         Explorer
+                    </NavLink>
+                    <NavLink className={classes.navLink} to='/rarity-hunt-support'>
+                        <Box className={classes.navLinkBox}>
+                            Rarity Hunt Support
+                            <Typography variant={'caption'}>Beta</Typography>
+                        </Box>
                     </NavLink>
                     <NavLink className={classes.navLink} to='/raffle-calculator'>
                         Raffle Calculator

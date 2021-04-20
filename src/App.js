@@ -12,8 +12,9 @@ import Footer from './root/Footer/Footer';
 
 import Main from './pages/Main/Main';
 import Baazaar from './pages/Baazaar/Baazaar';
-import Raffle from './pages/Raffle/Raffle';
 import GhostExplorer from './pages/GhostExplorer/GhostExplorer';
+import RarityHuntSupport from './pages/RarityHuntSupport/RarityHuntSupport';
+import Raffle from './pages/Raffle/Raffle';
 import NotFound from './pages/NotFound/NotFound';
 
 const useStyles = makeStyles(() => ({
@@ -42,7 +43,7 @@ export default function App() {
     return (
         <SnackbarContextProvider>
             <Helmet>
-                <title>GHST_gg</title>
+                <title>ghst_gg clan</title>
             </Helmet>
             <Grid
                 container
@@ -53,8 +54,9 @@ export default function App() {
                     <Switch>
                         <Route exact path={`/`} component={ Main } />
                         <Route exact path={`/market`} component={ Baazaar } />
-                        <Route exact path={`/raffle-calculator`} component={ Raffle } />
                         <Route exact path={`/explorer`} component={ GhostExplorer } />
+                        <Route exact path={`/rarity-hunt-support`} component={ RarityHuntSupport } />
+                        <Route exact path={`/raffle-calculator`} component={ Raffle } />
                         <Route exact path={`/404`} component={ NotFound } />
                         <Redirect from='*' to='/404' />
                     </Switch>

@@ -10,6 +10,10 @@ export default {
         return wearables[id]?.stats || '';
     },
 
+    getItemRarityById(id) {
+        return wearables[id]?.rarity || '';
+    },
+
     getItemType(item) {
         const itemMap = {
             'ERC721Listing': {
