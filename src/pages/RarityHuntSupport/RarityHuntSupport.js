@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Grid, Container, Box, Backdrop, CircularProgress, Typography, FormControl, Select, InputLabel, MenuItem, Paper } from '@material-ui/core';
+import { Container, Backdrop, CircularProgress, } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import {useStyles} from './styles';
 import Web3 from 'web3';
@@ -7,12 +7,9 @@ import Constants from '../../api/common/constants.js';
 import thegraph from '../../api/thegraph';
 import graphUtils from '../../utils/graphUtils';
 import {SnackbarContext} from '../../contexts/SnackbarContext';
-import classNames from 'classnames';
-import ghst from '../../assets/images/ghst-doubleside.gif';
 
-import RHSGotchi from './components/RHSGotchi';
 import RHSFields from './components/RHSFields';
-import RHSWearable from './components/RHSWearable';
+import RHSContent from './components/RHSContent';
 
 const web3 = new Web3(Constants.RPC_URL);
 const contract = new web3.eth.Contract(Constants.ABI, Constants.TOKEN_ADDRESS);
@@ -60,6 +57,7 @@ export default function RarityHuntSupport() {
     }
 
     const getWearablesByAddresses = async (addresses) => {
+        showBackdrop(true);
         try {
             const addressesCounter = addresses.length,
                 responseArray = [];
@@ -84,8 +82,10 @@ export default function RarityHuntSupport() {
             }, []);
 
             setWearables(combinedArray);
+            showBackdrop(false);
         } catch (error) {
             setWearables([]);
+            showBackdrop(false);
         }
     };
 
@@ -107,6 +107,7 @@ export default function RarityHuntSupport() {
     };
 
     const onGotchiesSort = (event) => {
+        // TODO: add filter by owner
         setUserGotchies(graphUtils.sortGotchies(userGotchies, event.target.value));
         setGotchiesFilter(event.target.value);
     };
@@ -124,7 +125,7 @@ export default function RarityHuntSupport() {
 
             <RHSFields loadData={loadData} validAddresses={validAddresses} />
 
-            <RenderContent
+            <RHSContent
                 validAddresses={validAddresses}
                 userGotchies={userGotchies}
                 gotchiesFilter={gotchiesFilter}
@@ -138,124 +139,5 @@ export default function RarityHuntSupport() {
             </Backdrop>
 
         </Container>
-    );
-}
-
-function RenderContent({ validAddresses, userGotchies, gotchiesFilter, onGotchiesSort, currentReward, wearables }) {
-    const classes = useStyles();
-
-    const renderGotchiesHead = () => {
-        if(userGotchies.length !== 0) {
-            return (
-                <Grid container spacing={2} style={{marginBottom: 12}}>
-                    <Grid item xs={3}>
-                        <FormControl variant='outlined' size={'small'} className={classes.formControl} fullWidth>
-                            <InputLabel>Order by:</InputLabel>
-                            <Select
-                                label={'Order by:'}
-                                value={gotchiesFilter}
-                                onChange={onGotchiesSort}
-                            >
-                                <MenuItem value={'totalRew'}>Current reward</MenuItem>
-                                <MenuItem value={'modifiedRarityScore'}>RS (modified)</MenuItem>
-                                <MenuItem value={'baseRarityScore'}>RS (base)</MenuItem>
-                                <MenuItem value={'kinship'}>KIN</MenuItem>
-                                <MenuItem value={'experience'}>EXP</MenuItem>
-                            </Select>
-                        </FormControl>
-                    </Grid>
-                </Grid>
-            )
-        } else {
-            return (
-                <Typography
-                    align={'center'}
-                    variant={'h6'}
-                    color={'primary'}
-                >
-                    To earn some prizes you should get at least 1 ghost!
-                </Typography>
-            )
-        }
-    }
-
-    const renderWearablesHead = () => {
-        if(wearables.length !== 0) {
-            return (
-                <Typography
-                    variant={'h6'}
-                    style={{marginTop: 20}}
-                >
-                    Inventory items:
-                </Typography>
-            )
-        } else {
-            return (
-                <Typography
-                    align={'center'}
-                    variant={'h6'}
-                    color={'primary'}
-                    style={{marginTop: 20}}
-                >
-                    Your inventory is empty :(
-                </Typography>
-            )
-        }
-    }
-
-    if (validAddresses.length === 0) {
-        return null;
-    }
-
-    return (
-        <Box>
-            <Grid container spacing={2} style={{marginBottom: 20}}>
-                <Grid item xs={6}>
-                    <Paper variant='outlined' style={{padding: '12px 0'}}>
-                        <Typography align={'center'} variant={'h6'}>
-                            Current Reward >=>
-                            <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
-                                {currentReward}
-                                <img src={ghst} width='26' alt='GHST Token Icon' />
-                            </Box>
-                        </Typography>
-                    </Paper>
-                </Grid>
-                <Grid item xs={6}>
-                    <Paper variant='outlined' style={{padding: '12px 0'}}>
-                        <Typography align={'center'} variant={'h6'}>
-                            Possible Reward >=>
-                            <Box className={classes.textHighlight} component={'span'}>
-                                Coming soon...
-                            </Box>
-                        </Typography>
-                    </Paper>
-                </Grid>
-            </Grid>
-
-            {renderGotchiesHead()}
-
-            <Grid container spacing={2}>
-                {
-                    userGotchies.map((gotchi, i)=>{
-                        return <Grid item xs={2} key={i}>
-                            <RHSGotchi gotchi={gotchi} validAddresses={validAddresses} />
-                        </Grid>
-                    })
-                }
-            </Grid>
-
-            {renderWearablesHead()}
-
-            <Grid container spacing={2}>
-                {
-                    wearables.map((wearable, i)=>{
-                        return <Grid item xs={2} key={i}>
-                            <RHSWearable wearable={wearable} validAddresses={validAddresses}/>
-                        </Grid>
-                    })
-                }
-            </Grid>
-        </Box>
     );
 }
