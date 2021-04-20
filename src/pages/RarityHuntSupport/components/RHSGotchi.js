@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Typography } from '@material-ui/core';
+import { Grid, Link, Typography } from '@material-ui/core';
 import {useStyles} from '../styles';
 import classNames from 'classnames';
 import commonUtils from '../../../utils/commonUtils';
@@ -17,8 +17,10 @@ export default function RHSGotchi({gotchi, validAddresses}) {
     };
 
     return (
-        <Box
+        <Link
             className={classNames(classes.gotchi, `color-${getOwnerIndex(gotchi.owner.id)}`)}
+            href={`https://aavegotchi.com/gotchi/${gotchi.id}`}
+            target="_blank"
         >
             <Typography
                 variant={'body2'}
@@ -26,7 +28,13 @@ export default function RHSGotchi({gotchi, validAddresses}) {
             >
                 {commonUtils.cutAddress(gotchi.owner.id)}
             </Typography>
-            <img className={classes.gotchiPlaceholder} src={gotchiPlaceholder} alt='logo' width={'50px'} />
+            <img
+                className={classes.gotchiPlaceholder}
+                src={gotchiPlaceholder}
+                alt='Ghost'
+                height={75}
+                width={75}
+            />
             <Typography variant={'body1'}>{gotchi.name}</Typography>
             <Typography variant={'body2'}>
                 BRS: {gotchi.modifiedRarityScore}({gotchi.baseRarityScore})
@@ -67,6 +75,6 @@ export default function RHSGotchi({gotchi, validAddresses}) {
                     })
                 }
             </Grid>
-        </Box>
+        </Link>
     );
 }

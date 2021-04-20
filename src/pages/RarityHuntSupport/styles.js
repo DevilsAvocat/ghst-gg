@@ -26,11 +26,16 @@ export const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     },
     gotchi: {
+        display: 'block',
         borderRadius: theme.shape.borderRadius,
+        color: '#fff',
         padding: '24px 12px 16px',
         textAlign: 'center',
         height: '100%',
         position: 'relative',
+        '&:hover': {
+            textDecoration: 'none'
+        },
         '&.color-1': {
             backgroundColor: fade(theme.palette.rewards.color1, .2),
         },
@@ -102,6 +107,7 @@ export const useStyles = makeStyles((theme) => ({
         top: 0,
         right: '50%',
         transform: 'translate(50%, -50%)',
+        color: '#fff'
     },
     addressField: {
         '&.highlighted.color-1': {
