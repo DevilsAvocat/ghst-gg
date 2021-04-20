@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Grid, Container, Box, CircularProgress, Typography, FormControl, Select, InputLabel, MenuItem, Paper } from '@material-ui/core';
+import { Grid, Container, Box, Backdrop, CircularProgress, Typography, FormControl, Select, InputLabel, MenuItem, Paper } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import {useStyles} from './styles';
 import Web3 from 'web3';
@@ -29,16 +29,15 @@ export default function RarityHuntSupport() {
     const [validAddresses, setValidAddresses] = useState([]);
 
     const [currentReward, setCurrentReward] = useState(0);
-    const [dataSpinner, setDataSpinner] = useState(false);
+    const [backdropIsOpen, showBackdrop] = useState(false);
 
     useEffect(()=> {
         getAllGotchies();
-        // getWearables();
     }, []);
 
     // Get all gotchies from TheGraph and calculate rewards
     const getAllGotchies = () => {
-        setDataSpinner(true);
+        showBackdrop(true);
         thegraph.getAllGotchies()
             .then((gotchies) => {
                 let rscLeaders = graphUtils.sortGotchies(gotchies, 'modifiedRarityScore');
@@ -56,7 +55,7 @@ export default function RarityHuntSupport() {
                 });
 
                 setGotchies(gotchies);
-                setDataSpinner(false);
+                showBackdrop(false);
             });
     }
 
@@ -83,8 +82,6 @@ export default function RarityHuntSupport() {
                 }
                 return acc;
             }, []);
-
-            console.log(combinedArray)
 
             setWearables(combinedArray);
         } catch (error) {
@@ -125,17 +122,7 @@ export default function RarityHuntSupport() {
                 <title>Rarity Hunt Support</title>
             </Helmet>
 
-            {dataSpinner ? (
-                <Grid container justify={'center'}>
-                    <Typography variant={'body1'}>Summoning all ghosts ...</Typography>
-                    <CircularProgress color='primary' size={20} style={{marginLeft: 5}} />
-                </Grid>
-            ) : (
-                <Grid>
-                    <Typography variant={'body1'} style={{marginBottom: 12}}>Fill up to 10 addresses</Typography>
-                    <RHSFields loadData={loadData} validAddresses={validAddresses} />
-                </Grid>
-            )}
+            <RHSFields loadData={loadData} validAddresses={validAddresses} />
 
             <RenderContent
                 validAddresses={validAddresses}
@@ -145,6 +132,10 @@ export default function RarityHuntSupport() {
                 currentReward={currentReward}
                 wearables={wearables}
             />
+
+            <Backdrop className={classes.backdrop} open={backdropIsOpen}>
+                <CircularProgress color='primary' />
+            </Backdrop>
 
         </Container>
     );

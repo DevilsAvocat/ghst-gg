@@ -181,7 +181,7 @@ export default function Baazaar() {
                 onPrevPageClick={onPrevPageClick}
             />
             <Backdrop className={classes.backdrop} open={backdropIsOpen}>
-                <CircularProgress color="inherit" />
+                <CircularProgress color='primary' />
             </Backdrop>
         </Grid>
     );

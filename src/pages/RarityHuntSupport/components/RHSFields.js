@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Grid, TextField, Button, IconButton } from '@material-ui/core';
+import { Grid, TextField, Button, IconButton, Typography } from '@material-ui/core';
 import {useStyles} from '../styles';
 import classNames from 'classnames';
 
@@ -29,6 +29,9 @@ export default function RHSFields({validAddresses, loadData}) {
 
     return (
         <Grid container spacing={2} style={{marginBottom: 20}}>
+            <Grid item xs={12}>
+                <Typography variant={'body1'}>Fill up to 10 addresses</Typography>
+            </Grid>
             <Grid container item spacing={2} xs={9}>
                 {
                     addresses.map((address, i)=>{

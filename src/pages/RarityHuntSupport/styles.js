@@ -7,6 +7,10 @@ export const useStyles = makeStyles((theme) => ({
             padding: '50px 32px'
         }
     },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff'
+    },
     textHighlight: {
         color: theme.palette.primary.main,
         marginLeft: 10
