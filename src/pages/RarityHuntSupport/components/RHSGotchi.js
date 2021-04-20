@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Link, Typography } from '@material-ui/core';
+import { Grid, Box, Link, Typography } from '@material-ui/core';
 import {useStyles} from '../styles';
 import classNames from 'classnames';
 import commonUtils from '../../../utils/commonUtils';
@@ -35,7 +35,15 @@ export default function RHSGotchi({gotchi, validAddresses}) {
                 height={75}
                 width={75}
             />
-            <Typography variant={'body1'}>{gotchi.name}</Typography>
+            <Box className={classNames(classes.owner, `color-${getOwnerIndex(gotchi.owner.id)}`)} style={{margin: '4px 0'}}>
+                <Typography variant={'body1'} className={classes.gotchiName}>
+                    {gotchi.name ? (
+                        gotchi.name
+                    ) : (
+                        'Unnamed'
+                    )}
+                </Typography>
+            </Box>
             <Typography variant={'body2'}>
                 BRS: {gotchi.modifiedRarityScore}({gotchi.baseRarityScore})
                 {/*Rew: {gotchi.brsRew}*/}

@@ -109,6 +109,43 @@ export const useStyles = makeStyles((theme) => ({
         transform: 'translate(50%, -50%)',
         color: '#fff'
     },
+    gotchiName: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+    },
+    ownerTextHighlight: {
+        '&.color-1': {
+            color: theme.palette.rewards.color1,
+        },
+        '&.color-2': {
+            color: theme.palette.rewards.color2,
+        },
+        '&.color-3': {
+            color: theme.palette.rewards.color3,
+        },
+        '&.color-4': {
+            color: theme.palette.rewards.color4,
+        },
+        '&.color-5': {
+            color: theme.palette.rewards.color5,
+        },
+        '&.color-6': {
+            color: theme.palette.rewards.color6,
+        },
+        '&.color-7': {
+            color: theme.palette.rewards.color7,
+        },
+        '&.color-8': {
+            color: theme.palette.rewards.color8,
+        },
+        '&.color-9': {
+            color: theme.palette.rewards.color9,
+        },
+        '&.color-10': {
+            color: theme.palette.rewards.color10,
+        }
+    },
     addressField: {
         '&.highlighted.color-1': {
             '& label.Mui-focused': {
