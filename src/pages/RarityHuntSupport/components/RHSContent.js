@@ -14,8 +14,8 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
         if(userGotchies.length !== 0) {
             return (
                 <Grid container spacing={2} style={{marginBottom: 12}}>
-                    <Grid item xs={6}>
-                        <Paper variant='outlined' style={{padding: '12px 0'}}>
+                    <Grid item xs={12} sm={6}>
+                        <Paper variant='outlined' style={{padding: '12px 6px', height: '100%'}}>
                             <Typography align={'center'} variant={'h6'}>
                                 Current Reward >=>
                                 <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
@@ -25,8 +25,8 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                             </Typography>
                         </Paper>
                     </Grid>
-                    <Grid item xs={6}>
-                        <Paper variant='outlined' style={{padding: '12px 0'}}>
+                    <Grid item xs={12} sm={6}>
+                        <Paper variant='outlined' style={{padding: '12px 6px', height: '100%'}}>
                             <Typography align={'center'} variant={'h6'}>
                                 Possible Reward >=>
                                 <Box className={classes.textHighlight} component={'span'}>
@@ -35,7 +35,7 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                             </Typography>
                         </Paper>
                     </Grid>
-                    <Grid item xs={3} style={{marginTop: 8}}>
+                    <Grid item xs={6} md={3} style={{marginTop: 4}}>
                         <FormControl variant='outlined' size={'small'} className={classes.formControl} fullWidth>
                             <InputLabel>Order by:</InputLabel>
                             <Select
@@ -101,7 +101,7 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
             <Grid container spacing={2}>
                 {
                     userGotchies.map((gotchi, i)=>{
-                        return <Grid item xs={2} key={i}>
+                        return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
                             <RHSGotchi gotchi={gotchi} validAddresses={validAddresses} />
                         </Grid>
                     })
@@ -113,7 +113,7 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
             <Grid container spacing={2}>
                 {
                     wearables.map((wearable, i)=>{
-                        return <Grid item xs={2} key={i}>
+                        return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
                             <RHSWearable wearable={wearable} validAddresses={validAddresses}/>
                         </Grid>
                     })
