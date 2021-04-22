@@ -26,7 +26,7 @@ export default function RHSWearable({wearable, validAddresses}) {
     };
 
     return (
-        <Box className={classNames(classes.wearable, rarity)} style={{marginTop: 20}}>
+        <Box className={classNames(classes.wearable, rarity)} style={{marginBottom: 20}}>
             <img
                 src={getWerableImagePath(wearable.itemId)}
                 alt={name}

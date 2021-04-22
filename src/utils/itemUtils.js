@@ -70,6 +70,25 @@ export default {
         }
     },
 
+    getItemRarityId(rarity) {
+        switch (rarity) {
+            case 'common':
+                return '0';
+            case 'uncommon':
+                return '1';
+            case 'rare':
+                return '2';
+            case 'legendary':
+                return '3';
+            case 'mythical':
+                return '4';
+            case 'godlike':
+                return '5';
+            default:
+                return '-1';
+        }
+    },
+
     getItemImg(item) {
         const typeMap = {
             wearable: () => returnWearable(),

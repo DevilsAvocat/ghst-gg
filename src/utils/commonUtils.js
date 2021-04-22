@@ -35,5 +35,9 @@ export default {
 
     cutAddress(address) {
         return address.slice(0, 4) + '~~' + address.slice(38);
-    }
+    },
+
+    basicSort(array, sortType, sortDir) {
+        return [...array].sort((a, b) => sortDir === 'asc' ? b[sortType] - a[sortType] : a[sortType] - b[sortType]);
+    },
 }

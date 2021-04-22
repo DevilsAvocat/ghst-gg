@@ -6,6 +6,8 @@ import Web3 from 'web3';
 import Constants from '../../api/common/constants.js';
 import thegraph from '../../api/thegraph';
 import graphUtils from '../../utils/graphUtils';
+import itemUtils from '../../utils/itemUtils';
+import commonUtils from '../../utils/commonUtils';
 import {SnackbarContext} from '../../contexts/SnackbarContext';
 
 import RHSFields from './components/RHSFields';
@@ -23,6 +25,7 @@ export default function RarityHuntSupport() {
 
     const [userGotchies, setUserGotchies] = useState([]);
     const [gotchiesFilter, setGotchiesFilter] = useState('totalRew');
+    const [wearablesFilter, setWearablesFilter] = useState('asc');
     const [validAddresses, setValidAddresses] = useState([]);
 
     const [currentReward, setCurrentReward] = useState(0);
@@ -37,9 +40,9 @@ export default function RarityHuntSupport() {
         showBackdrop(true);
         thegraph.getAllGotchies()
             .then((gotchies) => {
-                let rscLeaders = graphUtils.sortGotchies(gotchies, 'modifiedRarityScore');
-                let kinLeaders = graphUtils.sortGotchies(gotchies, 'kinship');
-                let expLeaders = graphUtils.sortGotchies(gotchies, 'experience');
+                let rscLeaders = commonUtils.basicSort(gotchies, 'modifiedRarityScore');
+                let kinLeaders = commonUtils.basicSort(gotchies, 'kinship');
+                let expLeaders = commonUtils.basicSort(gotchies, 'experience');
 
                 gotchies.forEach((item, index)=>{
                     gotchies[index] = {
@@ -71,17 +74,27 @@ export default function RarityHuntSupport() {
                     });
             }
 
-            let combinedArray = responseArray.reduce((acc, val) => {
-                const index = acc.findIndex(el => el.itemId === val.itemId);
+            console.log(responseArray)
+
+
+            let combinedArray = responseArray.reduce((unique, item) => {
+                const index = unique.findIndex(el => el.itemId === item.itemId);
                 if(index !== -1){
-                    acc[index].owners.push(val.owners[0]);
+                    unique[index].owners.push(item.owners[0]);
                 } else {
-                    acc.push({itemId: val.itemId, owners: val.owners});
+                    unique.push({
+                        itemId: item.itemId,
+                        rarity: itemUtils.getItemRarityById(item.itemId),
+                        rarityId: itemUtils.getItemRarityId(itemUtils.getItemRarityById(item.itemId)),
+                        qty: item.balance,
+                        owners: item.owners
+                    });
                 }
-                return acc;
+                return unique;
             }, []);
 
-            setWearables(combinedArray);
+            setWearablesFilter('asc');
+            setWearables(commonUtils.basicSort(combinedArray, 'rarityId', 'asc'));
             showBackdrop(false);
         } catch (error) {
             setWearables([]);
@@ -102,14 +115,25 @@ export default function RarityHuntSupport() {
 
     const getGotchiesByAddresses = (addresses) => {
         let filtered = gotchies.filter((gotchi) => addresses.map((item)=>item.toLowerCase()).includes(gotchi.owner?.id));
-        setUserGotchies(graphUtils.sortGotchies(filtered, gotchiesFilter));
+        setUserGotchies(commonUtils.basicSort(filtered, gotchiesFilter));
         calculateCurrentRew(filtered);
     };
 
     const onGotchiesSort = (event) => {
         // TODO: add filter by owner
-        setUserGotchies(graphUtils.sortGotchies(userGotchies, event.target.value));
+        setUserGotchies(commonUtils.basicSort(userGotchies, event.target.value));
         setGotchiesFilter(event.target.value);
+    };
+
+    const onWearablesSort = (event) => {
+        if(event.target.value === 'asc') {
+            setWearables(commonUtils.basicSort(wearables, 'rarityId', 'asc'));
+        } else if(event.target.value === 'desc') {
+            setWearables(commonUtils.basicSort(wearables, 'rarityId', 'desc'));
+        } else {
+            setWearables(commonUtils.basicSort(wearables, event.target.value, 'asc'));
+        }
+        setWearablesFilter(event.target.value);
     };
 
     const calculateCurrentRew = (gotchies) => {
@@ -130,6 +154,8 @@ export default function RarityHuntSupport() {
                 userGotchies={userGotchies}
                 gotchiesFilter={gotchiesFilter}
                 onGotchiesSort={onGotchiesSort}
+                wearablesFilter={wearablesFilter}
+                onWearablesSort={onWearablesSort}
                 currentReward={currentReward}
                 wearables={wearables}
             />

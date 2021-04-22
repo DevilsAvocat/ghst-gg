@@ -1,10 +1,5 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
-    sortGotchies(array, sortType) {
-        // Possible sortType values: id, baseRarityScore, modifiedRarityScore, kinship, experience
-        return [...array].sort((a, b) => b[sortType] - a[sortType]);
-    },
-
     calculateRewards(position, type) {
         const RSCformula = {y: 0.97, k: 95338.67};
         const KINformula = {y: 0.76, k: 9800.93};

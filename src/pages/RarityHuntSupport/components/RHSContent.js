@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper } from '@material-ui/core';
 import {useStyles} from '../styles';
 import classNames from 'classnames';
@@ -7,7 +7,7 @@ import ghst from '../../../assets/images/ghst-doubleside.gif';
 import RHSGotchi from './RHSGotchi';
 import RHSWearable from './RHSWearable';
 
-export default function RHSContent({validAddresses, userGotchies, gotchiesFilter, onGotchiesSort, currentReward, wearables}) {
+export default function RHSContent({validAddresses, userGotchies, gotchiesFilter, onGotchiesSort, currentReward, wearables, wearablesFilter, onWearablesSort}) {
     const classes = useStyles();
 
     const renderGotchiesHead = () => {
@@ -69,12 +69,27 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
     const renderWearablesHead = () => {
         if(wearables.length !== 0) {
             return (
-                <Typography
-                    variant={'h6'}
-                    style={{marginTop: 20}}
-                >
-                    Inventory items:
-                </Typography>
+                <Grid container spacing={2} style={{marginTop: 12, marginBottom: 8}}>
+                    <Grid item xs={12}>
+                        <Typography variant={'h6'}>
+                            Inventory items:
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={6} md={3}>
+                        <FormControl variant='outlined' size={'small'} className={classes.formControl} fullWidth>
+                            <InputLabel>Order by:</InputLabel>
+                            <Select
+                                label={'Order by:'}
+                                value={wearablesFilter}
+                                onChange={onWearablesSort}
+                            >
+                                <MenuItem value={'asc'}>Rarity (godlike -> common)</MenuItem>
+                                <MenuItem value={'desc'}>Rarity (common -> godlike)</MenuItem>
+                                <MenuItem value={'qty'}>Quantity</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                </Grid>
             )
         } else {
             return (
