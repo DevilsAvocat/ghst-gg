@@ -25,7 +25,7 @@ export default function RarityHuntSupport() {
 
     const [userGotchies, setUserGotchies] = useState([]);
     const [gotchiesFilter, setGotchiesFilter] = useState('totalRew');
-    const [wearablesFilter, setWearablesFilter] = useState('asc');
+    const [wearablesFilter, setWearablesFilter] = useState('desc');
     const [validAddresses, setValidAddresses] = useState([]);
 
     const [currentReward, setCurrentReward] = useState(0);
@@ -74,27 +74,26 @@ export default function RarityHuntSupport() {
                     });
             }
 
-            console.log(responseArray)
-
 
             let combinedArray = responseArray.reduce((unique, item) => {
                 const index = unique.findIndex(el => el.itemId === item.itemId);
                 if(index !== -1){
+                    unique[index].qty = +unique[index].qty + +item.balance;
                     unique[index].owners.push(item.owners[0]);
                 } else {
                     unique.push({
                         itemId: item.itemId,
                         rarity: itemUtils.getItemRarityById(item.itemId),
                         rarityId: itemUtils.getItemRarityId(itemUtils.getItemRarityById(item.itemId)),
-                        qty: item.balance,
+                        qty: +item.balance,
                         owners: item.owners
                     });
                 }
                 return unique;
             }, []);
 
-            setWearablesFilter('asc');
-            setWearables(commonUtils.basicSort(combinedArray, 'rarityId', 'asc'));
+            setWearablesFilter('desc');
+            setWearables(commonUtils.basicSort(combinedArray, 'rarityId', 'desc'));
             showBackdrop(false);
         } catch (error) {
             setWearables([]);
@@ -131,7 +130,7 @@ export default function RarityHuntSupport() {
         } else if(event.target.value === 'desc') {
             setWearables(commonUtils.basicSort(wearables, 'rarityId', 'desc'));
         } else {
-            setWearables(commonUtils.basicSort(wearables, event.target.value, 'asc'));
+            setWearables(commonUtils.basicSort(wearables, event.target.value, 'desc'));
         }
         setWearablesFilter(event.target.value);
     };

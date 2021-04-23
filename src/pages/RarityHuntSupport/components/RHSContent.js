@@ -83,8 +83,8 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                                 value={wearablesFilter}
                                 onChange={onWearablesSort}
                             >
-                                <MenuItem value={'asc'}>Rarity (godlike -> common)</MenuItem>
-                                <MenuItem value={'desc'}>Rarity (common -> godlike)</MenuItem>
+                                <MenuItem value={'desc'}>Rarity (godlike -> common)</MenuItem>
+                                <MenuItem value={'asc'}>Rarity (common -> godlike)</MenuItem>
                                 <MenuItem value={'qty'}>Quantity</MenuItem>
                             </Select>
                         </FormControl>

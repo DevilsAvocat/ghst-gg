@@ -38,6 +38,6 @@ export default {
     },
 
     basicSort(array, sortType, sortDir) {
-        return [...array].sort((a, b) => sortDir === 'asc' ? b[sortType] - a[sortType] : a[sortType] - b[sortType]);
+        return [...array].sort((a, b) => sortDir === 'asc' ? a[sortType] - b[sortType] : b[sortType] - a[sortType]);
     },
 }
