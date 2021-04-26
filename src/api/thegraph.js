@@ -65,7 +65,6 @@ export default {
                     return unique;
                 }, []);
 
-                console.log(combinedArray);
                 return combinedArray;
             });
     }
