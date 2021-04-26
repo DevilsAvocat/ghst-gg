@@ -2,9 +2,8 @@ import React, {useContext, useEffect, useState} from 'react';
 import { Container, Backdrop, CircularProgress, } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import {useStyles} from './styles';
-import Web3 from 'web3';
-import Constants from '../../api/common/constants.js';
 import thegraph from '../../api/thegraph';
+import web3 from '../../api/web3';
 import graphUtils from '../../utils/graphUtils';
 import itemUtils from '../../utils/itemUtils';
 import commonUtils from '../../utils/commonUtils';
@@ -12,9 +11,6 @@ import {SnackbarContext} from '../../contexts/SnackbarContext';
 
 import RHSFields from './components/RHSFields';
 import RHSContent from './components/RHSContent';
-
-const web3 = new Web3(Constants.RPC_URL);
-const contract = new web3.eth.Contract(Constants.ABI, Constants.TOKEN_ADDRESS);
 
 export default function RarityHuntSupport() {
     const classes = useStyles();
@@ -24,7 +20,7 @@ export default function RarityHuntSupport() {
     const [wearables, setWearables] = useState([]);
 
     const [userGotchies, setUserGotchies] = useState([]);
-    const [gotchiesFilter, setGotchiesFilter] = useState('totalRew');
+    const [gotchiesFilter, setGotchiesFilter] = useState('modifiedRarityScore');
     const [wearablesFilter, setWearablesFilter] = useState('desc');
     const [validAddresses, setValidAddresses] = useState([]);
 
@@ -32,7 +28,7 @@ export default function RarityHuntSupport() {
     const [backdropIsOpen, showBackdrop] = useState(false);
 
     useEffect(()=> {
-        getAllGotchies();
+        // getAllGotchies();
     }, []);
 
     // Get all gotchies from TheGraph and calculate rewards
@@ -59,63 +55,61 @@ export default function RarityHuntSupport() {
             });
     }
 
-    const getWearablesByAddresses = async (addresses) => {
-        showBackdrop(true);
-        try {
-            const addressesCounter = addresses.length,
-                responseArray = [];
+    const getGotchiesByAddresses = (addresses) => {
+        thegraph.getGotchiesByAddresses(addresses).then((response)=>{
+            let combinedGotchies = [];
+            response.forEach((item)=>{
+                combinedGotchies.push(...item.data.user.gotchisOwned);
+            });
 
-            for (let i = 0; i < addressesCounter; i++) {
-                await contract.methods.itemBalances(addresses[i]).call()
-                    .then((response) => {
-                        response.forEach((item)=> {
-                            responseArray.push({...item, owners: [{id: addresses[i], qty: item.balance}]})
+            console.log('----GOTCHIES-----');
+            console.log(combinedGotchies);
+
+            setUserGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
+        });
+    };
+
+    const getInventoryByAddresses = (addresses) => {
+        web3.getInventoryByAddresses(addresses).then((response)=>{
+            let combinedArray = [];
+
+            for (let i = 0; i < response.length; i++) {
+                response[i].items.forEach((item)=> {
+                    let index = combinedArray.findIndex(el => el.itemId === item.itemId);
+                    let owner = { id: response[i].owner, qty: +item.balance };
+
+                    if(index !== -1){
+                        combinedArray[index].qty = +combinedArray[index].qty + +item.balance;
+                        combinedArray[index].owners.push(owner);
+                    } else {
+                        combinedArray.push({
+                            itemId: item.itemId,
+                            rarity: itemUtils.getItemRarityById(item.itemId),
+                            rarityId: itemUtils.getItemRarityId(itemUtils.getItemRarityById(item.itemId)),
+                            qty: +item.balance,
+                            owners: [owner]
                         });
-                    });
+                    }
+                });
             }
 
-
-            let combinedArray = responseArray.reduce((unique, item) => {
-                const index = unique.findIndex(el => el.itemId === item.itemId);
-                if(index !== -1){
-                    unique[index].qty = +unique[index].qty + +item.balance;
-                    unique[index].owners.push(item.owners[0]);
-                } else {
-                    unique.push({
-                        itemId: item.itemId,
-                        rarity: itemUtils.getItemRarityById(item.itemId),
-                        rarityId: itemUtils.getItemRarityId(itemUtils.getItemRarityById(item.itemId)),
-                        qty: +item.balance,
-                        owners: item.owners
-                    });
-                }
-                return unique;
-            }, []);
+            console.log('----INVENTORY-----');
+            console.log(combinedArray);
 
             setWearablesFilter('desc');
             setWearables(commonUtils.basicSort(combinedArray, 'rarityId', 'desc'));
-            showBackdrop(false);
-        } catch (error) {
-            setWearables([]);
-            showBackdrop(false);
-        }
+        });
     };
 
     const loadData = (addresses) => {
-        if(addresses.every((address) => Web3.utils.isAddress(address))) {
+        if(addresses.every((address) => web3.isAddressValid(address))) {
             showSnackbar('success', 'Leeroy Jenkins!');
             setValidAddresses(addresses);
             getGotchiesByAddresses(addresses);
-            getWearablesByAddresses(addresses)
+            getInventoryByAddresses(addresses);
         } else {
             showSnackbar('error', 'One or more addresses are not correct!');
         }
-    };
-
-    const getGotchiesByAddresses = (addresses) => {
-        let filtered = gotchies.filter((gotchi) => addresses.map((item)=>item.toLowerCase()).includes(gotchi.owner?.id));
-        setUserGotchies(commonUtils.basicSort(filtered, gotchiesFilter));
-        calculateCurrentRew(filtered);
     };
 
     const onGotchiesSort = (event) => {
@@ -135,10 +129,10 @@ export default function RarityHuntSupport() {
         setWearablesFilter(event.target.value);
     };
 
-    const calculateCurrentRew = (gotchies) => {
-        let reward = gotchies.reduce((prev, next) => prev + next.totalRew, 0);
-        setCurrentReward(reward);
-    };
+    // const calculateCurrentRew = (gotchies) => {
+    //     let reward = gotchies.reduce((prev, next) => prev + next.totalRew, 0);
+    //     setCurrentReward(reward);
+    // };
 
     return (
         <Container maxWidth='lg' className={classes.container}>

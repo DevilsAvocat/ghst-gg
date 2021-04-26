@@ -43,7 +43,7 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                                 value={gotchiesFilter}
                                 onChange={onGotchiesSort}
                             >
-                                <MenuItem value={'totalRew'}>Current reward</MenuItem>
+                                {/*<MenuItem value={'totalRew'}>Current reward</MenuItem>*/}
                                 <MenuItem value={'modifiedRarityScore'}>RS (modified)</MenuItem>
                                 <MenuItem value={'baseRarityScore'}>RS (base)</MenuItem>
                                 <MenuItem value={'kinship'}>KIN</MenuItem>

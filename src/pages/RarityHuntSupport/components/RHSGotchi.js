@@ -56,9 +56,9 @@ export default function RHSGotchi({gotchi, validAddresses}) {
                 Exp: {gotchi.experience}
                 {/*Rew: {gotchi.expRew}*/}
             </Typography>
-            <Typography variant={'body2'}>
-                Current reward: {gotchi.totalRew}
-            </Typography>
+            {/*<Typography variant={'body2'}>*/}
+            {/*    Current reward: {gotchi.totalRew}*/}
+            {/*</Typography>*/}
             {/*<Grid container>*/}
             {/*    {*/}
             {/*        Object.entries(commonUtils.formatTraits(gotchi.numericTraits)).map(([key, value], i)=>{*/}

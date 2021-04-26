@@ -21,3 +21,24 @@ export const gotchiesQuery = (skip, orderDir) => {
         }
     }`
 };
+
+export const userQuery = (id) => {
+    return `{
+        user(id: "${id}") {
+          id
+          gotchisOwned(where: {status: 3}) {
+            id
+            name
+            numericTraits
+            baseRarityScore
+            modifiedRarityScore
+            kinship
+            experience
+            equippedWearables
+            owner {
+              id
+            }
+          }
+        }
+    }`
+};
