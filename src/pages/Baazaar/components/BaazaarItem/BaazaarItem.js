@@ -10,12 +10,6 @@ import useStyles from './styles';
 export default function BaazaarItem({item}) {
     const classes = useStyles();
 
-    const getSellerShortAddress = (item) => {
-        let sellerAddress = item.seller;
-
-        return `${sellerAddress.substring(0, 4)}...${sellerAddress.substring(sellerAddress.length - 4, sellerAddress.length)}`;
-    };
-
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={item.listing_id}>
             <Box className={classNames(classes.baazaarItem, itemUtils.getItemRarityName(item))}>
@@ -60,7 +54,7 @@ export default function BaazaarItem({item}) {
                             href={`https://aavegotchi.com/baazaar/owner/${item.seller}`}
                             target={'_blank'}
                         >
-                            { getSellerShortAddress(item) }
+                            { commonUtils.getSellerShortAddress(item) }
                         </Link>
                         </Typography>
                     </Grid>
