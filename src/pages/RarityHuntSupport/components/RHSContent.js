@@ -7,7 +7,7 @@ import ghst from '../../../assets/images/ghst-doubleside.gif';
 import RHSGotchi from './RHSGotchi';
 import RHSWearable from './RHSWearable';
 
-export default function RHSContent({validAddresses, userGotchies, gotchiesFilter, onGotchiesSort, currentReward, wearables, wearablesFilter, onWearablesSort}) {
+export default function RHSContent({validAddresses, userGotchies, gotchiesFilter, onGotchiesSort, currentReward, wearables, wearablesFilter, onWearablesSort, isDataLoading}) {
     const classes = useStyles();
 
     const renderGotchiesHead = () => {
@@ -53,7 +53,7 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                     </Grid>
                 </Grid>
             )
-        } else {
+        } else if (!isDataLoading) {
             return (
                 <Typography
                     align={'center'}
@@ -91,7 +91,7 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                     </Grid>
                 </Grid>
             )
-        } else {
+        } else if (!isDataLoading) {
             return (
                 <Typography
                     align={'center'}

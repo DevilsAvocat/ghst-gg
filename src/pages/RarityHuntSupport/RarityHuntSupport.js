@@ -25,18 +25,21 @@ export default function RarityHuntSupport() {
     const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAddresses').split(',') || []);
 
     const [currentReward, setCurrentReward] = useState(0);
-    const [backdropIsOpen, showBackdrop] = useState(false);
+
+    const [isGotchiesLoading, setIsGotchiesLoading] = useState(false);
+    const [isInventoryLoading, setIsInventoryLoading] = useState(false);
 
     useEffect(()=> {
         if(validAddresses.length !== 0) {
-            loadData(validAddresses)
+            getGotchiesByAddresses(validAddresses);
+            getInventoryByAddresses(validAddresses);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Get all gotchies from TheGraph and calculate rewards
     const getAllGotchies = () => {
-        showBackdrop(true);
+        // showBackdrop(true);
         thegraph.getAllGotchies()
             .then((gotchies) => {
                 let rscLeaders = commonUtils.basicSort(gotchies, 'modifiedRarityScore');
@@ -54,11 +57,12 @@ export default function RarityHuntSupport() {
                 });
 
                 setGotchies(gotchies);
-                showBackdrop(false);
+                // showBackdrop(false);
             });
     }
 
     const getGotchiesByAddresses = (addresses) => {
+        setIsGotchiesLoading(true);
         thegraph.getGotchiesByAddresses(addresses).then((response)=>{
             let combinedGotchies = [];
             response.forEach((item)=>{
@@ -68,11 +72,13 @@ export default function RarityHuntSupport() {
             console.log('----GOTCHIES-----');
             console.log(combinedGotchies);
 
+            setIsGotchiesLoading(false);
             setUserGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
         });
     };
 
     const getInventoryByAddresses = (addresses) => {
+        setIsInventoryLoading(true);
         web3.getInventoryByAddresses(addresses).then((response)=>{
             let combinedArray = [];
 
@@ -99,20 +105,24 @@ export default function RarityHuntSupport() {
             console.log('----INVENTORY-----');
             console.log(combinedArray);
 
+            setIsInventoryLoading(false);
             setWearablesFilter('desc');
             setWearables(commonUtils.basicSort(combinedArray, 'rarityId', 'desc'));
         });
     };
 
     const loadData = (addresses) => {
-        if(addresses.every((address) => web3.isAddressValid(address))) {
+        let noDuplicates = !commonUtils.checkArrayForDuplicates(addresses);
+        let allValid = addresses.every((address) => web3.isAddressValid(address));
+
+        if(allValid && noDuplicates) {
             showSnackbar('success', 'Leeroy Jenkins!');
             setValidAddresses(addresses);
             getGotchiesByAddresses(addresses);
             getInventoryByAddresses(addresses);
             localStorage.setItem('loggedAddresses', addresses);
         } else {
-            showSnackbar('error', 'One or more addresses are not correct!');
+            showSnackbar('error', 'One or more addresses are not correct or duplicated!');
         }
     };
 
@@ -131,6 +141,10 @@ export default function RarityHuntSupport() {
             setWearables(commonUtils.basicSort(wearables, event.target.value, 'desc'));
         }
         setWearablesFilter(event.target.value);
+    };
+
+    const isDataLoading = () => {
+        return isGotchiesLoading || isInventoryLoading;
     };
 
     // const calculateCurrentRew = (gotchies) => {
@@ -155,9 +169,10 @@ export default function RarityHuntSupport() {
                 onWearablesSort={onWearablesSort}
                 currentReward={currentReward}
                 wearables={wearables}
+                isDataLoading={isDataLoading}
             />
 
-            <Backdrop className={classes.backdrop} open={backdropIsOpen}>
+            <Backdrop className={classes.backdrop} open={isDataLoading()}>
                 <CircularProgress color='primary' />
             </Backdrop>
 

@@ -40,4 +40,8 @@ export default {
     basicSort(array, sortType, sortDir) {
         return [...array].sort((a, b) => sortDir === 'asc' ? a[sortType] - b[sortType] : b[sortType] - a[sortType]);
     },
+
+    checkArrayForDuplicates(array){
+        return new Set(array).size !== array.length;
+    }
 }

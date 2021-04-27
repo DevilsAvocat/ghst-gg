@@ -18,7 +18,7 @@ export default function RHSFields({validAddresses, loadData}) {
     const deleteField = (index) => {
         let addressesCache = [...addresses];
         addressesCache.splice(index, 1);
-        setAddresses(addressesCache);
+        addresses.length === 1 ? setAddresses(['']) : setAddresses(addressesCache);
     };
 
     const addMoreFields = () => {
@@ -48,7 +48,7 @@ export default function RHSFields({validAddresses, loadData}) {
                                 fillAddress(event.target.value, i);
                             }}
                             InputProps={{
-                                endAdornment: <IconButton disabled={addresses.length === 1} size={'small'} onClick={() => deleteField(i)}>
+                                endAdornment: <IconButton size={'small'} onClick={() => deleteField(i)}>
                                     <Close/>
                                 </IconButton>
                             }}
