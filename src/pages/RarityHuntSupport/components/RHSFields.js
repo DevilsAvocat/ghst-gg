@@ -7,7 +7,7 @@ import Close from '@material-ui/icons/Close';
 
 export default function RHSFields({validAddresses, loadData}) {
     const classes = useStyles();
-    const [addresses, setAddresses] = useState(['']);
+    const [addresses, setAddresses] = useState(validAddresses);
 
     const fillAddress = (value, index) => {
         let addressesCache = [...addresses];

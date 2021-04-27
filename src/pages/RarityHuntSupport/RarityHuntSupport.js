@@ -22,13 +22,16 @@ export default function RarityHuntSupport() {
     const [userGotchies, setUserGotchies] = useState([]);
     const [gotchiesFilter, setGotchiesFilter] = useState('modifiedRarityScore');
     const [wearablesFilter, setWearablesFilter] = useState('desc');
-    const [validAddresses, setValidAddresses] = useState([]);
+    const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAddresses').split(',') || []);
 
     const [currentReward, setCurrentReward] = useState(0);
     const [backdropIsOpen, showBackdrop] = useState(false);
 
     useEffect(()=> {
-        // getAllGotchies();
+        if(validAddresses.length !== 0) {
+            loadData(validAddresses)
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // Get all gotchies from TheGraph and calculate rewards
@@ -107,6 +110,7 @@ export default function RarityHuntSupport() {
             setValidAddresses(addresses);
             getGotchiesByAddresses(addresses);
             getInventoryByAddresses(addresses);
+            localStorage.setItem('loggedAddresses', addresses);
         } else {
             showSnackbar('error', 'One or more addresses are not correct!');
         }
