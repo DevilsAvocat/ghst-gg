@@ -11,11 +11,11 @@ export default {
 
         switch(type) {
             case 'RSC':
-                return +((Math.pow(1 / position, RSCformula.y)) * RSCformula.k).toFixed(0);
+                return +((Math.pow(1 / (position + 1), RSCformula.y)) * RSCformula.k).toFixed(0);
             case 'KIN':
-                return +((Math.pow(1 / position, KINformula.y)) * KINformula.k).toFixed(0);
+                return +((Math.pow(1 / (position + 1), KINformula.y)) * KINformula.k).toFixed(0);
             case 'EXP':
-                return +((Math.pow(1 / position, EXPformula.y)) * EXPformula.k).toFixed(0);
+                return +((Math.pow(1 / (position + 1), EXPformula.y)) * EXPformula.k).toFixed(0);
             default:
                 return 0;
         }

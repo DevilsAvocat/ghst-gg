@@ -4,7 +4,6 @@ import {Helmet} from 'react-helmet';
 import {useStyles} from './styles';
 import thegraph from '../../api/thegraph';
 import web3 from '../../api/web3';
-import graphUtils from '../../utils/graphUtils';
 import itemUtils from '../../utils/itemUtils';
 import commonUtils from '../../utils/commonUtils';
 import {SnackbarContext} from '../../contexts/SnackbarContext';
@@ -15,19 +14,17 @@ import RHSContent from './components/RHSContent';
 export default function RarityHuntSupport() {
     const classes = useStyles();
     const { showSnackbar } = useContext(SnackbarContext);
-
-    const [gotchies, setGotchies] = useState([]);
-    const [wearables, setWearables] = useState([]);
-
-    const [userGotchies, setUserGotchies] = useState([]);
-    const [gotchiesFilter, setGotchiesFilter] = useState('modifiedRarityScore');
-    const [wearablesFilter, setWearablesFilter] = useState('desc');
     const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAddresses').split(',') || []);
 
-    const [currentReward, setCurrentReward] = useState(0);
-
+    const [gotchies, setGotchies] = useState([]);
+    const [gotchiesFilter, setGotchiesFilter] = useState('modifiedRarityScore');
     const [isGotchiesLoading, setIsGotchiesLoading] = useState(false);
+
+    const [inventory, setInventory] = useState([]);
+    const [inventoryFilter, setInventoryFilter] = useState('desc');
     const [isInventoryLoading, setIsInventoryLoading] = useState(false);
+
+    const [isRewardCalculating, setIsRewardCalculating] = useState(false);
 
     useEffect(()=> {
         if(validAddresses.length !== 0) {
@@ -37,43 +34,17 @@ export default function RarityHuntSupport() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    // Get all gotchies from TheGraph and calculate rewards
-    const getAllGotchies = () => {
-        // showBackdrop(true);
-        thegraph.getAllGotchies()
-            .then((gotchies) => {
-                let rscLeaders = commonUtils.basicSort(gotchies, 'modifiedRarityScore');
-                let kinLeaders = commonUtils.basicSort(gotchies, 'kinship');
-                let expLeaders = commonUtils.basicSort(gotchies, 'experience');
-
-                gotchies.forEach((item, index)=>{
-                    gotchies[index] = {
-                        ...item,
-                        rscRew: graphUtils.calculateRewards(rscLeaders.indexOf(gotchies[index]) + 1, 'RSC'),
-                        kinRew: graphUtils.calculateRewards(kinLeaders.indexOf(gotchies[index]) + 1, 'KIN'),
-                        expRew: graphUtils.calculateRewards(expLeaders.indexOf(gotchies[index]) + 1, 'EXP'),
-                        totalRew: graphUtils.calculateRewards(rscLeaders.indexOf(gotchies[index]) + 1, 'RSC') + graphUtils.calculateRewards(kinLeaders.indexOf(gotchies[index]) + 1, 'KIN') + graphUtils.calculateRewards(expLeaders.indexOf(gotchies[index]) + 1, 'EXP')
-                    }
-                });
-
-                setGotchies(gotchies);
-                // showBackdrop(false);
-            });
-    }
-
     const getGotchiesByAddresses = (addresses) => {
         setIsGotchiesLoading(true);
         thegraph.getGotchiesByAddresses(addresses).then((response)=>{
             let combinedGotchies = [];
+
             response.forEach((item)=>{
                 combinedGotchies.push(...item.data.user.gotchisOwned);
             });
 
-            console.log('----GOTCHIES-----');
-            console.log(combinedGotchies);
-
             setIsGotchiesLoading(false);
-            setUserGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
+            setGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
         });
     };
 
@@ -102,25 +73,22 @@ export default function RarityHuntSupport() {
                 });
             }
 
-            console.log('----INVENTORY-----');
-            console.log(combinedArray);
-
             setIsInventoryLoading(false);
-            setWearablesFilter('desc');
-            setWearables(commonUtils.basicSort(combinedArray, 'rarityId', 'desc'));
+            setInventoryFilter('desc');
+            setInventory(commonUtils.basicSort(combinedArray, 'rarityId', 'desc'));
         });
     };
 
-    const loadData = (addresses) => {
+    const loadData = async (addresses) => {
         let noDuplicates = !commonUtils.checkArrayForDuplicates(addresses);
         let allValid = addresses.every((address) => web3.isAddressValid(address));
 
         if(allValid && noDuplicates) {
-            showSnackbar('success', 'Leeroy Jenkins!');
             setValidAddresses(addresses);
             getGotchiesByAddresses(addresses);
             getInventoryByAddresses(addresses);
             localStorage.setItem('loggedAddresses', addresses);
+            showSnackbar('success', 'Leeroy Jenkins!');
         } else {
             showSnackbar('error', 'One or more addresses are not correct or duplicated!');
         }
@@ -128,29 +96,24 @@ export default function RarityHuntSupport() {
 
     const onGotchiesSort = (event) => {
         // TODO: add filter by owner
-        setUserGotchies(commonUtils.basicSort(userGotchies, event.target.value));
+        setGotchies(commonUtils.basicSort(gotchies, event.target.value));
         setGotchiesFilter(event.target.value);
     };
 
-    const onWearablesSort = (event) => {
+    const onInventorySort = (event) => {
         if(event.target.value === 'asc') {
-            setWearables(commonUtils.basicSort(wearables, 'rarityId', 'asc'));
+            setInventory(commonUtils.basicSort(inventory, 'rarityId', 'asc'));
         } else if(event.target.value === 'desc') {
-            setWearables(commonUtils.basicSort(wearables, 'rarityId', 'desc'));
+            setInventory(commonUtils.basicSort(inventory, 'rarityId', 'desc'));
         } else {
-            setWearables(commonUtils.basicSort(wearables, event.target.value, 'desc'));
+            setInventory(commonUtils.basicSort(inventory, event.target.value, 'desc'));
         }
-        setWearablesFilter(event.target.value);
+        setInventoryFilter(event.target.value);
     };
 
     const isDataLoading = () => {
-        return isGotchiesLoading || isInventoryLoading;
+        return isGotchiesLoading || isInventoryLoading || isRewardCalculating;
     };
-
-    // const calculateCurrentRew = (gotchies) => {
-    //     let reward = gotchies.reduce((prev, next) => prev + next.totalRew, 0);
-    //     setCurrentReward(reward);
-    // };
 
     return (
         <Container maxWidth='lg' className={classes.container}>
@@ -162,13 +125,13 @@ export default function RarityHuntSupport() {
 
             <RHSContent
                 validAddresses={validAddresses}
-                userGotchies={userGotchies}
+                gotchies={gotchies}
                 gotchiesFilter={gotchiesFilter}
                 onGotchiesSort={onGotchiesSort}
-                wearablesFilter={wearablesFilter}
-                onWearablesSort={onWearablesSort}
-                currentReward={currentReward}
-                wearables={wearables}
+                inventory={inventory}
+                inventoryFilter={inventoryFilter}
+                onInventorySort={onInventorySort}
+                setIsRewardCalculating={setIsRewardCalculating}
                 isDataLoading={isDataLoading}
             />
 

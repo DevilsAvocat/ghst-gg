@@ -63,7 +63,6 @@ export default {
                     return unique;
                 }, []);
 
-                console.log(filteredArray);
                 return filteredArray;
             });
     },
@@ -71,8 +70,8 @@ export default {
     async getGotchiesByAddresses(addressesArray) {
         let queries = [];
 
-        addressesArray.forEach((item)=> {
-            queries.push(userQuery(item.toLowerCase()));
+        addressesArray.forEach((address)=> {
+            queries.push(userQuery(address.toLowerCase()));
         });
 
         return await this.getJoinedData(queries);
