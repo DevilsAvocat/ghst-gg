@@ -305,7 +305,7 @@ export const useStyles = makeStyles((theme) => ({
             },
         }
     },
-    wearable: {
+    item: {
         borderRadius: theme.shape.borderRadius,
         backgroundColor: theme.palette.secondary.dark,
         padding: '16px 12px',
@@ -331,7 +331,7 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.rarity.godlike, .1)
         },
     },
-    wearableTitle: {
+    itemTitle: {
         '&.common': {
             color: theme.palette.rarity.common
         },

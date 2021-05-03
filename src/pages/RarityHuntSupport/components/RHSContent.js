@@ -1,40 +1,51 @@
-import React from 'react';
-import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper } from '@material-ui/core';
+import React, {useState} from 'react';
+import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, Button } from '@material-ui/core';
 import {useStyles} from '../styles';
+import thegraph from '../../../api/thegraph';
+import graphUtils from '../../../utils/graphUtils';
+import commonUtils from '../../../utils/commonUtils';
 import classNames from 'classnames';
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
 import RHSGotchi from './RHSGotchi';
-import RHSWearable from './RHSWearable';
+import RHSItem from './RHSItem';
 
-export default function RHSContent({validAddresses, userGotchies, gotchiesFilter, onGotchiesSort, currentReward, wearables, wearablesFilter, onWearablesSort}) {
+export default function RHSContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
+                                       onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
+    const [totalReward, setTotalReward] = useState(0);
+    const showPlaceholder = validAddresses[0].length !== 0 && !isDataLoading();
+
+    const calculateReward = () => {
+        setIsRewardCalculating(true);
+        thegraph.getAllGotchies().then((allGotchies)=>{
+            let rscLeaders = commonUtils.basicSort(allGotchies, 'withSetsRarityScore');
+            let kinLeaders = commonUtils.basicSort(allGotchies, 'kinship');
+            let expLeaders = commonUtils.basicSort(allGotchies, 'experience');
+
+            gotchies.forEach((item, index)=>{
+                let resRew = graphUtils.calculateRewards(rscLeaders.findIndex(x => x.id === item.id), 'RSC');
+                let kinRew = graphUtils.calculateRewards(kinLeaders.findIndex(x => x.id === item.id), 'KIN');
+                let expRew = graphUtils.calculateRewards(expLeaders.findIndex(x => x.id === item.id), 'EXP');
+
+                gotchies[index] = {
+                    ...item,
+                    rscRew: resRew,
+                    kinRew: kinRew,
+                    expRew: expRew,
+                    totalRew: resRew + kinRew + expRew
+                }
+            });
+
+            setTotalReward(gotchies.reduce((prev, next) => prev + next.totalRew, 0));
+            setIsRewardCalculating(false);
+        });
+    };
 
     const renderGotchiesHead = () => {
-        if(userGotchies.length !== 0) {
+        if(gotchies.length !== 0) {
             return (
                 <Grid container spacing={2} style={{marginBottom: 12}}>
-                    <Grid item xs={12} sm={6}>
-                        <Paper variant='outlined' style={{padding: '12px 6px', height: '100%'}}>
-                            <Typography align={'center'} variant={'h6'}>
-                                Current Reward >=>
-                                <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
-                                    {currentReward}
-                                    <img src={ghst} width='26' alt='GHST Token Icon' />
-                                </Box>
-                            </Typography>
-                        </Paper>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                        <Paper variant='outlined' style={{padding: '12px 6px', height: '100%'}}>
-                            <Typography align={'center'} variant={'h6'}>
-                                Possible Reward >=>
-                                <Box className={classes.textHighlight} component={'span'}>
-                                    Coming soon...
-                                </Box>
-                            </Typography>
-                        </Paper>
-                    </Grid>
                     <Grid item xs={6} md={3} style={{marginTop: 4}}>
                         <FormControl variant='outlined' size={'small'} className={classes.formControl} fullWidth>
                             <InputLabel>Order by:</InputLabel>
@@ -43,8 +54,8 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                                 value={gotchiesFilter}
                                 onChange={onGotchiesSort}
                             >
-                                <MenuItem value={'totalRew'}>Current reward</MenuItem>
-                                <MenuItem value={'modifiedRarityScore'}>RS (modified)</MenuItem>
+                                {/*<MenuItem value={'totalRew'}>Current reward</MenuItem>*/}
+                                <MenuItem value={'withSetsRarityScore'}>RS (modified)</MenuItem>
                                 <MenuItem value={'baseRarityScore'}>RS (base)</MenuItem>
                                 <MenuItem value={'kinship'}>KIN</MenuItem>
                                 <MenuItem value={'experience'}>EXP</MenuItem>
@@ -53,7 +64,7 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                     </Grid>
                 </Grid>
             )
-        } else {
+        } else if (showPlaceholder) {
             return (
                 <Typography
                     align={'center'}
@@ -63,11 +74,13 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                     To earn some prizes you should get at least 1 ghost!
                 </Typography>
             )
+        } else {
+            return null;
         }
     }
 
-    const renderWearablesHead = () => {
-        if(wearables.length !== 0) {
+    const renderInventoryHead = () => {
+        if(inventory.length !== 0) {
             return (
                 <Grid container spacing={2} style={{marginTop: 12, marginBottom: 8}}>
                     <Grid item xs={12}>
@@ -80,8 +93,8 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                             <InputLabel>Order by:</InputLabel>
                             <Select
                                 label={'Order by:'}
-                                value={wearablesFilter}
-                                onChange={onWearablesSort}
+                                value={inventoryFilter}
+                                onChange={onInventorySort}
                             >
                                 <MenuItem value={'desc'}>Rarity (godlike -> common)</MenuItem>
                                 <MenuItem value={'asc'}>Rarity (common -> godlike)</MenuItem>
@@ -91,7 +104,7 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                     </Grid>
                 </Grid>
             )
-        } else {
+        } else if (showPlaceholder) {
             return (
                 <Typography
                     align={'center'}
@@ -102,6 +115,28 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                     Your inventory is empty :(
                 </Typography>
             )
+        } else {
+            return null;
+        }
+    }
+
+    const renderRewardPaper = () => {
+        if(totalReward !== 0) {
+            return (
+                <Grid item xs={12} md={6}>
+                    <Paper variant='outlined' align='center' style={{padding: 12}}>
+                        <Typography align={'center'} variant={'h6'}>
+                            Total Reward >=>
+                            <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
+                                {totalReward}
+                                <img src={ghst} width='26' alt='GHST Token Icon' />
+                            </Box>
+                        </Typography>
+                    </Paper>
+                </Grid>
+            )
+        } else {
+            return null;
         }
     }
 
@@ -111,11 +146,33 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
 
     return (
         <Box>
+            <Grid container alignItems={'center'} spacing={2} style={{marginBottom: 12, minHeight: 74}}>
+                <Grid item xs={12} md={6}>
+                    <Button
+                        variant={'contained'}
+                        size={'large'}
+                        onClick={calculateReward}
+                        style={{marginRight: 16}}
+                    >
+                        Calculate Reward
+                    </Button>
+                    <Button
+                        disabled={true}
+                        color={'primary'}
+                        variant={'contained'}
+                        size={'large'}
+                    >
+                        Get Support
+                    </Button>
+                </Grid>
+                {renderRewardPaper()}
+            </Grid>
+
             {renderGotchiesHead()}
 
             <Grid container spacing={2}>
                 {
-                    userGotchies.map((gotchi, i)=>{
+                    gotchies.map((gotchi, i)=>{
                         return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
                             <RHSGotchi gotchi={gotchi} validAddresses={validAddresses} />
                         </Grid>
@@ -123,13 +180,13 @@ export default function RHSContent({validAddresses, userGotchies, gotchiesFilter
                 }
             </Grid>
 
-            {renderWearablesHead()}
+            {renderInventoryHead()}
 
             <Grid container spacing={2}>
                 {
-                    wearables.map((wearable, i)=>{
+                    inventory.map((item, i)=>{
                         return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
-                            <RHSWearable wearable={wearable} validAddresses={validAddresses}/>
+                            <RHSItem item={item} validAddresses={validAddresses}/>
                         </Grid>
                     })
                 }

@@ -1,6 +1,6 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
-import {gotchiesQuery} from './common/queries';
+import {gotchiesQuery, userQuery} from './common/queries';
 
 var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic',
     client = new ApolloClient({
@@ -47,9 +47,7 @@ export default {
     async getAllGotchies() {
         // NOTE: to reduce loading speed current gotchies max amount is 7000
         // We should add new queries when there will be more than 7000 unique gotchies
-        return await graphJoin([
-                gotchiesQuery(0, 'asc'), gotchiesQuery(1000, 'asc'), gotchiesQuery(2000, 'asc'), gotchiesQuery(3000, 'asc'), gotchiesQuery(4000, 'asc'), gotchiesQuery(5000, 'asc'), gotchiesQuery(0, 'desc')
-            ])
+        return await graphJoin([gotchiesQuery(0, 'asc'), gotchiesQuery(1000, 'asc'), gotchiesQuery(2000, 'asc'), gotchiesQuery(3000, 'asc'), gotchiesQuery(4000, 'asc'), gotchiesQuery(5000, 'asc'), gotchiesQuery(0, 'desc')])
             .then((response)=> {
                 let responseArray = [];
 
@@ -57,7 +55,7 @@ export default {
                     responseArray = [...response[i].data.aavegotchis, ...responseArray];
                 }
 
-                let combinedArray = responseArray.reduce((unique, item) => {
+                let filteredArray = responseArray.reduce((unique, item) => {
                     const index = unique.findIndex(el => el.id === item.id);
                     if(index === -1){
                         unique.push(item);
@@ -65,7 +63,17 @@ export default {
                     return unique;
                 }, []);
 
-                return combinedArray;
+                return filteredArray;
             });
+    },
+
+    async getGotchiesByAddresses(addressesArray) {
+        let queries = [];
+
+        addressesArray.forEach((address)=> {
+            queries.push(userQuery(address.toLowerCase()));
+        });
+
+        return await this.getJoinedData(queries);
     }
 }

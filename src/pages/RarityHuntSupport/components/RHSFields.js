@@ -7,7 +7,7 @@ import Close from '@material-ui/icons/Close';
 
 export default function RHSFields({validAddresses, loadData}) {
     const classes = useStyles();
-    const [addresses, setAddresses] = useState(['']);
+    const [addresses, setAddresses] = useState(validAddresses);
 
     const fillAddress = (value, index) => {
         let addressesCache = [...addresses];
@@ -18,7 +18,7 @@ export default function RHSFields({validAddresses, loadData}) {
     const deleteField = (index) => {
         let addressesCache = [...addresses];
         addressesCache.splice(index, 1);
-        setAddresses(addressesCache);
+        addresses.length === 1 ? setAddresses(['']) : setAddresses(addressesCache);
     };
 
     const addMoreFields = () => {
@@ -42,13 +42,13 @@ export default function RHSFields({validAddresses, loadData}) {
                             size={'small'}
                             label={`address ${i + 1}`}
                             value={address}
-                            disabled={address === validAddresses[i]}
+                            disabled={validAddresses[i]?.length !== 0 && address === validAddresses[i]}
                             className={classNames(classes.addressField, `color-${i + 1}`, address === validAddresses[i] && 'highlighted')}
                             onChange={(event) => {
                                 fillAddress(event.target.value, i);
                             }}
                             InputProps={{
-                                endAdornment: <IconButton disabled={addresses.length === 1} size={'small'} onClick={() => deleteField(i)}>
+                                endAdornment: <IconButton size={'small'} onClick={() => deleteField(i)}>
                                     <Close/>
                                 </IconButton>
                             }}
