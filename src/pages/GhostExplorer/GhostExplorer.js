@@ -1,54 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, fade, Link, Typography } from '@material-ui/core';
+import { Box, Link, Typography } from '@material-ui/core';
+import useStyles from './styles';
 import classNames from 'classnames';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        height: '100%',
-        overflowY: 'auto',
-        justifyContent: 'space-around'
-    },
-    gotchi: {
-        borderRadius: 4,
-        width: 150,
-        padding: 30,
-        transition: 'background-color .3s ease-in-out',
-        '& img': {
-            height: 90,
-            width: 90,
-            filter: 'drop-shadow( 0px 0px 7px rgba(255,255,209,.5))'
-        },
-        '&:hover': {
-            textDecoration: 'none',
-            backgroundColor: fade(theme.palette.primary.main, .1)
-        }
-    },
-    gotchiName: {
-        textAlign: 'center',
-        fontSize: 20,
-        whiteSpace: 'nowrap',
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        paddingBottom: 15
-    },
-    goBack: {
-        borderTopLeftRadius: 0,
-        borderBottomLeftRadius: 0,
-        position: "fixed",
-        bottom: 20,
-        left: 0
-    },
-    goBackButtonText: {
-        textTransform: 'uppercase',
-        marginLeft: 8,
-        fontWeight: 500
-    }
-}));
-
-var maxGotchiQuantity = 10000;
-var loadNewItemsAfterThisScrollHeight = 2000;
+var maxGotchiQuantity = 10000,
+    loadNewItemsAfterThisScrollHeight = 2000;
 
 export default function GhostExplorer() {
     const classes = useStyles();
@@ -56,7 +13,6 @@ export default function GhostExplorer() {
     // scrolling
     const scrollingContainerRef = useRef();
     const size = useNodeScroll(scrollingContainerRef.current);
-
 
     function useNodeScroll() {
         const [scrollDown, setScrollDown] = useState();
@@ -137,13 +93,6 @@ export default function GhostExplorer() {
                             href={`https://aavegotchi.com/gotchi/${ghst}`}
                             target="_blank"
                         >
-                            {/*<Typography*/}
-                            {/*    align={'center'}*/}
-                            {/*    className={classes.gotchiName}*/}
-                            {/*    variant={'h5'}*/}
-                            {/*>*/}
-                            {/*    Unnamed*/}
-                            {/*</Typography>*/}
                             <Box h={90}>
                                 <img alt={ghst} src={img} />
                             </Box>

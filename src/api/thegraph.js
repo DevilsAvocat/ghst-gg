@@ -77,8 +77,3 @@ export default {
         return await this.getJoinedData(queries);
     }
 }
-
-
-
-
-

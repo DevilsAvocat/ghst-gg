@@ -5,7 +5,7 @@ import BaazaarItem from '../BaazaarItem/BaazaarItem';
 import Pagination from '../Pagination/Pagination';
 import {Typography} from '@material-ui/core';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     baazaarBody: {
         padding: 30
     },

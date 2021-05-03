@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme) => ({
     section: {
         padding: '50px 0',
         [theme.breakpoints.up('md')]: {
-            padding: '75px 0',
+            padding: '75px 0'
         }
     }
 }));

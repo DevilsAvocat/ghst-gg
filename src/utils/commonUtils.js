@@ -37,6 +37,12 @@ export default {
         return address.slice(0, 4) + '~~' + address.slice(38);
     },
 
+    getSellerShortAddress(item) {
+        let sellerAddress = item.seller;
+
+        return `${sellerAddress.substring(0, 4)}...${sellerAddress.substring(sellerAddress.length - 4, sellerAddress.length)}`;
+    },
+
     basicSort(array, sortType, sortDir) {
         return [...array].sort((a, b) => sortDir === 'asc' ? a[sortType] - b[sortType] : b[sortType] - a[sortType]);
     },

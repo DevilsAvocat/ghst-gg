@@ -1,58 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import useStyles from './styles';
 import { Link } from 'react-router-dom';
 import {Box, CircularProgress, Grid} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-
 import thegraph from '../../../../api/thegraph';
 import commonUtils from '../../../../utils/commonUtils';
-import {portalsQuery} from './queries';
-
+import { portalsQuery } from './queries';
 import openedPortal from '../../../../assets/images/portal-opened.gif';
 import sealedPortal from '../../../../assets/images/portal-sealed.svg';
-
-const useStyles = makeStyles((theme) => ({
-    portalsColumn: {
-        marginBottom: 30,
-        [theme.breakpoints.up('md')]: {
-            marginBottom: 0
-        }
-    },
-    portalsDescr: {
-        fontSize: 24
-    },
-    portalsImage: {
-        cursor: 'pointer',
-        width: 150,
-        height: 150
-    },
-    explorerLink: {
-        display: 'inline-block',
-        color: theme.palette.primary.main,
-        textDecoration: 'none',
-        position: 'relative',
-        '&::after': {
-            content: '""',
-            position: 'absolute',
-            right: 0,
-            bottom: 0,
-            left: '50%',
-            opacity: .3,
-            transform: 'translateX(-50%)',
-            transition: 'all .3s ease-in-out',
-            width: 0,
-            height: 1,
-            borderRadius: 4,
-            backgroundColor: theme.palette.primary.main
-        },
-        '&:hover::after': {
-            opacity: 1,
-            width: '100%'
-        }
-    },
-    highlight: {
-        color: theme.palette.primary.main
-    }
-}));
 
 export default function Portals() {
     const classes = useStyles();
@@ -63,7 +17,7 @@ export default function Portals() {
 
     useEffect(() => {
         getGraphData();
-    },[]);
+    }, []);
 
     const getGraphData = () => {
         setDataSpinner(true);
