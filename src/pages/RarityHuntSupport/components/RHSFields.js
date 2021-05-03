@@ -42,7 +42,7 @@ export default function RHSFields({validAddresses, loadData}) {
                             size={'small'}
                             label={`address ${i + 1}`}
                             value={address}
-                            disabled={address === validAddresses[i]}
+                            disabled={validAddresses[i]?.length !== 0 && address === validAddresses[i]}
                             className={classNames(classes.addressField, `color-${i + 1}`, address === validAddresses[i] && 'highlighted')}
                             onChange={(event) => {
                                 fillAddress(event.target.value, i);

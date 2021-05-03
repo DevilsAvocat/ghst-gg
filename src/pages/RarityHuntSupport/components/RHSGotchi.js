@@ -4,6 +4,7 @@ import {useStyles} from '../styles';
 import classNames from 'classnames';
 import commonUtils from '../../../utils/commonUtils';
 import gotchiPlaceholder from '../../../assets/images/logo.png';
+import ghst from '../../../assets/images/ghst-doubleside.gif';
 
 export default function RHSGotchi({gotchi, validAddresses}) {
     const classes = useStyles();
@@ -15,6 +16,54 @@ export default function RHSGotchi({gotchi, validAddresses}) {
     const getOwnerIndex = (owner) => {
         return validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
     };
+
+    const renderReward = () => {
+        if(gotchi.totalRew) {
+            return (
+                <Typography align={'center'} variant={'body2'}>
+                    Reward
+                    <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
+                        {gotchi.totalRew}
+                        <img src={ghst} width='18' alt='GHST Token Icon' style={{marginTop: -2}} />
+                    </Box>
+                </Typography>
+            )
+        } else {
+            return null;
+        }
+    }
+
+    console.log(gotchi.equippedWearables)
+
+    const renderWearables = () => {
+        if(gotchi.equippedWearables.length !== 0) {
+            return (
+                <Box>
+                    <Typography variant={'body2'}>
+                        Equipped:
+                    </Typography>
+                    <Grid container justify={'center'} spacing={1}>
+                        {
+                            gotchi.equippedWearables.map((wearable, i)=> {
+                                if(wearable > 0) {
+                                    return <Grid item key={i}>
+                                        <img src={getWearableIconPath(wearable)} alt='Icon' width={'40px'} height={'40px'} />
+                                    </Grid>
+                                }
+                                return null;
+                            })
+                        }
+                    </Grid>
+                </Box>
+            )
+        } else {
+            return (
+                <Typography variant={'body2'}>
+                    No wearables equipped!
+                </Typography>
+            );
+        }
+    }
 
     return (
         <Link
@@ -45,7 +94,7 @@ export default function RHSGotchi({gotchi, validAddresses}) {
                 </Typography>
             </Box>
             <Typography variant={'body2'}>
-                BRS: {gotchi.modifiedRarityScore}({gotchi.baseRarityScore})
+                BRS: {gotchi.withSetsRarityScore}({gotchi.baseRarityScore})
                 {/*Rew: {gotchi.brsRew}*/}
             </Typography>
             <Typography variant={'body2'}>
@@ -56,9 +105,8 @@ export default function RHSGotchi({gotchi, validAddresses}) {
                 Exp: {gotchi.experience}
                 {/*Rew: {gotchi.expRew}*/}
             </Typography>
-            {/*<Typography variant={'body2'}>*/}
-            {/*    Current reward: {gotchi.totalRew}*/}
-            {/*</Typography>*/}
+            {renderReward()}
+            {renderWearables()}
             {/*<Grid container>*/}
             {/*    {*/}
             {/*        Object.entries(commonUtils.formatTraits(gotchi.numericTraits)).map(([key, value], i)=>{*/}
@@ -68,21 +116,7 @@ export default function RHSGotchi({gotchi, validAddresses}) {
             {/*        })*/}
             {/*    }*/}
             {/*</Grid>*/}
-            <Typography variant={'body2'}>
-                Equipped:
-            </Typography>
-            <Grid container justify={'center'} spacing={1}>
-                {
-                    gotchi.equippedWearables.map((wearable, i)=> {
-                         if(wearable > 0) {
-                             return <Grid item key={i}>
-                                <img src={getWearableIconPath(wearable)} alt='Icon' width={'40px'} height={'40px'} />
-                            </Grid>
-                         }
-                         return null;
-                    })
-                }
-            </Grid>
+
         </Link>
     );
 }

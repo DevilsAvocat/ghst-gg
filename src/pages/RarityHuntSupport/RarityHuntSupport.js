@@ -14,10 +14,10 @@ import RHSContent from './components/RHSContent';
 export default function RarityHuntSupport() {
     const classes = useStyles();
     const { showSnackbar } = useContext(SnackbarContext);
-    const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAddresses').split(',') || []);
+    const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAccounts')?.split(',')|| ['']);
 
     const [gotchies, setGotchies] = useState([]);
-    const [gotchiesFilter, setGotchiesFilter] = useState('modifiedRarityScore');
+    const [gotchiesFilter, setGotchiesFilter] = useState('withSetsRarityScore');
     const [isGotchiesLoading, setIsGotchiesLoading] = useState(false);
 
     const [inventory, setInventory] = useState([]);
@@ -27,7 +27,7 @@ export default function RarityHuntSupport() {
     const [isRewardCalculating, setIsRewardCalculating] = useState(false);
 
     useEffect(()=> {
-        if(validAddresses.length !== 0) {
+        if(validAddresses[0].length !== 0) {
             getGotchiesByAddresses(validAddresses);
             getInventoryByAddresses(validAddresses);
         }
@@ -87,7 +87,7 @@ export default function RarityHuntSupport() {
             setValidAddresses(addresses);
             getGotchiesByAddresses(addresses);
             getInventoryByAddresses(addresses);
-            localStorage.setItem('loggedAddresses', addresses);
+            localStorage.setItem('loggedAccounts', addresses);
             showSnackbar('success', 'Leeroy Jenkins!');
         } else {
             showSnackbar('error', 'One or more addresses are not correct or duplicated!');

@@ -12,6 +12,7 @@ export const gotchiesQuery = (skip, orderDir) => {
           numericTraits
           baseRarityScore
           modifiedRarityScore
+          withSetsRarityScore
           kinship
           experience
           equippedWearables
@@ -32,6 +33,7 @@ export const userQuery = (id) => {
             numericTraits
             baseRarityScore
             modifiedRarityScore
+            withSetsRarityScore
             kinship
             experience
             equippedWearables

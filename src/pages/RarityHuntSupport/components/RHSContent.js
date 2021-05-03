@@ -14,11 +14,12 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
     const [totalReward, setTotalReward] = useState(0);
+    const showPlaceholder = validAddresses[0].length !== 0 && !isDataLoading();
 
     const calculateReward = () => {
         setIsRewardCalculating(true);
         thegraph.getAllGotchies().then((allGotchies)=>{
-            let rscLeaders = commonUtils.basicSort(allGotchies, 'modifiedRarityScore');
+            let rscLeaders = commonUtils.basicSort(allGotchies, 'withSetsRarityScore');
             let kinLeaders = commonUtils.basicSort(allGotchies, 'kinship');
             let expLeaders = commonUtils.basicSort(allGotchies, 'experience');
 
@@ -54,7 +55,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                                 onChange={onGotchiesSort}
                             >
                                 {/*<MenuItem value={'totalRew'}>Current reward</MenuItem>*/}
-                                <MenuItem value={'modifiedRarityScore'}>RS (modified)</MenuItem>
+                                <MenuItem value={'withSetsRarityScore'}>RS (modified)</MenuItem>
                                 <MenuItem value={'baseRarityScore'}>RS (base)</MenuItem>
                                 <MenuItem value={'kinship'}>KIN</MenuItem>
                                 <MenuItem value={'experience'}>EXP</MenuItem>
@@ -63,7 +64,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                     </Grid>
                 </Grid>
             )
-        } else if (!isDataLoading()) {
+        } else if (showPlaceholder) {
             return (
                 <Typography
                     align={'center'}
@@ -103,7 +104,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                     </Grid>
                 </Grid>
             )
-        } else if (!isDataLoading()) {
+        } else if (showPlaceholder) {
             return (
                 <Typography
                     align={'center'}
