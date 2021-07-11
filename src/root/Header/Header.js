@@ -55,9 +55,9 @@ export default function Header() {
                     <NavLink className={classes.navLink} to='/explorer'>
                         Explorer
                     </NavLink>
-                    <NavLink className={classes.navLink} to='/rarity-hunt-support'>
+                    <NavLink className={classes.navLink} to='/client'>
                         <Box className={classes.navLinkBox}>
-                            Rarity Hunt Support
+                            Client
                             <Typography variant={'caption'}>Beta</Typography>
                         </Box>
                     </NavLink>

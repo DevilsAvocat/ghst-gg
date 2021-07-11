@@ -11,7 +11,7 @@ import {SnackbarContext} from '../../contexts/SnackbarContext';
 import RHSFields from './components/RHSFields';
 import RHSContent from './components/RHSContent';
 
-export default function RarityHuntSupport() {
+export default function Client() {
     const classes = useStyles();
     const { showSnackbar } = useContext(SnackbarContext);
     const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAccounts')?.split(',')|| ['']);
