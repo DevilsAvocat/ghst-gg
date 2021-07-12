@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Container, Backdrop, CircularProgress, } from '@material-ui/core';
+import { Container, Backdrop, CircularProgress, useTheme, } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import {useStyles} from './styles';
 import thegraph from '../../api/thegraph';
@@ -13,6 +13,7 @@ import ClientContent from './components/ClientContent';
 
 export default function Client() {
     const classes = useStyles();
+    const theme = useTheme();
     const { showSnackbar } = useContext(SnackbarContext);
     const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAccounts')?.split(',')|| ['']);
 
@@ -56,17 +57,21 @@ export default function Client() {
             for (let i = 0; i < response.length; i++) {
                 response[i].items.forEach((item)=> {
                     let index = combinedArray.findIndex(el => el.itemId === item.itemId);
-                    let owner = { id: response[i].owner, qty: +item.balance };
+                    let owner = {
+                        id: response[i].owner,
+                        balance: +item.balance,
+                        color: theme.palette.accounts[`color${addresses.indexOf(response[i].owner) + 1}`]
+                    };
 
                     if(index !== -1){
-                        combinedArray[index].qty = +combinedArray[index].qty + +item.balance;
+                        combinedArray[index].balance = +combinedArray[index].balance + +item.balance;
                         combinedArray[index].owners.push(owner);
                     } else {
                         combinedArray.push({
                             itemId: item.itemId,
                             rarity: itemUtils.getItemRarityById(item.itemId),
                             rarityId: itemUtils.getItemRarityId(itemUtils.getItemRarityById(item.itemId)),
-                            qty: +item.balance,
+                            balance: +item.balance,
                             owners: [owner]
                         });
                     }

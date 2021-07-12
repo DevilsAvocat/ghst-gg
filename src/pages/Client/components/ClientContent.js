@@ -8,7 +8,7 @@ import classNames from 'classnames';
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
 import Gotchi from '../../../components/Gotchi/Gotchi';
-import RHSItem from './RHSItem';
+import Item from '../../../components/Item/Item';
 
 export default function ClientContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
@@ -17,9 +17,8 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
     const [totalReward, setTotalReward] = useState(0);
     const showPlaceholder = validAddresses[0].length !== 0 && !isDataLoading();
 
-    const getGotchiColor = (owner) => {
+    const getAddressColor = (owner) => {
         let index = validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
-
         return index ? theme.palette.accounts[`color${index}`] : theme.palette.accounts.color1;
     };
 
@@ -105,7 +104,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                             >
                                 <MenuItem value={'desc'}>Rarity (godlike -> common)</MenuItem>
                                 <MenuItem value={'asc'}>Rarity (common -> godlike)</MenuItem>
-                                <MenuItem value={'qty'}>Quantity</MenuItem>
+                                <MenuItem value={'balance'}>Quantity</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -181,7 +180,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                 {
                     gotchies.map((gotchi, i)=>{
                         return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
-                            <Gotchi gotchi={gotchi} gotchiColor={getGotchiColor(gotchi.owner.id)} />
+                            <Gotchi gotchi={gotchi} gotchiColor={getAddressColor(gotchi.owner.id)} />
                         </Grid>
                     })
                 }
@@ -193,7 +192,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                 {
                     inventory.map((item, i)=>{
                         return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
-                            <RHSItem item={item} validAddresses={validAddresses}/>
+                            <Item item={item} owners={true}/>
                         </Grid>
                     })
                 }

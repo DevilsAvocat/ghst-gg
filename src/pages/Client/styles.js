@@ -216,52 +216,6 @@ export const useStyles = makeStyles((theme) => ({
             },
         }
     },
-    item: {
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: theme.palette.secondary.dark,
-        padding: '16px 12px',
-        textAlign: 'center',
-        height: '100%',
-        position: 'relative',
-        '&.common': {
-            backgroundColor: fade(theme.palette.rarity.common, .1)
-        },
-        '&.uncommon': {
-            backgroundColor: fade(theme.palette.rarity.uncommon, .1)
-        },
-        '&.rare': {
-            backgroundColor: fade(theme.palette.rarity.rare, .1)
-        },
-        '&.legendary': {
-            backgroundColor: fade(theme.palette.rarity.legendary, .1)
-        },
-        '&.mythical': {
-            backgroundColor: fade(theme.palette.rarity.mythical, .1)
-        },
-        '&.godlike': {
-            backgroundColor: fade(theme.palette.rarity.godlike, .1)
-        },
-    },
-    itemTitle: {
-        '&.common': {
-            color: theme.palette.rarity.common
-        },
-        '&.uncommon': {
-            color: theme.palette.rarity.uncommon
-        },
-        '&.rare': {
-            color: theme.palette.rarity.rare
-        },
-        '&.legendary': {
-            color: theme.palette.rarity.legendary
-        },
-        '&.mythical': {
-            color: theme.palette.rarity.mythical
-        },
-        '&.godlike': {
-            color: theme.palette.rarity.godlike
-        },
-    },
     fieldsButton: {
         padding: '7px 15px'
     }
