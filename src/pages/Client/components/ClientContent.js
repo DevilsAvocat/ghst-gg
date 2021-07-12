@@ -10,7 +10,7 @@ import ghst from '../../../assets/images/ghst-doubleside.gif';
 import Gotchi from '../../../components/Gotchi/Gotchi';
 import RHSItem from './RHSItem';
 
-export default function RHSContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
+export default function ClientContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
     const theme = useTheme();

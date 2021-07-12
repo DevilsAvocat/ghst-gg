@@ -8,8 +8,8 @@ import itemUtils from '../../utils/itemUtils';
 import commonUtils from '../../utils/commonUtils';
 import {SnackbarContext} from '../../contexts/SnackbarContext';
 
-import RHSFields from './components/RHSFields';
-import RHSContent from './components/RHSContent';
+import ClientFields from './components/ClientFields';
+import ClientContent from './components/ClientContent';
 
 export default function Client() {
     const classes = useStyles();
@@ -121,9 +121,9 @@ export default function Client() {
                 <title>Client</title>
             </Helmet>
 
-            <RHSFields loadData={loadData} validAddresses={validAddresses} />
+            <ClientFields loadData={loadData} validAddresses={validAddresses} />
 
-            <RHSContent
+            <ClientContent
                 validAddresses={validAddresses}
                 gotchies={gotchies}
                 gotchiesFilter={gotchiesFilter}
