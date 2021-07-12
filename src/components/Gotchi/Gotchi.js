@@ -1,20 +1,48 @@
 import React from 'react';
 import { Grid, Box, Link, Typography } from '@material-ui/core';
-import {useStyles} from '../styles';
+import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
-import commonUtils from '../../../utils/commonUtils';
-import gotchiPlaceholder from '../../../assets/images/logo.png';
-import ghst from '../../../assets/images/ghst-doubleside.gif';
+import commonUtils from '../../utils/commonUtils';
+import gotchiPlaceholder from '../../assets/images/logo.png';
+import ghst from '../../assets/images/ghst-doubleside.gif';
 
-export default function RHSGotchi({gotchi, validAddresses}) {
+const useStyles = makeStyles((theme) => ({
+    gotchi: {
+        display: 'block',
+        borderRadius: theme.shape.borderRadius,
+        color: '#fff',
+        padding: '24px 12px 16px',
+        textAlign: 'center',
+        height: '100%',
+        position: 'relative',
+        '&:hover': {
+            textDecoration: 'none'
+        },
+    },
+    owner: {
+        borderRadius: theme.shape.borderRadius,
+        fontSize: 12,
+        padding: '2px 4px',
+    },
+    gotchiOwner: {
+        position: 'absolute',
+        top: 0,
+        right: '50%',
+        transform: 'translate(50%, -50%)',
+        color: '#fff'
+    },
+    gotchiName: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap'
+    }
+}));
+
+export default function Gotchi({gotchi, gotchiColor}) {
     const classes = useStyles();
 
     const getWearableIconPath = (iconId) => {
-        return require(`../../../assets/wearables/${iconId}.svg`).default;
-    };
-
-    const getOwnerIndex = (owner) => {
-        return validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
+        return require(`../../assets/wearables/${iconId}.svg`).default;
     };
 
     const renderReward = () => {
@@ -32,8 +60,6 @@ export default function RHSGotchi({gotchi, validAddresses}) {
             return null;
         }
     }
-
-    console.log(gotchi.equippedWearables)
 
     const renderWearables = () => {
         if(gotchi.equippedWearables.length !== 0) {
@@ -67,13 +93,15 @@ export default function RHSGotchi({gotchi, validAddresses}) {
 
     return (
         <Link
-            className={classNames(classes.gotchi, `color-${getOwnerIndex(gotchi.owner.id)}`)}
+            className={classNames(classes.gotchi)}
             href={`https://aavegotchi.com/gotchi/${gotchi.id}`}
             target="_blank"
+            style={{ backgroundColor: fade(gotchiColor, .2) }}
         >
             <Typography
                 variant={'body2'}
-                className={classNames(classes.owner, classes.gotchiOwner, `color-${getOwnerIndex(gotchi.owner.id)}`)}
+                className={classNames(classes.owner, classes.gotchiOwner)}
+                style={{ backgroundColor: gotchiColor }}
             >
                 {commonUtils.cutAddress(gotchi.owner.id)}
             </Typography>
@@ -84,7 +112,7 @@ export default function RHSGotchi({gotchi, validAddresses}) {
                 height={75}
                 width={75}
             />
-            <Box className={classNames(classes.owner, `color-${getOwnerIndex(gotchi.owner.id)}`)} style={{margin: '4px 0'}}>
+            <Box className={classNames(classes.owner)} style={{ backgroundColor: gotchiColor, margin: '4px 0'}}>
                 <Typography variant={'body1'} className={classes.gotchiName}>
                     {gotchi.name ? (
                         gotchi.name

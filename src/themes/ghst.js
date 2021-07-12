@@ -28,7 +28,7 @@ export const theme = createMuiTheme({
             mythical: 'rgb(255, 150, 255)',
             godlike: 'rgb(81, 255, 168)'
         },
-        rewards: {
+        accounts: {
             color1: '#E76F51',
             color2: '#2A9D8F',
             color3: '#D00000',

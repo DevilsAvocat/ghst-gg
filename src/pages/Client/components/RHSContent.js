@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, Button } from '@material-ui/core';
+import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, Button, useTheme } from '@material-ui/core';
 import {useStyles} from '../styles';
 import thegraph from '../../../api/thegraph';
 import graphUtils from '../../../utils/graphUtils';
@@ -7,14 +7,21 @@ import commonUtils from '../../../utils/commonUtils';
 import classNames from 'classnames';
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
-import RHSGotchi from './RHSGotchi';
+import Gotchi from '../../../components/Gotchi/Gotchi';
 import RHSItem from './RHSItem';
 
 export default function RHSContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
+    const theme = useTheme();
     const [totalReward, setTotalReward] = useState(0);
     const showPlaceholder = validAddresses[0].length !== 0 && !isDataLoading();
+
+    const getGotchiColor = (owner) => {
+        let index = validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
+
+        return index ? theme.palette.accounts[`color${index}`] : theme.palette.accounts.color1;
+    };
 
     const calculateReward = () => {
         setIsRewardCalculating(true);
@@ -174,7 +181,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                 {
                     gotchies.map((gotchi, i)=>{
                         return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
-                            <RHSGotchi gotchi={gotchi} validAddresses={validAddresses} />
+                            <Gotchi gotchi={gotchi} gotchiColor={getGotchiColor(gotchi.owner.id)} />
                         </Grid>
                     })
                 }

@@ -118,7 +118,7 @@ export default function Client() {
     return (
         <Container maxWidth='lg' className={classes.container}>
             <Helmet>
-                <title>Rarity Hunt Support</title>
+                <title>Client</title>
             </Helmet>
 
             <RHSFields loadData={loadData} validAddresses={validAddresses} />
