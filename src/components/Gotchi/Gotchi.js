@@ -6,6 +6,8 @@ import commonUtils from '../../utils/commonUtils';
 import gotchiPlaceholder from '../../assets/images/logo.png';
 import ghst from '../../assets/images/ghst-doubleside.gif';
 
+import GotchiWearablesLine from './GotchiWearablesLine';
+
 const useStyles = makeStyles((theme) => ({
     gotchi: {
         display: 'block',
@@ -43,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'inline-flex',
         alignItems: 'center'
     },
+    wearablesLine: {
+        marginTop: 10
+    }
 }));
 
 export default function Gotchi({gotchi, gotchiColor}) {
@@ -68,35 +73,35 @@ export default function Gotchi({gotchi, gotchiColor}) {
         }
     }
 
-    const renderWearables = () => {
-        if(gotchi.equippedWearables.length !== 0) {
-            return (
-                <Box>
-                    <Typography variant={'body2'}>
-                        Equipped:
-                    </Typography>
-                    <Grid container justify={'center'} spacing={1}>
-                        {
-                            gotchi.equippedWearables.map((wearable, i)=> {
-                                if(wearable > 0) {
-                                    return <Grid item key={i}>
-                                        <img src={getWearableIconPath(wearable)} alt='Icon' width={'40px'} height={'40px'} />
-                                    </Grid>
-                                }
-                                return null;
-                            })
-                        }
-                    </Grid>
-                </Box>
-            )
-        } else {
-            return (
-                <Typography variant={'body2'}>
-                    No wearables equipped!
-                </Typography>
-            );
-        }
-    }
+    // const renderWearables = () => {
+    //     if(gotchi.equippedWearables.length !== 0) {
+    //         return (
+    //             <Box>
+    //                 <Typography variant={'body2'}>
+    //                     Equipped:
+    //                 </Typography>
+    //                 <Grid container justify={'center'} spacing={1}>
+    //                     {
+    //                         gotchi.equippedWearables.map((wearable, i)=> {
+    //                             if(wearable > 0) {
+    //                                 return <Grid item key={i}>
+    //                                     <img src={getWearableIconPath(wearable)} alt='Icon' width={'40px'} height={'40px'} />
+    //                                 </Grid>
+    //                             }
+    //                             return null;
+    //                         })
+    //                     }
+    //                 </Grid>
+    //             </Box>
+    //         )
+    //     } else {
+    //         return (
+    //             <Typography variant={'body2'}>
+    //                 No wearables equipped!
+    //             </Typography>
+    //         );
+    //     }
+    // }
 
     return (
         <Link
@@ -141,7 +146,10 @@ export default function Gotchi({gotchi, gotchiColor}) {
                 {/*Rew: {gotchi.expRew}*/}
             </Typography>
             {renderReward()}
-            {renderWearables()}
+            {/* {renderWearables()} */}
+            <Box className={classes.wearablesLine}>
+                <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
+            </Box>
             {/*<Grid container>*/}
             {/*    {*/}
             {/*        Object.entries(commonUtils.formatTraits(gotchi.numericTraits)).map(([key, value], i)=>{*/}

@@ -42,7 +42,8 @@ export const theme = createMuiTheme({
         },
         customColors: {
             lightGray: '#9A9EAA',
-            grayBorder: '#C3C5CB'
+            grayBorder: '#C3C5CB',
+            gray: '#94969a'
         }
     },
     typography: {
@@ -56,5 +57,8 @@ export const theme = createMuiTheme({
             lg: 1280,
             xl: 1640
         }
+    },
+    shape: {
+        borderRadiusSmaller: 2
     }
 });
