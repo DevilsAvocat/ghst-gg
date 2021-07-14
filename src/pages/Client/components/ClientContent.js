@@ -28,31 +28,31 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
         return index ? theme.palette.accounts[`color${index}`] : theme.palette.accounts.color1;
     };
 
-    const calculateReward = () => {
-        setIsRewardCalculating(true);
-        thegraph.getAllGotchies().then((allGotchies)=>{
-            let rscLeaders = commonUtils.basicSort(allGotchies, 'withSetsRarityScore');
-            let kinLeaders = commonUtils.basicSort(allGotchies, 'kinship');
-            let expLeaders = commonUtils.basicSort(allGotchies, 'experience');
+    // const calculateReward = () => {
+    //     setIsRewardCalculating(true);
+    //     thegraph.getAllGotchies().then((allGotchies)=>{
+    //         let rscLeaders = commonUtils.basicSort(allGotchies, 'withSetsRarityScore');
+    //         let kinLeaders = commonUtils.basicSort(allGotchies, 'kinship');
+    //         let expLeaders = commonUtils.basicSort(allGotchies, 'experience');
 
-            gotchies.forEach((item, index)=>{
-                let resRew = graphUtils.calculateRewards(rscLeaders.findIndex(x => x.id === item.id), 'RSC');
-                let kinRew = graphUtils.calculateRewards(kinLeaders.findIndex(x => x.id === item.id), 'KIN');
-                let expRew = graphUtils.calculateRewards(expLeaders.findIndex(x => x.id === item.id), 'EXP');
+    //         gotchies.forEach((item, index)=>{
+    //             let resRew = graphUtils.calculateRewards(rscLeaders.findIndex(x => x.id === item.id), 'RSC');
+    //             let kinRew = graphUtils.calculateRewards(kinLeaders.findIndex(x => x.id === item.id), 'KIN');
+    //             let expRew = graphUtils.calculateRewards(expLeaders.findIndex(x => x.id === item.id), 'EXP');
 
-                gotchies[index] = {
-                    ...item,
-                    rscRew: resRew,
-                    kinRew: kinRew,
-                    expRew: expRew,
-                    totalRew: resRew + kinRew + expRew
-                }
-            });
+    //             gotchies[index] = {
+    //                 ...item,
+    //                 rscRew: resRew,
+    //                 kinRew: kinRew,
+    //                 expRew: expRew,
+    //                 totalRew: resRew + kinRew + expRew
+    //             }
+    //         });
 
-            setTotalReward(gotchies.reduce((prev, next) => prev + next.totalRew, 0));
-            setIsRewardCalculating(false);
-        });
-    };
+    //         setTotalReward(gotchies.reduce((prev, next) => prev + next.totalRew, 0));
+    //         setIsRewardCalculating(false);
+    //     });
+    // };
 
     const renderGotchiesHead = () => {
         if(gotchies.length !== 0) {
@@ -158,7 +158,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
 
     return (
         <Box>
-            <Grid container alignItems={'center'} spacing={2} style={{marginBottom: 12, minHeight: 74}}>
+            {/* <Grid container alignItems={'center'} spacing={2} style={{marginBottom: 12, minHeight: 74}}>
                 <Grid item xs={12} md={6}>
                     <Button
                         variant={'contained'}
@@ -178,7 +178,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                     </Button>
                 </Grid>
                 {renderRewardPaper()}
-            </Grid>
+            </Grid> */}
 
             {renderGotchiesHead()}
 
