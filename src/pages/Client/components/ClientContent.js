@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, Button, useTheme } from '@material-ui/core';
-import {useStyles} from '../styles';
+import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, Button, useTheme, makeStyles } from '@material-ui/core';
 import thegraph from '../../../api/thegraph';
 import graphUtils from '../../../utils/graphUtils';
 import commonUtils from '../../../utils/commonUtils';
@@ -9,6 +8,13 @@ import ghst from '../../../assets/images/ghst-doubleside.gif';
 
 import Gotchi from '../../../components/Gotchi/Gotchi';
 import Item from '../../../components/Item/Item';
+
+const useStyles = makeStyles((theme) => ({
+    textHighlight: {
+        color: theme.palette.primary.main,
+        marginLeft: 10
+    },
+}));
 
 export default function ClientContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {

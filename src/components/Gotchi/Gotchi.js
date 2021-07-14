@@ -35,7 +35,14 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap'
-    }
+    },
+    gotchiPlaceholder: {
+        filter: 'grayscale(100%)'
+    },
+    tokenValue: {
+        display: 'inline-flex',
+        alignItems: 'center'
+    },
 }));
 
 export default function Gotchi({gotchi, gotchiColor}) {

@@ -1,11 +1,178 @@
 import React, {useState} from 'react';
-import { Grid, TextField, Button, IconButton, Typography } from '@material-ui/core';
-import {useStyles} from '../styles';
+import { Grid, TextField, Button, IconButton, Typography, makeStyles } from '@material-ui/core';
 import classNames from 'classnames';
 
 import Close from '@material-ui/icons/Close';
 
-export default function RHSFields({validAddresses, loadData}) {
+const useStyles = makeStyles((theme) => ({
+    addressField: {
+        '&.highlighted.color-1': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color1,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color1,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color1,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color1,
+                },
+            },
+        },
+        '&.highlighted.color-2': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color2,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color2,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color2,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color2,
+                },
+            },
+        },
+        '&.highlighted.color-3': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color3,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color3,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color3,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color3,
+                },
+            },
+        },
+        '&.highlighted.color-4': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color4,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color4,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color4,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color4,
+                },
+            },
+        },
+        '&.highlighted.color-5': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color5,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color5,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color5,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color5,
+                },
+            },
+        },
+        '&.highlighted.color-6': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color6,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color6,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color6,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color6,
+                },
+            },
+        },
+        '&.highlighted.color-7': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color7,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color7,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color7,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color7,
+                },
+            },
+        },
+        '&.highlighted.color-8': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color8,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color8,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color8,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color8,
+                },
+            },
+        },
+        '&.highlighted.color-9': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color9,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color9,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color9,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color9,
+                },
+            },
+        },
+        '&.highlighted.color-10': {
+            '& label.Mui-focused': {
+                color: theme.palette.accounts.color10,
+            },
+            '& .MuiOutlinedInput-root': {
+                '& fieldset': {
+                    borderColor: theme.palette.accounts.color10,
+                },
+                '&:hover fieldset': {
+                    borderColor: theme.palette.accounts.color10,
+                },
+                '&.Mui-focused fieldset': {
+                    borderColor: theme.palette.accounts.color10,
+                },
+            },
+        }
+    },
+    fieldsButton: {
+        padding: '7px 15px'
+    }
+}));
+
+export default function ClientFields({validAddresses, loadData}) {
     const classes = useStyles();
     const [addresses, setAddresses] = useState(validAddresses);
 
