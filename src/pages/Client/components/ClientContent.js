@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, Button, useTheme, makeStyles } from '@material-ui/core';
-import thegraph from '../../../api/thegraph';
-import graphUtils from '../../../utils/graphUtils';
-import commonUtils from '../../../utils/commonUtils';
+import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, useTheme, makeStyles } from '@material-ui/core';
+// import thegraph from '../../../api/thegraph';
+// import graphUtils from '../../../utils/graphUtils';
+// import commonUtils from '../../../utils/commonUtils';
 import classNames from 'classnames';
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 
@@ -20,7 +20,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
     const theme = useTheme();
-    const [totalReward, setTotalReward] = useState(0);
+    // const [totalReward, setTotalReward] = useState(0);
     const showPlaceholder = validAddresses[0].length !== 0 && !isDataLoading();
 
     const getAddressColor = (owner) => {
@@ -132,25 +132,25 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
         }
     }
 
-    const renderRewardPaper = () => {
-        if(totalReward !== 0) {
-            return (
-                <Grid item xs={12} md={6}>
-                    <Paper variant='outlined' align='center' style={{padding: 12}}>
-                        <Typography align={'center'} variant={'h6'}>
-                            Total Reward >=>
-                            <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
-                                {totalReward}
-                                <img src={ghst} width='26' alt='GHST Token Icon' />
-                            </Box>
-                        </Typography>
-                    </Paper>
-                </Grid>
-            )
-        } else {
-            return null;
-        }
-    }
+    // const renderRewardPaper = () => {
+    //     if(totalReward !== 0) {
+    //         return (
+    //             <Grid item xs={12} md={6}>
+    //                 <Paper variant='outlined' align='center' style={{padding: 12}}>
+    //                     <Typography align={'center'} variant={'h6'}>
+    //                         Total Reward >=>
+    //                         <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
+    //                             {totalReward}
+    //                             <img src={ghst} width='26' alt='GHST Token Icon' />
+    //                         </Box>
+    //                     </Typography>
+    //                 </Paper>
+    //             </Grid>
+    //         )
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
     if (validAddresses.length === 0) {
         return null;

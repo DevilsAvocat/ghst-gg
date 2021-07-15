@@ -43,30 +43,30 @@ export default {
         return itemMap[item.__typename][item.category]();
     },
 
-    getItemRarityName(item) {
+    getBaazaarItemRarityName(item) {
         if (item.__typename === 'ERC1155Listing') {
-            return getRarityName(item.rarityLevel);
+            return this.getItemRarityName(item.rarityLevel);
         } else {
             return null;
         }
+    },
 
-        function getRarityName(id) {
-            switch (id) {
-                case '0':
-                    return 'common';
-                case '1':
-                    return 'uncommon';
-                case '2':
-                    return 'rare';
-                case '3':
-                    return 'legendary';
-                case '4':
-                    return 'mythical';
-                case '5':
-                    return 'godlike';
-                default:
-                    return null;
-            }
+    getItemRarityName(id) {
+        switch (id) {
+            case '0':
+                return 'common';
+            case '1':
+                return 'uncommon';
+            case '2':
+                return 'rare';
+            case '3':
+                return 'legendary';
+            case '4':
+                return 'mythical';
+            case '5':
+                return 'godlike';
+            default:
+                return null;
         }
     },
 
@@ -121,7 +121,7 @@ export default {
 
         function returnTicket() {
             try {
-                return require(`../assets/tickets/${this.getItemRarityName(item)}.svg`).default;
+                return require(`../assets/tickets/${this.getBaazaarItemRarityName(item)}.svg`).default;
             } catch (error) {
                 return require(`../assets/images/no-image2.svg`).default;
             }

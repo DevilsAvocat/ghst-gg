@@ -12,14 +12,14 @@ export default function BaazaarItem({item}) {
 
     return (
         <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={item.listing_id}>
-            <Box className={classNames(classes.baazaarItem, itemUtils.getItemRarityName(item))}>
+            <Box className={classNames(classes.baazaarItem, itemUtils.getBaazaarItemRarityName(item))}>
                 <Grid container>
                     <Grid item xs={12}>
                         <Typography
-                            className={classNames(classes.itemRarity, itemUtils.getItemRarityName(item))}
+                            className={classNames(classes.itemRarity, itemUtils.getBaazaarItemRarityName(item))}
                             variant={'caption'}
                         >
-                            {itemUtils.getItemRarityName(item)}
+                            {itemUtils.getBaazaarItemRarityName(item)}
                         </Typography>
                     </Grid>
                     {
