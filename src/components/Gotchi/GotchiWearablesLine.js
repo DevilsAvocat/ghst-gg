@@ -1,8 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Box, Typography, useTheme } from '@material-ui/core';
+import { Grid, Box, Typography, Link, useTheme } from '@material-ui/core';
 import classNames from 'classnames';
 import itemUtils from '../../utils/itemUtils';
+import CallMadeIcon from '@material-ui/icons/CallMade';
 
 const useStyles = makeStyles((theme) => ({
     wrapper: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         },
         '&:hover': {
             height: 16,
-            '& .inner': {
+            '& .popover-core': {
                 opacity: 1,
                 pointerEvents: 'all'
             }
@@ -36,14 +37,26 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         bottom: '100%',
         left: '50%',
-        marginBottom: 5,
         opacity: 0,
         padding: 4,
         pointerEvents: 'none',
         height: 75,
         width: 75,
+        textDecoration: 'none',
         transform: 'translateX(-50%)',
-        transition: 'opacity .2s ease-in-out',
+        transition: 'opacity .2s ease-in-out'
+    },
+    popoverLink: {
+        display: 'block',
+        height: '100%',
+        textDecoration: 'none !important',
+    },
+    popoverCallMadeIcon: {
+        color: theme.palette.secondary.main,
+        position: 'absolute',
+        right: 2,
+        bottom: 2,
+        fontSize: 14
     },
     popoverTitle: {
         fontWeight: 'bold',
@@ -61,21 +74,44 @@ export default function GotchiWearablesLine({wearables}) {
     const theme = useTheme();
     const wearableSlots = ['Body', 'Face', 'Eyes', 'Head', 'R Hand', 'L Hand', 'Pet', 'BG'];
 
-    const renderWeatableIcon = (id) => {
+    const renderPopover = (id, name, type, color) => {
         if(id !== 0) {
             return (
-                <img
-                    src={itemUtils.getWearableImg(id)}
-                    alt={itemUtils.getItemNameById(id)}
-                    height={42}
-                    width={42}
-                />
+                <Link 
+                    className={classes.popoverLink}
+                    href={`https://wiki.aavegotchi.com/en/wearables#${type}`}
+                    target={'_blank'}
+                >
+                    <Box 
+                        className={classNames(classes.popover, 'popover-core')}
+                        style={{ backgroundColor: theme.palette.rarity[color] }}
+                    >
+                        <Typography className={classes.popoverTitle} variant='body2'>
+                            {name}
+                        </Typography>
+                        <img
+                            src={itemUtils.getWearableImg(id)}
+                            alt={itemUtils.getItemNameById(id)}
+                            height={42}
+                            width={42}
+                        />
+                        <CallMadeIcon className={classes.popoverCallMadeIcon} />
+                    </Box>
+                </Link>
             )
         } else {
             return (
-                <Typography className={classes.popoverEmpty} variant='body1'>
-                    Empty
-                </Typography>
+                <Box 
+                    className={classNames(classes.popover, 'popover-core')}
+                    style={{ backgroundColor: theme.palette.rarity[color] }}
+                >
+                    <Typography className={classes.popoverTitle} variant='body2'>
+                        {name}
+                    </Typography>
+                    <Typography className={classes.popoverEmpty} variant='body1'>
+                        Empty
+                    </Typography>
+                </Box>
             )
         }
     }
@@ -85,6 +121,7 @@ export default function GotchiWearablesLine({wearables}) {
             {
                 wearableSlots.map((name, index)=> {
                     let wearable = wearables[index];
+                    let type = itemUtils.getItemTypeById(wearable);
                     let rarityColor = itemUtils.getItemRarityById(wearable);
 
                     return (
@@ -95,12 +132,7 @@ export default function GotchiWearablesLine({wearables}) {
                             style={{ backgroundColor: theme.palette.rarity[rarityColor] }}
                             key={index}
                         >
-                            <Box className={classNames(classes.popover, 'inner')} style={{ backgroundColor: theme.palette.rarity[rarityColor] }}>
-                                <Typography className={classes.popoverTitle} variant='body2'>
-                                    {name}
-                                </Typography>
-                                {renderWeatableIcon(wearable)}
-                            </Box>
+                            {renderPopover(wearable, name, type, rarityColor)}
                         </Grid>
                     )
                 })
