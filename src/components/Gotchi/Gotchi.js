@@ -104,7 +104,7 @@ export default function Gotchi({gotchi, gotchiColor}) {
     // }
 
     return (
-        <Link
+        <Box
             className={classNames(classes.gotchi)}
             href={`https://aavegotchi.com/gotchi/${gotchi.id}`}
             target="_blank"
@@ -160,6 +160,6 @@ export default function Gotchi({gotchi, gotchiColor}) {
             {/*    }*/}
             {/*</Grid>*/}
 
-        </Link>
+        </Box>
     );
 }

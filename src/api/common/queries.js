@@ -27,7 +27,7 @@ export const userQuery = (id) => {
     return `{
         user(id: "${id}") {
           id
-          gotchisOwned(where: {status: 3}) {
+          gotchisOwned(first: 1000, where: {status: 3}) {
             id
             name
             numericTraits
