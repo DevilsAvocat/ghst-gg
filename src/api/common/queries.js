@@ -30,13 +30,14 @@ export const userQuery = (id) => {
           gotchisOwned(first: 1000, where: {status: 3}) {
             id
             name
-            numericTraits
             baseRarityScore
             modifiedRarityScore
             withSetsRarityScore
             kinship
-            experience
             equippedWearables
+            experience
+            level
+            toNextLevel
             owner {
               id
             }

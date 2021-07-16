@@ -1,11 +1,12 @@
 import React from 'react';
-import { Grid, Box, Link, Typography } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
 import gotchiPlaceholder from '../../assets/images/logo.png';
 import ghst from '../../assets/images/ghst-doubleside.gif';
 
+import GotchiLevel from './GotchiLevel';
 import GotchiWearablesLine from './GotchiWearablesLine';
 
 const useStyles = makeStyles((theme) => ({
@@ -117,6 +118,13 @@ export default function Gotchi({gotchi, gotchiColor}) {
             >
                 {commonUtils.cutAddress(gotchi.owner.id)}
             </Typography>
+            <Box position='absolute' top={8} right={8}>
+                <GotchiLevel
+                    experience={gotchi.experience}
+                    level={gotchi.level}
+                    size={30}
+                />
+            </Box>
             <img
                 className={classes.gotchiPlaceholder}
                 src={gotchiPlaceholder}
@@ -142,7 +150,8 @@ export default function Gotchi({gotchi, gotchiColor}) {
                 {/*Rew: {gotchi.kinRew}*/}
             </Typography>
             <Typography variant={'body2'}>
-                Exp: {gotchi.experience}
+                Exp: {gotchi.experience} <br />
+                TNL: {gotchi.toNextLevel}
                 {/*Rew: {gotchi.expRew}*/}
             </Typography>
             {renderReward()}
