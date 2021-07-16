@@ -2,16 +2,22 @@ import React from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, CircularProgress } from '@material-ui/core';
 
+const expFormula = (lvl) => {
+    return lvl * lvl / 0.02;
+};  // Based on https://wiki.aavegotchi.com/en/xp
+
 const useStyles = makeStyles((theme) => ({
     circle: {
         backgroundColor: fade(theme.palette.primary.main, .1),
-        borderRadius: '50%'
+        borderRadius: '50%',
+        cursor: 'default'
     }
 }));
 
-export default function GotchiLevel({experience, level, size}) {
+export default function GotchiLevel({level, toNextLevel, experience, size}) {
     const classes = useStyles();
-    const percentageFormula = Math.floor(experience * 100 / (level * level / 0.02)); // Based on https://wiki.aavegotchi.com/en/xp
+    const diff = expFormula(level) - expFormula(level-1);
+    const percentageFormula = 100 - Math.floor(toNextLevel * 100 / diff);
 
     return (
         <Box position='relative' display='inline-flex' className={classes.circle}>

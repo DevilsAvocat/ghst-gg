@@ -120,9 +120,10 @@ export default function Gotchi({gotchi, gotchiColor}) {
             </Typography>
             <Box position='absolute' top={8} right={8}>
                 <GotchiLevel
-                    experience={gotchi.experience}
                     level={gotchi.level}
-                    size={30}
+                    toNextLevel={gotchi.toNextLevel}
+                    experience={gotchi.experience}
+                    size={28}
                 />
             </Box>
             <img
