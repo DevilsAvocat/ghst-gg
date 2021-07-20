@@ -150,13 +150,7 @@ export default function Gotchi({gotchi, gotchiColor}) {
                 Kin: {gotchi.kinship}
                 {/*Rew: {gotchi.kinRew}*/}
             </Typography>
-            <Typography variant={'body2'}>
-                Exp: {gotchi.experience} <br />
-                TNL: {gotchi.toNextLevel}
-                {/*Rew: {gotchi.expRew}*/}
-            </Typography>
             {renderReward()}
-            {/* {renderWearables()} */}
             <Box className={classes.wearablesLine}>
                 <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
             </Box>
