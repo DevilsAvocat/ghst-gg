@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, Link } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
@@ -23,9 +23,15 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     owner: {
+        display: 'block',
         borderRadius: theme.shape.borderRadius,
+        color: theme.palette.common.white,
         fontSize: 12,
         padding: '2px 4px',
+        textDecoration: 'none',
+        '&:hover': {
+            textDecoration: 'none'
+        }
     },
     gotchiOwner: {
         position: 'absolute',
@@ -37,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     gotchiName: {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap'
+        whiteSpace: 'nowrap',
+        fontSize: 15
     },
     gotchiPlaceholder: {
         filter: 'grayscale(100%)'
@@ -107,8 +114,6 @@ export default function Gotchi({gotchi, gotchiColor}) {
     return (
         <Box
             className={classNames(classes.gotchi)}
-            href={`https://aavegotchi.com/gotchi/${gotchi.id}`}
-            target="_blank"
             style={{ backgroundColor: fade(gotchiColor, .2) }}
         >
             <Typography
@@ -133,22 +138,25 @@ export default function Gotchi({gotchi, gotchiColor}) {
                 height={75}
                 width={75}
             />
-            <Box className={classNames(classes.owner)} style={{ backgroundColor: gotchiColor, margin: '4px 0'}}>
-                <Typography variant={'body1'} className={classes.gotchiName}>
+            <Link
+                className={classNames(classes.owner)}
+                style={{ backgroundColor: gotchiColor, margin: '4px 0'}}
+                href={`https://aavegotchi.com/gotchi/${gotchi.id}`}
+                target="_blank"
+            >
+                <Typography variant={'subtitle2'} className={classes.gotchiName}>
                     {gotchi.name ? (
                         gotchi.name
                     ) : (
                         'Unnamed'
                     )}
                 </Typography>
-            </Box>
+            </Link>
             <Typography variant={'body2'}>
                 BRS: {gotchi.withSetsRarityScore}({gotchi.baseRarityScore})
-                {/*Rew: {gotchi.brsRew}*/}
             </Typography>
             <Typography variant={'body2'}>
                 Kin: {gotchi.kinship}
-                {/*Rew: {gotchi.kinRew}*/}
             </Typography>
             {renderReward()}
             <Box className={classes.wearablesLine}>
