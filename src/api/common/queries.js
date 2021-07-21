@@ -30,6 +30,9 @@ export const userQuery = (id) => {
           gotchisOwned(first: 1000, where: {status: 3}) {
             id
             name
+            numericTraits
+            modifiedNumericTraits
+            withSetsNumericTraits
             baseRarityScore
             modifiedRarityScore
             withSetsRarityScore

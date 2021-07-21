@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Link } from '@material-ui/core';
+import { Box, Typography, Link, Grid } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
@@ -61,10 +61,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Gotchi({gotchi, gotchiColor}) {
     const classes = useStyles();
 
-    const getWearableIconPath = (iconId) => {
-        return require(`../../assets/wearables/${iconId}.svg`).default;
-    };
-
     const renderReward = () => {
         if(gotchi.totalRew) {
             return (
@@ -81,36 +77,6 @@ export default function Gotchi({gotchi, gotchiColor}) {
         }
     }
 
-    // const renderWearables = () => {
-    //     if(gotchi.equippedWearables.length !== 0) {
-    //         return (
-    //             <Box>
-    //                 <Typography variant={'body2'}>
-    //                     Equipped:
-    //                 </Typography>
-    //                 <Grid container justify={'center'} spacing={1}>
-    //                     {
-    //                         gotchi.equippedWearables.map((wearable, i)=> {
-    //                             if(wearable > 0) {
-    //                                 return <Grid item key={i}>
-    //                                     <img src={getWearableIconPath(wearable)} alt='Icon' width={'40px'} height={'40px'} />
-    //                                 </Grid>
-    //                             }
-    //                             return null;
-    //                         })
-    //                     }
-    //                 </Grid>
-    //             </Box>
-    //         )
-    //     } else {
-    //         return (
-    //             <Typography variant={'body2'}>
-    //                 No wearables equipped!
-    //             </Typography>
-    //         );
-    //     }
-    // }
-
     return (
         <Box
             className={classNames(classes.gotchi)}
@@ -123,6 +89,7 @@ export default function Gotchi({gotchi, gotchiColor}) {
             >
                 {commonUtils.cutAddress(gotchi.owner.id)}
             </Typography>
+
             <Box position='absolute' top={8} right={8}>
                 <GotchiLevel
                     level={gotchi.level}
@@ -131,6 +98,7 @@ export default function Gotchi({gotchi, gotchiColor}) {
                     size={28}
                 />
             </Box>
+
             <img
                 className={classes.gotchiPlaceholder}
                 src={gotchiPlaceholder}
@@ -138,9 +106,10 @@ export default function Gotchi({gotchi, gotchiColor}) {
                 height={75}
                 width={75}
             />
+
             <Link
                 className={classNames(classes.owner)}
-                style={{ backgroundColor: gotchiColor, margin: '4px 0'}}
+                style={{ backgroundColor: fade(gotchiColor, .5), margin: '4px 0'}}
                 href={`https://aavegotchi.com/gotchi/${gotchi.id}`}
                 target="_blank"
             >
@@ -152,26 +121,29 @@ export default function Gotchi({gotchi, gotchiColor}) {
                     )}
                 </Typography>
             </Link>
-            <Typography variant={'body2'}>
+
+            {/* <Typography variant={'body2'}>
                 BRS: {gotchi.withSetsRarityScore}({gotchi.baseRarityScore})
             </Typography>
             <Typography variant={'body2'}>
                 Kin: {gotchi.kinship}
-            </Typography>
+            </Typography> */}
+
             {renderReward()}
+
+            <Grid container>
+               {
+                   Object.entries(commonUtils.formatTraits(gotchi.numericTraits)).map(([key, value], i)=>{
+                       return <Grid item xs={6} variant={'body2'} key={i}>
+                           {key}:{value}
+                       </Grid>
+                   })
+               }
+            </Grid>
+
             <Box className={classes.wearablesLine}>
                 <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
             </Box>
-            {/*<Grid container>*/}
-            {/*    {*/}
-            {/*        Object.entries(commonUtils.formatTraits(gotchi.numericTraits)).map(([key, value], i)=>{*/}
-            {/*            return <Grid item xs={6} variant={'body2'} key={i}>*/}
-            {/*                {key}:{value}*/}
-            {/*            </Grid>*/}
-            {/*        })*/}
-            {/*    }*/}
-            {/*</Grid>*/}
-
         </Box>
     );
 }
