@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
-import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, useTheme, makeStyles } from '@material-ui/core';
+import React from 'react';
+import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, useTheme, makeStyles } from '@material-ui/core';
 // import thegraph from '../../../api/thegraph';
 // import graphUtils from '../../../utils/graphUtils';
 // import commonUtils from '../../../utils/commonUtils';
-import classNames from 'classnames';
-import ghst from '../../../assets/images/ghst-doubleside.gif';
+// import classNames from 'classnames';
+// import ghst from '../../../assets/images/ghst-doubleside.gif';
 
 import Gotchi from '../../../components/Gotchi/Gotchi';
 import Item from '../../../components/Item/Item';

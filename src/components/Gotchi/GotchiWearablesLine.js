@@ -24,10 +24,16 @@ const useStyles = makeStyles((theme) => ({
             borderBottomRightRadius: theme.shape.borderRadiusSmaller
         },
         '&:hover': {
+            borderTopLeftRadius: 0,
+            borderTopRightRadius: 0,
             height: 16,
+            flexBasis: '25%',
             '& .popover-core': {
                 opacity: 1,
                 pointerEvents: 'all'
+            },
+            '& .name': {
+                opacity: '1 !important'
             }
         }
     },
@@ -40,8 +46,8 @@ const useStyles = makeStyles((theme) => ({
         opacity: 0,
         padding: 4,
         pointerEvents: 'none',
-        height: 75,
-        width: 75,
+        height: 65,
+        width: 65,
         textDecoration: 'none',
         transform: 'translateX(-50%)',
         transition: 'opacity .2s ease-in-out'
@@ -58,14 +64,22 @@ const useStyles = makeStyles((theme) => ({
         bottom: 2,
         fontSize: 14
     },
-    popoverTitle: {
+    popoverName: {
+        position: 'absolute',
+        right: 0,
+        bottom: -1,
+        left: 0,
+        pointerEvents: 'none',
+        fontSize: 13,
         fontWeight: 'bold',
-        color: theme.palette.secondary.main
+        color: theme.palette.secondary.main,
+        whiteSpace: 'nowrap',
+        opacity: 0,
+        transition: 'opacity .2s ease-in-out'
     },
     popoverEmpty: {
         fontWeight: 'bold',
-        color: theme.palette.secondary.main,
-        marginTop: 6
+        color: theme.palette.secondary.main
     }
 }));
 
@@ -74,7 +88,7 @@ export default function GotchiWearablesLine({wearables}) {
     const theme = useTheme();
     const wearableSlots = ['Body', 'Face', 'Eyes', 'Head', 'R Hand', 'L Hand', 'Pet', 'BG'];
 
-    const renderPopover = (id, name, type, color) => {
+    const renderPopover = (id, type, color) => {
         if(id !== 0) {
             return (
                 <Link 
@@ -82,18 +96,18 @@ export default function GotchiWearablesLine({wearables}) {
                     href={`https://wiki.aavegotchi.com/en/wearables#${type}`}
                     target={'_blank'}
                 >
-                    <Box 
+                    <Box
+                        display='flex'
+                        alignItems='center'
+                        justifyContent='center'
                         className={classNames(classes.popover, 'popover-core')}
                         style={{ backgroundColor: theme.palette.rarity[color] }}
                     >
-                        <Typography className={classes.popoverTitle} variant='body2'>
-                            {name}
-                        </Typography>
                         <img
                             src={itemUtils.getWearableImg(id)}
                             alt={itemUtils.getItemNameById(id)}
-                            height={42}
-                            width={42}
+                            height={40}
+                            width={40}
                         />
                         <CallMadeIcon className={classes.popoverCallMadeIcon} />
                     </Box>
@@ -101,14 +115,14 @@ export default function GotchiWearablesLine({wearables}) {
             )
         } else {
             return (
-                <Box 
+                <Box
+                    display='flex'
+                    alignItems='center'
+                    justifyContent='center'
                     className={classNames(classes.popover, 'popover-core')}
                     style={{ backgroundColor: theme.palette.rarity[color] }}
                 >
-                    <Typography className={classes.popoverTitle} variant='body2'>
-                        {name}
-                    </Typography>
-                    <Typography className={classes.popoverEmpty} variant='body1'>
+                    <Typography className={classes.popoverEmpty} variant='body2'>
                         Empty
                     </Typography>
                 </Box>
@@ -132,7 +146,10 @@ export default function GotchiWearablesLine({wearables}) {
                             style={{ backgroundColor: theme.palette.rarity[rarityColor] }}
                             key={index}
                         >
-                            {renderPopover(wearable, name, type, rarityColor)}
+                            {renderPopover(wearable, type, rarityColor)}
+                            <Typography className={classNames(classes.popoverName, 'name')} variant='subtitle2'>
+                                {name}
+                            </Typography>
                         </Grid>
                     )
                 })
