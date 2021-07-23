@@ -4,9 +4,10 @@ import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
 import gotchiPlaceholder from '../../assets/images/logo.png';
-import ghst from '../../assets/images/ghst-doubleside.gif';
+// import ghst from '../../assets/images/ghst-doubleside.gif';
 
 import GotchiLevel from './GotchiLevel';
+import GotchiTraitsHighlight from './GotchiTraitsHighlight';
 import GotchiWearablesLine from './GotchiWearablesLine';
 
 const useStyles = makeStyles((theme) => ({
@@ -61,21 +62,23 @@ const useStyles = makeStyles((theme) => ({
 export default function Gotchi({gotchi, gotchiColor}) {
     const classes = useStyles();
 
-    const renderReward = () => {
-        if(gotchi.totalRew) {
-            return (
-                <Typography align={'center'} variant={'body2'}>
-                    Reward
-                    <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
-                        {gotchi.totalRew}
-                        <img src={ghst} width='18' alt='GHST Token Icon' style={{marginTop: -2}} />
-                    </Box>
-                </Typography>
-            )
-        } else {
-            return null;
-        }
-    }
+    console.log('firing gotchi')
+
+    // const renderReward = () => {
+    //     if(gotchi.totalRew) {
+    //         return (
+    //             <Typography align={'center'} variant={'body2'}>
+    //                 Reward
+    //                 <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
+    //                     {gotchi.totalRew}
+    //                     <img src={ghst} width='18' alt='GHST Token Icon' style={{marginTop: -2}} />
+    //                 </Box>
+    //             </Typography>
+    //         )
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
     return (
         <Box
@@ -129,9 +132,11 @@ export default function Gotchi({gotchi, gotchiColor}) {
                 Kin: {gotchi.kinship}
             </Typography> */}
 
-            {renderReward()}
+            {/* {renderReward()} */}
 
-            <Grid container>
+            <GotchiTraitsHighlight traits={gotchi.numericTraits} currentTraits={gotchi.withSetsNumericTraits} />
+
+            {/* <Grid container>
                {
                    Object.entries(commonUtils.formatTraits(gotchi.numericTraits)).map(([key, value], i)=>{
                        return <Grid item xs={6} variant={'body2'} key={i}>
@@ -140,6 +145,16 @@ export default function Gotchi({gotchi, gotchiColor}) {
                    })
                }
             </Grid>
+
+            <Grid container>
+               {
+                   Object.entries(commonUtils.formatTraits(gotchi.withSetsNumericTraits)).map(([key, value], i)=>{
+                       return <Grid item xs={6} variant={'body2'} key={i}>
+                           {key}:{value}
+                       </Grid>
+                   })
+               }
+            </Grid> */}
 
             <Box className={classes.wearablesLine}>
                 <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
