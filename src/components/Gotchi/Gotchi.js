@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Link, Grid } from '@material-ui/core';
+import { Box, Typography, Link } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
@@ -53,9 +53,6 @@ const useStyles = makeStyles((theme) => ({
     tokenValue: {
         display: 'inline-flex',
         alignItems: 'center'
-    },
-    wearablesLine: {
-        marginTop: 10
     }
 }));
 
@@ -134,29 +131,11 @@ export default function Gotchi({gotchi, gotchiColor}) {
 
             {/* {renderReward()} */}
 
-            <GotchiTraitsHighlight traits={gotchi.numericTraits} currentTraits={gotchi.withSetsNumericTraits} />
+            <Box marginTop='15px'>
+                <GotchiTraitsHighlight traits={gotchi.numericTraits} currentTraits={gotchi.withSetsNumericTraits} />
+            </Box>
 
-            {/* <Grid container>
-               {
-                   Object.entries(commonUtils.formatTraits(gotchi.numericTraits)).map(([key, value], i)=>{
-                       return <Grid item xs={6} variant={'body2'} key={i}>
-                           {key}:{value}
-                       </Grid>
-                   })
-               }
-            </Grid>
-
-            <Grid container>
-               {
-                   Object.entries(commonUtils.formatTraits(gotchi.withSetsNumericTraits)).map(([key, value], i)=>{
-                       return <Grid item xs={6} variant={'body2'} key={i}>
-                           {key}:{value}
-                       </Grid>
-                   })
-               }
-            </Grid> */}
-
-            <Box className={classes.wearablesLine}>
+            <Box marginTop='10px'>
                 <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
             </Box>
         </Box>
