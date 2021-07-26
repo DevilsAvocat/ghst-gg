@@ -59,8 +59,6 @@ const useStyles = makeStyles((theme) => ({
 export default function Gotchi({gotchi, gotchiColor}) {
     const classes = useStyles();
 
-    console.log('firing gotchi')
-
     // const renderReward = () => {
     //     if(gotchi.totalRew) {
     //         return (
@@ -131,11 +129,11 @@ export default function Gotchi({gotchi, gotchiColor}) {
 
             {/* {renderReward()} */}
 
-            <Box marginTop='15px'>
+            <Box marginTop='12px'>
                 <GotchiTraitsHighlight traits={gotchi.numericTraits} currentTraits={gotchi.withSetsNumericTraits} />
             </Box>
 
-            <Box marginTop='10px'>
+            <Box marginTop='8px'>
                 <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
             </Box>
         </Box>
