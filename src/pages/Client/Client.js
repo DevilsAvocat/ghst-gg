@@ -51,9 +51,7 @@ export default function Client() {
         setIsGotchiesLoading(true);
         thegraph.getGotchiesByAddresses(addresses).then((response)=>{
             let combinedGotchies = [];
-                if(item.data.user) {
-                    combinedGotchies.push(...item.data.user.gotchisOwned);
-                }
+
             response.forEach((item)=>{
                 if(item.data.user) {
                     combinedGotchies.push(...item.data.user.gotchisOwned);
