@@ -1005,5 +1005,29 @@ export const wearables = {
         'rarity': 'common',
         'stats': 'NRG +1',
         'type': 'auction-wearables'
+    },
+    206: {
+        'name': 'Biker Helmet',
+        'rarity': 'rare',
+        'stats': 'AGG +2, BRN +1',
+        'type': 'aavegotchi-x-venly-wearables'
+    },
+    207: {
+        'name': 'Biker Jacket',
+        'rarity': 'uncommon',
+        'stats': 'AGG +2',
+        'type': 'aavegotchi-x-venly-wearables'
+    },
+    208: {
+        'name': 'Aviators',
+        'rarity': 'uncommon',
+        'stats': 'SPK +2',
+        'type': 'aavegotchi-x-venly-wearables'
+    },
+    209: {
+        'name': 'Horseshoe Mustache',
+        'rarity': 'legendary',
+        'stats': 'NRG -2, SPK +2',
+        'type': 'aavegotchi-x-venly-wearables'
     }
 };
