@@ -35,7 +35,7 @@ export default function HighlightNumber({children, type}) {
         <Box
             className={classes.box}
             padding='2px'
-            bgcolor={getColor(type) == 'transparent' ? 'transparent' : fade(getColor(type), .15)}
+            bgcolor={getColor(type) === 'transparent' ? 'transparent' : fade(getColor(type), .15)}
             borderRadius={3}
             border={`1px solid ${getColor(type)}`}
         >
