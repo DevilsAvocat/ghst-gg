@@ -45,8 +45,8 @@ export default makeStyles((theme) => ({
         fontWeight: 500
     },
     aavegotchiAvatar: {
-        width: 150,
-        height: 150,
+        width: '150px !important',
+        height: '150px !important',
         '& > img': {
             width: 100,
             height: 100

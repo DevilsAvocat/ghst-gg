@@ -1,46 +1,58 @@
-import React, {useState} from 'react';
-import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, Paper, Button } from '@material-ui/core';
-import {useStyles} from '../styles';
-import thegraph from '../../../api/thegraph';
-import graphUtils from '../../../utils/graphUtils';
-import commonUtils from '../../../utils/commonUtils';
-import classNames from 'classnames';
-import ghst from '../../../assets/images/ghst-doubleside.gif';
+import React from 'react';
+import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, useTheme, makeStyles } from '@material-ui/core';
+// import thegraph from '../../../api/thegraph';
+// import graphUtils from '../../../utils/graphUtils';
+// import commonUtils from '../../../utils/commonUtils';
+// import classNames from 'classnames';
+// import ghst from '../../../assets/images/ghst-doubleside.gif';
 
-import RHSGotchi from './RHSGotchi';
-import RHSItem from './RHSItem';
+import Gotchi from '../../../components/Gotchi/Gotchi';
+import Item from '../../../components/Item/Item';
 
-export default function RHSContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
+const useStyles = makeStyles((theme) => ({
+    textHighlight: {
+        color: theme.palette.primary.main,
+        marginLeft: 10
+    },
+}));
+
+export default function ClientContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
-    const [totalReward, setTotalReward] = useState(0);
+    const theme = useTheme();
+    // const [totalReward, setTotalReward] = useState(0);
     const showPlaceholder = validAddresses[0].length !== 0 && !isDataLoading();
 
-    const calculateReward = () => {
-        setIsRewardCalculating(true);
-        thegraph.getAllGotchies().then((allGotchies)=>{
-            let rscLeaders = commonUtils.basicSort(allGotchies, 'withSetsRarityScore');
-            let kinLeaders = commonUtils.basicSort(allGotchies, 'kinship');
-            let expLeaders = commonUtils.basicSort(allGotchies, 'experience');
-
-            gotchies.forEach((item, index)=>{
-                let resRew = graphUtils.calculateRewards(rscLeaders.findIndex(x => x.id === item.id), 'RSC');
-                let kinRew = graphUtils.calculateRewards(kinLeaders.findIndex(x => x.id === item.id), 'KIN');
-                let expRew = graphUtils.calculateRewards(expLeaders.findIndex(x => x.id === item.id), 'EXP');
-
-                gotchies[index] = {
-                    ...item,
-                    rscRew: resRew,
-                    kinRew: kinRew,
-                    expRew: expRew,
-                    totalRew: resRew + kinRew + expRew
-                }
-            });
-
-            setTotalReward(gotchies.reduce((prev, next) => prev + next.totalRew, 0));
-            setIsRewardCalculating(false);
-        });
+    const getAddressColor = (owner) => {
+        let index = validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
+        return index ? theme.palette.accounts[`color${index}`] : theme.palette.accounts.color1;
     };
+
+    // const calculateReward = () => {
+    //     setIsRewardCalculating(true);
+    //     thegraph.getAllGotchies().then((allGotchies)=>{
+    //         let rscLeaders = commonUtils.basicSort(allGotchies, 'withSetsRarityScore');
+    //         let kinLeaders = commonUtils.basicSort(allGotchies, 'kinship');
+    //         let expLeaders = commonUtils.basicSort(allGotchies, 'experience');
+
+    //         gotchies.forEach((item, index)=>{
+    //             let resRew = graphUtils.calculateRewards(rscLeaders.findIndex(x => x.id === item.id), 'RSC');
+    //             let kinRew = graphUtils.calculateRewards(kinLeaders.findIndex(x => x.id === item.id), 'KIN');
+    //             let expRew = graphUtils.calculateRewards(expLeaders.findIndex(x => x.id === item.id), 'EXP');
+
+    //             gotchies[index] = {
+    //                 ...item,
+    //                 rscRew: resRew,
+    //                 kinRew: kinRew,
+    //                 expRew: expRew,
+    //                 totalRew: resRew + kinRew + expRew
+    //             }
+    //         });
+
+    //         setTotalReward(gotchies.reduce((prev, next) => prev + next.totalRew, 0));
+    //         setIsRewardCalculating(false);
+    //     });
+    // };
 
     const renderGotchiesHead = () => {
         if(gotchies.length !== 0) {
@@ -98,7 +110,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                             >
                                 <MenuItem value={'desc'}>Rarity (godlike -> common)</MenuItem>
                                 <MenuItem value={'asc'}>Rarity (common -> godlike)</MenuItem>
-                                <MenuItem value={'qty'}>Quantity</MenuItem>
+                                <MenuItem value={'balance'}>Quantity</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -120,25 +132,25 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
         }
     }
 
-    const renderRewardPaper = () => {
-        if(totalReward !== 0) {
-            return (
-                <Grid item xs={12} md={6}>
-                    <Paper variant='outlined' align='center' style={{padding: 12}}>
-                        <Typography align={'center'} variant={'h6'}>
-                            Total Reward >=>
-                            <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
-                                {totalReward}
-                                <img src={ghst} width='26' alt='GHST Token Icon' />
-                            </Box>
-                        </Typography>
-                    </Paper>
-                </Grid>
-            )
-        } else {
-            return null;
-        }
-    }
+    // const renderRewardPaper = () => {
+    //     if(totalReward !== 0) {
+    //         return (
+    //             <Grid item xs={12} md={6}>
+    //                 <Paper variant='outlined' align='center' style={{padding: 12}}>
+    //                     <Typography align={'center'} variant={'h6'}>
+    //                         Total Reward >=>
+    //                         <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
+    //                             {totalReward}
+    //                             <img src={ghst} width='26' alt='GHST Token Icon' />
+    //                         </Box>
+    //                     </Typography>
+    //                 </Paper>
+    //             </Grid>
+    //         )
+    //     } else {
+    //         return null;
+    //     }
+    // }
 
     if (validAddresses.length === 0) {
         return null;
@@ -146,7 +158,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
 
     return (
         <Box>
-            <Grid container alignItems={'center'} spacing={2} style={{marginBottom: 12, minHeight: 74}}>
+            {/* <Grid container alignItems={'center'} spacing={2} style={{marginBottom: 12, minHeight: 74}}>
                 <Grid item xs={12} md={6}>
                     <Button
                         variant={'contained'}
@@ -166,7 +178,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                     </Button>
                 </Grid>
                 {renderRewardPaper()}
-            </Grid>
+            </Grid> */}
 
             {renderGotchiesHead()}
 
@@ -174,7 +186,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                 {
                     gotchies.map((gotchi, i)=>{
                         return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
-                            <RHSGotchi gotchi={gotchi} validAddresses={validAddresses} />
+                            <Gotchi gotchi={gotchi} gotchiColor={getAddressColor(gotchi.owner.id)} />
                         </Grid>
                     })
                 }
@@ -186,7 +198,7 @@ export default function RHSContent({validAddresses, gotchies, gotchiesFilter, in
                 {
                     inventory.map((item, i)=>{
                         return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
-                            <RHSItem item={item} validAddresses={validAddresses}/>
+                            <Item item={item} owners={true}/>
                         </Grid>
                     })
                 }

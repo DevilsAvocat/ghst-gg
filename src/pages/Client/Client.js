@@ -1,18 +1,31 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Container, Backdrop, CircularProgress, } from '@material-ui/core';
+import { Container, Backdrop, CircularProgress, useTheme, makeStyles, } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
-import {useStyles} from './styles';
 import thegraph from '../../api/thegraph';
 import web3 from '../../api/web3';
 import itemUtils from '../../utils/itemUtils';
 import commonUtils from '../../utils/commonUtils';
 import {SnackbarContext} from '../../contexts/SnackbarContext';
 
-import RHSFields from './components/RHSFields';
-import RHSContent from './components/RHSContent';
+import ClientFields from './components/ClientFields';
+import ClientContent from './components/ClientContent';
+
+const useStyles = makeStyles((theme) => ({
+    container: {
+        padding: '50px 24px',
+        [theme.breakpoints.up('md')]: {
+            padding: '50px 32px'
+        }
+    },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff'
+    },
+}));
 
 export default function Client() {
     const classes = useStyles();
+    const theme = useTheme();
     const { showSnackbar } = useContext(SnackbarContext);
     const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAccounts')?.split(',')|| ['']);
 
@@ -40,12 +53,16 @@ export default function Client() {
             let combinedGotchies = [];
 
             response.forEach((item)=>{
-                combinedGotchies.push(...item.data.user.gotchisOwned);
+                if(item.data.user) {
+                    combinedGotchies.push(...item.data.user.gotchisOwned);
+                }
             });
 
             setIsGotchiesLoading(false);
             setGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
-        });
+        }).catch(()=>{
+            setIsGotchiesLoading(false);
+        });;
     };
 
     const getInventoryByAddresses = (addresses) => {
@@ -56,17 +73,21 @@ export default function Client() {
             for (let i = 0; i < response.length; i++) {
                 response[i].items.forEach((item)=> {
                     let index = combinedArray.findIndex(el => el.itemId === item.itemId);
-                    let owner = { id: response[i].owner, qty: +item.balance };
+                    let owner = {
+                        id: response[i].owner,
+                        balance: +item.balance,
+                        color: theme.palette.accounts[`color${addresses.indexOf(response[i].owner) + 1}`]
+                    };
 
                     if(index !== -1){
-                        combinedArray[index].qty = +combinedArray[index].qty + +item.balance;
+                        combinedArray[index].balance = +combinedArray[index].balance + +item.balance;
                         combinedArray[index].owners.push(owner);
                     } else {
                         combinedArray.push({
                             itemId: item.itemId,
                             rarity: itemUtils.getItemRarityById(item.itemId),
                             rarityId: itemUtils.getItemRarityId(itemUtils.getItemRarityById(item.itemId)),
-                            qty: +item.balance,
+                            balance: +item.balance,
                             owners: [owner]
                         });
                     }
@@ -76,6 +97,8 @@ export default function Client() {
             setIsInventoryLoading(false);
             setInventoryFilter('desc');
             setInventory(commonUtils.basicSort(combinedArray, 'rarityId', 'desc'));
+        }).catch(()=>{
+            setIsInventoryLoading(false);
         });
     };
 
@@ -118,12 +141,12 @@ export default function Client() {
     return (
         <Container maxWidth='lg' className={classes.container}>
             <Helmet>
-                <title>Rarity Hunt Support</title>
+                <title>Client</title>
             </Helmet>
 
-            <RHSFields loadData={loadData} validAddresses={validAddresses} />
+            <ClientFields loadData={loadData} validAddresses={validAddresses} />
 
-            <RHSContent
+            <ClientContent
                 validAddresses={validAddresses}
                 gotchies={gotchies}
                 gotchiesFilter={gotchiesFilter}
