@@ -51,14 +51,20 @@ export default function Client() {
         setIsGotchiesLoading(true);
         thegraph.getGotchiesByAddresses(addresses).then((response)=>{
             let combinedGotchies = [];
-
+                if(item.data.user) {
+                    combinedGotchies.push(...item.data.user.gotchisOwned);
+                }
             response.forEach((item)=>{
-                combinedGotchies.push(...item.data.user.gotchisOwned);
+                if(item.data.user) {
+                    combinedGotchies.push(...item.data.user.gotchisOwned);
+                }
             });
 
             setIsGotchiesLoading(false);
             setGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
-        });
+        }).catch(()=>{
+            setIsGotchiesLoading(false);
+        });;
     };
 
     const getInventoryByAddresses = (addresses) => {
@@ -93,6 +99,8 @@ export default function Client() {
             setIsInventoryLoading(false);
             setInventoryFilter('desc');
             setInventory(commonUtils.basicSort(combinedArray, 'rarityId', 'desc'));
+        }).catch(()=>{
+            setIsInventoryLoading(false);
         });
     };
 
