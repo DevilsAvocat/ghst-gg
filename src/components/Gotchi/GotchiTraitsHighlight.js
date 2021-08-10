@@ -34,13 +34,9 @@ export default function GotchiTraitsHighlight({traits, currentTraits}) {
     // const secondTraitKey = Object.keys(sortedDiff)[1];
     // const secondTraitValue = formattedTraits[secondTraitKey];
 
-    const isGodlikeTrait = (trait) => {
-        return trait >= 99 || trait <= 1;
-    };
-
-    const isMythicalTrait = (trait) => {
-        return trait >= 95 || trait <= 5;
-    };
+    const calculateTraitType = (trait) => {
+        return trait >= 101 || trait <= -1 ? 'godlike' : trait >= 98 || trait <= 1 ? 'mythical' : trait >= 91 || trait <= 9 ? 'rare' : '';
+    }
 
     return (
         <Box position='relative' display='flex' alignItems='center' flexWrap='wrap' justifyContent='space-between' minHeight={26}>
@@ -50,7 +46,7 @@ export default function GotchiTraitsHighlight({traits, currentTraits}) {
                     let traitVal = trait[1];
 
                     return <Box textAlign='center' flexBasis='49%' key={i} margin={'1% 0'}>
-                        <HighlightNumber type={isGodlikeTrait(traitVal) ? 'godlike' : isMythicalTrait(traitVal) ? 'mythical' : ''}>
+                        <HighlightNumber type={calculateTraitType(traitVal)}>
                             <Typography className={classes.mainVal} variant='subtitle2' noWrap={true}>
                                 {traitKey}{traitVal}
         

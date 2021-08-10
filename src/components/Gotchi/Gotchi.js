@@ -9,6 +9,9 @@ import gotchiPlaceholder from '../../assets/images/logo.png';
 import GotchiLevel from './GotchiLevel';
 import GotchiTraitsHighlight from './GotchiTraitsHighlight';
 import GotchiWearablesLine from './GotchiWearablesLine';
+import HighlightNumber from '../HighlightNumber';
+
+import CallMadeIcon from '@material-ui/icons/CallMade';
 
 const useStyles = makeStyles((theme) => ({
     gotchi: {
@@ -29,9 +32,12 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.common.white,
         fontSize: 12,
         padding: '2px 4px',
+        position: 'relative',
         textDecoration: 'none',
+        opacity: .9,
         '&:hover': {
-            textDecoration: 'none'
+            textDecoration: 'none',
+            opacity: 1
         }
     },
     gotchiOwner: {
@@ -50,9 +56,22 @@ const useStyles = makeStyles((theme) => ({
     gotchiPlaceholder: {
         filter: 'grayscale(100%)'
     },
+    callMadeIcon: {
+        position: 'absolute',
+        right: 2,
+        bottom: 2,
+        fontSize: 14
+    },
     tokenValue: {
         display: 'inline-flex',
         alignItems: 'center'
+    },
+    mainVal: {
+        fontSize: 13
+    },
+    defaultVal: {
+        fontSize: 10,
+        marginLeft: 2
     }
 }));
 
@@ -74,6 +93,14 @@ export default function Gotchi({gotchi, gotchiColor}) {
     //         return null;
     //     }
     // }
+
+    const calculateRarityType = (rarity) => {
+        return rarity >= 700 ? 'godlike' : rarity >= 600 ? 'mythical' : rarity >= 500 ? 'rare' : '';
+    }
+
+    const calculateKinshipType = (kin) => {
+        return kin >= 500 ? 'godlike' : kin >= 250 ? 'mythical' : kin >= 100 ? 'rare' : '';
+    }
 
     return (
         <Box
@@ -105,6 +132,27 @@ export default function Gotchi({gotchi, gotchiColor}) {
                 width={75}
             />
 
+            <Box position='relative' display='flex' alignItems='center' justifyContent='space-between' minHeight={26} margin={'4px 0 8px'}>
+                <Box textAlign='center' flexBasis='49%'>
+                    <HighlightNumber type={calculateRarityType(gotchi.withSetsRarityScore)}>
+                        <Typography className={classes.mainVal} variant={'subtitle2'}>
+                            🏆{gotchi.withSetsRarityScore}
+                            <Typography className={classes.defaultVal} component='span' variant='body2'>
+                                ({gotchi.baseRarityScore})
+                            </Typography>
+                        </Typography>        
+                    </HighlightNumber>
+                </Box>
+
+                <Box textAlign='center' flexBasis='49%' margin={'1% 0'}>
+                    <HighlightNumber type={calculateKinshipType(gotchi.kinship)}>
+                        <Typography className={classes.mainVal} variant={'subtitle2'}>
+                            🧡{gotchi.kinship}
+                        </Typography>        
+                    </HighlightNumber>
+                </Box>
+            </Box>
+
             <Link
                 className={classNames(classes.owner)}
                 style={{ backgroundColor: fade(gotchiColor, .5), margin: '4px 0'}}
@@ -118,18 +166,12 @@ export default function Gotchi({gotchi, gotchiColor}) {
                         'Unnamed'
                     )}
                 </Typography>
+                <CallMadeIcon className={classes.callMadeIcon} />
             </Link>
-
-            {/* <Typography variant={'body2'}>
-                BRS: {gotchi.withSetsRarityScore}({gotchi.baseRarityScore})
-            </Typography>
-            <Typography variant={'body2'}>
-                Kin: {gotchi.kinship}
-            </Typography> */}
 
             {/* {renderReward()} */}
 
-            <Box marginTop='12px'>
+            <Box marginTop='8px'>
                 <GotchiTraitsHighlight traits={gotchi.numericTraits} currentTraits={gotchi.withSetsNumericTraits} />
             </Box>
 
