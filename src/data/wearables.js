@@ -1029,5 +1029,209 @@ export const wearables = {
         'rarity': 'legendary',
         'stats': 'NRG -2, SPK +2',
         'type': 'aavegotchi-x-venly-wearables'
+    },
+    211: {
+        'name': 'Guy Fawkes Mask',
+        'rarity': 'common',
+        'stats': 'SPK +1',
+        'type': 'haunt-2-wearables'
+    },
+    212: {
+        'name': '1337 Laptop',
+        'rarity': 'Mythical',
+        'stats': 'NRG -2, BRN +3',
+        'type': 'haunt-2-wearables'
+    },
+    213: {
+        'name': 'H4xx0r Shirt',
+        'rarity': 'Legendary',
+        'stats': 'NRG -4',
+        'type': 'haunt-2-wearables'
+    },
+    214: {
+        'name': 'Matrix Eyes',
+        'rarity': 'Godlike',
+        'stats': 'NRG -3, AGG -3',
+        'type': 'haunt-2-wearables'
+    },
+    215: {
+        'name': 'Cyborg Eye',
+        'rarity': 'Legendary',
+        'stats': 'NRG +2, AGG +2',
+        'type': 'haunt-2-wearables'
+    },
+    216: {
+        'name': 'Rainbow Vomit',
+        'rarity': 'Mythical',
+        'stats': 'SPK -5',
+        'type': 'haunt-2-wearables'
+    },
+    217: {
+        'name': 'Energy Gun',
+        'rarity': 'Mythical',
+        'stats': 'NRG +2, AGG +3',
+        'type': 'haunt-2-wearables'
+    },
+    218: {
+        'name': 'Mohawk',
+        'rarity': 'Uncommon',
+        'stats': 'NRG +1, AGG +1',
+        'type': 'haunt-2-wearables'
+    },
+    219: {
+        'name': 'Mutton Chops',
+        'rarity': 'Rare',
+        'stats': 'SPK +2, BRN -1',
+        'type': 'haunt-2-wearables'
+    },
+    220: {
+        'name': 'Punk Shirt',
+        'rarity': 'Legendary',
+        'stats': 'NRG +1, AGG +3',
+        'type': 'haunt-2-wearables'
+    },
+    221: {
+        'name': 'Pirate Hat',
+        'rarity': 'Common',
+        'stats': 'BRN -1',
+        'type': 'haunt-2-wearables'
+    },
+    222: {
+        'name': 'Pirate Coat',
+        'rarity': 'Uncommon',
+        'stats': 'SPK +1, BRN -1',
+        'type': 'haunt-2-wearables'
+    },
+    223: {
+        'name': 'Hook Hand',
+        'rarity': 'Uncommon',
+        'stats': 'SPK +1, BRN -1',
+        'type': 'haunt-2-wearables'
+    },
+    224: {
+        'name': 'Pirate Patch',
+        'rarity': 'Rare',
+        'stats': 'SPK +2, BRN -1',
+        'type': 'haunt-2-wearables'
+    },
+    225: {
+        'name': 'Basketball',
+        'rarity': 'Common',
+        'stats': 'NRG +1',
+        'type': 'haunt-2-wearables'
+    },
+    226: {
+        'name': 'Red Headband',
+        'rarity': 'Rare',
+        'stats': 'NRG +2, AGG -1',
+        'type': 'haunt-2-wearables'
+    },
+    227: {
+        'name': '23 Jersey',
+        'rarity': 'Rare',
+        'stats': 'NRG +1, AGG -2',
+        'type': 'haunt-2-wearables'
+    },
+    228: {
+        'name': '10 Gallon Hat',
+        'rarity': 'Common',
+        'stats': 'BRN +1',
+        'type': 'haunt-2-wearables'
+    },
+    229: {
+        'name': 'Lasso',
+        'rarity': 'Uncommon',
+        'stats': 'AGG +1, BRN +1',
+        'type': 'haunt-2-wearables'
+    },
+    230: {
+        'name': 'Wraangler Jeans',
+        'rarity': 'Common',
+        'stats': 'AGG +1',
+        'type': 'haunt-2-wearables'
+    },
+    231: {
+        'name': 'Comfy Poncho',
+        'rarity': 'Uncommon',
+        'stats': 'NRG -2',
+        'type': 'haunt-2-wearables'
+    },
+    232: {
+        'name': 'Poncho Hoodie',
+        'rarity': 'Common',
+        'stats': 'NRG -1',
+        'type': 'haunt-2-wearables'
+    },
+    233: {
+        'name': 'Uncommon Cacti',
+        'rarity': 'Uncommon',
+        'stats': 'SPK -1, BRN +1',
+        'type': 'haunt-2-wearables'
+    },
+    234: {
+        'name': 'Shaaman Poncho',
+        'rarity': 'Mythical',
+        'stats': 'NRG -5',
+        'type': 'haunt-2-wearables'
+    },
+    235: {
+        'name': 'Shaaman Hoodie',
+        'rarity': 'Legendary',
+        'stats': 'NRG -4',
+        'type': 'haunt-2-wearables'
+    },
+    236: {
+        'name': 'Blue Cacti',
+        'rarity': 'Rare',
+        'stats': 'SPK -1, BRN +2',
+        'type': 'haunt-2-wearables'
+    },
+    237: {
+        'name': 'Mythical Cacti',
+        'rarity': 'Mythical',
+        'stats': 'SPK -2, BRN +3',
+        'type': 'haunt-2-wearables'
+    },
+    238: {
+        'name': 'Godlike Cacti',
+        'rarity': 'Godlike',
+        'stats': 'SPK -3, BRN +3',
+        'type': 'haunt-2-wearables'
+    },
+    239: {
+        'name': 'Wagie Cap',
+        'rarity': 'Uncommon',
+        'stats': 'AGG -2',
+        'type': 'haunt-2-wearables'
+    },
+    240: {
+        'name': 'Headphones',
+        'rarity': 'Uncommon',
+        'stats': 'AGG -2',
+        'type': 'haunt-2-wearables'
+    },
+    241: {
+        'name': 'WGMI Shirt',
+        'rarity': 'Rare',
+        'stats': 'AGG -3',
+        'type': 'haunt-2-wearables'
+    },
+    242: {
+        'name': 'Yellow Manbun',
+        'rarity': 'Legendary',
+        'stats': 'NRG -2, AGG -2',
+        'type': 'haunt-2-wearables'
+    },
+    243: {
+        'name': 'Tinted Shades',
+        'rarity': 'Rare',
+        'stats': 'AGG -3',
+        'type': 'haunt-2-wearables'
+    },
+    244: {
+        'name': 'V-Neck Shirt',
+        'rarity': 'Rare',
+        'stats': 'AGG -3',
+        'type': 'haunt-2-wearables'
     }
 };
