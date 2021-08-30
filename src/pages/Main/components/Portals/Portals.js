@@ -15,6 +15,8 @@ export default function Portals() {
     const [gotchiClaimed, setGotchiClaimed] = useState(0);
     const [eegg, setEegg] = useState(false);
 
+    const portalsAmount = 25000;
+
     useEffect(() => {
         getGraphData();
     }, []);
@@ -28,13 +30,14 @@ export default function Portals() {
                 setDataSpinner(false);
             });
     };
+
     
     const getSealedPortals = () => {
-        return commonUtils.formatNumber(10000 - openedPortals);
+        return commonUtils.formatNumber(portalsAmount - openedPortals);
     };
     
     const getOpenedPortalsPercentage = () => {
-        return (openedPortals / 10000 * 100).toFixed(2);
+        return (openedPortals / portalsAmount * 100).toFixed(2);
     };
 
     function onPortalClick() {
@@ -57,7 +60,7 @@ export default function Portals() {
                         </Box>
                     )}
                     <Box component='span'>
-                        { eegg ? `/${commonUtils.formatNumber(10000)} are sealed!` : ' portals are opened!' }
+                        { eegg ? `/${commonUtils.formatNumber(portalsAmount)} are sealed!` : ' portals are opened!' }
                     </Box>
                 </Box>
             </Grid>
