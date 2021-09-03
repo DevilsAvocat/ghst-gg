@@ -3,9 +3,7 @@ import { Box, Typography, Link } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
-// import gotchiPlaceholder from '../../assets/images/logo.png';
 import GotchiSvgRender from './GotchiSvgRender';
-// import ghst from '../../assets/images/ghst-doubleside.gif';
 
 import GotchiLevel from './GotchiLevel';
 import GotchiTraitsHighlight from './GotchiTraitsHighlight';
@@ -77,28 +75,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Gotchi({gotchi, gotchiColor}) {
     const classes = useStyles();
-
-    // const renderReward = () => {
-    //     if(gotchi.totalRew) {
-    //         return (
-    //             <Typography align={'center'} variant={'body2'}>
-    //                 Reward
-    //                 <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
-    //                     {gotchi.totalRew}
-    //                     <img src={ghst} width='18' alt='GHST Token Icon' style={{marginTop: -2}} />
-    //                 </Box>
-    //             </Typography>
-    //         )
-    //     } else {
-    //         return null;
-    //     }
-    // }
     const { Moralis , isInitialized} = useMoralis();
     const [svg, setSvg] = useState('');
-    const [isLoaded, setIsLoaded] = useState(false);
 
     if(isInitialized) {
-        GotchiSvgRender.getSvg(gotchi.numericTraits, gotchi.equippedWearables, Moralis).then((result) => {
+        GotchiSvgRender.getSvg(
+            parseInt(gotchi.hauntId),
+            gotchi.collateral,
+            gotchi.numericTraits,
+            gotchi.equippedWearables,
+            Moralis
+        ).then((result) => {
             setSvg(result)
         });
     }

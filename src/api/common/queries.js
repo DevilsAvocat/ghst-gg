@@ -41,6 +41,8 @@ export const userQuery = (id) => {
             experience
             level
             toNextLevel
+            collateral
+            hauntId
             owner {
               id
             }

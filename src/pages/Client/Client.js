@@ -62,7 +62,7 @@ export default function Client() {
             setGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
         }).catch(()=>{
             setIsGotchiesLoading(false);
-        });;
+        });
     };
 
     const getInventoryByAddresses = (addresses) => {
