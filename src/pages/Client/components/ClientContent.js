@@ -9,6 +9,8 @@ import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, useTh
 import Gotchi from '../../../components/Gotchi/Gotchi';
 import Item from '../../../components/Item/Item';
 
+// import { useMoralis } from "react-moralis";
+
 const useStyles = makeStyles((theme) => ({
     textHighlight: {
         color: theme.palette.primary.main,
@@ -155,6 +157,16 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
     if (validAddresses.length === 0) {
         return null;
     }
+
+    // const { Moralis , isInitialized} = useMoralis();
+    // const [svg, setSvg] = useState('');
+    // const [isLoaded, setIsLoaded] = useState(false);
+
+    // if(isInitialized) {
+    //     GotchiSvgRender.getSvg(gotchi.numericTraits, gotchi.equippedWearables, Moralis).then((result) => {
+    //         setSvg(result)
+    //     });
+    // }
 
     return (
         <Box>

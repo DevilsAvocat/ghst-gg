@@ -1,9 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Box, Typography, Link } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
-import gotchiPlaceholder from '../../assets/images/logo.png';
+// import gotchiPlaceholder from '../../assets/images/logo.png';
+import GotchiSvgRender from './GotchiSvgRender';
 // import ghst from '../../assets/images/ghst-doubleside.gif';
 
 import GotchiLevel from './GotchiLevel';
@@ -12,6 +13,8 @@ import GotchiWearablesLine from './GotchiWearablesLine';
 import HighlightNumber from '../HighlightNumber';
 
 import CallMadeIcon from '@material-ui/icons/CallMade';
+
+import { useMoralis } from "react-moralis";
 
 const useStyles = makeStyles((theme) => ({
     gotchi: {
@@ -53,9 +56,6 @@ const useStyles = makeStyles((theme) => ({
         whiteSpace: 'nowrap',
         fontSize: 15
     },
-    gotchiPlaceholder: {
-        filter: 'grayscale(100%)'
-    },
     callMadeIcon: {
         position: 'absolute',
         right: 2,
@@ -93,6 +93,15 @@ export default function Gotchi({gotchi, gotchiColor}) {
     //         return null;
     //     }
     // }
+    const { Moralis , isInitialized} = useMoralis();
+    const [svg, setSvg] = useState('');
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    if(isInitialized) {
+        GotchiSvgRender.getSvg(gotchi.numericTraits, gotchi.equippedWearables, Moralis).then((result) => {
+            setSvg(result)
+        });
+    }
 
     const calculateRarityType = (rarity) => {
         return rarity >= 700 ? 'godlike' : rarity >= 600 ? 'mythical' : rarity >= 500 ? 'rare' : '';
@@ -125,8 +134,7 @@ export default function Gotchi({gotchi, gotchiColor}) {
             </Box>
 
             <img
-                className={classes.gotchiPlaceholder}
-                src={gotchiPlaceholder}
+                src={svg}
                 alt='Ghost'
                 height={75}
                 width={75}
