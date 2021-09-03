@@ -1,7 +1,9 @@
 export default { 
-    async getSvg(hauntId, collateralAddress, numericTraits, equippedWearables, Moralis) {
-        let result = await Moralis.Cloud.run("getSVG",{hauntId, collateralAddress, numericTraits:numericTraits,equippedWearables:equippedWearables});
+    async getSvg(gotchies, Moralis) {
+        let result = await Moralis.Cloud.run("getSVG",{gotchies});
 
-        return `data:image/svg+xml;utf8,${encodeURIComponent(result)}`;
+        return result.map((item) => {
+            return `data:image/svg+xml;utf8,${encodeURIComponent(item)}`;
+        })
     }
 }

@@ -3,7 +3,6 @@ import { Box, Typography, Link } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
-import GotchiSvgRender from './GotchiSvgRender';
 
 import GotchiLevel from './GotchiLevel';
 import GotchiTraitsHighlight from './GotchiTraitsHighlight';
@@ -11,8 +10,6 @@ import GotchiWearablesLine from './GotchiWearablesLine';
 import HighlightNumber from '../HighlightNumber';
 
 import CallMadeIcon from '@material-ui/icons/CallMade';
-
-import { useMoralis } from "react-moralis";
 
 const useStyles = makeStyles((theme) => ({
     gotchi: {
@@ -75,20 +72,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Gotchi({gotchi, gotchiColor}) {
     const classes = useStyles();
-    const { Moralis , isInitialized} = useMoralis();
-    const [svg, setSvg] = useState('');
-
-    if(isInitialized) {
-        GotchiSvgRender.getSvg(
-            parseInt(gotchi.hauntId),
-            gotchi.collateral,
-            gotchi.numericTraits,
-            gotchi.equippedWearables,
-            Moralis
-        ).then((result) => {
-            setSvg(result)
-        });
-    }
 
     const calculateRarityType = (rarity) => {
         return rarity >= 700 ? 'godlike' : rarity >= 600 ? 'mythical' : rarity >= 500 ? 'rare' : '';
@@ -121,7 +104,7 @@ export default function Gotchi({gotchi, gotchiColor}) {
             </Box>
 
             <img
-                src={svg}
+                src={gotchi.svg}
                 alt='Ghost'
                 height={75}
                 width={75}
