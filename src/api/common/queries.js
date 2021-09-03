@@ -16,6 +16,8 @@ export const gotchiesQuery = (skip, orderDir) => {
           kinship
           experience
           equippedWearables
+          collateral
+          hauntId
           owner {
             id
           }
