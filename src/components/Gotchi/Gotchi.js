@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
     },
     gotchiOwner: {
         position: 'absolute',
+        minWidth: 60,
         top: 0,
         right: '50%',
         transform: 'translate(50%, -50%)',
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Gotchi({gotchi, ownerId, validAddresses, expanded}) {
+export default function Gotchi({gotchi, title, ownerId, validAddresses}) {
     const classes = useStyles();
 
     const theme = useTheme();
@@ -89,15 +90,6 @@ export default function Gotchi({gotchi, ownerId, validAddresses, expanded}) {
         return kin >= 500 ? 'godlike' : kin >= 250 ? 'mythical' : kin >= 100 ? 'rare' : '';
     }
 
-    if(!expanded) return (
-        <img
-            src={gotchi.svg}
-            alt='Ghost'
-            height={75}
-            width={75}
-        />
-    )
-
     return (
         <Box
             className={classNames(classes.gotchi)}
@@ -108,7 +100,7 @@ export default function Gotchi({gotchi, ownerId, validAddresses, expanded}) {
                 className={classNames(classes.owner, classes.gotchiOwner)}
                 style={{ backgroundColor: gotchiColor }}
             >
-                {commonUtils.cutAddress(gotchi.owner.id)}
+                {title || commonUtils.cutAddress(gotchi.owner.id)}
             </Typography>
 
             <Box position='absolute' top={8} right={8}>

@@ -9,11 +9,13 @@ export const gotchiesQuery = (skip, orderDir) => {
         ) {
           id
           name
+          withSetsNumericTraits
           numericTraits
           baseRarityScore
           modifiedRarityScore
           withSetsRarityScore
           kinship
+          level
           experience
           equippedWearables
           collateral

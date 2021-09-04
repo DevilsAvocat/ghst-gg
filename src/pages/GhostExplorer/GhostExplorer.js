@@ -1,21 +1,29 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { Box, Link, Typography } from '@material-ui/core';
+import { CircularProgress, Backdrop } from '@material-ui/core';
+import Gotchi from '../../components/Gotchi/Gotchi'; 
+import thegraph from '../../api/thegraph';
+import GotchiSvgRender from '../../components/Gotchi/GotchiSvgRender';
+import Moralis from "moralis";
 import useStyles from './styles';
-import classNames from 'classnames';
 
 var maxGotchiQuantity = 10000,
     loadNewItemsAfterThisScrollHeight = 2000;
 
 export default function GhostExplorer() {
+
+    console.log(useStyles);
     const classes = useStyles();
-    const [gotchies, setGotchies] = useState([]);
+    const [gotchiesFromGraph, setGotchiesFromGraph] = useState(null);
+    const [gotchiesShown, setGotchiesShown] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
     // scrolling
     const scrollingContainerRef = useRef();
     const size = useNodeScroll(scrollingContainerRef.current);
 
     function useNodeScroll() {
-        const [scrollDown, setScrollDown] = useState();
+        const [scrollDown, setScrollDown] = useState(false);
 
         useEffect(() => {
             function handleScroll() {
@@ -24,88 +32,94 @@ export default function GhostExplorer() {
                     scrollHeight = node.scrollHeight,
                     scrollTop = node.scrollTop,
                     actualBottomScroll = scrollHeight - (clientHeight + scrollTop);
+                    if (!actualBottomScroll) setScrollDown(true);
+                    else setScrollDown(false);
 
-                if (actualBottomScroll < loadNewItemsAfterThisScrollHeight) {
-                    if (scrollDown === actualBottomScroll) {
-                        setScrollDown(actualBottomScroll + 1);
-                    } else {
-                        setScrollDown(actualBottomScroll);
-                    }
-                }
+                    console.log(actualBottomScroll);
             }
-
+            
             scrollingContainerRef?.current?.addEventListener("scroll", handleScroll);
             handleScroll();
-
             return () =>  scrollingContainerRef?.current?.removeEventListener("scroll", handleScroll);
         }, [scrollDown]);
 
         return scrollDown;
     }
 
-    const getSVG = (ghst) => {
-        try {
-            return require(`../../assets/svgs/${ghst}.svg`).default;
-        } catch (error) {
-            return null;
-        }
+    const getGotchies = async () => {
+         await thegraph.getAllGotchies().then((response) => {
+            const gotchiesData = response.sort((a,b) => a.id - b.id);
+            setGotchiesFromGraph(gotchiesData);
+
+            renderGotchi(50);
+        }).catch(()=> {
+        });
+        console.log('LOADED');
     };
 
-    const renderGotchi = (quantity) => {
-        if (gotchies.length < maxGotchiQuantity) {
-            const gotchiQuantity = gotchies.length;
+    const renderGotchi = async (quantity) => {
+        if(gotchiesFromGraph === null) return;
+        if(gotchiesShown.length < maxGotchiQuantity) {
+            const gotchiQuantity = gotchiesShown.length;
 
-            let gotchiCache = [],
+            let gotchiCache,
+                svgs,
                 lastGotchiCached = gotchiQuantity;
 
             if (lastGotchiCached < maxGotchiQuantity) {
-                for (let i = 0; i < quantity; i++) {
-                    lastGotchiCached < maxGotchiQuantity && gotchiCache.push(++lastGotchiCached);
-                }
-            }
+                
+                gotchiCache = gotchiesFromGraph.slice(gotchiQuantity, gotchiQuantity+quantity);
 
-            gotchiCache.length && setGotchies([...gotchies, ...gotchiCache]);
+                svgs = await GotchiSvgRender.getSvg(gotchiCache, Moralis);
+
+                gotchiCache = gotchiCache.map((item, index) => {
+                    let gotchi = {...item, svg: svgs[index] }
+                    return (
+                        <Grid item xs={5} sm={4} md={3} lg={2} key={gotchi.id}>
+                            <Gotchi gotchi={gotchi} title={gotchi.id} />
+                        </Grid>
+                    )
+                });
+
+                const newGotchies = [...gotchiesShown, ...gotchiCache].sort((a,b) => a.id - b.id);
+                
+                setGotchiesShown(newGotchies);
+
+                setIsLoading(false);
+            }
+            
         }
     };
 
     useEffect(() => {
-        renderGotchi(300);
+        getGotchies();
     }, []);
 
     useEffect(() => {
-        renderGotchi(200);
+        renderGotchi(50);
+    }, [gotchiesFromGraph]);
+
+    useEffect(() => {
+        if(size) {
+            setIsLoading(true);
+            renderGotchi(50);
+        }
     }, [size]);
 
     return (
+        <>
+        <Backdrop className={classes.backdrop} open={isLoading}>
+            <CircularProgress color='primary' />
+        </Backdrop>
         <Grid
             container
             className={classes.root}
+            spacing={2}
             ref={scrollingContainerRef}
         >
-            {
-                gotchies.map((ghst, index) => {
-                    const img = getSVG(ghst);
-
-                    if (img) {
-                        return <Link
-                            key={index}
-                            className={classNames(classes.gotchi)}
-                            href={`https://aavegotchi.com/gotchi/${ghst}`}
-                            target="_blank"
-                        >
-                            <Box h={90}>
-                                <img alt={ghst} src={img} />
-                            </Box>
-                            <Typography
-                                align={'center'}
-                                variant={'h6'}
-                            >
-                                {ghst}
-                            </Typography>
-                        </Link>
-                    }
-                })
-            }
+            
+            {gotchiesShown ? gotchiesShown : ''}
         </Grid>
+        </>
     );
 }

@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function ClientContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
