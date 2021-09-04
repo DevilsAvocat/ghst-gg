@@ -943,25 +943,25 @@ export const wearables = {
     158: {
         'name': 'Lil Pump Drank',
         'rarity': 'rare',
-        'stats': 'BRS +5, NRG +1, AGG +2',
+        'stats': 'NRG +1, AGG +2',
         'type': 'layer-2-themed-set'
     },
     159: {
         'name': 'Lil Pump Shades',
         'rarity': 'legendary',
-        'stats': 'BRS +10, AGG +3, SPK +1',
+        'stats': 'AGG +3, SPK +1',
         'type': 'layer-2-themed-set'
     },
     160: {
         'name': 'Lil Pump Threads',
         'rarity': 'mythical',
-        'stats': 'BRS +20, NRG +5',
+        'stats': 'NRG +5',
         'type': 'layer-2-themed-set'
     },
     161: {
         'name': 'Lil Pump Dreads',
         'rarity': 'godlike',
-        'stats': 'BRS +50, NRG +4, AGG +2',
+        'stats': 'NRG +4, AGG +2',
         'type': 'layer-2-themed-set'
     },
     199: {
