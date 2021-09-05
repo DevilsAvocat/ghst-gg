@@ -1,21 +1,21 @@
-import { wearables } from '../data/wearables';
+import { items } from '../data/items';
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     getItemNameById(id) {
-        return wearables[id]?.name || '';
+        return items[id]?.name || '';
     },
 
     getItemStatsById(id) {
-        return wearables[id]?.stats || '';
+        return items[id]?.stats || '';
     },
 
     getItemRarityById(id) {
-        return wearables[id]?.rarity || '';
+        return items[id]?.rarity || '';
     },
 
     getItemTypeById(id) {
-        return wearables[id]?.type || '';
+        return items[id]?.type || '';
     },
 
     getItemType(item) {

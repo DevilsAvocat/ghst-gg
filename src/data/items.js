@@ -1,4 +1,4 @@
-export const wearables = {
+export const items = {
     1: {
         'name': 'Camo Hat',
         'rarity': 'common',

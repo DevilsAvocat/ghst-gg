@@ -8,7 +8,7 @@ import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
-import {commonQuery, godlikeQuery, legendaryQuery, mythicalQuery, rareQuery, uncommonQuery} from './data/queries';
+import {raffleTicketPriceQuery} from './data/queries';
 import commonUtils from "../../utils/commonUtils";
 
 function useInterval(callback, delay) {
@@ -141,7 +141,7 @@ export default function Raffle() {
     const getAveragePrices = () => {
         setPricesSpinner(true);
 
-        thegraph.getJoinedData([commonQuery, uncommonQuery, rareQuery, legendaryQuery, mythicalQuery, godlikeQuery])
+        thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)])
             .then((response) => {
                 let averagePrices = response.map((item)=> {
                     let prices = item.data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
