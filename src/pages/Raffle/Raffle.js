@@ -2,13 +2,14 @@ import React, {useEffect, useState, useContext, useRef} from 'react';
 import axios from "axios";
 import {Button, Container, Grid, Link, Typography} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
-import RaffleTable from './components/RaffleTable';
+// import RaffleTable from './components/RaffleTable'; TODO: temporary solution, read more in RaffleDropTable.js
+import RaffleDropTable from './components/RaffleDropTable';
 import RaffleWearables from './components/RaffleWearables';
 import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
-import {raffleTicketPriceQuery} from './data/queries';
+import {raffle5TotalEnteredQuery, raffleTicketPriceQuery} from './data/queries';
 import commonUtils from "../../utils/commonUtils";
 
 function useInterval(callback, delay) {
@@ -38,33 +39,37 @@ export default function Raffle() {
     const [supplySpinner, setSupplySpinner] = useState(true);
     const [pricesSpinner, setPricesSpinner] = useState(true);
     const [lastTicketInfo, setLastTicketInfo] = useState('');
-    const [commonQuantity, setCommonQuantity] = useState('');
-    const [uncommonQuantity, setUncommonQuantity] = useState('');
-    const [rareQuantity, setRareQuantity] = useState('');
-    const [legendaryQuantity, setLegendaryQuantity] = useState('');
-    const [mythicalQuantity, setMythicalQuantity] = useState('');
-    const [godlikeQuantity, setGodlikeQuantity] = useState('');
-    const [enteredSupplyType, setEnteredSupplyType] = useState(true);
+    const [dropQuantity, setDropQuantity] = useState('');
+    // const [commonQuantity, setCommonQuantity] = useState('');
+    // const [uncommonQuantity, setUncommonQuantity] = useState('');
+    // const [rareQuantity, setRareQuantity] = useState('');
+    // const [legendaryQuantity, setLegendaryQuantity] = useState('');
+    // const [mythicalQuantity, setMythicalQuantity] = useState('');
+    // const [godlikeQuantity, setGodlikeQuantity] = useState('');
+    // const [enteredSupplyType, setEnteredSupplyType] = useState(true);
 
     const getTicketQuantity = (type) => {
         const map = {
-            'common': () => {
-                return commonQuantity;
-            },
-            'uncommon': () => {
-                return uncommonQuantity;
-            },
-            'rare': () => {
-                return rareQuantity;
-            },
-            'legendary': () => {
-                return legendaryQuantity;
-            },
-            'mythical': () => {
-                return mythicalQuantity;
-            },
-            'godlike': () => {
-                return godlikeQuantity;
+            // 'common': () => {
+            //     return commonQuantity;
+            // },
+            // 'uncommon': () => {
+            //     return uncommonQuantity;
+            // },
+            // 'rare': () => {
+            //     return rareQuantity;
+            // },
+            // 'legendary': () => {
+            //     return legendaryQuantity;
+            // },
+            // 'mythical': () => {
+            //     return mythicalQuantity;
+            // },
+            // 'godlike': () => {
+            //     return godlikeQuantity;
+            // },
+            'drop': () => {
+                return dropQuantity;
             }
         };
 
@@ -80,7 +85,7 @@ export default function Raffle() {
     };
 
     const getTicketSupply = (ticket) => {
-        return enteredSupplyType ? ticket.entered : ticket.supply;
+        return ticket.entered;
     }
 
     const countTicketsChance = () => {
@@ -117,31 +122,43 @@ export default function Raffle() {
     const loadTickets = () => {
         setSupplySpinner(true);
 
-        axios.get('https://api.ghst.gg/baazaar/tickets').then((response) => {
-            let data = response.data;
-            let supplyArray = [data.common, data.uncommon, data.rare, data.legendary, data.mythical, data.godlike];
-            let enteredArray = [data.common_entered, data.uncommon_entered, data.rare_entered, data.legendary_entered, data.mythical_entered, data.godlike_entered];
+        thegraph.getRaffleData(raffle5TotalEnteredQuery()).then((response)=> {
+            let enteredTickets = response.data.total.totalDrop;
 
-            if (lastTicketInfo !== JSON.stringify(supplyArray)) {
+            ticketsCache[0].entered = enteredTickets;
 
-                supplyArray.forEach((supply, i) => {
-                    ticketsCache[i].supply = supply;
-                    ticketsCache[i].entered = enteredArray[i];
-                });
-
-                setTicketsCache(ticketsCache);
-                setTickets(ticketsCache);
-                setLastTicketInfo(JSON.stringify(supplyArray));
-                setSnackbarShowsOnFirstLoading(false);
-            }
+            setTicketsCache(ticketsCache);
+            setTickets(ticketsCache);
+            setSnackbarShowsOnFirstLoading(false);
             setSupplySpinner(false);
-        });
+        }).catch(error => console.log(error))
+
+        // axios.get('https://api.ghst.gg/baazaar/tickets').then((response) => {
+        //     let data = response.data;
+        //     let supplyArray = [data.common, data.uncommon, data.rare, data.legendary, data.mythical, data.godlike];
+        //     let enteredArray = [data.common_entered, data.uncommon_entered, data.rare_entered, data.legendary_entered, data.mythical_entered, data.godlike_entered];
+
+        //     if (lastTicketInfo !== JSON.stringify(supplyArray)) {
+
+        //         supplyArray.forEach((supply, i) => {
+        //             ticketsCache[i].supply = supply;
+        //             ticketsCache[i].entered = enteredArray[i];
+        //         });
+
+        //         setTicketsCache(ticketsCache);
+        //         setTickets(ticketsCache);
+        //         setLastTicketInfo(JSON.stringify(supplyArray));
+        //         setSnackbarShowsOnFirstLoading(false);
+        //     }
+        //     setSupplySpinner(false);
+        // });
     };
 
     const getAveragePrices = () => {
         setPricesSpinner(true);
 
-        thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)])
+        // thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)]) // raffle 4 queries
+        thegraph.getJoinedData([raffleTicketPriceQuery(6)])
             .then((response) => {
                 let averagePrices = response.map((item)=> {
                     let prices = item.data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
@@ -164,9 +181,9 @@ export default function Raffle() {
         loadTickets();
     },[]);
 
-    useEffect(() => {
-        countTicketsChance();
-    },[enteredSupplyType]);
+    // useEffect(() => {
+    //     countTicketsChance();
+    // },[enteredSupplyType]);
 
     useEffect(() => {
         getAveragePrices();
@@ -174,7 +191,7 @@ export default function Raffle() {
 
     useEffect(() => {
         onFieldChange();
-    }, [commonQuantity, uncommonQuantity, rareQuantity, legendaryQuantity, mythicalQuantity, godlikeQuantity]);
+    }, [dropQuantity]);
 
     useEffect(() => {
         onFieldChange();
@@ -194,28 +211,21 @@ export default function Raffle() {
             </Helmet>
             <Grid container alignContent={'center'} className={classes.titleWrapper}>
                 <Grid item xs={12} md={6}>
-                    <Typography variant='h1' className={classes.title}>Raffle #4 Calculator</Typography>
+                    <Typography variant='h1' className={classes.title}>Raffle #5 Calculator</Typography>
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
-                    <Link href={'https://www.aavegotchi.com/raffle/3'} className={classes.enterButton} target={'_blank'}>
+                    <Link href={'https://www.aavegotchi.com/raffle/4'} className={classes.enterButton} target={'_blank'}>
                         <Button variant={'contained'} color={'primary'} size={'large'}>
                             Enter Raffle
                         </Button>
                     </Link>
                 </Grid>
             </Grid>
-            <RaffleTable
+            <RaffleDropTable
                 tickets={tickets}
                 supplySpinner={supplySpinner}
                 pricesSpinner={pricesSpinner}
-                setCommonQuantity={setCommonQuantity}
-                setUncommonQuantity={setUncommonQuantity}
-                setRareQuantity={setRareQuantity}
-                setLegendaryQuantity={setLegendaryQuantity}
-                setMythicalQuantity={setMythicalQuantity}
-                setGodlikeQuantity={setGodlikeQuantity}
-                enteredSupplyType={enteredSupplyType}
-                setEnteredSupplyType={setEnteredSupplyType}
+                setDropQuantity={setDropQuantity}
             />
             <RaffleWearables tickets={tickets} />
         </Container>

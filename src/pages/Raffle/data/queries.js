@@ -28,6 +28,15 @@ export const raffleTotalQuery = (id) => {
             totalMythical
             totalLegendary
             totalGodLike
+            totalDrop
+        }
+    }`
+};
+
+export const raffle5TotalEnteredQuery = () => {
+    return `{
+        total(id: 4) {
+            totalDrop
         }
     }`
 };
