@@ -46,11 +46,12 @@ export default function GhostExplorer() {
          await thegraph.getAllGotchies().then((response) => {
             const gotchiesData = response.sort((a,b) => a.id - b.id);
             setGotchiesFromGraph(gotchiesData);
+            console.log(gotchiesData);
 
             renderGotchi(50);
-        }).catch(()=> {
+        }).catch((e)=> {
+            console.log(e);
         });
-        console.log('LOADED');
     };
 
     const renderGotchi = async (quantity) => {

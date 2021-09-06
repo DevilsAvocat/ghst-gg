@@ -93,7 +93,7 @@ export default function Gotchi({gotchi, title, gotchiColor}) {
             style={{ backgroundColor: fade(gotchiColor, .2) }}
         >
             <Typography
-                variant={'body2'}
+                variant={'subtitle2'}
                 className={classNames(classes.owner, classes.gotchiOwner)}
                 style={{ backgroundColor: gotchiColor }}
             >
@@ -109,7 +109,7 @@ export default function Gotchi({gotchi, title, gotchiColor}) {
                 />
             </Box>
             
-            <Box ref={svgBox} width={90} margin='auto' className={`gotchi-svg-${gotchi.id}`}>
+            <Box ref={svgBox} width={120} margin='auto' className={`gotchi-svg-${gotchi.id}`}>
 
             </Box>
 

@@ -5,7 +5,7 @@ export const gotchiesQuery = (skip, orderDir) => {
           skip: ${skip},
           orderBy: id,
           orderDirection: ${orderDir},
-          where: {status: 3}
+          where: {status: 3, owner_not: "0x0000000000000000000000000000000000000000"}
         ) {
           id
           name

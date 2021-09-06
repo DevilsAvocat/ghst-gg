@@ -47,7 +47,7 @@ export default {
     async getAllGotchies() {
         // NOTE: to reduce loading speed current gotchies max amount is 7000
         // We should add new queries when there will be more than 7000 unique gotchies
-        return await graphJoin([gotchiesQuery(0, 'asc'), gotchiesQuery(1000, 'asc'), gotchiesQuery(2000, 'asc'), gotchiesQuery(3000, 'asc'), gotchiesQuery(4000, 'asc'), gotchiesQuery(5000, 'asc'), gotchiesQuery(0, 'desc')])
+        return await graphJoin([gotchiesQuery(0, 'asc'), gotchiesQuery(1000, 'asc'), gotchiesQuery(2000, 'asc'), gotchiesQuery(3000, 'asc'), gotchiesQuery(4000, 'asc'), gotchiesQuery(5000, 'asc'), gotchiesQuery(0, 'desc'), gotchiesQuery(1000, 'desc'), gotchiesQuery(2000, 'desc'), gotchiesQuery(3000, 'desc'), gotchiesQuery(4000, 'desc'), gotchiesQuery(5000, 'desc')])
             .then((response)=> {
                 let responseArray = [];
 
