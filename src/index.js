@@ -8,18 +8,22 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import { theme } from './themes/ghst';
 import {BrowserRouter} from 'react-router-dom';
+import { MoralisProvider } from "react-moralis";
 
 const apiUrl = process.env.REACT_APP_BASE_URL;
 
 // set base API URL
 axios.defaults.baseURL = apiUrl;
-
+const appId = "3BztObJw5DN2WXoWuTUuQfY3VHmI8cbZ9g5vpTlj";
+const serverURL = "https://hbuwdfmuhgp6.bigmoralis.com:2053/server";
 ReactDOM.render(
     <BrowserRouter>
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <App/>
-        </ThemeProvider>
+        <MoralisProvider appId={appId} serverUrl={serverURL}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <App/>
+            </ThemeProvider>
+        </MoralisProvider>
     </BrowserRouter>,
     document.getElementById('root')
 );

@@ -86,7 +86,7 @@ const useStyles = makeStyles((theme) => ({
 export default function GotchiWearablesLine({wearables}) {
     const classes = useStyles();
     const theme = useTheme();
-    const wearableSlots = ['Body', 'Face', 'Eyes', 'Head', 'R Hand', 'L Hand', 'Pet', 'BG'];
+    const wearableSlots = ['Body', 'Face', 'Eyes', 'Head', 'R Hand', 'L Hand', 'Pet'];
 
     const renderPopover = (id, type, color) => {
         if(id !== 0) {

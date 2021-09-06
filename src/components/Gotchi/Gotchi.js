@@ -1,10 +1,8 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box, Typography, Link } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
-import gotchiPlaceholder from '../../assets/images/logo.png';
-// import ghst from '../../assets/images/ghst-doubleside.gif';
 
 import GotchiLevel from './GotchiLevel';
 import GotchiTraitsHighlight from './GotchiTraitsHighlight';
@@ -31,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: theme.shape.borderRadius,
         color: theme.palette.common.white,
         fontSize: 12,
-        padding: '2px 4px',
+        fontWeight: 'bold',
+        padding: '0 4px',
         position: 'relative',
         textDecoration: 'none',
         opacity: .9,
@@ -40,8 +39,46 @@ const useStyles = makeStyles((theme) => ({
             opacity: 1
         }
     },
+    gotchiSvg: {
+        '& .gotchi-wearable': {
+            transition: 'all .5s ease-in-out'
+        },
+        '& .gotchi-sleeves': {
+            transition: 'all .5s ease-in-out'
+        },
+        '&:hover': {
+            '& .gotchi-wearable:not(.wearable-bg)': {
+                opacity: 0,
+            },
+            '& .gotchi-sleeves': {
+                opacity: 0,
+            },
+            '& .wearable-head': {
+                transform: 'translateY(-5px) rotateZ(-45deg)'
+            },
+            '& .wearable-eyes': {
+                transform: 'translateX(10px) rotateZ(5deg)'
+            },
+            '& .wearable-face': {
+                transform: 'translateX(-10px) rotateZ(10deg)'
+            },
+            '& .wearable-body': {
+                transform: 'translateY(10px) rotateZ(-5deg)'
+            },
+            '& .wearable-hand-right': {
+                transform: 'translateX(5px) rotateZ(-5deg)'
+            },
+            '& .wearable-hand-left': {
+                transform: 'translateX(-5px) rotateZ(5deg)'
+            },
+            '& .wearable-pet': {
+                transform: 'translateY(5px)'
+            }
+        }
+    },
     gotchiOwner: {
         position: 'absolute',
+        minWidth: 60,
         top: 0,
         right: '50%',
         transform: 'translate(50%, -50%)',
@@ -52,9 +89,6 @@ const useStyles = makeStyles((theme) => ({
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
         fontSize: 15
-    },
-    gotchiPlaceholder: {
-        filter: 'grayscale(100%)'
     },
     callMadeIcon: {
         position: 'absolute',
@@ -75,24 +109,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Gotchi({gotchi, gotchiColor}) {
+export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
     const classes = useStyles();
+    const svgBox = useRef();
 
-    // const renderReward = () => {
-    //     if(gotchi.totalRew) {
-    //         return (
-    //             <Typography align={'center'} variant={'body2'}>
-    //                 Reward
-    //                 <Box className={classNames(classes.textHighlight, classes.tokenValue)} component={'span'}>
-    //                     {gotchi.totalRew}
-    //                     <img src={ghst} width='18' alt='GHST Token Icon' style={{marginTop: -2}} />
-    //                 </Box>
-    //             </Typography>
-    //         )
-    //     } else {
-    //         return null;
-    //     }
-    // }
+    useEffect(() => {
+        svgBox.current.appendChild(gotchi.svg);
+    }, [svgBox]);
 
     const calculateRarityType = (rarity) => {
         return rarity >= 700 ? 'godlike' : rarity >= 600 ? 'mythical' : rarity >= 500 ? 'rare' : '';
@@ -102,56 +125,71 @@ export default function Gotchi({gotchi, gotchiColor}) {
         return kin >= 500 ? 'godlike' : kin >= 250 ? 'mythical' : kin >= 100 ? 'rare' : '';
     }
 
+    const renderNarrowed = () => {
+        if(!narrowed) {
+            return (
+                <>
+                    <Box position='absolute' top={8} right={8}>
+                        <GotchiLevel
+                            level={gotchi.level}
+                            toNextLevel={gotchi.toNextLevel}
+                            experience={gotchi.experience}
+                            size={28}
+                        />
+                    </Box>
+
+                    <Box position='relative' display='flex' alignItems='center' justifyContent='space-between' minHeight={26} margin={'8px 0'}>
+                        <Box textAlign='center' flexBasis='49%'>
+                            <HighlightNumber type={calculateRarityType(gotchi.withSetsRarityScore)}>
+                                <Typography className={classes.mainVal} variant={'subtitle2'}>
+                                    🏆{gotchi.withSetsRarityScore}
+                                    <Typography className={classes.defaultVal} component='span' variant='body2'>
+                                        ({gotchi.baseRarityScore})
+                                    </Typography>
+                                </Typography>        
+                            </HighlightNumber>
+                        </Box>
+
+                        <Box textAlign='center' flexBasis='49%' margin={'1% 0'}>
+                            <HighlightNumber type={calculateKinshipType(gotchi.kinship)}>
+                                <Typography className={classes.mainVal} variant={'subtitle2'}>
+                                    🧡{gotchi.kinship}
+                                </Typography>        
+                            </HighlightNumber>
+                        </Box>
+                    </Box>
+
+                    <Box marginTop='8px'>
+                        <GotchiTraitsHighlight traits={gotchi.numericTraits} currentTraits={gotchi.withSetsNumericTraits} />
+                    </Box>
+
+                    <Box marginTop='8px'>
+                        <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
+                    </Box>
+                </>
+            )
+        } else return null;
+    }
+    
     return (
         <Box
             className={classNames(classes.gotchi)}
             style={{ backgroundColor: fade(gotchiColor, .2) }}
         >
             <Typography
-                variant={'body2'}
+                variant={'subtitle2'}
                 className={classNames(classes.owner, classes.gotchiOwner)}
                 style={{ backgroundColor: gotchiColor }}
             >
-                {commonUtils.cutAddress(gotchi.owner.id)}
+                {title || commonUtils.cutAddress(gotchi.owner.id)}
             </Typography>
-
-            <Box position='absolute' top={8} right={8}>
-                <GotchiLevel
-                    level={gotchi.level}
-                    toNextLevel={gotchi.toNextLevel}
-                    experience={gotchi.experience}
-                    size={28}
-                />
-            </Box>
-
-            <img
-                className={classes.gotchiPlaceholder}
-                src={gotchiPlaceholder}
-                alt='Ghost'
-                height={75}
-                width={75}
-            />
-
-            <Box position='relative' display='flex' alignItems='center' justifyContent='space-between' minHeight={26} margin={'4px 0 8px'}>
-                <Box textAlign='center' flexBasis='49%'>
-                    <HighlightNumber type={calculateRarityType(gotchi.withSetsRarityScore)}>
-                        <Typography className={classes.mainVal} variant={'subtitle2'}>
-                            🏆{gotchi.withSetsRarityScore}
-                            <Typography className={classes.defaultVal} component='span' variant='body2'>
-                                ({gotchi.baseRarityScore})
-                            </Typography>
-                        </Typography>        
-                    </HighlightNumber>
-                </Box>
-
-                <Box textAlign='center' flexBasis='49%' margin={'1% 0'}>
-                    <HighlightNumber type={calculateKinshipType(gotchi.kinship)}>
-                        <Typography className={classes.mainVal} variant={'subtitle2'}>
-                            🧡{gotchi.kinship}
-                        </Typography>        
-                    </HighlightNumber>
-                </Box>
-            </Box>
+            
+            <Box
+                ref={svgBox}
+                width={120}
+                margin='auto'
+                className={classNames(classes.gotchiSvg, `gotchi-svg-${gotchi.id}`)}
+            ></Box>
 
             <Link
                 className={classNames(classes.owner)}
@@ -169,15 +207,7 @@ export default function Gotchi({gotchi, gotchiColor}) {
                 <CallMadeIcon className={classes.callMadeIcon} />
             </Link>
 
-            {/* {renderReward()} */}
-
-            <Box marginTop='8px'>
-                <GotchiTraitsHighlight traits={gotchi.numericTraits} currentTraits={gotchi.withSetsNumericTraits} />
-            </Box>
-
-            <Box marginTop='8px'>
-                <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
-            </Box>
+            {renderNarrowed()}
         </Box>
     );
 }

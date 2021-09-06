@@ -4,7 +4,7 @@ export default makeStyles((theme) => ({
     root: {
         height: '100%',
         overflowY: 'auto',
-        justifyContent: 'space-around'
+        padding: 20
     },
     gotchi: {
         borderRadius: 4,
@@ -40,5 +40,9 @@ export default makeStyles((theme) => ({
         textTransform: 'uppercase',
         marginLeft: 8,
         fontWeight: 500
+    },
+    backdrop: {
+        zIndex: theme.zIndex.appBar-1,
+        color: '#fff'
     }
 }));

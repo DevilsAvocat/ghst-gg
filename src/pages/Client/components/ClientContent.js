@@ -9,6 +9,8 @@ import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, useTh
 import Gotchi from '../../../components/Gotchi/Gotchi';
 import Item from '../../../components/Item/Item';
 
+// import { useMoralis } from "react-moralis";
+
 const useStyles = makeStyles((theme) => ({
     textHighlight: {
         color: theme.palette.primary.main,
@@ -16,17 +18,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+
 export default function ClientContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
     const theme = useTheme();
+
     // const [totalReward, setTotalReward] = useState(0);
     const showPlaceholder = validAddresses[0].length !== 0 && !isDataLoading();
-
-    const getAddressColor = (owner) => {
-        let index = validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
-        return index ? theme.palette.accounts[`color${index}`] : theme.palette.accounts.color1;
-    };
 
     // const calculateReward = () => {
     //     setIsRewardCalculating(true);
@@ -108,8 +107,8 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                                 value={inventoryFilter}
                                 onChange={onInventorySort}
                             >
-                                <MenuItem value={'desc'}>Rarity (godlike -> common)</MenuItem>
-                                <MenuItem value={'asc'}>Rarity (common -> godlike)</MenuItem>
+                                <MenuItem value={'desc'}>Rarity (godlike {'->'} common)</MenuItem>
+                                <MenuItem value={'asc'}>Rarity (common {'->'} godlike)</MenuItem>
                                 <MenuItem value={'balance'}>Quantity</MenuItem>
                             </Select>
                         </FormControl>
@@ -155,6 +154,21 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
     if (validAddresses.length === 0) {
         return null;
     }
+
+    const getAddressColor = (owner) => {
+        let index = validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
+        return index ? theme.palette.accounts[`color${index}`] : theme.palette.accounts.color1;
+    };
+
+    // const { Moralis , isInitialized} = useMoralis();
+    // const [svg, setSvg] = useState('');
+    // const [isLoaded, setIsLoaded] = useState(false);
+
+    // if(isInitialized) {
+    //     GotchiSvgRender.getSvg(gotchi.numericTraits, gotchi.equippedWearables, Moralis).then((result) => {
+    //         setSvg(result)
+    //     });
+    // }
 
     return (
         <Box>

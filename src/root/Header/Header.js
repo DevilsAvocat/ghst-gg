@@ -4,7 +4,6 @@ import {NavLink, useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 import {useStyles} from './styles';
 
-import TelegramIcon from '@material-ui/icons/Telegram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import MenuIcon from '@material-ui/icons/Menu';
 

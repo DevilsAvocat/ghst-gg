@@ -5,17 +5,21 @@ export const gotchiesQuery = (skip, orderDir) => {
           skip: ${skip},
           orderBy: id,
           orderDirection: ${orderDir},
-          where: {status: 3}
+          where: {status: 3, owner_not: "0x0000000000000000000000000000000000000000"}
         ) {
           id
           name
+          withSetsNumericTraits
           numericTraits
           baseRarityScore
           modifiedRarityScore
           withSetsRarityScore
           kinship
+          level
           experience
           equippedWearables
+          collateral
+          hauntId
           owner {
             id
           }
@@ -41,6 +45,8 @@ export const userQuery = (id) => {
             experience
             level
             toNextLevel
+            collateral
+            hauntId
             owner {
               id
             }
