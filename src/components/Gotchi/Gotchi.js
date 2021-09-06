@@ -38,6 +38,43 @@ const useStyles = makeStyles((theme) => ({
             opacity: 1
         }
     },
+    gotchiSvg: {
+        '& .gotchi-wearable': {
+            transition: 'all .5s ease-in-out'
+        },
+        '& .gotchi-sleeves': {
+            transition: 'all .5s ease-in-out'
+        },
+        '&:hover': {
+            '& .gotchi-wearable:not(.wearable-bg)': {
+                opacity: 0,
+            },
+            '& .gotchi-sleeves': {
+                opacity: 0,
+            },
+            '& .wearable-head': {
+                transform: 'translateY(-5px) rotateZ(-45deg)'
+            },
+            '& .wearable-eyes': {
+                transform: 'translateX(10px) rotateZ(5deg)'
+            },
+            '& .wearable-face': {
+                transform: 'translateX(-10px) rotateZ(10deg)'
+            },
+            '& .wearable-body': {
+                transform: 'translateY(10px) rotateZ(-5deg)'
+            },
+            '& .wearable-hand-right': {
+                transform: 'translateX(5px) rotateZ(-5deg)'
+            },
+            '& .wearable-hand-left': {
+                transform: 'translateX(-5px) rotateZ(5deg)'
+            },
+            '& .wearable-pet': {
+                transform: 'translateY(5px)'
+            }
+        }
+    },
     gotchiOwner: {
         position: 'absolute',
         minWidth: 60,
@@ -109,7 +146,7 @@ export default function Gotchi({gotchi, title, gotchiColor}) {
                 />
             </Box>
             
-            <Box ref={svgBox} width={120} margin='auto' className={`gotchi-svg-${gotchi.id}`}>
+            <Box ref={svgBox} width={120} margin='auto' className={classNames(classes.gotchiSvg, `gotchi-svg-${gotchi.id}`)}>
 
             </Box>
 

@@ -9,7 +9,6 @@ export default {
             html = html.trim();
             template.innerHTML = html;
 
-            console.log(template.content.firstChild);
             return template.content.firstChild;
         }
 
