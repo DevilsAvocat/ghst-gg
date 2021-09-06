@@ -73,7 +73,12 @@ export default function GhostExplorer() {
                     let gotchi = {...item, svg: svgs[index] }
                     return (
                         <Grid item xs={5} sm={4} md={3} lg={2} key={gotchi.id}>
-                            <Gotchi gotchi={gotchi} title={gotchi.id} gotchiColor={theme.palette.customColors.gray} />
+                            <Gotchi
+                                gotchi={gotchi}
+                                title={gotchi.id}
+                                gotchiColor={theme.palette.customColors.gray}
+                                narrowed={true}
+                            />
                         </Grid>
                     )
                 });
