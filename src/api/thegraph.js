@@ -2,11 +2,18 @@ import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
 import {gotchiesQuery, userQuery} from './common/queries';
 
-var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic',
-    client = new ApolloClient({
-        uri: baseUrl,
-        cache: new InMemoryCache()
-    });
+var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic';
+var raffleUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-matic-raffle';
+
+var client = new ApolloClient({
+    uri: baseUrl,
+    cache: new InMemoryCache()
+});
+
+var raffleClient = new ApolloClient({
+    uri: raffleUrl,
+    cache: new InMemoryCache()
+});
 
 
 async function graphJoin(queries) {
@@ -75,5 +82,12 @@ export default {
         });
 
         return await this.getJoinedData(queries);
-    }
+    },
+
+    async getRaffleData(query) {
+        return await raffleClient
+            .query({
+                query: gql`${query}`
+            });
+    },
 }

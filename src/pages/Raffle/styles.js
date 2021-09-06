@@ -198,6 +198,26 @@ export const useStyles = makeStyles((theme) => ({
             '& .MuiFormLabel-root.Mui-focused': {
                 color: theme.palette.rarity.godlike
             }
+        },
+        '&.drop': {
+            '& input ': {
+                color: theme.palette.rarity.drop
+            },
+            '& label ': {
+                color: theme.palette.rarity.drop
+            },
+            '& fieldset': {
+                borderColor: theme.palette.rarity.drop,
+            },
+            '&:hover fieldset': {
+                borderColor: theme.palette.rarity.drop
+            },
+            '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: theme.palette.rarity.drop
+            },
+            '& .MuiFormLabel-root.Mui-focused': {
+                color: theme.palette.rarity.drop
+            }
         }
     },
     ticketBg: {
@@ -212,7 +232,7 @@ export const useStyles = makeStyles((theme) => ({
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
-            opacity: 0.1,
+            opacity: .15,
             pointerEvent: 'none'
         }
     },
@@ -227,7 +247,8 @@ export const useStyles = makeStyles((theme) => ({
         '&.rare.highlighted': { backgroundColor: fade(theme.palette.rarity.rare, .05) },
         '&.legendary.highlighted': { backgroundColor: fade(theme.palette.rarity.legendary, .05) },
         '&.mythical.highlighted': { backgroundColor: fade(theme.palette.rarity.mythical, .05) },
-        '&.godlike.highlighted': { backgroundColor: fade(theme.palette.rarity.godlike, .05) }
+        '&.godlike.highlighted': { backgroundColor: fade(theme.palette.rarity.godlike, .05) },
+        '&.drop.highlighted': { backgroundColor: fade(theme.palette.rarity.drop, .05) }
     },
     textHighlight: {
         position: 'relative',
@@ -237,7 +258,8 @@ export const useStyles = makeStyles((theme) => ({
         '&.rare': {color: theme.palette.rarity.rare},
         '&.legendary': {color: theme.palette.rarity.legendary},
         '&.mythical': {color: theme.palette.rarity.mythical},
-        '&.godlike': {color: theme.palette.rarity.godlike}
+        '&.godlike': {color: theme.palette.rarity.godlike},
+        '&.drop': {color: theme.palette.rarity.drop}
     },
     tableValue: {
         fontSize: 16,
@@ -322,6 +344,12 @@ export const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.rarity.godlike, .1),
             '&.mystery': {
                 backgroundColor: fade(theme.palette.rarity.godlike, .15)
+            }
+        },
+        '&.drop': {
+            backgroundColor: fade(theme.palette.rarity.drop, .1),
+            '&.mystery': {
+                backgroundColor: fade(theme.palette.rarity.drop, .15)
             }
         },
         '&.mystery': {

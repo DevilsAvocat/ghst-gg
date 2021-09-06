@@ -107,8 +107,8 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                                 value={inventoryFilter}
                                 onChange={onInventorySort}
                             >
-                                <MenuItem value={'desc'}>Rarity (godlike -> common)</MenuItem>
-                                <MenuItem value={'asc'}>Rarity (common -> godlike)</MenuItem>
+                                <MenuItem value={'desc'}>Rarity (godlike {'->'} common)</MenuItem>
+                                <MenuItem value={'asc'}>Rarity (common {'->'} godlike)</MenuItem>
                                 <MenuItem value={'balance'}>Quantity</MenuItem>
                             </Select>
                         </FormControl>

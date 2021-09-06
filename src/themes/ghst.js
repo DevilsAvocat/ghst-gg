@@ -26,7 +26,8 @@ export const theme = createMuiTheme({
             rare: 'rgb(89, 188, 255)',
             legendary: 'rgb(255, 195, 107)',
             mythical: 'rgb(255, 150, 255)',
-            godlike: 'rgb(81, 255, 168)'
+            godlike: 'rgb(81, 255, 168)',
+            drop: 'rgb(238, 232, 170)'
         },
         accounts: {
             color1: '#E76F51',
