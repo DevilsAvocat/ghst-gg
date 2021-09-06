@@ -1,22 +1,20 @@
 import React, { useEffect, useState, useRef } from 'react';
 import Grid from '@material-ui/core/Grid';
-import { CircularProgress, Backdrop } from '@material-ui/core';
+import { CircularProgress, Backdrop, useTheme } from '@material-ui/core';
 import Gotchi from '../../components/Gotchi/Gotchi'; 
 import thegraph from '../../api/thegraph';
 import GotchiSvgRender from '../../components/Gotchi/GotchiSvgRender';
-import Moralis from "moralis";
 import useStyles from './styles';
 
-var maxGotchiQuantity = 10000,
-    loadNewItemsAfterThisScrollHeight = 2000;
+var maxGotchiQuantity = 10000;
 
 export default function GhostExplorer() {
 
-    console.log(useStyles);
     const classes = useStyles();
     const [gotchiesFromGraph, setGotchiesFromGraph] = useState(null);
     const [gotchiesShown, setGotchiesShown] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const theme = useTheme();
 
     // scrolling
     const scrollingContainerRef = useRef();
@@ -34,8 +32,6 @@ export default function GhostExplorer() {
                     actualBottomScroll = scrollHeight - (clientHeight + scrollTop);
                     if (!actualBottomScroll) setScrollDown(true);
                     else setScrollDown(false);
-
-                    console.log(actualBottomScroll);
             }
             
             scrollingContainerRef?.current?.addEventListener("scroll", handleScroll);
@@ -70,18 +66,18 @@ export default function GhostExplorer() {
                 
                 gotchiCache = gotchiesFromGraph.slice(gotchiQuantity, gotchiQuantity+quantity);
 
-                svgs = await GotchiSvgRender.getSvg(gotchiCache, Moralis);
+                svgs = await GotchiSvgRender.getSvg(gotchiCache);
 
                 gotchiCache = gotchiCache.map((item, index) => {
                     let gotchi = {...item, svg: svgs[index] }
                     return (
                         <Grid item xs={5} sm={4} md={3} lg={2} key={gotchi.id}>
-                            <Gotchi gotchi={gotchi} title={gotchi.id} />
+                            <Gotchi gotchi={gotchi} title={gotchi.id} gotchiColor={theme.palette.customColors.gray} />
                         </Grid>
                     )
                 });
 
-                const newGotchies = [...gotchiesShown, ...gotchiCache].sort((a,b) => a.id - b.id);
+                const newGotchies = [...gotchiesShown, ...gotchiCache];
                 
                 setGotchiesShown(newGotchies);
 

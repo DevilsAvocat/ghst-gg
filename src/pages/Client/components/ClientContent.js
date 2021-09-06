@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export default function ClientContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
                                        onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
     const classes = useStyles();
+    const theme = useTheme();
 
     // const [totalReward, setTotalReward] = useState(0);
     const showPlaceholder = validAddresses[0].length !== 0 && !isDataLoading();
@@ -154,6 +155,11 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
         return null;
     }
 
+    const getAddressColor = (owner) => {
+        let index = validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
+        return index ? theme.palette.accounts[`color${index}`] : theme.palette.accounts.color1;
+    };
+
     // const { Moralis , isInitialized} = useMoralis();
     // const [svg, setSvg] = useState('');
     // const [isLoaded, setIsLoaded] = useState(false);
@@ -194,7 +200,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                 {
                     gotchies.map((gotchi, i)=>{
                         return <Grid item xs={6} sm={4} md={3} lg={2} key={i}>
-                            <Gotchi gotchi={gotchi} ownerId={gotchi.owner.id} validAddresses={validAddresses} expanded={true} />
+                            <Gotchi gotchi={gotchi} gotchiColor={getAddressColor(gotchi.owner.id)} />
                         </Grid>
                     })
                 }

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { Box, Typography, Link, useTheme } from '@material-ui/core';
+import React, { useEffect, useRef } from 'react';
+import { Box, Typography, Link } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
@@ -71,16 +71,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function Gotchi({gotchi, title, ownerId, validAddresses}) {
+export default function Gotchi({gotchi, title, gotchiColor}) {
     const classes = useStyles();
+    const svgBox = useRef();
 
-    const theme = useTheme();
-    const getAddressColor = (owner) => {
-        if(!validAddresses) return theme.palette.accounts.color1;
-        let index = validAddresses.map((item)=>item.toLowerCase()).indexOf(owner) + 1;
-        return index ? theme.palette.accounts[`color${index}`] : theme.palette.accounts.color1;
-    };
-    const gotchiColor = getAddressColor(ownerId);
+    useEffect(() => {
+        svgBox.current.appendChild(gotchi.svg);
+    }, [svgBox]);
 
     const calculateRarityType = (rarity) => {
         return rarity >= 700 ? 'godlike' : rarity >= 600 ? 'mythical' : rarity >= 500 ? 'rare' : '';
@@ -89,6 +86,10 @@ export default function Gotchi({gotchi, title, ownerId, validAddresses}) {
     const calculateKinshipType = (kin) => {
         return kin >= 500 ? 'godlike' : kin >= 250 ? 'mythical' : kin >= 100 ? 'rare' : '';
     }
+    
+    const svg = (
+        gotchi.svg
+    )
 
     return (
         <Box
@@ -111,13 +112,17 @@ export default function Gotchi({gotchi, title, ownerId, validAddresses}) {
                     size={28}
                 />
             </Box>
+            
+            <Box ref={svgBox} width={90} margin='auto'>
 
-            <img
+            </Box>
+
+            {/* <img
                 src={gotchi.svg}
                 alt='Ghost'
                 height={75}
                 width={75}
-            />
+            /> */}
 
             <Box position='relative' display='flex' alignItems='center' justifyContent='space-between' minHeight={26} margin={'4px 0 8px'}>
                 <Box textAlign='center' flexBasis='49%'>

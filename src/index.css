@@ -17,3 +17,7 @@ html, body {
 ::selection {
   background: rgba(253, 154, 249, .1);
 }
+
+.gotchi-bg {
+  display: none;
+}
