@@ -87,10 +87,6 @@ export default function Gotchi({gotchi, title, gotchiColor}) {
         return kin >= 500 ? 'godlike' : kin >= 250 ? 'mythical' : kin >= 100 ? 'rare' : '';
     }
     
-    const svg = (
-        gotchi.svg
-    )
-
     return (
         <Box
             className={classNames(classes.gotchi)}
@@ -113,7 +109,7 @@ export default function Gotchi({gotchi, title, gotchiColor}) {
                 />
             </Box>
             
-            <Box ref={svgBox} width={90} margin='auto'>
+            <Box ref={svgBox} width={90} margin='auto' className={`gotchi-svg-${gotchi.id}`}>
 
             </Box>
 
