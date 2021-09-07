@@ -1,16 +1,15 @@
 // TODO: this component is created as a temporary solution for Raffle #5 calculator,
 // we should create more flexible component that can accept data from different raffles
-import React from 'react';
-import {Box, CircularProgress, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
+import React, { useState } from 'react';
+import {Box, Checkbox, CircularProgress, FormControlLabel, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
 import classNames from 'classnames';
 import {useStyles} from '../styles';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import commonUtils from '../../../utils/commonUtils';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
-import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 
-export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, setDropQuantity}) {
+export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, dropQuantity, setDropQuantity, enteredCombined, setEnteredCombined}) {
     const classes = useStyles();
 
     // const handleTicketsSupply = (event, type) => {
@@ -19,6 +18,10 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
 
     const getTicketIconPath = (iconId) => {
         return require(`../../../assets/tickets/${iconId}.svg`).default;
+    };
+
+    const handleTicketsEnter = (event) => {
+        setEnteredCombined(event.target.checked);
     };
 
     const countProfit = () => {
@@ -33,7 +36,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                     <Typography variant='h6' className={classes.subtitle}>Your Tickets</Typography>
                 </Grid>
                 <Grid item xs={12} md={8} lg={9}>
-                    <Box maxWidth={200} margin='auto'>
+                    <Box maxWidth={200} margin='auto' position='relative'>
                         <TextField
                             type='number'
                             variant='outlined'
@@ -41,9 +44,15 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                             className={classNames(classes.input, 'drop')}
                             label={'Drop'}
                             onChange={(event) => {
-                                setDropQuantity(event.target.value);
+                                setDropQuantity(event.target.value > 0 ? event.target.value : 0);
                             }}
                         />
+                        <Box position='absolute' bottom='100%' left={0} whiteSpace='nowrap'>
+                            <FormControlLabel
+                                control={<Checkbox checked={enteredCombined} onChange={handleTicketsEnter} color='primary' name='enteredCombined' size='small' />}
+                                label='Count as entered'
+                            />
+                        </Box>
                     </Box>
                 </Grid>
             </Grid>
@@ -103,18 +112,20 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                 <Grid item xs={12} md={8} lg={9}>
                     {
                         tickets.map((ticket, i) => {
+                            let combinedQuantity = +ticket.entered + +dropQuantity;
+
                             return <Box maxWidth={300} minWidth={80} margin='auto' key={i} className={classes.ticketBg}>
                                 <img src={getTicketIconPath(ticket.type)} alt={'ticket-' + ticket.type} />
                                 <Box align='center' className={classNames(classes.textHighlight, ticket.type, classes.ticketVisual)}>
                                     {supplySpinner ? (
-                                        <CircularProgress color="inherit" size={20} style={{bottom: -5, position: 'relative'}}/>
+                                        <CircularProgress color='inherit' size={20} style={{bottom: -5, position: 'relative'}}/>
                                     ) : (
                                         <Typography
                                             variant='body1'
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            {commonUtils.formatNumber(ticket.entered)}
+                                            {commonUtils.formatNumber(enteredCombined ? combinedQuantity : ticket.entered)}
                                             {/* {enteredSupplyType ? (
                                                 <Box component={'span'} className={classes.enteredValue}>
                                                     <Box component={'span'}>
@@ -160,7 +171,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                             return <Box maxWidth={300} margin='auto' key={i} className={classNames(classes.chance, ticket.type)}>
                                 <Box align='center' className={classNames(classes.textHighlight, ticket.type, classes.ticketVisual)}>
                                     {supplySpinner ? (
-                                        <CircularProgress color="inherit" size={20} style={{bottom: -5, position: 'relative'}}/>
+                                        <CircularProgress color='inherit' size={20} style={{bottom: -5, position: 'relative'}}/>
                                     ) : (
                                         <Typography
                                             variant='body1'
@@ -200,7 +211,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                             return <Box maxWidth={300} margin='auto' key={i}>
                                 <Box align='center' className={classNames(classes.textHighlight, ticket.type)}>
                                     {pricesSpinner ? (
-                                        <CircularProgress color="inherit" size={20} />
+                                        <CircularProgress color='inherit' size={20} />
                                     ) : (
                                         <Typography
                                             variant='body1'
@@ -274,7 +285,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                         tickets.map((ticket, i) => {
                             return <Box maxWidth={300} align='center' padding='5px' margin='auto' key={i} className={classNames(classes.textHighlight, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>
                                 {pricesSpinner ? (
-                                    <CircularProgress color="inherit" size={20} />
+                                    <CircularProgress color='inherit' size={20} />
                                 ) : (
                                     <Typography
                                         variant='body1'

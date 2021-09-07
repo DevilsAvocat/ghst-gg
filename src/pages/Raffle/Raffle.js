@@ -39,6 +39,7 @@ export default function Raffle() {
     const [pricesSpinner, setPricesSpinner] = useState(true);
     const [lastTicketInfo, setLastTicketInfo] = useState('');
     const [dropQuantity, setDropQuantity] = useState('');
+    const [enteredCombined, setEnteredCombined] = useState(true);
     // const [commonQuantity, setCommonQuantity] = useState('');
     // const [uncommonQuantity, setUncommonQuantity] = useState('');
     // const [rareQuantity, setRareQuantity] = useState('');
@@ -91,7 +92,8 @@ export default function Raffle() {
         let ticketsLocalRef = [...tickets];
 
         ticketsLocalRef.forEach((ticket, i) => {
-            let chance = getTicketQuantity(ticket.type) / getTicketSupply(ticket) * ticket.items;
+            let combinedSupply = enteredCombined ? +getTicketSupply(ticket) + +dropQuantity : getTicketSupply(ticket);
+            let chance = getTicketQuantity(ticket.type) / combinedSupply * ticket.items;
             let percentage = (chance * 100).toFixed(1);
             let price = ticket.price;
             let cost = getTicketQuantity(ticket.type) * price;
@@ -157,24 +159,6 @@ export default function Raffle() {
     const getAveragePrices = () => {
         setPricesSpinner(true);
 
-        thegraph.getJoinedData([rafflePortalsPriceQuery()])
-            // .then((response) => {
-            //     let averagePrices = response.map((item)=> {
-            //         let prices = item.data.erc721Listings.map((wei)=> parseInt(wei.priceInWei));
-            //         let average = prices.reduce((a,b) => a + b, 0) / prices.length;
-            //         let price = average / 10**18;
-            //         return price.toFixed(2);
-            //     });
-
-            //     averagePrices.forEach((price, i) => {
-            //         ticketsCache[i].profit = price;
-            //     });
-
-            //     console.log(ticketsCache)
-
-            //     setTickets(ticketsCache);
-            // });
-
         // thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)]) // raffle 4 queries
         thegraph.getJoinedData([raffleTicketPriceQuery(6), rafflePortalsPriceQuery()])
             .then((response) => {
@@ -184,8 +168,8 @@ export default function Raffle() {
                 let ticketsFloorPrice = (ticketsWeiPrices.reduce((a,b) => a + b, 0) / ticketsWeiPrices.length) / 10**18;
                 let portalsFloorPrice = (portalsWeiPrices.reduce((a,b) => a + b, 0) / portalsWeiPrices.length) / 10**18;
 
-                ticketsCache[0].price = ticketsFloorPrice.toFixed(0);
-                ticketsCache[0].cost = ticketsFloorPrice.toFixed(0);
+                ticketsCache[0].price = ticketsFloorPrice.toFixed(5);
+                ticketsCache[0].cost = ticketsFloorPrice.toFixed(5);
                 ticketsCache[0].portalsPrice = portalsFloorPrice.toFixed(0);
 
                 setTickets(ticketsCache);
@@ -197,9 +181,9 @@ export default function Raffle() {
         loadTickets();
     },[]);
 
-    // useEffect(() => {
-    //     countTicketsChance();
-    // },[enteredSupplyType]);
+    useEffect(() => {
+        countTicketsChance();
+    },[enteredCombined]);
 
     useEffect(() => {
         getAveragePrices();
@@ -220,7 +204,7 @@ export default function Raffle() {
         loadTickets();
     }, 180000);
 
-    const date = new Date(2021, 8, 8, 13);
+    const date = new Date(2021, 8, 8, 17);
 
     return (
         <Container maxWidth='lg' className={classes.raffle}>
@@ -246,7 +230,10 @@ export default function Raffle() {
                 tickets={tickets}
                 supplySpinner={supplySpinner}
                 pricesSpinner={pricesSpinner}
+                dropQuantity={dropQuantity}
                 setDropQuantity={setDropQuantity}
+                enteredCombined={enteredCombined}
+                setEnteredCombined={setEnteredCombined}
             />
             <RaffleWearables tickets={tickets} />
         </Container>

@@ -81,6 +81,13 @@ export const useStyles = makeStyles((theme) => ({
         '& label:first-letter': {
             textTransform: 'uppercase'
         },
+        '& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button': {
+            'WebkitAppearance': 'none',
+            'margin': 0
+        },
+        '& input[type=number]': {
+            'MozAppearance': 'textfield'
+        },
         '&.common': {
             '& input ': {
                 color: theme.palette.rarity.common
