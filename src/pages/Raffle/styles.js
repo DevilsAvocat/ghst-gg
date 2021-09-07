@@ -311,7 +311,7 @@ export const useStyles = makeStyles((theme) => ({
     wearable: {
         borderRadius: theme.shape.borderRadius,
         height: '100%',
-        padding: '16px 12px',
+        padding: '24px 12px 16px',
         textAlign: 'center',
         '&.common': {
             backgroundColor: fade(theme.palette.rarity.common, .1),
