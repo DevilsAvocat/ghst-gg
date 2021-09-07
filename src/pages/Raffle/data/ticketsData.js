@@ -105,6 +105,8 @@ export const ticketsData = [
         priceInFrens: 10000,
         cost: 0,
         chance: 0,
+        chanceEcho: 0,
+        portalsPrice: 0,
         wearables: [
             { name: 'H2 portal', amount: 3000, icon: 'h2_sealed' }
         ]

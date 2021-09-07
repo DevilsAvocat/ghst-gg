@@ -1,5 +1,4 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
-import axios from "axios";
 import {Button, Container, Grid, Link, Typography} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 // import RaffleTable from './components/RaffleTable'; TODO: temporary solution, read more in RaffleDropTable.js
@@ -9,8 +8,8 @@ import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
-import {raffle5TotalEnteredQuery, raffleTicketPriceQuery} from './data/queries';
-import commonUtils from "../../utils/commonUtils";
+import {raffle5TotalEnteredQuery, rafflePortalsPriceQuery, raffleTicketPriceQuery} from './data/queries';
+import Countdown from '../../components/Countdown/Countdown';
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -101,8 +100,9 @@ export default function Raffle() {
 
             ticketsLocalRef[i] = {
                 ...ticket,
+                chanceEcho: chance.toFixed(2),
                 chance: chance > 1 ? `x${chance.toFixed(2)}` : chance > 0 ? `${percentage}% for 1` : 0,
-                cost: cost > price ? commonUtils.formatNumber(cost) : price,
+                cost: cost > price ? cost : price,
                 wearables: wearables
             };
         });
@@ -157,20 +157,36 @@ export default function Raffle() {
     const getAveragePrices = () => {
         setPricesSpinner(true);
 
-        // thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)]) // raffle 4 queries
-        thegraph.getJoinedData([raffleTicketPriceQuery(6)])
-            .then((response) => {
-                let averagePrices = response.map((item)=> {
-                    let prices = item.data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
-                    let average = prices.reduce((a,b) => a + b, 0) / prices.length;
-                    let price = average / 10**18;
-                    return price.toFixed(2);
-                });
+        thegraph.getJoinedData([rafflePortalsPriceQuery()])
+            // .then((response) => {
+            //     let averagePrices = response.map((item)=> {
+            //         let prices = item.data.erc721Listings.map((wei)=> parseInt(wei.priceInWei));
+            //         let average = prices.reduce((a,b) => a + b, 0) / prices.length;
+            //         let price = average / 10**18;
+            //         return price.toFixed(2);
+            //     });
 
-                averagePrices.forEach((price, i) => {
-                    ticketsCache[i].price = price;
-                    ticketsCache[i].cost = price;
-                });
+            //     averagePrices.forEach((price, i) => {
+            //         ticketsCache[i].profit = price;
+            //     });
+
+            //     console.log(ticketsCache)
+
+            //     setTickets(ticketsCache);
+            // });
+
+        // thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)]) // raffle 4 queries
+        thegraph.getJoinedData([raffleTicketPriceQuery(6), rafflePortalsPriceQuery()])
+            .then((response) => {
+                let ticketsWeiPrices = response[0].data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
+                let portalsWeiPrices = response[1].data.erc721Listings.map((wei)=> parseInt(wei.priceInWei));
+
+                let ticketsFloorPrice = (ticketsWeiPrices.reduce((a,b) => a + b, 0) / ticketsWeiPrices.length) / 10**18;
+                let portalsFloorPrice = (portalsWeiPrices.reduce((a,b) => a + b, 0) / portalsWeiPrices.length) / 10**18;
+
+                ticketsCache[0].price = ticketsFloorPrice.toFixed(0);
+                ticketsCache[0].cost = ticketsFloorPrice.toFixed(0);
+                ticketsCache[0].portalsPrice = portalsFloorPrice.toFixed(0);
 
                 setTickets(ticketsCache);
                 setPricesSpinner(false);
@@ -204,22 +220,27 @@ export default function Raffle() {
         loadTickets();
     }, 180000);
 
+    const date = new Date(2021, 8, 8, 13);
+
     return (
         <Container maxWidth='lg' className={classes.raffle}>
             <Helmet>
-                <title>Raffle #4 Calculator</title>
+                <title>Raffle #5 Calculator</title>
             </Helmet>
             <Grid container alignContent={'center'} className={classes.titleWrapper}>
-                <Grid item xs={12} md={6}>
-                    <Typography variant='h1' className={classes.title}>Raffle #5 Calculator</Typography>
+                <Grid item xs={12} md={7}>
+                    <Typography variant='h4' className={classes.title}>
+                         <Countdown date={date} countdownEnd='Raffle #5 ended' isCounting='Raffle #5 ends in' />
+                    </Typography>
                 </Grid>
-                <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
+                <Grid item xs={12} md={5} className={classes.enterButtonWrapper}>
                     <Link href={'https://www.aavegotchi.com/raffle/4'} className={classes.enterButton} target={'_blank'}>
                         <Button variant={'contained'} color={'primary'} size={'large'}>
                             Enter Raffle
                         </Button>
                     </Link>
                 </Grid>
+                
             </Grid>
             <RaffleDropTable
                 tickets={tickets}

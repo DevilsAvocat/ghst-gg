@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, useTheme, makeStyles } from '@material-ui/core';
+import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, useTheme, makeStyles, Link } from '@material-ui/core';
 // import thegraph from '../../../api/thegraph';
 // import graphUtils from '../../../utils/graphUtils';
 // import commonUtils from '../../../utils/commonUtils';
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 export default function ClientContent({validAddresses, gotchies, gotchiesFilter, inventory, inventoryFilter,
-                                       onGotchiesSort, onInventorySort, setIsRewardCalculating, isDataLoading}) {
+                                       onGotchiesSort, onInventorySort, isDataLoading}) {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -82,7 +82,14 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                     variant={'h6'}
                     color={'primary'}
                 >
-                    To earn some prizes you should get at least 1 ghost!
+                    No gotchies here :( <br/> Grab some frens at 
+                    <Link
+                        href='https://www.aavegotchi.com/baazaar/aavegotchis?sort=latest'
+                        target='_blank'
+                        style={{ marginLeft: '10px', color: 'red' }}
+                    >
+                        Baazaar
+                    </Link>
                 </Typography>
             )
         } else {
@@ -123,7 +130,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                     color={'primary'}
                     style={{marginTop: 20}}
                 >
-                    Your inventory is empty :(
+                    Inventory is empty
                 </Typography>
             )
         } else {

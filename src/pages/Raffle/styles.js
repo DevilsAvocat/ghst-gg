@@ -14,13 +14,15 @@ export const useStyles = makeStyles((theme) => ({
     },
     titleWrapper: {
         textAlign: 'center',
-        marginBottom: 40
+        marginBottom: 40,
+        display: 'flex',
+        alignItems: 'center'
     },
     title: {
-        fontSize: 30,
+        fontSize: 26,
         marginBottom: 20,
         [theme.breakpoints.up('md')]: {
-            fontSize: 34,
+            fontSize: 30,
             marginBottom: 0,
             textAlign: 'left'
         }
@@ -311,7 +313,7 @@ export const useStyles = makeStyles((theme) => ({
     wearable: {
         borderRadius: theme.shape.borderRadius,
         height: '100%',
-        padding: '16px 12px',
+        padding: '24px 12px 16px',
         textAlign: 'center',
         '&.common': {
             backgroundColor: fade(theme.palette.rarity.common, .1),

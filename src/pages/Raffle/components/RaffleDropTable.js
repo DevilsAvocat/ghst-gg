@@ -20,6 +20,11 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
     const getTicketIconPath = (iconId) => {
         return require(`../../../assets/tickets/${iconId}.svg`).default;
     };
+
+    const countProfit = () => {
+        let profitInGHSTs = tickets[0].chanceEcho * tickets[0].portalsPrice;
+        return profitInGHSTs !== 0 ? (((profitInGHSTs / tickets[0].cost) - 1) * 100).toFixed(0) : 0;
+    }
     
     return (
         <Grid item>
@@ -65,7 +70,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3} className={classes.toggleWrapper}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Tickets Supply
+                        Tickets Entered
                         <Tooltip
                             placement='right'
                             arrow
@@ -134,7 +139,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Frens market cap
+                        Tickets Entered in FRENs
                         <Tooltip
                             placement='right'
                             arrow
@@ -174,7 +179,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Estimated baazaar price
+                        Your tickets price
                         <Tooltip
                             placement='right'
                             arrow
@@ -202,7 +207,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            {ticket.cost}
+                                            {commonUtils.formatNumber(ticket.cost)}
                                             <img src={ghst} width='26' alt='GHST Token Icon' />
                                         </Typography>
                                     )}
@@ -215,7 +220,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Your items
+                        Your reward
                         <Tooltip
                             placement='right'
                             arrow
@@ -233,7 +238,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                 <Grid item xs={12} md={8} lg={9}>
                     {
                         tickets.map((ticket, i) => {
-                            return <Box maxWidth={300} padding={1} margin='auto' key={i} className={classNames(classes.chance, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>
+                            return <Box maxWidth={300} padding='5px' margin='auto' key={i} className={classNames(classes.chance, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>
                                 <Typography
                                     variant='body1'
                                     align='center'
@@ -241,6 +246,53 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
                                 >
                                     {ticket.chance}
                                 </Typography>
+                            </Box>
+                        })
+                    }
+                </Grid>
+            </Grid>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+                <Grid item xs={12} md={4} lg={3}>
+                    <Typography variant='h6' className={classes.subtitle}>
+                        Raffle profitability
+                        <Tooltip
+                            placement='right'
+                            arrow
+                            enterTouchDelay={0}
+                            title={
+                                <React.Fragment>
+                                    <Typography>How profitable is the raffle based on the baazaar floor prices</Typography>
+                                </React.Fragment>
+                            }
+                        >
+                            <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
+                        </Tooltip>
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} md={8} lg={9}>
+                    {
+                        tickets.map((ticket, i) => {
+                            return <Box maxWidth={300} align='center' padding='5px' margin='auto' key={i} className={classNames(classes.textHighlight, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>
+                                {pricesSpinner ? (
+                                    <CircularProgress color="inherit" size={20} />
+                                ) : (
+                                    <Typography
+                                        variant='body1'
+                                        align='center'
+                                        className={classNames(classes.tableValue, classes.price)}
+                                    >
+                                        {countProfit() > 0 ?
+                                            <Box component='span' style={{ color: '#4caf50' }}>
+                                                +{countProfit()}%
+                                            </Box>
+                                            : countProfit() < 0 ?
+                                            <Box component='span' style={{ color: '#f44336' }}>
+                                                {countProfit()}%
+                                            </Box>
+                                            : 0
+                                        }
+                                    </Typography>
+                                )}
                             </Box>
                         })
                     }

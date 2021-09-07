@@ -38,8 +38,6 @@ export default function Client() {
     const [inventoryFilter, setInventoryFilter] = useState('desc');
     const [isInventoryLoading, setIsInventoryLoading] = useState(false);
 
-    const [isRewardCalculating, setIsRewardCalculating] = useState(false);
-
     useEffect(()=> {
         if(validAddresses[0].length !== 0) {
             getGotchiesByAddresses(validAddresses);
@@ -59,8 +57,6 @@ export default function Client() {
                 }
             });
 
-            setIsGotchiesLoading(false);
-
             const svgs = await GotchiSvgRender.getSvg(combinedGotchies);
 
             combinedGotchies = combinedGotchies.map((item, index) => {
@@ -68,6 +64,7 @@ export default function Client() {
             });
 
             setGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
+            setIsGotchiesLoading(false);
         }).catch(()=>{
             setIsGotchiesLoading(false);
         });
@@ -143,7 +140,7 @@ export default function Client() {
     };
 
     const isDataLoading = () => {
-        return isGotchiesLoading || isInventoryLoading || isRewardCalculating;
+        return isGotchiesLoading || isInventoryLoading;
     };
 
     return (
@@ -162,7 +159,6 @@ export default function Client() {
                 inventory={inventory}
                 inventoryFilter={inventoryFilter}
                 onInventorySort={onInventorySort}
-                setIsRewardCalculating={setIsRewardCalculating}
                 isDataLoading={isDataLoading}
             />
 

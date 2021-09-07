@@ -5,18 +5,36 @@ export const raffleTicketPriceQuery = (id) => {
             orderBy: timeLastPurchased,
             orderDirection: desc,
             where: {
-                cancelled: false, 
+                cancelled: false,
                 sold: true,
                 category: 3,
                 erc1155TypeId: ${id}
             }
-        )
-        {
+        ){
             id,
             priceInWei
         }
     }`
 };
+
+export const rafflePortalsPriceQuery = () => {
+    return `{
+        erc721Listings (
+            first: 15,
+            orderBy: priceInWei,
+            orderDirection: asc,
+            where: {
+                cancelled: false,
+                category: 0,
+                timePurchased: 0,
+                hauntId: 2
+            }
+        ){
+            id
+            priceInWei
+        }
+    }`
+}
 
 export const raffleTotalQuery = (id) => {
     return `{
