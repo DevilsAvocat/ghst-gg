@@ -65,7 +65,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3} className={classes.toggleWrapper}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Tickets Supply
+                        Tickets Entered
                         <Tooltip
                             placement='right'
                             arrow
@@ -134,7 +134,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Frens market cap
+                        Tickets Entered in FRENs
                         <Tooltip
                             placement='right'
                             arrow
@@ -174,7 +174,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Estimated baazaar price
+                        Your tickets price
                         <Tooltip
                             placement='right'
                             arrow
@@ -215,7 +215,7 @@ export default function RaffleDropTable({tickets, supplySpinner, pricesSpinner, 
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Your items
+                        Your reward
                         <Tooltip
                             placement='right'
                             arrow
