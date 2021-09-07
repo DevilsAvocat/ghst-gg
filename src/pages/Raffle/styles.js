@@ -14,13 +14,15 @@ export const useStyles = makeStyles((theme) => ({
     },
     titleWrapper: {
         textAlign: 'center',
-        marginBottom: 40
+        marginBottom: 40,
+        display: 'flex',
+        alignItems: 'center'
     },
     title: {
-        fontSize: 30,
+        fontSize: 26,
         marginBottom: 20,
         [theme.breakpoints.up('md')]: {
-            fontSize: 34,
+            fontSize: 30,
             marginBottom: 0,
             textAlign: 'left'
         }
