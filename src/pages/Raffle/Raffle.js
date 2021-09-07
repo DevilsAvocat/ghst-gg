@@ -9,6 +9,7 @@ import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
 import {raffle5TotalEnteredQuery, rafflePortalsPriceQuery, raffleTicketPriceQuery} from './data/queries';
+import Countdown from '../../components/Countdown/Countdown';
 
 function useInterval(callback, delay) {
     const savedCallback = useRef();
@@ -219,22 +220,27 @@ export default function Raffle() {
         loadTickets();
     }, 180000);
 
+    const date = new Date(2021, 8, 8, 13);
+
     return (
         <Container maxWidth='lg' className={classes.raffle}>
             <Helmet>
                 <title>Raffle #5 Calculator</title>
             </Helmet>
             <Grid container alignContent={'center'} className={classes.titleWrapper}>
-                <Grid item xs={12} md={6}>
-                    <Typography variant='h1' className={classes.title}>Raffle #5 Calculator</Typography>
+                <Grid item xs={12} md={7}>
+                    <Typography variant='h4' className={classes.title}>
+                         <Countdown date={date} countdownEnd='Raffle #5 ended' isCounting='Raffle #5 ends in' />
+                    </Typography>
                 </Grid>
-                <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
+                <Grid item xs={12} md={5} className={classes.enterButtonWrapper}>
                     <Link href={'https://www.aavegotchi.com/raffle/4'} className={classes.enterButton} target={'_blank'}>
                         <Button variant={'contained'} color={'primary'} size={'large'}>
                             Enter Raffle
                         </Button>
                     </Link>
                 </Grid>
+                
             </Grid>
             <RaffleDropTable
                 tickets={tickets}
