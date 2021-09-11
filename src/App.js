@@ -13,6 +13,7 @@ import Footer from './root/Footer/Footer';
 import Main from './pages/Main/Main';
 import Baazaar from './pages/Baazaar/Baazaar';
 import GhostExplorer from './pages/GhostExplorer/GhostExplorer';
+import CountdownTest from './pages/CountdownTest/CountdownTest';
 import Client from './pages/Client/Client';
 import Raffle from './pages/Raffle/Raffle';
 import NotFound from './pages/NotFound/NotFound';
@@ -57,6 +58,7 @@ export default function App() {
                         <Route exact path={`/explorer`} component={ GhostExplorer } />
                         <Route exact path={`/client`} component={ Client } />
                         <Route exact path={`/raffle-calculator`} component={ Raffle } />
+                        <Route exact path={`/countdown-test`} component={ CountdownTest } />
                         <Route exact path={`/404`} component={ NotFound } />
                         <Redirect from='*' to='/404' />
                     </Switch>

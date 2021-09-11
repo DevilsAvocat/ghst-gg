@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext, useRef} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {Button, Container, Grid, Link, Typography} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 // import RaffleTable from './components/RaffleTable'; TODO: temporary solution, read more in RaffleDropTable.js
@@ -9,25 +9,7 @@ import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
 import {raffle5TotalEnteredQuery, rafflePortalsPriceQuery, raffleTicketPriceQuery} from './data/queries';
-import Countdown from '../../components/Countdown/Countdown';
-
-function useInterval(callback, delay) {
-    const savedCallback = useRef();
-
-    useEffect(() => {
-        savedCallback.current = callback;
-    }, [callback]);
-
-    useEffect(() => {
-        function tick() {
-            savedCallback.current();
-        }
-        if (delay !== null) {
-            let id = setInterval(tick, delay);
-            return () => clearInterval(id);
-        }
-    }, [delay]);
-}
+import useInterval from '../../hooks/useInterval';
 
 export default function Raffle() {
     const classes = useStyles();
@@ -47,6 +29,9 @@ export default function Raffle() {
     // const [mythicalQuantity, setMythicalQuantity] = useState('');
     // const [godlikeQuantity, setGodlikeQuantity] = useState('');
     // const [enteredSupplyType, setEnteredSupplyType] = useState(true);
+
+
+    // const dateToFormat = '1976-04-19T12:59-0500';
 
     const getTicketQuantity = (type) => {
         const map = {
@@ -204,17 +189,18 @@ export default function Raffle() {
         loadTickets();
     }, 180000);
 
-    const date = new Date(2021, 8, 8, 17);
-
     return (
         <Container maxWidth='lg' className={classes.raffle}>
+            {/* <Moment>{ts}</Moment> */}
+            {/* {ts} */}
             <Helmet>
                 <title>Raffle #5 Calculator</title>
             </Helmet>
+            
             <Grid container alignContent={'center'} className={classes.titleWrapper}>
                 <Grid item xs={12} md={7}>
                     <Typography variant='h4' className={classes.title}>
-                         <Countdown date={date} countdownEnd='Raffle #5 ended' isCounting='Raffle #5 ends in' />
+                        Raffle #5 calculator
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={5} className={classes.enterButtonWrapper}>
