@@ -1,15 +1,10 @@
 import React, { useState } from 'react';
-import Moment from 'react-moment';
 import { DateTime, Duration } from "luxon";
-import moment from 'moment';
 import 'moment-timezone';
 import useInterval from '../../hooks/useInterval';
 import useStyles from './styles';
 
-console.log(Duration);
 
-// Moment.globalTimezone = 'America/Los_Angeles';
-const timeZone = moment.tz.guess(true);
 const interval = 1000/24;
 
 const names = {
@@ -21,10 +16,6 @@ const names = {
     M: ['month', 'months'],
     // YY: ['year', 'years'] 
 }
-
-// const l = names.length-1;
-
-console.log(moment().utcOffset());
 
 const getName = (names, number) => {
     return names[Number(number) === 1 ? 0 : 1];
