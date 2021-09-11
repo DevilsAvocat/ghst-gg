@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { DateTime, Duration } from "luxon";
-import 'moment-timezone';
 import useInterval from '../../hooks/useInterval';
 import useStyles from './styles';
 
