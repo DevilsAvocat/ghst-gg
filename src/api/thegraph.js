@@ -1,9 +1,10 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
-import {gotchiesQuery, userQuery} from './common/queries';
+import {gotchiesQuery, svgQuery, userQuery} from './common/queries';
 
 var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic';
 var raffleUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-matic-raffle';
+var gotchiSVGs = 'https://api.thegraph.com/subgraphs/name/froid1911/aavegotchi-svg';
 
 var client = new ApolloClient({
     uri: baseUrl,
@@ -12,6 +13,11 @@ var client = new ApolloClient({
 
 var raffleClient = new ApolloClient({
     uri: raffleUrl,
+    cache: new InMemoryCache()
+});
+
+var svgsClient = new ApolloClient({
+    uri: gotchiSVGs,
     cache: new InMemoryCache()
 });
 
@@ -88,6 +94,13 @@ export default {
         return await raffleClient
             .query({
                 query: gql`${query}`
+            });
+    },
+
+    async getGotchiSvgById(id) {
+        return await svgsClient
+            .query({
+                query: gql`${svgQuery(id)}`
             });
     },
 }

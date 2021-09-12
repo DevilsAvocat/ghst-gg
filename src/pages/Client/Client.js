@@ -9,7 +9,6 @@ import {SnackbarContext} from '../../contexts/SnackbarContext';
 
 import ClientFields from './components/ClientFields';
 import ClientContent from './components/ClientContent';
-import GotchiSvgRender from "../../components/Gotchi/GotchiSvgRender";
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -55,12 +54,6 @@ export default function Client() {
                 if(item.data.user) {
                     combinedGotchies.push(...item.data.user.gotchisOwned);
                 }
-            });
-
-            const svgs = await GotchiSvgRender.getSvg(combinedGotchies);
-
-            combinedGotchies = combinedGotchies.map((item, index) => {
-                return {...item, svg: svgs[index]};
             });
 
             setGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));

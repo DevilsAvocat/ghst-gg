@@ -64,11 +64,11 @@ export default makeStyles((theme) => ({
         fontWeight: 'bold',
         padding: '0 4px',
         position: 'absolute',
-        minWidth: 60,
         top: 0,
         right: '50%',
+        minWidth: 60,
+        margin: 0,
         transform: 'translate(50%, -50%)',
-        color: '#fff',
         opacity: .8
     },
     gotchiLvlWrapper: {
@@ -124,7 +124,7 @@ export default makeStyles((theme) => ({
         fontSize: 12,
         fontWeight: 'bold',
         padding: '2px 4px',
-        margin: '4px 0 8px',
+        margin: '8px 0',
         position: 'relative',
         textDecoration: 'none',
         opacity: .9,

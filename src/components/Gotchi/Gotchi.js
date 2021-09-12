@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
-import { Typography, Link } from '@material-ui/core';
+import React from 'react';
+import { Link } from '@material-ui/core';
 import { fade } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
@@ -11,14 +11,10 @@ import GotchiWearablesLine from './GotchiWearablesLine';
 import HighlightNumber from '../HighlightNumber';
 
 import CallMadeIcon from '@material-ui/icons/CallMade';
+import GotchiSvg from './GotchiSvg';
 
 export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
     const classes = useStyles();
-    const svgBox = useRef();
-
-    useEffect(() => {
-        svgBox.current.appendChild(gotchi.svg);
-    }, [svgBox]);
 
     const calculateRarityType = (rarity) => {
         return rarity >= 700 ? 'godlike' : rarity >= 600 ? 'mythical' : rarity >= 500 ? 'rare' : '';
@@ -80,18 +76,11 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
             className={classNames(classes.gotchi)}
             style={{ backgroundColor: fade(gotchiColor, .2) }}
         >
-            <Typography
-                variant={'subtitle2'}
-                className={classes.gotchiCaption}
-                style={{ backgroundColor: gotchiColor }}
-            >
+            <p className={classes.gotchiCaption} style={{ backgroundColor: gotchiColor }}>
                 {title || commonUtils.cutAddress(gotchi.owner.id)}
-            </Typography>
-            
-            <div
-                ref={svgBox}
-                className={classNames(classes.gotchiSvg, `gotchi-svg-${gotchi.id}`)}
-            ></div>
+            </p>
+
+            <GotchiSvg id={gotchi.id} size={120} />
 
             <Link
                 className={classes.gotchiName}
