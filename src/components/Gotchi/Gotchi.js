@@ -1,8 +1,9 @@
 import React, { useEffect, useRef } from 'react';
-import { Box, Typography, Link } from '@material-ui/core';
-import { fade, makeStyles } from '@material-ui/core/styles';
+import { Typography, Link } from '@material-ui/core';
+import { fade } from '@material-ui/core/styles';
 import classNames from 'classnames';
 import commonUtils from '../../utils/commonUtils';
+import useStyles from './styles';
 
 import GotchiLevel from './GotchiLevel';
 import GotchiTraitsHighlight from './GotchiTraitsHighlight';
@@ -10,104 +11,6 @@ import GotchiWearablesLine from './GotchiWearablesLine';
 import HighlightNumber from '../HighlightNumber';
 
 import CallMadeIcon from '@material-ui/icons/CallMade';
-
-const useStyles = makeStyles((theme) => ({
-    gotchi: {
-        display: 'block',
-        borderRadius: theme.shape.borderRadius,
-        color: '#fff',
-        padding: '24px 12px 16px',
-        textAlign: 'center',
-        height: '100%',
-        position: 'relative',
-        '&:hover': {
-            textDecoration: 'none'
-        },
-    },
-    owner: {
-        display: 'block',
-        borderRadius: theme.shape.borderRadius,
-        color: theme.palette.common.white,
-        fontSize: 12,
-        fontWeight: 'bold',
-        padding: '0 4px',
-        position: 'relative',
-        textDecoration: 'none',
-        opacity: .9,
-        '&:hover': {
-            textDecoration: 'none',
-            opacity: 1
-        }
-    },
-    gotchiSvg: {
-        '& .gotchi-wearable': {
-            transition: 'all .5s ease-in-out'
-        },
-        '& .gotchi-sleeves': {
-            transition: 'all .5s ease-in-out'
-        },
-        '&:hover': {
-            '& .gotchi-wearable:not(.wearable-bg)': {
-                opacity: 0,
-            },
-            '& .gotchi-sleeves': {
-                opacity: 0,
-            },
-            '& .wearable-head': {
-                transform: 'translateY(-5px) rotateZ(-45deg)'
-            },
-            '& .wearable-eyes': {
-                transform: 'translateX(10px) rotateZ(5deg)'
-            },
-            '& .wearable-face': {
-                transform: 'translateX(-10px) rotateZ(10deg)'
-            },
-            '& .wearable-body': {
-                transform: 'translateY(10px) rotateZ(-5deg)'
-            },
-            '& .wearable-hand-right': {
-                transform: 'translateX(5px) rotateZ(-5deg)'
-            },
-            '& .wearable-hand-left': {
-                transform: 'translateX(-5px) rotateZ(5deg)'
-            },
-            '& .wearable-pet': {
-                transform: 'translateY(5px)'
-            }
-        }
-    },
-    gotchiOwner: {
-        position: 'absolute',
-        minWidth: 60,
-        top: 0,
-        right: '50%',
-        transform: 'translate(50%, -50%)',
-        color: '#fff'
-    },
-    gotchiName: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        fontSize: 15
-    },
-    callMadeIcon: {
-        position: 'absolute',
-        right: 2,
-        bottom: 2,
-        fontSize: 14
-    },
-    tokenValue: {
-        display: 'inline-flex',
-        alignItems: 'center'
-    },
-    mainVal: {
-        fontSize: 13
-    },
-    defaultVal: {
-        fontSize: 10,
-        marginLeft: 2
-    }
-}));
 
 export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
     const classes = useStyles();
@@ -129,17 +32,17 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
         if(!narrowed) {
             return (
                 <>
-                    <Box position='absolute' top={8} right={8}>
+                    <div className={classes.gotchiLvlWrapper}>
                         <GotchiLevel
                             level={gotchi.level}
                             toNextLevel={gotchi.toNextLevel}
                             experience={gotchi.experience}
                             size={28}
                         />
-                    </Box>
+                    </div>
 
-                    <Box position='relative' display='flex' alignItems='center' justifyContent='space-between' minHeight={26} margin={'8px 0'}>
-                        <Box textAlign='center' flexBasis='49%'>
+                    <div className={classNames(classes.gotchiInnerSection, classes.gotchiTraits)}>
+                        <div className={classes.gotchiTraitsInner}>
                             <HighlightNumber type={calculateRarityType(gotchi.withSetsRarityScore)}>
                                 <Typography className={classes.mainVal} variant={'subtitle2'}>
                                     🏆{gotchi.withSetsRarityScore}
@@ -148,31 +51,31 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
                                     </Typography>
                                 </Typography>        
                             </HighlightNumber>
-                        </Box>
+                        </div>
 
-                        <Box textAlign='center' flexBasis='49%' margin={'1% 0'}>
+                        <div className={classes.gotchiTraitsInner}>
                             <HighlightNumber type={calculateKinshipType(gotchi.kinship)}>
                                 <Typography className={classes.mainVal} variant={'subtitle2'}>
                                     🧡{gotchi.kinship}
                                 </Typography>        
                             </HighlightNumber>
-                        </Box>
-                    </Box>
+                        </div>
+                    </div>
 
-                    <Box marginTop='8px'>
+                    <div className={classes.gotchiInnerSection}>
                         <GotchiTraitsHighlight traits={gotchi.numericTraits} currentTraits={gotchi.withSetsNumericTraits} />
-                    </Box>
+                    </div>
 
-                    <Box marginTop='8px'>
+                    <div className={classes.gotchiInnerSection}>
                         <GotchiWearablesLine wearables={gotchi.equippedWearables}/>
-                    </Box>
+                    </div>
                 </>
             )
         } else return null;
     }
     
     return (
-        <Box
+        <div
             className={classNames(classes.gotchi)}
             style={{ backgroundColor: fade(gotchiColor, .2) }}
         >
@@ -184,12 +87,10 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
                 {title || commonUtils.cutAddress(gotchi.owner.id)}
             </Typography>
             
-            <Box
+            <div
                 ref={svgBox}
-                width={120}
-                margin='auto'
                 className={classNames(classes.gotchiSvg, `gotchi-svg-${gotchi.id}`)}
-            ></Box>
+            ></div>
 
             <Link
                 className={classNames(classes.owner)}
@@ -208,6 +109,6 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
             </Link>
 
             {renderNarrowed()}
-        </Box>
+        </div>
     );
 }

@@ -1,26 +1,10 @@
 import React from 'react';
-import { fade, makeStyles } from '@material-ui/core/styles';
-import { Box, Typography, CircularProgress, Popover } from '@material-ui/core';
+import { Typography, CircularProgress, Popover } from '@material-ui/core';
+import useStyles from './styles';
 
 const expFormula = (lvl) => {
     return lvl * lvl / 0.02;
 };  // Based on https://wiki.aavegotchi.com/en/xp
-
-const useStyles = makeStyles((theme) => ({
-    circle: {
-        backgroundColor: fade(theme.palette.primary.main, .1),
-        borderRadius: '50%',
-        cursor: 'default'
-    },
-    popover: {
-        pointerEvents: 'none'
-    },
-    popoverInner: {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.white,
-        padding: '4px 8px'
-    }
-}));
 
 export default function GotchiLevel({level, toNextLevel, experience, size}) {
     const classes = useStyles();
@@ -40,18 +24,10 @@ export default function GotchiLevel({level, toNextLevel, experience, size}) {
     const popoverOpen = Boolean(anchorEl);
 
     return (
-        <Box position='relative' display='inline-flex' className={classes.circle} 
-            >
+        <div className={classes.gotchiLvl}>
             <CircularProgress variant='determinate' value={percentageFormula} size={size} />
-            <Box
-                top={0}
-                left={0}
-                bottom={0}
-                right={0}
-                position='absolute'
-                display='flex'
-                alignItems='center'
-                justifyContent='center'
+            <div
+                className={classes.gotchiLvlInner}
                 aria-owns={popoverOpen ? 'mouse-over-popover' : undefined}
                 aria-haspopup="true"
                 onMouseEnter={handlePopoverOpen}
@@ -68,9 +44,9 @@ export default function GotchiLevel({level, toNextLevel, experience, size}) {
 
                 <Popover
                     id="mouse-over-popover"
-                    className={classes.popover}
+                    className={classes.gotchiLvlPopover}
                     classes={{
-                      paper: classes.popoverInner,
+                      paper: classes.gotchiLvlPopoverInner,
                     }}
                     open={popoverOpen}
                     anchorEl={anchorEl}
@@ -86,13 +62,13 @@ export default function GotchiLevel({level, toNextLevel, experience, size}) {
                     disableRestoreFocus
                 >
                     <Typography variant='subtitle2' color='secondary'>
-                        Summary => {experience} XP
+                        Summary {'=>'} {experience} XP
                     </Typography>
                     <Typography variant='subtitle2' color='secondary'>
-                        To level {+level + 1} => {toNextLevel} XP
+                        To level {+level + 1} {'=>'} {toNextLevel} XP
                     </Typography>
                 </Popover>
-            </Box>
-        </Box>
+            </div>
+        </div>
     );
 }
