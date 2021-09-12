@@ -24,13 +24,13 @@ export default function GotchiTraitsHighlight({traits, currentTraits}) {
 
                     return <div className={classes.gotchiTraitsInner} key={i}>
                         <HighlightNumber type={calculateTraitType(traitVal)}>
-                            <Typography className={classes.mainVal} variant='subtitle2' noWrap={true}>
+                            <p className={classes.mainVal}>
                                 {traitKey}{traitVal}
         
-                                <Typography className={classes.defaultVal} component='span' variant='body2'>
+                                <span className={classes.defaultVal}>
                                     ({defaultTraits[traitKey]})
-                                </Typography>
-                            </Typography>
+                                </span>
+                            </p>
                         </HighlightNumber>
                     </div>
                 })

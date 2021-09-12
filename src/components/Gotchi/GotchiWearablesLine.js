@@ -38,9 +38,9 @@ export default function GotchiWearablesLine({wearables}) {
                     className={classNames(classes.gotchiWLinePopover, 'popover-core')}
                     style={{ backgroundColor: theme.palette.rarity[color] }}
                 >
-                    <Typography className={classes.gotchiWLinePopoverEmpty} variant='body2'>
+                    <p className={classes.gotchiWLinePopoverEmpty}>
                         Empty
-                    </Typography>
+                    </p>
                 </div>
             )
         }
@@ -61,9 +61,9 @@ export default function GotchiWearablesLine({wearables}) {
                             key={index}
                         >
                             {renderPopover(wearable, type, rarityColor)}
-                            <Typography className={classNames(classes.gotchiWLinePopoverName, 'name')} variant='subtitle2'>
+                            <p className={classNames(classes.gotchiWLinePopoverName, 'name')}>
                                 {name}
-                            </Typography>
+                            </p>
                         </div>
                     )
                 })

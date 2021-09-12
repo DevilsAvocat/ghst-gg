@@ -44,20 +44,21 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
                     <div className={classNames(classes.gotchiInnerSection, classes.gotchiTraits)}>
                         <div className={classes.gotchiTraitsInner}>
                             <HighlightNumber type={calculateRarityType(gotchi.withSetsRarityScore)}>
-                                <Typography className={classes.mainVal} variant={'subtitle2'}>
+                                <p className={classes.mainVal}>
                                     🏆{gotchi.withSetsRarityScore}
-                                    <Typography className={classes.defaultVal} component='span' variant='body2'>
+
+                                    <span className={classes.defaultVal}>
                                         ({gotchi.baseRarityScore})
-                                    </Typography>
-                                </Typography>        
+                                    </span>
+                                </p>        
                             </HighlightNumber>
                         </div>
 
                         <div className={classes.gotchiTraitsInner}>
                             <HighlightNumber type={calculateKinshipType(gotchi.kinship)}>
-                                <Typography className={classes.mainVal} variant={'subtitle2'}>
+                                <p className={classes.mainVal}>
                                     🧡{gotchi.kinship}
-                                </Typography>        
+                                </p>        
                             </HighlightNumber>
                         </div>
                     </div>

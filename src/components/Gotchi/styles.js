@@ -81,7 +81,10 @@ export default makeStyles((theme) => ({
         position: 'relative',
         backgroundColor: fade(theme.palette.primary.main, .1),
         borderRadius: '50%',
-        cursor: 'default'
+        cursor: 'default',
+        '&:hover .popover-core': {
+            opacity: 1
+        }
     },
     gotchiLvlInner: {
         position: 'absolute',
@@ -90,13 +93,29 @@ export default makeStyles((theme) => ({
         justifyContent: 'center',
         inset: 0
     },
-    gotchiLvlPopover: {
-        pointerEvents: 'none'
+    gotchiLvlNumber: {
+        color: theme.palette.primary.main,
+        fontWeight: 500,
     },
-    gotchiLvlPopoverInner: {
+    gotchiLvlPopover: {
+        borderRadius: theme.shape.borderRadius,
+        position: 'absolute',
+        bottom: '100%',
+        left: '50%',
+        transform: 'translateX(-50%)',
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
-        padding: '4px 8px'
+        padding: '4px 8px',
+        pointerEvents: 'none',
+        whiteSpace: 'nowrap',
+        textAlign: 'left',
+        transition: 'opacity .3s ease-in-out',
+        opacity: 0,
+        '& p': {
+            fontWeight: 500,
+            color: theme.palette.secondary.main,
+            margin: 0
+        }
     },
     gotchiName: {
         display: 'block',
@@ -199,11 +218,13 @@ export default makeStyles((theme) => ({
         color: theme.palette.secondary.main,
         whiteSpace: 'nowrap',
         opacity: 0,
+        margin: 0,
         transition: 'opacity .2s ease-in-out'
     },
     gotchiWLinePopoverEmpty: {
         fontWeight: 'bold',
-        color: theme.palette.secondary.main
+        color: theme.palette.secondary.main,
+        margin: 0
     },
     gotchiWLineLink: {
         display: 'block',
@@ -221,7 +242,11 @@ export default makeStyles((theme) => ({
         alignItems: 'center'
     },
     mainVal: {
-        fontSize: 13
+        fontSize: 13,
+        fontWeight: 500,
+        margin: 0,
+        padding: '1px 0',
+        whiteSpace: 'nowrap'
     },
     defaultVal: {
         fontSize: 10,
