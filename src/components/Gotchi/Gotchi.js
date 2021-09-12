@@ -81,7 +81,7 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
         >
             <Typography
                 variant={'subtitle2'}
-                className={classNames(classes.owner, classes.gotchiOwner)}
+                className={classes.gotchiCaption}
                 style={{ backgroundColor: gotchiColor }}
             >
                 {title || commonUtils.cutAddress(gotchi.owner.id)}
@@ -93,18 +93,18 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
             ></div>
 
             <Link
-                className={classNames(classes.owner)}
-                style={{ backgroundColor: fade(gotchiColor, .5), margin: '4px 0'}}
+                className={classes.gotchiName}
+                style={{ backgroundColor: fade(gotchiColor, .5)}}
                 href={`https://aavegotchi.com/gotchi/${gotchi.id}`}
                 target="_blank"
             >
-                <Typography variant={'subtitle2'} className={classes.gotchiName}>
+                <p className={classes.gotchiName}>
                     {gotchi.name ? (
                         gotchi.name
                     ) : (
                         'Unnamed'
                     )}
-                </Typography>
+                </p>
                 <CallMadeIcon className={classes.callMadeIcon} />
             </Link>
 

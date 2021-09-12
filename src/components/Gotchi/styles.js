@@ -14,21 +14,6 @@ export default makeStyles((theme) => ({
             textDecoration: 'none'
         },
     },
-    owner: {
-        display: 'block',
-        borderRadius: theme.shape.borderRadius,
-        color: theme.palette.common.white,
-        fontSize: 12,
-        fontWeight: 'bold',
-        padding: '0 4px',
-        position: 'relative',
-        textDecoration: 'none',
-        opacity: .9,
-        '&:hover': {
-            textDecoration: 'none',
-            opacity: 1
-        }
-    },
     gotchiSvg: {
         width: 120,
         margin: 'auto',
@@ -71,13 +56,20 @@ export default makeStyles((theme) => ({
     gotchiInnerSection: {
         marginTop: 8
     },
-    gotchiOwner: {
+    gotchiCaption: {
+        display: 'block',
+        borderRadius: theme.shape.borderRadius,
+        color: theme.palette.common.white,
+        fontSize: 12,
+        fontWeight: 'bold',
+        padding: '0 4px',
         position: 'absolute',
         minWidth: 60,
         top: 0,
         right: '50%',
         transform: 'translate(50%, -50%)',
-        color: '#fff'
+        color: '#fff',
+        opacity: .8
     },
     gotchiLvlWrapper: {
         position: 'absolute',
@@ -107,10 +99,27 @@ export default makeStyles((theme) => ({
         padding: '4px 8px'
     },
     gotchiName: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        fontSize: 15
+        display: 'block',
+        borderRadius: theme.shape.borderRadius,
+        color: theme.palette.common.white,
+        fontSize: 12,
+        fontWeight: 'bold',
+        padding: '2px 4px',
+        margin: '4px 0 8px',
+        position: 'relative',
+        textDecoration: 'none',
+        opacity: .9,
+        '&:hover': {
+            textDecoration: 'none',
+            opacity: 1
+        },
+        '& p': {
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            fontSize: 15,
+            margin: 0
+        }
     },
     gotchiTraits: {
         position: 'relative',
@@ -201,14 +210,11 @@ export default makeStyles((theme) => ({
         height: '100%',
         textDecoration: 'none !important',
     },
-    // gotchiWLineIcon: {
-    //     color: theme.palette.secondary.main
-    // },
     callMadeIcon: {
         position: 'absolute',
         right: 2,
         bottom: 2,
-        fontSize: 14
+        fontSize: 12
     },
     tokenValue: {
         display: 'inline-flex',

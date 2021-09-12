@@ -28,7 +28,7 @@ export default function GotchiWearablesLine({wearables}) {
                             height={40}
                             width={40}
                         />
-                        <CallMadeIcon className={classes.callMadeIcon} />
+                        <CallMadeIcon color='secondary' className={classes.callMadeIcon} />
                     </div>
                 </Link>
             )
