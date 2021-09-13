@@ -8,6 +8,7 @@ import { Grid, Box, Typography, FormControl, Select, InputLabel, MenuItem, useTh
 
 import Gotchi from '../../../components/Gotchi/Gotchi';
 import Item from '../../../components/Item/Item';
+import Subtitle from '../../../components/Subtitle/Subtitle';
 
 // import { useMoralis } from "react-moralis";
 
@@ -56,8 +57,14 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
     const renderGotchiesHead = () => {
         if(gotchies.length !== 0) {
             return (
-                <Grid container spacing={2} style={{marginBottom: 12}}>
-                    <Grid item xs={6} md={3} style={{marginTop: 4}}>
+                <Box marginBottom='16px'>
+                    <Subtitle margin='12px 0 20px'>
+                        <Box bgcolor='primary.main' color='secondary.main' component='span' padding='1px 4px' marginRight='8px' borderRadius={4}>
+                            {gotchies.length}
+                        </Box>
+                        Gotchi{gotchies.length != 1 ? `'s` : ''}
+                    </Subtitle>
+                    <Box maxWidth={300}>
                         <FormControl variant='outlined' size={'small'} className={classes.formControl} fullWidth>
                             <InputLabel>Order by:</InputLabel>
                             <Select
@@ -72,8 +79,8 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                                 <MenuItem value={'experience'}>EXP</MenuItem>
                             </Select>
                         </FormControl>
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             )
         } else if (showPlaceholder) {
             return (
@@ -100,13 +107,14 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
     const renderInventoryHead = () => {
         if(inventory.length !== 0) {
             return (
-                <Grid container spacing={2} style={{marginTop: 12, marginBottom: 8}}>
-                    <Grid item xs={12}>
-                        <Typography variant={'h6'}>
-                            Inventory items:
-                        </Typography>
-                    </Grid>
-                    <Grid item xs={6} md={3}>
+                <Box marginBottom='16px'>
+                    <Subtitle margin='12px 0 20px'>
+                        <Box bgcolor='primary.main' color='secondary.main' component='span' padding='1px 4px' marginRight='8px' borderRadius={4}>
+                            {inventory.length}
+                        </Box>
+                        Item{inventory.length != 1 ? `'s` : ''}
+                    </Subtitle>
+                    <Box maxWidth={300}>
                         <FormControl variant='outlined' size={'small'} className={classes.formControl} fullWidth>
                             <InputLabel>Order by:</InputLabel>
                             <Select
@@ -119,8 +127,8 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                                 <MenuItem value={'balance'}>Quantity</MenuItem>
                             </Select>
                         </FormControl>
-                    </Grid>
-                </Grid>
+                    </Box>
+                </Box>
             )
         } else if (showPlaceholder) {
             return (
