@@ -61,6 +61,7 @@ export default function GotchiSvg({id, size}) {
     let svgInner = document.createElement('div');
 
     useEffect(() => {
+        setLoadingSvg(true);
         thegraph.getGotchiSvgById(id)
             .then((response)=> {
                 let svgString = response.data.aavegotchis[0].svg;
