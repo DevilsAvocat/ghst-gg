@@ -54,3 +54,12 @@ export const userQuery = (id) => {
         }
     }`
 };
+
+export const svgQuery = (id) => {
+    return `{
+        aavegotchis(where: {id: ${id}}) {
+          id
+          svg
+        }
+      }`
+};

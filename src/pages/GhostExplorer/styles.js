@@ -42,7 +42,7 @@ export default makeStyles((theme) => ({
         fontWeight: 500
     },
     backdrop: {
-        zIndex: theme.zIndex.appBar-1,
+        zIndex: theme.zIndex.appBar - 1,
         color: '#fff'
     }
 }));

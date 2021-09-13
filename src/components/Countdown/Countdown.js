@@ -3,7 +3,6 @@ import { DateTime, Duration } from "luxon";
 import useInterval from '../../hooks/useInterval';
 import useStyles from './styles';
 
-
 const interval = 1000/24;
 
 const names = {
