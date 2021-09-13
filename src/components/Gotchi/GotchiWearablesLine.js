@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Link, useTheme } from '@material-ui/core';
+import { Link, useTheme } from '@material-ui/core';
 import classNames from 'classnames';
 import itemUtils from '../../utils/itemUtils';
 import CallMadeIcon from '@material-ui/icons/CallMade';

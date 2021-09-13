@@ -62,7 +62,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                         <Box bgcolor='primary.main' color='secondary.main' component='span' padding='1px 4px' marginRight='8px' borderRadius={4}>
                             {gotchies.length}
                         </Box>
-                        Gotchi{gotchies.length != 1 ? `'s` : ''}
+                        Gotchi{gotchies.length !== 1 ? `'s` : ''}
                     </Subtitle>
                     <Box maxWidth={300}>
                         <FormControl variant='outlined' size={'small'} className={classes.formControl} fullWidth>
@@ -112,7 +112,7 @@ export default function ClientContent({validAddresses, gotchies, gotchiesFilter,
                         <Box bgcolor='primary.main' color='secondary.main' component='span' padding='1px 4px' marginRight='8px' borderRadius={4}>
                             {inventory.length}
                         </Box>
-                        Item{inventory.length != 1 ? `'s` : ''}
+                        Item{inventory.length !== 1 ? `'s` : ''}
                     </Subtitle>
                     <Box maxWidth={300}>
                         <FormControl variant='outlined' size={'small'} className={classes.formControl} fullWidth>

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Typography } from '@material-ui/core';
 import commonUtils from '../../utils/commonUtils';
 import useStyles from './styles';
 

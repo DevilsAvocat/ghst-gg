@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, CircularProgress } from '@material-ui/core';
+import { CircularProgress } from '@material-ui/core';
 import useStyles from './styles';
 import classNames from 'classnames';
 
