@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core';
 import thegraph from '../../api/thegraph';
 import classNames from 'classnames';
 
+import gotchiLoading from '../../assets/images/gotchi-loading.gif';
+
 const useStyles = makeStyles((theme) => ({
     svgWrapper: {
         margin: 'auto',
@@ -41,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
                 transform: 'translateY(5px)'
             }
         }
+    },
+    svgPlaceholder: {
+        width: '140%',
+        transform: 'translate(-15%, -15%)',
+        pointerEvents: 'none'
     }
 }));
 
@@ -78,9 +85,15 @@ export default function GotchiSvg({id, size}) {
     return (
         <div className={classes.svgWrapper} style={{ width: size, height: size }}>
             {loadingSvg ? (
-                <div>Loading</div>
+                <img
+                    className={classes.svgPlaceholder}
+                    src={gotchiLoading} alt='Gotchi Loading...'
+                />
             ) : (
-                <div className={classNames(classes.svgImage, `gotchi-${id}`)} ref={svgRef}></div>
+                <div
+                    className={classNames(classes.svgImage, `gotchi-${id}`)}
+                    ref={svgRef}
+                ></div>
             )}
         </div>
     );
