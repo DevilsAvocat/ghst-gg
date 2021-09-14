@@ -2,9 +2,17 @@ import { makeStyles, fade } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
     root: {
-        height: '100%',
         overflowY: 'auto',
-        padding: 20
+        padding: '15px 10px 10px',
+        maxHeight: '100%',
+        width: '100%',
+        display: 'grid',
+        alignItems: 'start',
+        gap: 4,
+        gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))'
+    },
+    item: {
+        margin: 5
     },
     gotchi: {
         borderRadius: 4,
