@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Grid from '@material-ui/core/Grid';
 import { CircularProgress, Backdrop, useTheme } from '@material-ui/core';
 import Gotchi from '../../components/Gotchi/Gotchi'; 
 import thegraph from '../../api/thegraph';
-import GotchiSvgRender from '../../components/Gotchi/GotchiSvgRender';
 import useStyles from './styles';
+// import Pagination from '@material-ui/lab/Pagination';
 
-var maxGotchiQuantity = 10000;
+
 
 export default function GhostExplorer() {
 
@@ -15,6 +14,7 @@ export default function GhostExplorer() {
     const [gotchiesShown, setGotchiesShown] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const theme = useTheme();
+    const [maxGotchiQuantity, setMaxGotchiQuantity] = useState(0);
 
     // scrolling
     const scrollingContainerRef = useRef();
@@ -46,40 +46,34 @@ export default function GhostExplorer() {
          await thegraph.getAllGotchies().then((response) => {
             const gotchiesData = response.sort((a,b) => a.id - b.id);
             setGotchiesFromGraph(gotchiesData);
-            console.log(gotchiesData);
-
-            renderGotchi(50);
         }).catch((e)=> {
             console.log(e);
         });
     };
 
-    const renderGotchi = async (quantity) => {
-        if(gotchiesFromGraph === null) return;
-        if(gotchiesShown.length < maxGotchiQuantity) {
-            const gotchiQuantity = gotchiesShown.length;
+    const renderGotchi = (quantity) => {
+        console.log(maxGotchiQuantity);
+        const l = gotchiesShown.length;
+        if(l < maxGotchiQuantity) {
+            const gotchiQuantity = l;
 
             let gotchiCache,
-                svgs,
                 lastGotchiCached = gotchiQuantity;
 
             if (lastGotchiCached < maxGotchiQuantity) {
                 
                 gotchiCache = gotchiesFromGraph.slice(gotchiQuantity, gotchiQuantity+quantity);
 
-                svgs = await GotchiSvgRender.getSvg(gotchiCache);
-
-                gotchiCache = gotchiCache.map((item, index) => {
-                    let gotchi = {...item, svg: svgs[index] }
+                gotchiCache = gotchiCache.map((item) => {
                     return (
-                        <Grid item xs={5} sm={4} md={3} lg={2} key={gotchi.id}>
+                        <div key={item.id} className={classes.item}>
                             <Gotchi
-                                gotchi={gotchi}
-                                title={gotchi.id}
+                                gotchi={item}
+                                title={item.id}
                                 gotchiColor={theme.palette.customColors.gray}
                                 narrowed={true}
                             />
-                        </Grid>
+                        </div>
                     )
                 });
 
@@ -98,30 +92,28 @@ export default function GhostExplorer() {
     }, []);
 
     useEffect(() => {
-        renderGotchi(50);
+        if(gotchiesFromGraph) setMaxGotchiQuantity(gotchiesFromGraph.length);
     }, [gotchiesFromGraph]);
 
     useEffect(() => {
+        if(maxGotchiQuantity) renderGotchi(50);
+    }, [maxGotchiQuantity]);
+
+    useEffect(() => {
         if(size) {
-            setIsLoading(true);
-            renderGotchi(50);
+            renderGotchi(25);
         }
     }, [size]);
 
     return (
         <>
-        <Backdrop className={classes.backdrop} open={isLoading}>
-            <CircularProgress color='primary' />
-        </Backdrop>
-        <Grid
-            container
-            className={classes.root}
-            spacing={2}
-            ref={scrollingContainerRef}
-        >
-            
-            {gotchiesShown ? gotchiesShown : ''}
-        </Grid>
+            <Backdrop className={classes.backdrop} open={isLoading}>
+                <CircularProgress color='primary' />
+            </Backdrop>
+            <div className={classes.root} ref={scrollingContainerRef}>
+                {gotchiesShown}
+            </div>
+            {/* <Pagination count={10} variant="outlined" /> */}
         </>
     );
 }
