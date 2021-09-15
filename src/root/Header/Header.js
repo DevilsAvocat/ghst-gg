@@ -3,6 +3,7 @@ import {Box, Button, Grid, Link, Toolbar, Typography, IconButton} from '@materia
 import {NavLink, useLocation} from 'react-router-dom';
 import classNames from 'classnames';
 import {useStyles} from './styles';
+import MetamaskLoginButton from '../../components/MetamaskLoginButton.js/MetamaskLoginButton.js';
 
 import TwitterIcon from '@material-ui/icons/Twitter';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -16,6 +17,7 @@ export default function Header() {
     const location = useLocation();
     const navRef = useRef(null);
     const hamburgerRef = useRef(null);
+
 
     // Close nav on route change
     useEffect(() => {
@@ -81,16 +83,20 @@ export default function Header() {
                         <Typography variant={'caption'}>Join our community!</Typography>
                     </Box>
                 </Grid>
+                
             </Grid>
-            <IconButton
-                color='primary'
-                aria-label='menu'
-                className={classes.navHamburger}
-                onClick={() => setNavOpen(!navOpen)}
-                ref={hamburgerRef}
-            >
-                <MenuIcon />
-            </IconButton>
+            <Grid item className={classes.group}>
+                <MetamaskLoginButton size='small'/>
+                <IconButton
+                    color='primary'
+                    aria-label='menu'
+                    className={classes.navHamburger}
+                    onClick={() => setNavOpen(!navOpen)}
+                    ref={hamburgerRef}
+                >
+                    <MenuIcon />
+                </IconButton>
+            </Grid>
         </Toolbar>
     )
 }

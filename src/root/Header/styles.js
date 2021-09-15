@@ -4,7 +4,7 @@ export const useStyles = makeStyles((theme) => ({
     toolbar: {
         width: '100%',
         justifyContent: 'space-between',
-        padding: '11px 24px',
+        padding: '11px 14px 11px 24px',
         background: theme.palette.background.default,
         boxShadow: '0px 4px 16px rgba(29, 32, 37, 0.67)',
         position: 'fixed',
@@ -123,6 +123,7 @@ export const useStyles = makeStyles((theme) => ({
     navHamburger: {
         position: 'relative',
         zIndex: theme.zIndex.appBar,
+        marginLeft: 10,
         [theme.breakpoints.up('md')]: {
             display: 'none'
         }
@@ -165,5 +166,10 @@ export const useStyles = makeStyles((theme) => ({
     },
     iconButtonText: {
         marginLeft: '8px'
+    },
+    group: {
+        display: 'flex',
+        alignItems: 'center',
+        marginLeft: 15
     }
 }));

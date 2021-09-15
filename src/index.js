@@ -8,6 +8,8 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import { theme } from './themes/ghst';
 import {BrowserRouter} from 'react-router-dom';
+import { MetamaskStateProvider } from 'use-metamask';
+
 
 const apiUrl = process.env.REACT_APP_BASE_URL;
 
@@ -17,10 +19,12 @@ const appId = "3BztObJw5DN2WXoWuTUuQfY3VHmI8cbZ9g5vpTlj";
 const serverURL = "https://hbuwdfmuhgp6.bigmoralis.com:2053/server";
 ReactDOM.render(
     <BrowserRouter>
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <App/>
-        </ThemeProvider>
+        <MetamaskStateProvider>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <App/>
+            </ThemeProvider>
+        </MetamaskStateProvider>
     </BrowserRouter>,
     document.getElementById('root')
 );
