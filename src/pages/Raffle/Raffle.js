@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {Button, Container, Grid, Link, Typography} from '@material-ui/core';
+import {Box, Button, Container, Link, Tab, Typography} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 // import RaffleTable from './components/RaffleTable'; TODO: temporary solution, read more in RaffleDropTable.js
 import RaffleDropTable from './components/RaffleDropTable';
@@ -10,6 +10,7 @@ import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
 import {raffle5TotalEnteredQuery, rafflePortalsPriceQuery, raffleTicketPriceQuery} from './data/queries';
 import useInterval from '../../hooks/useInterval';
+import { TabList, TabPanel, TabContext } from '@material-ui/lab';
 
 export default function Raffle() {
     const classes = useStyles();
@@ -22,6 +23,14 @@ export default function Raffle() {
     const [lastTicketInfo, setLastTicketInfo] = useState('');
     const [dropQuantity, setDropQuantity] = useState('');
     const [enteredCombined, setEnteredCombined] = useState(true);
+
+
+    const [activeRaffle, setActiveRaffle] = React.useState('5');
+
+    const onTabsChange = (event, newValue) => {
+        setActiveRaffle(newValue);
+    };
+
     // const [commonQuantity, setCommonQuantity] = useState('');
     // const [uncommonQuantity, setUncommonQuantity] = useState('');
     // const [rareQuantity, setRareQuantity] = useState('');
@@ -191,27 +200,63 @@ export default function Raffle() {
 
     return (
         <Container maxWidth='lg' className={classes.raffle}>
-            {/* <Moment>{ts}</Moment> */}
-            {/* {ts} */}
             <Helmet>
-                <title>Raffle #5 Calculator</title>
+                <title>Raffle Calculator</title>
             </Helmet>
+
+            <Box display='flex' justifyContent='center' textAlign='center' marginBottom='60px'>
+                <Box margin='0 8px' flexBasis={180}>
+                    <Button variant='outlined' color='primary' size='large' fullWidth>
+                        Raffle 4
+                    </Button>
+                    <Typography variant='caption'>29.03.21 {'<=>'} 01.04.21</Typography>
+                </Box>
+                <Box margin='0 8px' flexBasis={180}>
+                    <Button variant='contained' color='primary' size='large' fullWidth>
+                        Raffle 5
+                    </Button>
+                    <Typography variant='caption'>05.09.21 {'<=>'} 08.09.21</Typography>
+                </Box>
+                <Box margin='0 8px' flexBasis={180}>
+                    <Button variant='contained' color='primary' size='large' fullWidth disabled>
+                        Raffle 6
+                    </Button>
+                    <Typography variant='caption'>24.09.21 {'<=>'} 28.09.21</Typography>
+                </Box>
+            </Box>
+
+            <TabContext value={activeRaffle}>
+                <Box textAlign='center'>
+                    <TabList
+                        onChange={onTabsChange}
+                        variant='scrollable'
+                        scrollButtons='auto'
+                    >
+                        <Tab label='Raffle 4' value='4' />
+                        <Tab label='Raffle 5' value='5' />
+                        <Tab label='Raffle 6' value='6' disabled />
+                    </TabList>
+                </Box>
+
+                <TabPanel value='4'>
+                    RAFFLE 4 Panel
+                </TabPanel>
+                <TabPanel value='5'>
+                    RAFFLE 5 Panel
+                </TabPanel>
+                <TabPanel value='6'>
+                    RAFFLE 6 Panel
+                </TabPanel>
+            </TabContext>
             
-            <Grid container alignContent={'center'} className={classes.titleWrapper}>
-                <Grid item xs={12} md={7}>
-                    <Typography variant='h4' className={classes.title}>
-                        Raffle #5 calculator
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} md={5} className={classes.enterButtonWrapper}>
-                    <Link href={'https://www.aavegotchi.com/raffle/4'} className={classes.enterButton} target={'_blank'}>
-                        <Button variant={'contained'} color={'primary'} size={'large'}>
-                            Enter Raffle
-                        </Button>
-                    </Link>
-                </Grid>
-                
-            </Grid>
+            <Box position='fixed' right={20} bottom={20}>
+                <Link href={'https://www.aavegotchi.com/raffle/4'} className={classes.enterButton} target={'_blank'}>
+                    <Button variant='outlined' color='primary'>
+                        Enter Raffle
+                    </Button>
+                </Link>
+            </Box>
+
             <RaffleDropTable
                 tickets={tickets}
                 supplySpinner={supplySpinner}
