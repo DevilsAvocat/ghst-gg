@@ -2,13 +2,13 @@ import React, {useEffect, useState, useContext} from 'react';
 import {Box, Button, Container, Link, Tab, Typography, Grid} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 // import RaffleTable from './components/RaffleTable'; TODO: temporary solution, read more in RaffleDropTable.js
-import RaffleDropTable from './components/RaffleDropTable';
+import RaffleTable from './components/RaffleTable';
 import RaffleWearables from './components/RaffleWearables';
 import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
 import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
-import {raffle5TotalEnteredQuery, rafflePortalsPriceQuery, raffleTicketPriceQuery} from './data/queries';
+import {raffle6TotalEnteredQuery, raffleTicketPriceQuery} from './data/queries';
 import useInterval from '../../hooks/useInterval';
 import { TabList, TabPanel, TabContext } from '@material-ui/lab';
 
@@ -21,22 +21,22 @@ export default function Raffle() {
     const [supplySpinner, setSupplySpinner] = useState(true);
     const [pricesSpinner, setPricesSpinner] = useState(true);
     // const [lastTicketInfo, setLastTicketInfo] = useState('');
-    const [dropQuantity, setDropQuantity] = useState('');
+    // const [dropQuantity, setDropQuantity] = useState('');
     const [enteredCombined, setEnteredCombined] = useState(true);
 
 
-    const [activeRaffle, setActiveRaffle] = React.useState('5');
+    // const [activeRaffle, setActiveRaffle] = React.useState('5');
 
-    const onTabsChange = (event, newValue) => {
-        setActiveRaffle(newValue);
-    };
+    // const onTabsChange = (event, newValue) => {
+    //     setActiveRaffle(newValue);
+    // };
 
-    // const [commonQuantity, setCommonQuantity] = useState('');
-    // const [uncommonQuantity, setUncommonQuantity] = useState('');
-    // const [rareQuantity, setRareQuantity] = useState('');
-    // const [legendaryQuantity, setLegendaryQuantity] = useState('');
-    // const [mythicalQuantity, setMythicalQuantity] = useState('');
-    // const [godlikeQuantity, setGodlikeQuantity] = useState('');
+    const [commonQuantity, setCommonQuantity] = useState('');
+    const [uncommonQuantity, setUncommonQuantity] = useState('');
+    const [rareQuantity, setRareQuantity] = useState('');
+    const [legendaryQuantity, setLegendaryQuantity] = useState('');
+    const [mythicalQuantity, setMythicalQuantity] = useState('');
+    const [godlikeQuantity, setGodlikeQuantity] = useState('');
     // const [enteredSupplyType, setEnteredSupplyType] = useState(true);
 
 
@@ -44,27 +44,27 @@ export default function Raffle() {
 
     const getTicketQuantity = (type) => {
         const map = {
-            // 'common': () => {
-            //     return commonQuantity;
-            // },
-            // 'uncommon': () => {
-            //     return uncommonQuantity;
-            // },
-            // 'rare': () => {
-            //     return rareQuantity;
-            // },
-            // 'legendary': () => {
-            //     return legendaryQuantity;
-            // },
-            // 'mythical': () => {
-            //     return mythicalQuantity;
-            // },
-            // 'godlike': () => {
-            //     return godlikeQuantity;
-            // },
-            'drop': () => {
-                return dropQuantity;
-            }
+            'common': () => {
+                return commonQuantity;
+            },
+            'uncommon': () => {
+                return uncommonQuantity;
+            },
+            'rare': () => {
+                return rareQuantity;
+            },
+            'legendary': () => {
+                return legendaryQuantity;
+            },
+            'mythical': () => {
+                return mythicalQuantity;
+            },
+            'godlike': () => {
+                return godlikeQuantity;
+            },
+            // 'drop': () => {
+            //     return dropQuantity;
+            // }
         };
 
         try {
@@ -86,8 +86,9 @@ export default function Raffle() {
         let ticketsLocalRef = [...tickets];
 
         ticketsLocalRef.forEach((ticket, i) => {
-            let combinedSupply = enteredCombined ? +getTicketSupply(ticket) + +dropQuantity : getTicketSupply(ticket);
-            let chance = getTicketQuantity(ticket.type) / combinedSupply * ticket.items;
+            // let combinedSupply = enteredCombined ? +getTicketSupply(ticket) + +dropQuantity : getTicketSupply(ticket);
+            // let chance = getTicketQuantity(ticket.type) / combinedSupply * ticket.items;
+            let chance = getTicketQuantity(ticket.type) / getTicketSupply(ticket) * ticket.items;
             let percentage = (chance * 100).toFixed(1);
             let price = ticket.price;
             let cost = getTicketQuantity(ticket.type) * price;
@@ -118,14 +119,16 @@ export default function Raffle() {
     const loadTickets = () => {
         setSupplySpinner(true);
 
-        thegraph.getRaffleData(raffle5TotalEnteredQuery()).then((response)=> {
-            let enteredTickets = response.data.total.totalDrop;
+        thegraph.getRaffleData(raffle6TotalEnteredQuery()).then((response)=> {
+            let data = response.data.total;
+            let supplyArray = [data.totalCommon, data.totalUncommon, data.totalRare, data.totalLegendary, data.totalMythical, data.totalGodLike];
 
-            ticketsCache[0].entered = enteredTickets;
+            supplyArray.forEach((supply, i) => {
+                ticketsCache[i].supply = supply;
+            });
 
             setTicketsCache(ticketsCache);
             setTickets(ticketsCache);
-            // setSnackbarShowsOnFirstLoading(false);
             setSupplySpinner(false);
         }).catch(error => console.log(error))
 
@@ -153,18 +156,30 @@ export default function Raffle() {
     const getAveragePrices = () => {
         setPricesSpinner(true);
 
-        // thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)]) // raffle 4 queries
-        thegraph.getJoinedData([raffleTicketPriceQuery(6), rafflePortalsPriceQuery()])
+        thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)]) // raffle 4 queries
+        // thegraph.getJoinedData([raffleTicketPriceQuery(6), rafflePortalsPriceQuery()])
             .then((response) => {
-                let ticketsWeiPrices = response[0].data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
-                let portalsWeiPrices = response[1].data.erc721Listings.map((wei)=> parseInt(wei.priceInWei));
+                // let ticketsWeiPrices = response[0].data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
+                // let portalsWeiPrices = response[1].data.erc721Listings.map((wei)=> parseInt(wei.priceInWei));
 
-                let ticketsFloorPrice = (ticketsWeiPrices.reduce((a,b) => a + b, 0) / ticketsWeiPrices.length) / 10**18;
-                let portalsFloorPrice = (portalsWeiPrices.reduce((a,b) => a + b, 0) / portalsWeiPrices.length) / 10**18;
+                // let ticketsFloorPrice = (ticketsWeiPrices.reduce((a,b) => a + b, 0) / ticketsWeiPrices.length) / 10**18;
+                // let portalsFloorPrice = (portalsWeiPrices.reduce((a,b) => a + b, 0) / portalsWeiPrices.length) / 10**18;
 
-                ticketsCache[0].price = ticketsFloorPrice.toFixed(5);
-                ticketsCache[0].cost = ticketsFloorPrice.toFixed(5);
-                ticketsCache[0].portalsPrice = portalsFloorPrice.toFixed(0);
+                // ticketsCache[0].price = ticketsFloorPrice.toFixed(5);
+                // ticketsCache[0].cost = ticketsFloorPrice.toFixed(5);
+                // ticketsCache[0].portalsPrice = portalsFloorPrice.toFixed(0);
+
+                let averagePrices = response.map((item)=> {
+                    let prices = item.data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
+                    let average = prices.reduce((a,b) => a + b, 0) / prices.length;
+                    let price = average / 10**18;
+                    return price.toFixed(2);
+                });
+                console.log(averagePrices)
+                averagePrices.forEach((price, i) => {
+                    ticketsCache[i].price = price;
+                    ticketsCache[i].cost = price;
+                });
 
                 setTickets(ticketsCache);
                 setPricesSpinner(false);
@@ -185,7 +200,7 @@ export default function Raffle() {
 
     useEffect(() => {
         onFieldChange();
-    }, [dropQuantity]);
+    }, [commonQuantity, uncommonQuantity, rareQuantity, legendaryQuantity, mythicalQuantity, godlikeQuantity]);
 
     // useEffect(() => {
     //     onFieldChange();
@@ -207,11 +222,11 @@ export default function Raffle() {
             <Grid container alignContent={'center'} className={classes.titleWrapper}>
                 <Grid item xs={12} md={7}>
                     <Typography variant='h4' className={classes.title}>
-                        Raffle #5 calculator
+                        Raffle #6 calculator
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={5} className={classes.enterButtonWrapper}>
-                    Yo I'm here motherfuckers
+                    countdown goes here
                 </Grid>
             </Grid>
 
@@ -268,12 +283,20 @@ export default function Raffle() {
                 </Link>
             </Box>
 
-            <RaffleDropTable
+            <RaffleTable
                 tickets={tickets}
                 supplySpinner={supplySpinner}
                 pricesSpinner={pricesSpinner}
-                dropQuantity={dropQuantity}
-                setDropQuantity={setDropQuantity}
+
+                setCommonQuantity={setCommonQuantity}
+                setUncommonQuantity={setUncommonQuantity}
+                setRareQuantity={setRareQuantity}
+                setLegendaryQuantity={setLegendaryQuantity}
+                setMythicalQuantity={setMythicalQuantity}
+                setGodlikeQuantity={setGodlikeQuantity}
+                // enteredSupplyType={enteredSupplyType}
+                // setEnteredSupplyType={setEnteredSupplyType}
+
                 enteredCombined={enteredCombined}
                 setEnteredCombined={setEnteredCombined}
             />

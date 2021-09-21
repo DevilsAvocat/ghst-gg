@@ -9,13 +9,13 @@ import commonUtils from '../../../utils/commonUtils';
 import ghst from '../../../assets/images/ghst-doubleside.gif';
 import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 
-export default function RaffleTable({tickets, supplySpinner, pricesSpinner, enteredSupplyType, setEnteredSupplyType, setCommonQuantity, setUncommonQuantity,
+export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setCommonQuantity, setUncommonQuantity,
                                         setRareQuantity, setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
     const classes = useStyles();
 
-    const handleTicketsSupply = (event, type) => {
-        setEnteredSupplyType(type);
-    };
+    // const handleTicketsSupply = (event, type) => {
+    //     setEnteredSupplyType(type);
+    // };
 
     const getTicketIconPath = (iconId) => {
         return require(`../../../assets/tickets/${iconId}.svg`).default;
@@ -139,7 +139,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, ente
                             <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
                         </Tooltip>
                     </Typography>
-                    <ToggleButtonGroup
+                    {/* <ToggleButtonGroup
                         value={enteredSupplyType}
                         exclusive
                         onChange={handleTicketsSupply}
@@ -153,7 +153,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, ente
                         <ToggleButton className={classes.toggleButton} value={false} aria-label='all supply'>
                             All
                         </ToggleButton>
-                    </ToggleButtonGroup>
+                    </ToggleButtonGroup> */}
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     {
@@ -169,7 +169,8 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, ente
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            {enteredSupplyType ? (
+                                            {commonUtils.formatNumber(ticket.entered)}
+                                            {/* {enteredSupplyType ? (
                                                 <Box component={'span'} className={classes.enteredValue}>
                                                     <Box component={'span'}>
                                                         {commonUtils.formatNumber(ticket.entered)}
@@ -181,7 +182,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, ente
 
                                             ) : (
                                                 commonUtils.formatNumber(ticket.supply)
-                                            )}
+                                            )} */}
                                         </Typography>
                                     )}
                                 </Box>
