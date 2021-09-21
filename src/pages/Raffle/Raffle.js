@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {Box, Button, Container, Link, Tab, Typography} from '@material-ui/core';
+import {Box, Button, Container, Link, Tab, Typography, Grid} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 // import RaffleTable from './components/RaffleTable'; TODO: temporary solution, read more in RaffleDropTable.js
 import RaffleDropTable from './components/RaffleDropTable';
@@ -16,11 +16,11 @@ export default function Raffle() {
     const classes = useStyles();
     const [tickets, setTickets] = useState([...ticketsData]);
     const [ticketsCache, setTicketsCache] = useState([...tickets]);
-    const { showSnackbar } = useContext(SnackbarContext);
-    const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
+    // const { showSnackbar } = useContext(SnackbarContext);
+    // const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
     const [supplySpinner, setSupplySpinner] = useState(true);
     const [pricesSpinner, setPricesSpinner] = useState(true);
-    const [lastTicketInfo, setLastTicketInfo] = useState('');
+    // const [lastTicketInfo, setLastTicketInfo] = useState('');
     const [dropQuantity, setDropQuantity] = useState('');
     const [enteredCombined, setEnteredCombined] = useState(true);
 
@@ -125,7 +125,7 @@ export default function Raffle() {
 
             setTicketsCache(ticketsCache);
             setTickets(ticketsCache);
-            setSnackbarShowsOnFirstLoading(false);
+            // setSnackbarShowsOnFirstLoading(false);
             setSupplySpinner(false);
         }).catch(error => console.log(error))
 
@@ -187,12 +187,12 @@ export default function Raffle() {
         onFieldChange();
     }, [dropQuantity]);
 
-    useEffect(() => {
-        onFieldChange();
-        if (!snackbarShowsOnFirstLoading) {
-            showSnackbar('success', 'Tickets supply was successfully updated!')
-        }
-    }, [lastTicketInfo]);
+    // useEffect(() => {
+    //     onFieldChange();
+    //     if (!snackbarShowsOnFirstLoading) {
+    //         showSnackbar('success', 'Tickets supply was successfully updated!')
+    //     }
+    // }, [lastTicketInfo]);
 
     useInterval(() => {
         loadTickets();
@@ -204,7 +204,18 @@ export default function Raffle() {
                 <title>Raffle Calculator</title>
             </Helmet>
 
-            <Box display='flex' justifyContent='center' textAlign='center' marginBottom='60px'>
+            <Grid container alignContent={'center'} className={classes.titleWrapper}>
+                <Grid item xs={12} md={7}>
+                    <Typography variant='h4' className={classes.title}>
+                        Raffle #5 calculator
+                    </Typography>
+                </Grid>
+                <Grid item xs={12} md={5} className={classes.enterButtonWrapper}>
+                    Yo I'm here motherfuckers
+                </Grid>
+            </Grid>
+
+            {/* <Box display='flex' justifyContent='center' textAlign='center' marginBottom='60px'>
                 <Box margin='0 8px' flexBasis={180}>
                     <Button variant='outlined' color='primary' size='large' fullWidth>
                         Raffle 4
@@ -247,11 +258,11 @@ export default function Raffle() {
                 <TabPanel value='6'>
                     RAFFLE 6 Panel
                 </TabPanel>
-            </TabContext>
+            </TabContext> */}
             
-            <Box position='fixed' right={20} bottom={20}>
-                <Link href={'https://www.aavegotchi.com/raffle/4'} className={classes.enterButton} target={'_blank'}>
-                    <Button variant='outlined' color='primary'>
+            <Box position='fixed' right={18} bottom={18}>
+                <Link href={'https://www.aavegotchi.com/raffle/5'} className={classes.enterButton} target={'_blank'}>
+                    <Button variant='contained' color='primary'>
                         Enter Raffle
                     </Button>
                 </Link>

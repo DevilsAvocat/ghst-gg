@@ -49,6 +49,14 @@ export const useStyles = makeStyles((theme) => ({
     enterButton: {
         '&:hover': {
             textDecoration: 'none'
+        },
+        '& button': {
+            position: 'relative',
+            boxShadow: `0 0 0 0 ${fade(theme.palette.primary.main, .5)}`,
+            animation: `$customPulse 1.5s infinite`,
+            '&:hover': {
+                animation: 'none'
+            }
         }
     },
     toggleWrapper: {
@@ -364,5 +372,18 @@ export const useStyles = makeStyles((theme) => ({
         '&.mystery': {
             backgroundColor: `${fade(theme.palette.error.light, .2)} !important`,
         }
-    }
+    },
+    '@keyframes customPulse': {
+        '0%': {
+            transform: 'scale(.9)'
+        },
+        '70%': {
+            transform: 'scale(1)',
+            boxShadow: `0 0 0 20px transparent`
+        },
+        '100%': {
+            transform: 'scale(.9)',
+            boxShadow: `0 0 0 0 transparent`
+        }
+    },
 }));
