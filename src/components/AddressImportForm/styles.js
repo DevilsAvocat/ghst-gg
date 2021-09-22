@@ -1,12 +1,23 @@
-import React, {useState} from 'react';
-import { Grid, TextField, Button, IconButton, Typography, makeStyles } from '@material-ui/core';
-import classNames from 'classnames';
+import { makeStyles } from '@material-ui/core/styles';
 
-import Close from '@material-ui/icons/Close';
+export const useStyles = makeStyles((theme) => ({
+    select: {
+        width: '100%'
+    },
+    option: {
+        padding: '0 16px 0 ',
+        display: 'flex',
+        justifyContent: 'space-between'
+    },
+    optionText: {
+        maxWidth: 'calc(100% - 48px)',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        flexGrow: 1
 
-const useStyles = makeStyles((theme) => ({
+    },
     addressField: {
-        '&.highlighted.color-1': {
+        '&.color-1': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color1,
             },
@@ -22,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-2': {
+        '&.color-2': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color2,
             },
@@ -38,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-3': {
+        '&.color-3': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color3,
             },
@@ -54,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-4': {
+        '&.color-4': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color4,
             },
@@ -70,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-5': {
+        '&.color-5': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color5,
             },
@@ -86,7 +97,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-6': {
+        '&.color-6': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color6,
             },
@@ -102,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-7': {
+        '&.color-7': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color7,
             },
@@ -118,7 +129,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-8': {
+        '&.color-8': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color8,
             },
@@ -134,7 +145,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-9': {
+        '&.color-9': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color9,
             },
@@ -150,7 +161,7 @@ const useStyles = makeStyles((theme) => ({
                 },
             },
         },
-        '&.highlighted.color-10': {
+        '&.color-10': {
             '& label.Mui-focused': {
                 color: theme.palette.accounts.color10,
             },
@@ -167,87 +178,22 @@ const useStyles = makeStyles((theme) => ({
             },
         }
     },
+    deleteButton: {
+        marginRight: -16,
+        borderRadius: 0
+    },
+    metamaskIcon: {
+        width: 48,
+        height: 48,
+        padding: 12,
+        margin: '0 -8px',
+        '& img': {
+            display: 'block',
+            width: '100%',
+            height: '100%'
+        }
+    },
     fieldsButton: {
         padding: '7px 15px'
     }
 }));
-
-export default function ClientFields({validAddresses, loadData}) {
-    const classes = useStyles();
-    const [addresses, setAddresses] = useState(validAddresses);
-
-    const fillAddress = (value, index) => {
-        let addressesCache = [...addresses];
-        addressesCache[index] = value;
-        setAddresses(addressesCache);
-    };
-
-    const deleteField = (index) => {
-        let addressesCache = [...addresses];
-        addressesCache.splice(index, 1);
-        addresses.length === 1 ? setAddresses(['']) : setAddresses(addressesCache);
-    };
-
-    const addMoreFields = () => {
-        if(addresses.length < 10) {
-            setAddresses([...addresses, '']);
-        }
-    };
-
-    return (
-        <Grid container spacing={2} style={{marginBottom: 12}}>
-            <Grid item xs={12}>
-                <Typography variant={'body1'}>Fill up to 10 addresses</Typography>
-            </Grid>
-            {
-                addresses.map((address, i)=>{
-                    return <Grid item xs={12} sm={6} md={3} key={i}>
-                        <TextField
-                            type='text'
-                            variant='outlined'
-                            fullWidth
-                            size={'small'}
-                            label={`address ${i + 1}`}
-                            value={address}
-                            disabled={validAddresses[i]?.length !== 0 && address === validAddresses[i]}
-                            className={classNames(classes.addressField, `color-${i + 1}`, address === validAddresses[i] && 'highlighted')}
-                            onChange={(event) => {
-                                fillAddress(event.target.value, i);
-                            }}
-                            InputProps={{
-                                endAdornment: <IconButton size={'small'} onClick={() => deleteField(i)}>
-                                    <Close/>
-                                </IconButton>
-                            }}
-                        />
-                    </Grid>
-                })
-            }
-            <Grid container item xs={12} sm={6} md={3} style={{marginLeft: 'auto'}}>
-                <Grid item xs={4}>
-                    <Button
-                        className={classes.fieldsButton}
-                        disabled={addresses.length > 9}
-                        variant={'outlined'}
-                        color={'primary'}
-                        fullWidth
-                        onClick={addMoreFields}
-                    >
-                        Add
-                    </Button>
-                </Grid>
-                <Grid item xs={8} style={{paddingLeft: 16}}>
-                    <Button
-                        className={classes.fieldsButton}
-                        variant={'contained'}
-                        color={'primary'}
-                        fullWidth
-                        onClick={() => loadData(addresses)}
-                    >
-                        Fetch data!
-                    </Button>
-                </Grid>
-            </Grid>
-        </Grid>
-    )
-}

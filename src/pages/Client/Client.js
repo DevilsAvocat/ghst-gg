@@ -1,13 +1,12 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, { useEffect, useState} from 'react';
 import { Container, Backdrop, CircularProgress, useTheme, makeStyles, } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import thegraph from '../../api/thegraph';
 import web3 from '../../api/web3';
 import itemUtils from '../../utils/itemUtils';
 import commonUtils from '../../utils/commonUtils';
-import {SnackbarContext} from '../../contexts/SnackbarContext';
 
-import ClientFields from './components/ClientFields';
+import AddressImportForm from '../../components/AddressImportForm/AddressImportForm';
 import ClientContent from './components/ClientContent';
 
 const useStyles = makeStyles((theme) => ({
@@ -26,9 +25,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Client() {
     const classes = useStyles();
     const theme = useTheme();
-    const { showSnackbar } = useContext(SnackbarContext);
-    const [validAddresses, setValidAddresses] = useState(localStorage.getItem('loggedAccounts')?.split(',')|| ['']);
-
+    const [addresses, setAddresses] = useState([]);
     const [gotchies, setGotchies] = useState([]);
     const [gotchiesFilter, setGotchiesFilter] = useState('withSetsRarityScore');
     const [isGotchiesLoading, setIsGotchiesLoading] = useState(false);
@@ -37,20 +34,12 @@ export default function Client() {
     const [inventoryFilter, setInventoryFilter] = useState('desc');
     const [isInventoryLoading, setIsInventoryLoading] = useState(false);
 
-    useEffect(()=> {
-        if(validAddresses[0].length !== 0) {
-            getGotchiesByAddresses(validAddresses);
-            getInventoryByAddresses(validAddresses);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
     const getGotchiesByAddresses = (addresses) => {
         setIsGotchiesLoading(true);
-        thegraph.getGotchiesByAddresses(addresses).then(async (response)=>{
+        thegraph.getGotchiesByAddresses(addresses).then(async (response)=> {
             let combinedGotchies = [];
 
-            response.forEach((item)=>{
+            response.forEach( (item)=> {
                 if(item.data.user) {
                     combinedGotchies.push(...item.data.user.gotchisOwned);
                 }
@@ -58,7 +47,8 @@ export default function Client() {
 
             setGotchies(commonUtils.basicSort(combinedGotchies, gotchiesFilter));
             setIsGotchiesLoading(false);
-        }).catch(()=>{
+
+        }).catch(()=> {
             setIsGotchiesLoading(false);
         });
     };
@@ -100,19 +90,15 @@ export default function Client() {
         });
     };
 
-    const loadData = async (addresses) => {
-        let noDuplicates = !commonUtils.checkArrayForDuplicates(addresses);
-        let allValid = addresses.every((address) => web3.isAddressValid(address));
-
-        if(allValid && noDuplicates) {
-            setValidAddresses(addresses);
+    const getData = () => {
+        if(addresses.length !== 0) {
             getGotchiesByAddresses(addresses);
             getInventoryByAddresses(addresses);
-            localStorage.setItem('loggedAccounts', addresses);
-            showSnackbar('success', 'Leeroy Jenkins!');
-        } else {
-            showSnackbar('error', 'One or more addresses are not correct or duplicated!');
         }
+    }
+
+    const rebuildContent = (addresses) => {
+        if(addresses) setAddresses([...new Set(addresses.map(item => item.toLowerCase()))]);
     };
 
     const onGotchiesSort = (event) => {
@@ -132,6 +118,10 @@ export default function Client() {
         setInventoryFilter(event.target.value);
     };
 
+    useEffect( () => {
+        getData();
+    }, [addresses]);
+
     const isDataLoading = () => {
         return isGotchiesLoading || isInventoryLoading;
     };
@@ -142,10 +132,10 @@ export default function Client() {
                 <title>Client</title>
             </Helmet>
 
-            <ClientFields loadData={loadData} validAddresses={validAddresses} />
+            <AddressImportForm {...{rebuildContent}} />
 
             <ClientContent
-                validAddresses={validAddresses}
+                addresses={addresses}
                 gotchies={gotchies}
                 gotchiesFilter={gotchiesFilter}
                 onGotchiesSort={onGotchiesSort}
