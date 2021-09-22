@@ -14,7 +14,6 @@ export const useStyles = makeStyles((theme) => ({
         textOverflow: 'ellipsis',
         overflow: 'hidden',
         flexGrow: 1
-
     },
     addressField: {
         '&.color-1': {
@@ -186,12 +185,20 @@ export const useStyles = makeStyles((theme) => ({
         width: 48,
         height: 48,
         padding: 12,
-        margin: '0 -8px',
+        marginLeft: -8,
+        display: 'block',
+        boxSizing: 'border-box',
         '& img': {
             display: 'block',
             width: '100%',
             height: '100%'
         }
+    },
+    fieldMetamaskIcon: {
+        width: 16,
+        height: 16, 
+        display: 'inline-block',
+        marginBottom: -2
     },
     fieldsButton: {
         padding: '7px 15px'

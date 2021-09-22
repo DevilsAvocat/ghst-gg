@@ -15,7 +15,7 @@ export default function MetamaskLoginButton({size}) {
     const [maticState, setMaticState] = useState(false);
     const [btnTxt, setBtnTxt] = useState('Connect');
     const classes = useStyles();
-    const [addresses, setAddresses] = useLocalStorage('addresses', JSON.parse(localStorage.getItem('addresses')) || []);
+    const [metamaskAddress, setMetamaskAddress] = useLocalStorage('ghst_metamask', JSON.parse(localStorage.getItem('ghst_metamask')));
 
     const handleOpen = () => {
         setOpen(true);
@@ -24,22 +24,6 @@ export default function MetamaskLoginButton({size}) {
     const handleClose = () => {
         setOpen(false);
     };
-
-    const addWalletAddress = (walletAddress) => {
-        if(!addresses[0].metamask) {
-            setAddresses(
-                [
-                    {
-                        name: 'Wallet address',
-                        metamask: true,
-                        address: walletAddress,
-                        selected: true
-                    },
-                    ...addresses
-                ]
-            )
-        }
-    }
 
     const connectWallet = useCallback(() => {
         if (!metaState.isConnected) {
@@ -112,7 +96,7 @@ export default function MetamaskLoginButton({size}) {
         if(metaState.isConnected) {
             if(metaState.account.length) {
                 setBtnTxt(commonUtils.cutAddress(metaState.account[0]));
-                addWalletAddress(metaState.account[0]);
+                if(metaState.account[0] !== metamaskAddress) setMetamaskAddress(metaState.account[0]);
             };
 
             if (metaState.chain.id === '137') {

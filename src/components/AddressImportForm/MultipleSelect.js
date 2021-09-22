@@ -46,11 +46,34 @@ export default function MultipleSelect({ placeholder, onUpdate, newAddresess}) {
         return array.filter(item => item.selected).map(item => item.name);
     }
 
+    const updateMetamaskAddress = (address) => {
+        let addressesCeche = addresses.length ? addresses.filter((item) => {
+            return item.address.toLowerCase() !== address || item.metamask
+        }) : [];
+
+        if(addressesCeche[0]?.metamask && addressesCeche[0]?.address.toLowerCase() === address) return; // if address already added
+        
+        if(addressesCeche[0]?.metamask) { // if change metamask wallet
+            addressesCeche[0].address = address;
+        } else { // if metamask wallet not added
+            addressesCeche = [
+                {
+                    name: 'ghst_metamask_address',
+                    metamask: true,
+                    address: address,
+                    selected: true
+                },
+                ...addressesCeche
+            ]
+        }
+
+        setAddresses(addressesCeche)
+    }
+
 
     useEffect( () => {
-        if(metaState.account.length && addresses[0].address !== metaState.account[0]) {
-            addresses[0].address = metaState.account[0];
-            setAddresses([...addresses]);
+        if (metaState.account.length) {
+            updateMetamaskAddress(metaState.account[0].toLowerCase());
         }
     }, [metaState]);
 
@@ -80,8 +103,14 @@ export default function MultipleSelect({ placeholder, onUpdate, newAddresess}) {
                 renderValue={(selected) => {
                     if (!selected.length) {
                         return <em>{placeholder}</em>;
+                    } else if (selected[0] === 'ghst_metamask_address') {
+                        return [
+                            <img src={metamaskIcon} className={classes.fieldMetamaskIcon}></img>,
+                            selected.slice(1).length ? ', ' : '',
+                            selected.slice(1).join(',')
+                        ]
                     }
-                    return selected.join(', ');
+                    else return selected.join(', ')
                 }}
                 MenuProps={MenuProps}
                 inputProps={{ 'aria-label': 'Without label' }}
@@ -108,7 +137,7 @@ export default function MultipleSelect({ placeholder, onUpdate, newAddresess}) {
                                     value={item.name}
                                     className={classes.option}
                                 >
-                                    <Icon className={classes.metamaskIcon} src={metamaskIcon}>
+                                    <Icon className={classes.metamaskIcon}>
                                         <img src={metamaskIcon} ></img>
                                     </Icon>
                                     <Typography className={classes.optionText}> {commonUtils.cutAddress(item.address)}</Typography>

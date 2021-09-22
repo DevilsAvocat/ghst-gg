@@ -36,7 +36,9 @@ export default function AddressImportForm({rebuildContent}) {
     
 
     const canSaveAddress = (data) => {
-        let duplicate = newAddresess.map(item => item.name).includes(data.name) || newAddresess.map(item => item.address).includes(data.address);
+        let duplicate = 
+            newAddresess.map(item => item.name).includes(data.name) ||
+            newAddresess.map(item => item.address).includes(data.address.toLowerCase());
         let addressValid = web3.isAddressValid(data.address);
 
         return !duplicate && addressValid && data.name.length;
