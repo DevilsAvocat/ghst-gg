@@ -1,26 +1,15 @@
 import React, { useEffect, useState} from 'react';
-import { Container, Backdrop, CircularProgress, useTheme, makeStyles, } from '@material-ui/core';
+import { Container, Backdrop, CircularProgress, useTheme, } from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import thegraph from '../../api/thegraph';
 import web3 from '../../api/web3';
 import itemUtils from '../../utils/itemUtils';
 import commonUtils from '../../utils/commonUtils';
 
+import { useStyles } from './styles';
+
 import AddressImportForm from '../../components/AddressImportForm/AddressImportForm';
 import ClientContent from './components/ClientContent';
-
-const useStyles = makeStyles((theme) => ({
-    container: {
-        padding: '50px 24px',
-        [theme.breakpoints.up('md')]: {
-            padding: '50px 32px'
-        }
-    },
-    backdrop: {
-        zIndex: theme.zIndex.appBar - 1,
-        color: '#fff'
-    },
-}));
 
 export default function Client() {
     const classes = useStyles();
