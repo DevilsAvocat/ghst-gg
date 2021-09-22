@@ -86,7 +86,7 @@ export default function Header() {
                 
             </Grid>
             <Grid item className={classes.group}>
-                <MetamaskLoginButton size='small'/>
+                <MetamaskLoginButton size='small' />
                 <IconButton
                     color='primary'
                     aria-label='menu'

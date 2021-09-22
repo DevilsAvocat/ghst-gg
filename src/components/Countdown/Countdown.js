@@ -5,6 +5,8 @@ import useStyles from './styles';
 
 const interval = 1000/24;
 
+DateTime.local().setZone("America/Bogus");
+
 const names = {
     S: ['millisecond', 'milliseconds'],
     ss: ['second', 'seconds'],
@@ -25,7 +27,7 @@ export default function Countdown({date, format}) {
     const formatArray = format.split(':');
 
     useInterval(() => {
-        const diffTime = date.getTime() - DateTime.now().ts;
+        const diffTime = date - DateTime.local();
 
         setNewDate(Duration.fromObject({milliseconds: diffTime}).toFormat(format));
     }, interval);
@@ -36,7 +38,7 @@ export default function Countdown({date, format}) {
                 {
                     newDate.split(':').map((item, index) => {
                         return (
-                            <div className={classes.inner}>
+                            <div className={classes.inner} key={index}>
                                 <span className={classes.number}>
                                     {item}
                                 </span>

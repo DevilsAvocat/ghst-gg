@@ -1,9 +1,10 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
+import { DateTime } from 'luxon';
 import Countdown from '../../components/Countdown/Countdown';
 
 export default function CountdownTest() {
-    const date = new Date(2021, 10, 11, 20, 17);
+    const date = DateTime.local(2021, 10, 11, 20, 17, { zone: 'utc' });
 
     return (
         <Box maxWidth={600} margin='auto' padding={4}>
