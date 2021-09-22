@@ -20,8 +20,8 @@ export const useStyles = makeStyles((theme) => ({
         borderRadius: 0
     },
     metamaskIcon: {
-        width: 48,
-        height: 48,
+        width: '48px !important',
+        height: '48px !important',
         padding: 12,
         marginLeft: -8,
         display: 'block',
