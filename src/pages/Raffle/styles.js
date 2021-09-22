@@ -243,14 +243,14 @@ export const useStyles = makeStyles((theme) => ({
         minHeight: 40,
         padding: '6px !important',
         '& img': {
-            height: '100%',
+            height: '95%',
             width: '100%',
             position: 'absolute',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             opacity: .15,
-            pointerEvent: 'none'
+            pointerEvents: 'none'
         }
     },
     price: {

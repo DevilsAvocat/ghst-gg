@@ -36,7 +36,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                             className={classNames(classes.input, 'common')}
                             label={'Common'}
                             onChange={(event) => {
-                                setCommonQuantity(event.target.value);
+                                setCommonQuantity(event.target.value > 0 ? event.target.value : 0);
                             }}
                         />
                     </Grid>
@@ -48,7 +48,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                             className={classNames(classes.input, 'uncommon')}
                             label={'Uncommon'}
                             onChange={(event) => {
-                                setUncommonQuantity(event.target.value);
+                                setUncommonQuantity(event.target.value > 0 ? event.target.value : 0);
                             }}
                         />
                     </Grid>
@@ -60,7 +60,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                             className={classNames(classes.input, 'rare')}
                             label={'Rare'}
                             onChange={(event) => {
-                                setRareQuantity(event.target.value);
+                                setRareQuantity(event.target.value > 0 ? event.target.value : 0);
                             }}
                         />
                     </Grid>
@@ -72,7 +72,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                             className={classNames(classes.input, 'legendary')}
                             label={'Legendary'}
                             onChange={(event) => {
-                                setLegendaryQuantity(event.target.value);
+                                setLegendaryQuantity(event.target.value > 0 ? event.target.value : 0);
                             }}
                         />
                     </Grid>
@@ -84,7 +84,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                             className={classNames(classes.input, 'mythical')}
                             label={'Mythical'}
                             onChange={(event) => {
-                                setMythicalQuantity(event.target.value);
+                                setMythicalQuantity(event.target.value > 0 ? event.target.value : 0);
                             }}
                         />
                     </Grid>
@@ -96,7 +96,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                             className={classNames(classes.input, 'godlike')}
                             label={'Godlike'}
                             onChange={(event) => {
-                                setGodlikeQuantity(event.target.value);
+                                setGodlikeQuantity(event.target.value > 0 ? event.target.value : 0);
                             }}
                         />
                     </Grid>
@@ -125,14 +125,14 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3} className={classes.toggleWrapper}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Tickets Supply
+                        Tickets Entered
                         <Tooltip
                             placement='right'
                             arrow
                             enterTouchDelay={0}
                             title={
                                 <React.Fragment>
-                                    <Typography>The number of tickets is updated every 3 minutes. There is no need to reload the page</Typography>
+                                    <Typography>Total number of entered tickets</Typography>
                                 </React.Fragment>
                             }
                         >
@@ -194,7 +194,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Frens market cap
+                        Tickets Entered in FRENs
                         <Tooltip
                             placement='right'
                             arrow
@@ -222,7 +222,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            {commonUtils.formatNumber(ticket.supply * ticket.priceInFrens)}
+                                            {commonUtils.formatNumber(ticket.entered * ticket.priceInFrens)}
                                         </Typography>
                                     )}
                                 </Box>
@@ -234,7 +234,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Estimated baazaar price
+                        Your tickets price
                         <Tooltip
                             placement='right'
                             arrow
@@ -275,7 +275,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Your items
+                        Your reward
                         <Tooltip
                             placement='right'
                             arrow
@@ -301,6 +301,56 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                 >
                                     {ticket.chance}
                                 </Typography>
+                            </Grid>
+                        })
+                    }
+                </Grid>
+            </Grid>
+            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+                <Grid item xs={12} md={4} lg={3}>
+                    <Typography variant='h6' className={classes.subtitle}>
+                        Raffle profitability
+                        <Tooltip
+                            placement='right'
+                            arrow
+                            enterTouchDelay={0}
+                            title={
+                                <React.Fragment>
+                                    <Typography>How profitable is the raffle based on the baazaar floor prices</Typography>
+                                </React.Fragment>
+                            }
+                        >
+                            <HelpOutlineIcon fontSize='small' className={classes.subtitleIcon} />
+                        </Tooltip>
+                    </Typography>
+                </Grid>
+                <Grid container item spacing={1} xs={12} md={8} lg={9}>
+                    {
+                        tickets.map((ticket, i) => {
+                            return <Grid item xs={4} sm={true} key={i} className={classNames(classes.textHighlight, ticket.type, ticket.chance !== 0 ? 'highlighted' : '')}>
+                                <Box align='center'>
+                                    {pricesSpinner ? (
+                                        <CircularProgress color='inherit' size={20} />
+                                    ) : (
+                                        <Typography
+                                            variant='body1'
+                                            align='center'
+                                            className={classNames(classes.tableValue, classes.price)}
+                                        >
+                                            1
+                                            {/* {countProfit() > 0 ?
+                                                <Box component='span' style={{ color: '#4caf50' }}>
+                                                    +{countProfit()}%
+                                                </Box>
+                                                : countProfit() < 0 ?
+                                                <Box component='span' style={{ color: '#f44336' }}>
+                                                    {countProfit()}%
+                                                </Box>
+                                                : 0
+                                            } */}
+                                        </Typography>
+                                    )}
+                                </Box>
                             </Grid>
                         })
                     }

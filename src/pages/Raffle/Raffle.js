@@ -78,20 +78,16 @@ export default function Raffle() {
         countTicketsChance();
     };
 
-    const getTicketSupply = (ticket) => {
-        return ticket.entered;
-    }
-
     const countTicketsChance = () => {
         let ticketsLocalRef = [...tickets];
 
         ticketsLocalRef.forEach((ticket, i) => {
             // let combinedSupply = enteredCombined ? +getTicketSupply(ticket) + +dropQuantity : getTicketSupply(ticket);
             // let chance = getTicketQuantity(ticket.type) / combinedSupply * ticket.items;
-            let chance = getTicketQuantity(ticket.type) / getTicketSupply(ticket) * ticket.items;
+            let chance = getTicketQuantity(ticket.type) / ticket.entered * ticket.items;
             let percentage = (chance * 100).toFixed(1);
             let price = ticket.price;
-            let cost = getTicketQuantity(ticket.type) * price;
+            let cost = (getTicketQuantity(ticket.type) * price).toFixed(2);
 
             let wearables = countWearablesChance(ticket.wearables, ticket.items, chance.toFixed(2));
 
@@ -108,9 +104,15 @@ export default function Raffle() {
     }
 
     const countWearablesChance = (wearables, itemsAmount, chance) => {
-        wearables.forEach((wearable, i) => {
+        wearables.forEach((wearable) => {
             let percentage = (wearable.amount * 100 / itemsAmount).toFixed(2)
             let wearableChance = percentage * chance / 100;
+
+            if(wearableChance > wearable.amount) {
+                wearable.chance = `x${wearable.amount}`;
+                return;
+            }
+
             wearable.chance = wearableChance > 1 ? `x${wearableChance.toFixed(2)}` : `${(wearableChance * 100).toFixed(1)}% for 1`;
         });
         return wearables;
@@ -121,10 +123,11 @@ export default function Raffle() {
 
         thegraph.getRaffleData(raffle6TotalEnteredQuery()).then((response)=> {
             let data = response.data.total;
-            let supplyArray = [data.totalCommon, data.totalUncommon, data.totalRare, data.totalLegendary, data.totalMythical, data.totalGodLike];
+            // let enteredArray = [data.totalCommon, data.totalUncommon, data.totalRare, data.totalLegendary, data.totalMythical, data.totalGodLike];
+            let enteredArray = ['50000', '15000', '7000', '2000', '1200', '50'];
 
-            supplyArray.forEach((supply, i) => {
-                ticketsCache[i].supply = supply;
+            enteredArray.forEach((entered, i) => {
+                ticketsCache[i].entered = entered;
             });
 
             setTicketsCache(ticketsCache);
@@ -175,7 +178,7 @@ export default function Raffle() {
                     let price = average / 10**18;
                     return price.toFixed(2);
                 });
-                console.log(averagePrices)
+
                 averagePrices.forEach((price, i) => {
                     ticketsCache[i].price = price;
                     ticketsCache[i].cost = price;
@@ -275,7 +278,7 @@ export default function Raffle() {
                 </TabPanel>
             </TabContext> */}
             
-            <Box position='fixed' right={18} bottom={18}>
+            <Box position='fixed' right={18} bottom={18} zIndex={5}>
                 <Link href={'https://www.aavegotchi.com/raffle/5'} className={classes.enterButton} target={'_blank'}>
                     <Button variant='contained' color='primary'>
                         Enter Raffle
