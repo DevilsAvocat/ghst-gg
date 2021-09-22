@@ -23,7 +23,7 @@ const MenuProps = {
 
 export default function MultipleSelect({ placeholder, onUpdate, newAddresess}) {
     const classes = useStyles();
-    const [addresses, setAddresses] = useLocalStorage('addresses', JSON.parse(localStorage.getItem('addresses')) || []);
+    const [addresses, setAddresses] = useLocalStorage('ghst_addresses', JSON.parse(localStorage.getItem('ghst_addresses')) || []);
     const { metaState } = useMetamask();
     const [names, setNames] = useState([]);
 
