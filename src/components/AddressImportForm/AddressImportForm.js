@@ -5,7 +5,7 @@ import { SnackbarContext } from '../../contexts/SnackbarContext';
 import { useStyles } from './styles';
 
 import Field from './Field';
-import MultipleSelect from './MultipleSelect';
+import AddressesSelect from '../AddressesSelect/AddressesSelect';
 
 export default function AddressImportForm({rebuildContent}) {
     const classes = useStyles();
@@ -49,7 +49,7 @@ export default function AddressImportForm({rebuildContent}) {
     };
 
     useEffect( () => {
-        rebuildContent(
+        if(rebuildContent) rebuildContent(
             newAddresess.filter(item => item.selected).map(item => item.address)
         );
     }, [newAddresess]);
@@ -61,7 +61,7 @@ export default function AddressImportForm({rebuildContent}) {
             </Grid>
 
             <Grid item xs={12} sm={6} md={4} >
-                <MultipleSelect
+                <AddressesSelect
                     {
                         ...{ onUpdate, newAddresess }
                     }

@@ -5,7 +5,7 @@ import commonUtils from '../../utils/commonUtils';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
 import Web3 from 'web3';
 import useLocalStorage from '../../hooks/useLocalStorage';
-
+import AddressImportForm from '../AddressImportForm/AddressImportForm';
 
 import useStyles from './styles';
 
@@ -115,10 +115,11 @@ export default function MetamaskLoginButton({size}) {
             <Button className={classes.button} variant='contained' color='primary' onClick={onButtonClick} size={size ? size : 'medium'}>
                 {btnTxt}
             </Button>
-            <ModalWrapper modalOpen={modalOpen} handleClose={handleClose} width={500}>
+            <ModalWrapper modalOpen={modalOpen} handleClose={handleClose} width={700}>
                 <Typography variant='h5' paragraph={true}>Account</Typography>
                 <Typography variant='body1' paragraph={true}>Connected via MetaMask</Typography>
                 <Typography className={classes.address} variant='body1'>{metaState.account[0]}</Typography>
+                <AddressImportForm />
             </ModalWrapper>
         </Grid>
     );
