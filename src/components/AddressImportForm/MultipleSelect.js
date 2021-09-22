@@ -105,7 +105,7 @@ export default function MultipleSelect({ placeholder, onUpdate, newAddresess}) {
                         return <em>{placeholder}</em>;
                     } else if (selected[0] === 'ghst_metamask_address') {
                         return [
-                            <img src={metamaskIcon} className={classes.fieldMetamaskIcon}></img>,
+                            <img src={metamaskIcon} className={classes.fieldMetamaskIcon} key="metamask icon"></img>,
                             selected.slice(1).length ? ', ' : '',
                             selected.slice(1).join(',')
                         ]
