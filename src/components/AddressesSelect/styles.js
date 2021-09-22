@@ -7,7 +7,8 @@ export const useStyles = makeStyles((theme) => ({
     option: {
         padding: '0 16px 0 ',
         display: 'flex',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginBottom: 1
     },
     optionText: {
         maxWidth: 'calc(100% - 48px)',
