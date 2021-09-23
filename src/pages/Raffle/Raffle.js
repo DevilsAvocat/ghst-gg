@@ -7,6 +7,8 @@ import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
 import thegraph from '../../api/thegraph';
 import {raffle6TotalEnteredQuery, raffleTicketPriceQuery} from './data/queries';
+import Countdown from '../../components/Countdown/Countdown';
+import { DateTime } from 'luxon';
 
 export default function Raffle() {
     const classes = useStyles();
@@ -36,7 +38,8 @@ export default function Raffle() {
     // const [enteredSupplyType, setEnteredSupplyType] = useState(true);
 
 
-    // const dateToFormat = '1976-04-19T12:59-0500';
+    const raffleStartDate = DateTime.local(2021, 9, 24, 14, { zone: 'utc' });
+    const raffleEndDate = DateTime.local(2021, 9, 27, 14, { zone: 'utc' });
 
     const getTicketQuantity = (type) => {
         const map = {
@@ -124,8 +127,7 @@ export default function Raffle() {
 
         thegraph.getRaffleData(raffle6TotalEnteredQuery()).then((response)=> {
             let data = response.data.total;
-            // let enteredArray = [data.totalCommon, data.totalUncommon, data.totalRare, data.totalLegendary, data.totalMythical, data.totalGodLike];
-            let enteredArray = ['50000', '15000', '7000', '2000', '1200', '50'];
+            let enteredArray = data === null ? [0,0,0,0,0,0] : [data.totalCommon, data.totalUncommon, data.totalRare, data.totalLegendary, data.totalMythical, data.totalGodLike];
 
             enteredArray.forEach((entered, i) => {
                 ticketsCache[i].entered = entered;
@@ -225,13 +227,18 @@ export default function Raffle() {
             </Helmet>
 
             <Grid container alignContent={'center'} className={classes.titleWrapper}>
-                <Grid item xs={12} md={7}>
+                <Grid item xs={12} md={6}>
                     <Typography variant='h4' className={classes.title}>
                         Raffle #6 calculator
                     </Typography>
                 </Grid>
-                <Grid item xs={12} md={5} className={classes.enterButtonWrapper}>
-                    countdown goes here
+                <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
+                    <Box display='flex' alignItems='center' justifyContent='flex-end'>
+                        <Typography variant='h5' color='primary'>Starts in {'->'}</Typography>
+                        <Box paddingTop='18px'>
+                            <Countdown date={raffleStartDate} format='dd:hh:mm:ss' />
+                        </Box>
+                    </Box>
                 </Grid>
             </Grid>
 

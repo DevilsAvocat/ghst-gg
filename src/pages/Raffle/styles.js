@@ -7,9 +7,9 @@ export const useStyles = makeStyles((theme) => ({
         color: '#fff'
     },
     raffle: {
-        padding: '50px 16px',
+        padding: '25px 16px',
         [theme.breakpoints.up('sm')]: {
-            padding: '50px 24px',
+            padding: '25px 24px',
         }
     },
     titleWrapper: {

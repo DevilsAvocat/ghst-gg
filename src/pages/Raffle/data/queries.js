@@ -59,10 +59,9 @@ export const raffle5TotalEnteredQuery = () => {
     }`
 };
 
-// TODO: change ID to 5 when raffle start
 export const raffle6TotalEnteredQuery = () => { 
     return `{
-        total(id: 4) {
+        total(id: 6) {
             totalCommon
             totalUncommon
             totalRare

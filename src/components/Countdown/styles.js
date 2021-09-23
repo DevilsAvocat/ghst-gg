@@ -7,16 +7,16 @@ export default makeStyles((theme) => ({
         textAlign: 'center'
     },
     inner: {
-        fontSize: 36,
+        fontSize: 26,
         minWidth: 80,
         fontWeight: 600,
         position: 'relative',
-        padding: '0 10px',
+        padding: '0 8px',
         '&:after': {
             content: '":"',
             position: 'absolute',
             left: '100%',
-            top: 5,
+            top: 1,
             transform: 'translateX(-50%)'
         },
 
@@ -27,12 +27,12 @@ export default makeStyles((theme) => ({
     number: {
         backgroundColor: theme.palette.secondary.dark,
         borderRadius: 5,
-        padding: '6px 4px',
+        padding: '2px 6px',
         display: 'inline-block',
     },
     text: {
         display: 'block',
-        fontSize: 15,
-        margin: '5px 0 0'
+        fontSize: 14,
+        margin: '3px 0 0'
     }
 }));
