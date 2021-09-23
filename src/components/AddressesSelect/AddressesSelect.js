@@ -47,13 +47,19 @@ export default function AddressesSelect({ placeholder, onUpdate, newAddresess}) 
     }
 
     const updateMetamaskAddress = (address) => {
+
+        if (!address) return setAddresses(addresses.slice(1));
+
         let addressesCeche = addresses.length ? addresses.filter((item) => {
             return item.address.toLowerCase() !== address || item.metamask
         }) : [];
 
-        if(addressesCeche[0]?.metamask && addressesCeche[0]?.address.toLowerCase() === address) return; // if address already added
+        if (
+            addressesCeche[0]?.metamask &&
+            addressesCeche[0]?.address.toLowerCase() === address
+        ) return; // if address already added
         
-        if(addressesCeche[0]?.metamask) { // if change metamask wallet
+        if (addressesCeche[0]?.metamask) { // if change metamask wallet
             addressesCeche[0].address = address;
         } else { // if metamask wallet not added
             addressesCeche = [
@@ -72,22 +78,20 @@ export default function AddressesSelect({ placeholder, onUpdate, newAddresess}) 
 
 
     useEffect( () => {
-        if (metaState.account.length) {
-            updateMetamaskAddress(metaState.account[0].toLowerCase());
+        if (metaState.isAvailable) {
+            if (metaState.account.length) updateMetamaskAddress(metaState.account[0].toLowerCase());
+            else if (!metaState.isConnected && addresses[0]?.metamask) updateMetamaskAddress(false);
         }
     }, [metaState]);
 
     useEffect( () => {
-        if(addresses.length && onUpdate) {
-            onUpdate(addresses);
-            setNames(getNames(addresses));
-        }
+        if (onUpdate) onUpdate(addresses);
+        setNames(getNames(addresses));
     }, [addresses]);
 
     useEffect( () => {
-        if(newAddresess.length > addresses.length) {
+        if (newAddresess.length > addresses.length) {
             setAddresses(newAddresess);
-            setNames(getNames(newAddresess));
         }
     }, [newAddresess]);
 
@@ -117,7 +121,7 @@ export default function AddressesSelect({ placeholder, onUpdate, newAddresess}) 
             >
                 {
                     addresses.map((item) => {
-                        if(!item.metamask)  {
+                        if (!item.metamask)  {
                             return <MenuItem
                                 key={item.name}
                                 name={item.name}
