@@ -937,7 +937,7 @@ export const items = {
     157: {
         'name': 'Lil Pump Goatee',
         'rarity': 'uncommon',
-        'stats': 'BRS +2, NRG +1, AGG +1',
+        'stats': 'NRG +1, AGG +1',
         'type': 'layer-2-themed-set'
     },
     158: {
