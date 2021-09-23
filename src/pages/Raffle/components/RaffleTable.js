@@ -1,31 +1,39 @@
 
 import React from 'react';
-import {Box, CircularProgress, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
+import {Box, Checkbox, CircularProgress, FormControlLabel, Grid, TextField, Tooltip, Typography} from '@material-ui/core';
 import classNames from 'classnames';
 import {useStyles} from '../styles';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import commonUtils from '../../../utils/commonUtils';
 
 import ghst from '../../../assets/images/ghst-doubleside.gif';
-import {ToggleButton, ToggleButtonGroup} from "@material-ui/lab";
 
 export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setCommonQuantity, setUncommonQuantity,
-                                        setRareQuantity, setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity}) {
+                                        setRareQuantity, setLegendaryQuantity, setMythicalQuantity, setGodlikeQuantity, enteredCombined, setEnteredCombined}) {
     const classes = useStyles();
-
-    // const handleTicketsSupply = (event, type) => {
-    //     setEnteredSupplyType(type);
-    // };
 
     const getTicketIconPath = (iconId) => {
         return require(`../../../assets/tickets/${iconId}.svg`).default;
+    };
+
+    const handleTicketsEnter = (event) => {
+        setEnteredCombined(!event.target.checked);
     };
     
     return (
         <Grid item>
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={3} style={{ position: 'relative' }}>
                     <Typography variant='h6' className={classes.subtitle}>Your Tickets</Typography>
+                    <Box position='absolute' top='100%' marginTop='-10px' whiteSpace='nowrap'>
+                        <FormControlLabel
+                            className={classes.countEnteredCheckbox}
+                            control={
+                                <Checkbox checked={!enteredCombined} onChange={handleTicketsEnter} color='primary' name='enteredCombined' size='small' />
+                            }
+                            label='Count as entered'
+                        />
+                    </Box>
                 </Grid>
                 <Grid container item spacing={1} xs={12} md={8} lg={9}>
                     <Grid item xs={4} sm={true}>
@@ -306,7 +314,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                     }
                 </Grid>
             </Grid>
-            <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
+            {/* <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
                         Raffle profitability
@@ -337,8 +345,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                             align='center'
                                             className={classNames(classes.tableValue, classes.price)}
                                         >
-                                            1
-                                            {/* {countProfit() > 0 ?
+                                            {countProfit() > 0 ?
                                                 <Box component='span' style={{ color: '#4caf50' }}>
                                                     +{countProfit()}%
                                                 </Box>
@@ -347,7 +354,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                                                     {countProfit()}%
                                                 </Box>
                                                 : 0
-                                            } */}
+                                            }
                                         </Typography>
                                     )}
                                 </Box>
@@ -355,7 +362,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
                         })
                     }
                 </Grid>
-            </Grid>
+            </Grid> */}
         </Grid>
     );
 }

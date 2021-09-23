@@ -1,16 +1,12 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Box, Button, Container, Link, Tab, Typography, Grid} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
-// import RaffleTable from './components/RaffleTable'; TODO: temporary solution, read more in RaffleDropTable.js
 import RaffleTable from './components/RaffleTable';
 import RaffleWearables from './components/RaffleWearables';
 import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
-import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
 import {raffle6TotalEnteredQuery, raffleTicketPriceQuery} from './data/queries';
-import useInterval from '../../hooks/useInterval';
-import { TabList, TabPanel, TabContext } from '@material-ui/lab';
 
 export default function Raffle() {
     const classes = useStyles();
@@ -82,20 +78,23 @@ export default function Raffle() {
         let ticketsLocalRef = [...tickets];
 
         ticketsLocalRef.forEach((ticket, i) => {
-            // let combinedSupply = enteredCombined ? +getTicketSupply(ticket) + +dropQuantity : getTicketSupply(ticket);
-            // let chance = getTicketQuantity(ticket.type) / combinedSupply * ticket.items;
-            let chance = getTicketQuantity(ticket.type) / ticket.entered * ticket.items;
+            let combinedSupply = enteredCombined ? +ticket.supply + +getTicketQuantity(ticket.type) : ticket.supply;
+            let chance = getTicketQuantity(ticket.type) / combinedSupply * ticket.items;
+            // let chance = combinedSupply * 100 / getTicketQuantity(ticket.type);
             let percentage = (chance * 100).toFixed(1);
             let price = ticket.price;
             let cost = (getTicketQuantity(ticket.type) * price).toFixed(2);
 
-            let wearables = countWearablesChance(ticket.wearables, ticket.items, chance.toFixed(2));
+            let wearables = countWearablesChance(ticket.wearables, ticket.items, chance.toFixed(2), combinedSupply);
 
             ticketsLocalRef[i] = {
                 ...ticket,
-                chanceEcho: chance.toFixed(2),
-                chance: chance > 1 ? `x${chance.toFixed(2)}` : chance > 0 ? `${percentage}% for 1` : 0,
-                cost: cost > price ? cost : price,
+                chance: chance > ticket.items ? `x${ticket.items.toFixed(2)}` :
+                        chance > combinedSupply ? `x${combinedSupply.toFixed(2)}` :
+                        chance > 1 ? `x${chance.toFixed(2)}` :
+                        chance > 0 ? `${percentage}% for 1` : 0,
+                cost: Math.round(cost) > Math.round(price) ? cost : price,
+                entered: combinedSupply,
                 wearables: wearables
             };
         });
@@ -103,17 +102,19 @@ export default function Raffle() {
         setTickets(ticketsLocalRef);
     }
 
-    const countWearablesChance = (wearables, itemsAmount, chance) => {
+    const countWearablesChance = (wearables, itemsAmount, chance, combinedSupply) => {
         wearables.forEach((wearable) => {
-            let percentage = (wearable.amount * 100 / itemsAmount).toFixed(2)
+            let percentage = (wearable.amount * 100 / itemsAmount).toFixed(5);
             let wearableChance = percentage * chance / 100;
+            let singleSupply = combinedSupply / 3;
 
             if(wearableChance > wearable.amount) {
-                wearable.chance = `x${wearable.amount}`;
-                return;
+                wearable.chance = `x${wearable.amount.toFixed(2)}`;
+            } else if(wearableChance > singleSupply) {
+                wearable.chance = singleSupply > 1 ? `x${singleSupply.toFixed(2)}` : `${(singleSupply * 100).toFixed(1)}% for 1`;;
+            } else {
+                wearable.chance = wearableChance > 1 ? `x${wearableChance.toFixed(2)}` : `${(wearableChance * 100).toFixed(1)}% for 1`;
             }
-
-            wearable.chance = wearableChance > 1 ? `x${wearableChance.toFixed(2)}` : `${(wearableChance * 100).toFixed(1)}% for 1`;
         });
         return wearables;
     };
@@ -128,6 +129,7 @@ export default function Raffle() {
 
             enteredArray.forEach((entered, i) => {
                 ticketsCache[i].entered = entered;
+                ticketsCache[i].supply = entered;
             });
 
             setTicketsCache(ticketsCache);
@@ -212,9 +214,9 @@ export default function Raffle() {
     //     }
     // }, [lastTicketInfo]);
 
-    useInterval(() => {
-        loadTickets();
-    }, 180000);
+    // useInterval(() => {
+    //     loadTickets();
+    // }, 180000);
 
     return (
         <Container maxWidth='lg' className={classes.raffle}>
@@ -278,7 +280,7 @@ export default function Raffle() {
                 </TabPanel>
             </TabContext> */}
             
-            <Box position='fixed' right={18} bottom={18} zIndex={5}>
+            <Box position='fixed' right={18} bottom={18} zIndex={10}>
                 <Link href={'https://www.aavegotchi.com/raffle/5'} className={classes.enterButton} target={'_blank'}>
                     <Button variant='contained' color='primary'>
                         Enter Raffle

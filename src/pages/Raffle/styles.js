@@ -294,6 +294,16 @@ export const useStyles = makeStyles((theme) => ({
         alignContent: 'center',
         justifyContent: 'center'
     },
+    countEnteredCheckbox: {
+        '& span': {
+            fontSize: 13,
+            opacity: .7,
+            transition: 'opacity .3s ease-in-out'
+        },
+        '&:hover span': {
+            opacity: 1
+        }
+    },
     enteredValue: {
         position: 'relative',
         '&:hover .perc': {
