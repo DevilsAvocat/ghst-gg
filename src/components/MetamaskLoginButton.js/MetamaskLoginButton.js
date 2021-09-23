@@ -97,7 +97,7 @@ export default function MetamaskLoginButton({size}) {
             if(metaState.account.length) {
                 setBtnTxt(commonUtils.cutAddress(metaState.account[0]));
                 if(metaState.account[0] !== metamaskAddress) setMetamaskAddress(metaState.account[0]);
-            };
+            }
 
             if (metaState.chain.id === '137') {
                 setMaticState(true);
@@ -106,7 +106,8 @@ export default function MetamaskLoginButton({size}) {
                 setBtnTxt('Switch to Matic');
             }
         } else {
-            setBtnTxt('Connect')
+            setBtnTxt('Connect');
+            setMetamaskAddress(false);
         }
     }, [metaState]);
 
