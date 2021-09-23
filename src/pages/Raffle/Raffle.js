@@ -234,7 +234,7 @@ export default function Raffle() {
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
                     <Box display='flex' alignItems='center' justifyContent='flex-end'>
-                        <Typography variant='h5' color='primary'>Starts in {'->'}</Typography>
+                        <Typography variant='h6' color='primary'>Starts in {'->'}</Typography>
                         <Box paddingTop='18px'>
                             <Countdown date={raffleStartDate} format='dd:hh:mm:ss' />
                         </Box>

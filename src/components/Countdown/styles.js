@@ -8,10 +8,10 @@ export default makeStyles((theme) => ({
     },
     inner: {
         fontSize: 26,
-        minWidth: 80,
+        minWidth: 70,
         fontWeight: 600,
         position: 'relative',
-        padding: '0 8px',
+        padding: '0 2px',
         '&:after': {
             content: '":"',
             position: 'absolute',
