@@ -64,7 +64,7 @@ export default function Item({item, owners, raffleStats}) {
     const classes = useStyles();
     const name = itemUtils.getItemNameById(item.itemId);
     const rarity = itemUtils.getItemRarityById(item.itemId);
-    const stats = itemUtils.getItemStatsById(item.itemId);
+    const stats = itemUtils.getEmojiStatsById(item.itemId);
 
     const getItemImagePath = (id) => {
         try {
