@@ -4,7 +4,7 @@ import { useMetamask } from 'use-metamask';
 import commonUtils from '../../utils/commonUtils';
 import ModalWrapper from '../ModalWrapper/ModalWrapper';
 import Web3 from 'web3';
-import { useLocalStorage } from '../../hooks/useLocalStorage';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import AddressImportForm from '../AddressImportForm/AddressImportForm';
 
 import useStyles from './styles';
