@@ -58,3 +58,17 @@ export const raffle5TotalEnteredQuery = () => {
         }
     }`
 };
+
+export const raffle6TotalEnteredQuery = () => { 
+    return `{
+        total(id: 6) {
+            totalCommon
+            totalUncommon
+            totalRare
+            totalLegendary
+            totalMythical
+            totalLegendary
+            totalGodLike
+        }
+    }`
+};

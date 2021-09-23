@@ -134,7 +134,7 @@ export const useStyles = makeStyles((theme) => ({
         fontSize: '1rem',
         position: 'relative',
         [theme.breakpoints.up('md')]: {
-            paddingLeft: 35,
+            paddingLeft: 25,
             width: 'unset',
             margin: '5px 0'
         }
@@ -170,6 +170,6 @@ export const useStyles = makeStyles((theme) => ({
     group: {
         display: 'flex',
         alignItems: 'center',
-        marginLeft: 15
+        marginLeft: 25
     }
 }));

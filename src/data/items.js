@@ -1233,5 +1233,119 @@ export const items = {
         'rarity': 'rare',
         'stats': 'AGG -3',
         'type': 'haunt-2-wearables'
+    },
+    245: {
+        'name': 'Gecko Hat',
+        'rarity': 'rare',
+        'stats': 'SPK -3',
+        'type': 'partnerships-set'
+    },
+    246: {
+        'name': 'APY Shades',
+        'rarity': 'uncommon',
+        'stats': 'NRG +1, BRN +1',
+        'type': 'partnerships-set'
+    },
+    247: {
+        'name': 'Up Arrow',
+        'rarity': 'uncommon',
+        'stats': 'NRG +1, BRN +1',
+        'type': 'partnerships-set'
+    },
+    248: {
+        'name': 'Up Only Shirt',
+        'rarity': 'uncommon',
+        'stats': 'NRG +1, BRN +1',
+        'type': 'partnerships-set'
+    },
+    249: {
+        'name': 'Gecko Eyes',
+        'rarity': 'rare',
+        'stats': 'SPK -2, BRN -1',
+        'type': 'partnerships-set'
+    },
+    250: {
+        'name': 'CoinGecko Tee',
+        'rarity': 'rare',
+        'stats': 'SPK -2, BRN -1',
+        'type': 'partnerships-set'
+    },
+    251: {
+        'name': 'Candy Jaar',
+        'rarity': 'rare',
+        'stats': 'SPK -1, BRN -2',
+        'type': 'partnerships-set'
+    },
+    252: {
+        'name': 'Aastronaut Helmet',
+        'rarity': 'common',
+        'stats': 'SPK +1',
+        'type': 'partnerships-set'
+    },
+    253: {
+        'name': 'Aastronaut Suit',
+        'rarity': 'common',
+        'stats': 'SPK +1',
+        'type': 'partnerships-set'
+    },
+    254: {
+        'name': 'uGOTCHI Token',
+        'rarity': 'common',
+        'stats': 'SPK +1',
+        'type': 'partnerships-set'
+    },
+    255: {
+        'name': 'Space Helmet',
+        'rarity': 'legendary',
+        'stats': 'NRG +2, AGG -2',
+        'type': 'partnerships-set'
+    },
+    256: {
+        'name': 'Lil Bubble Space Suit',
+        'rarity': 'legendary',
+        'stats': 'NRG +2, AGG -2',
+        'type': 'partnerships-set'
+    },
+    257: {
+        'name': 'Bitcoin Guitar',
+        'rarity': 'legendary',
+        'stats': 'NRG +4',
+        'type': 'partnerships-set'
+    },
+    258: {
+        'name': 'Taoist Robe',
+        'rarity': 'godlike',
+        'stats': 'NRG -3, BRN +3',
+        'type': 'partnerships-set'
+    },
+    259: {
+        'name': 'Bushy Eyebrows',
+        'rarity': 'godlike',
+        'stats': 'NRG -3, BRN +3',
+        'type': 'partnerships-set'
+    },
+    260: {
+        'name': 'Beard of Wisdom',
+        'rarity': 'godlike',
+        'stats': 'NRG -2, BRN +4',
+        'type': 'partnerships-set'
+    },
+    261: {
+        'name': 'Aantenna Bot',
+        'rarity': 'mythical',
+        'stats': 'AGG -2, BRN +3',
+        'type': 'partnerships-set'
+    },
+    262: {
+        'name': 'Radar Eyes',
+        'rarity': 'mythical',
+        'stats': 'AGG -2, BRN +3',
+        'type': 'partnerships-set'
+    },
+    263: {
+        'name': 'Signal Headset',
+        'rarity': 'mythical',
+        'stats': 'AGG -2, BRN +3',
+        'type': 'partnerships-set'
     }
 };

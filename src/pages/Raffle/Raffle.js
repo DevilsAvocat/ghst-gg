@@ -1,61 +1,69 @@
-import React, {useEffect, useState, useContext} from 'react';
-import {Button, Container, Grid, Link, Typography} from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
+import {Box, Button, Container, Link, Tab, Typography, Grid} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
-// import RaffleTable from './components/RaffleTable'; TODO: temporary solution, read more in RaffleDropTable.js
-import RaffleDropTable from './components/RaffleDropTable';
+import RaffleTable from './components/RaffleTable';
 import RaffleWearables from './components/RaffleWearables';
 import {ticketsData} from './data/ticketsData';
 import {useStyles} from './styles';
-import { SnackbarContext } from "../../contexts/SnackbarContext";
 import thegraph from '../../api/thegraph';
-import {raffle5TotalEnteredQuery, rafflePortalsPriceQuery, raffleTicketPriceQuery} from './data/queries';
-import useInterval from '../../hooks/useInterval';
+import {raffle6TotalEnteredQuery, raffleTicketPriceQuery} from './data/queries';
+import Countdown from '../../components/Countdown/Countdown';
+import { DateTime } from 'luxon';
 
 export default function Raffle() {
     const classes = useStyles();
     const [tickets, setTickets] = useState([...ticketsData]);
     const [ticketsCache, setTicketsCache] = useState([...tickets]);
-    const { showSnackbar } = useContext(SnackbarContext);
-    const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
+    // const { showSnackbar } = useContext(SnackbarContext);
+    // const [snackbarShowsOnFirstLoading, setSnackbarShowsOnFirstLoading] = useState(true);
     const [supplySpinner, setSupplySpinner] = useState(true);
     const [pricesSpinner, setPricesSpinner] = useState(true);
-    const [lastTicketInfo, setLastTicketInfo] = useState('');
-    const [dropQuantity, setDropQuantity] = useState('');
+    // const [lastTicketInfo, setLastTicketInfo] = useState('');
+    // const [dropQuantity, setDropQuantity] = useState('');
     const [enteredCombined, setEnteredCombined] = useState(true);
-    // const [commonQuantity, setCommonQuantity] = useState('');
-    // const [uncommonQuantity, setUncommonQuantity] = useState('');
-    // const [rareQuantity, setRareQuantity] = useState('');
-    // const [legendaryQuantity, setLegendaryQuantity] = useState('');
-    // const [mythicalQuantity, setMythicalQuantity] = useState('');
-    // const [godlikeQuantity, setGodlikeQuantity] = useState('');
+
+
+    // const [activeRaffle, setActiveRaffle] = React.useState('5');
+
+    // const onTabsChange = (event, newValue) => {
+    //     setActiveRaffle(newValue);
+    // };
+
+    const [commonQuantity, setCommonQuantity] = useState('');
+    const [uncommonQuantity, setUncommonQuantity] = useState('');
+    const [rareQuantity, setRareQuantity] = useState('');
+    const [legendaryQuantity, setLegendaryQuantity] = useState('');
+    const [mythicalQuantity, setMythicalQuantity] = useState('');
+    const [godlikeQuantity, setGodlikeQuantity] = useState('');
     // const [enteredSupplyType, setEnteredSupplyType] = useState(true);
 
 
-    // const dateToFormat = '1976-04-19T12:59-0500';
+    const raffleStartDate = DateTime.local(2021, 9, 24, 14, { zone: 'utc' });
+    const raffleEndDate = DateTime.local(2021, 9, 27, 14, { zone: 'utc' });
 
     const getTicketQuantity = (type) => {
         const map = {
-            // 'common': () => {
-            //     return commonQuantity;
-            // },
-            // 'uncommon': () => {
-            //     return uncommonQuantity;
-            // },
-            // 'rare': () => {
-            //     return rareQuantity;
-            // },
-            // 'legendary': () => {
-            //     return legendaryQuantity;
-            // },
-            // 'mythical': () => {
-            //     return mythicalQuantity;
-            // },
-            // 'godlike': () => {
-            //     return godlikeQuantity;
-            // },
-            'drop': () => {
-                return dropQuantity;
-            }
+            'common': () => {
+                return commonQuantity;
+            },
+            'uncommon': () => {
+                return uncommonQuantity;
+            },
+            'rare': () => {
+                return rareQuantity;
+            },
+            'legendary': () => {
+                return legendaryQuantity;
+            },
+            'mythical': () => {
+                return mythicalQuantity;
+            },
+            'godlike': () => {
+                return godlikeQuantity;
+            },
+            // 'drop': () => {
+            //     return dropQuantity;
+            // }
         };
 
         try {
@@ -69,27 +77,27 @@ export default function Raffle() {
         countTicketsChance();
     };
 
-    const getTicketSupply = (ticket) => {
-        return ticket.entered;
-    }
-
     const countTicketsChance = () => {
         let ticketsLocalRef = [...tickets];
 
         ticketsLocalRef.forEach((ticket, i) => {
-            let combinedSupply = enteredCombined ? +getTicketSupply(ticket) + +dropQuantity : getTicketSupply(ticket);
+            let combinedSupply = enteredCombined ? +ticket.supply + +getTicketQuantity(ticket.type) : ticket.supply;
             let chance = getTicketQuantity(ticket.type) / combinedSupply * ticket.items;
+            // let chance = combinedSupply * 100 / getTicketQuantity(ticket.type);
             let percentage = (chance * 100).toFixed(1);
             let price = ticket.price;
-            let cost = getTicketQuantity(ticket.type) * price;
+            let cost = (getTicketQuantity(ticket.type) * price).toFixed(2);
 
-            let wearables = countWearablesChance(ticket.wearables, ticket.items, chance.toFixed(2));
+            let wearables = countWearablesChance(ticket.wearables, ticket.items, chance.toFixed(2), combinedSupply);
 
             ticketsLocalRef[i] = {
                 ...ticket,
-                chanceEcho: chance.toFixed(2),
-                chance: chance > 1 ? `x${chance.toFixed(2)}` : chance > 0 ? `${percentage}% for 1` : 0,
-                cost: cost > price ? cost : price,
+                chance: chance > ticket.items ? `x${ticket.items.toFixed(2)}` :
+                        chance > combinedSupply ? `x${combinedSupply.toFixed(2)}` :
+                        chance > 1 ? `x${chance.toFixed(2)}` :
+                        chance > 0 ? `${percentage}% for 1` : 0,
+                cost: Math.round(cost) > Math.round(price) ? cost : price,
+                entered: combinedSupply,
                 wearables: wearables
             };
         });
@@ -97,11 +105,19 @@ export default function Raffle() {
         setTickets(ticketsLocalRef);
     }
 
-    const countWearablesChance = (wearables, itemsAmount, chance) => {
-        wearables.forEach((wearable, i) => {
-            let percentage = (wearable.amount * 100 / itemsAmount).toFixed(2)
+    const countWearablesChance = (wearables, itemsAmount, chance, combinedSupply) => {
+        wearables.forEach((wearable) => {
+            let percentage = (wearable.amount * 100 / itemsAmount).toFixed(5);
             let wearableChance = percentage * chance / 100;
-            wearable.chance = wearableChance > 1 ? `x${wearableChance.toFixed(2)}` : `${(wearableChance * 100).toFixed(1)}% for 1`;
+            let singleSupply = combinedSupply / 3;
+
+            if(wearableChance > wearable.amount) {
+                wearable.chance = `x${wearable.amount.toFixed(2)}`;
+            } else if(wearableChance > singleSupply) {
+                wearable.chance = singleSupply > 1 ? `x${singleSupply.toFixed(2)}` : `${(singleSupply * 100).toFixed(1)}% for 1`;;
+            } else {
+                wearable.chance = wearableChance > 1 ? `x${wearableChance.toFixed(2)}` : `${(wearableChance * 100).toFixed(1)}% for 1`;
+            }
         });
         return wearables;
     };
@@ -109,14 +125,17 @@ export default function Raffle() {
     const loadTickets = () => {
         setSupplySpinner(true);
 
-        thegraph.getRaffleData(raffle5TotalEnteredQuery()).then((response)=> {
-            let enteredTickets = response.data.total.totalDrop;
+        thegraph.getRaffleData(raffle6TotalEnteredQuery()).then((response)=> {
+            let data = response.data.total;
+            let enteredArray = data === null ? [0,0,0,0,0,0] : [data.totalCommon, data.totalUncommon, data.totalRare, data.totalLegendary, data.totalMythical, data.totalGodLike];
 
-            ticketsCache[0].entered = enteredTickets;
+            enteredArray.forEach((entered, i) => {
+                ticketsCache[i].entered = entered;
+                ticketsCache[i].supply = entered;
+            });
 
             setTicketsCache(ticketsCache);
             setTickets(ticketsCache);
-            setSnackbarShowsOnFirstLoading(false);
             setSupplySpinner(false);
         }).catch(error => console.log(error))
 
@@ -144,18 +163,30 @@ export default function Raffle() {
     const getAveragePrices = () => {
         setPricesSpinner(true);
 
-        // thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)]) // raffle 4 queries
-        thegraph.getJoinedData([raffleTicketPriceQuery(6), rafflePortalsPriceQuery()])
+        thegraph.getJoinedData([raffleTicketPriceQuery(0), raffleTicketPriceQuery(1), raffleTicketPriceQuery(2), raffleTicketPriceQuery(3), raffleTicketPriceQuery(4), raffleTicketPriceQuery(5)]) // raffle 4 queries
+        // thegraph.getJoinedData([raffleTicketPriceQuery(6), rafflePortalsPriceQuery()])
             .then((response) => {
-                let ticketsWeiPrices = response[0].data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
-                let portalsWeiPrices = response[1].data.erc721Listings.map((wei)=> parseInt(wei.priceInWei));
+                // let ticketsWeiPrices = response[0].data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
+                // let portalsWeiPrices = response[1].data.erc721Listings.map((wei)=> parseInt(wei.priceInWei));
 
-                let ticketsFloorPrice = (ticketsWeiPrices.reduce((a,b) => a + b, 0) / ticketsWeiPrices.length) / 10**18;
-                let portalsFloorPrice = (portalsWeiPrices.reduce((a,b) => a + b, 0) / portalsWeiPrices.length) / 10**18;
+                // let ticketsFloorPrice = (ticketsWeiPrices.reduce((a,b) => a + b, 0) / ticketsWeiPrices.length) / 10**18;
+                // let portalsFloorPrice = (portalsWeiPrices.reduce((a,b) => a + b, 0) / portalsWeiPrices.length) / 10**18;
 
-                ticketsCache[0].price = ticketsFloorPrice.toFixed(5);
-                ticketsCache[0].cost = ticketsFloorPrice.toFixed(5);
-                ticketsCache[0].portalsPrice = portalsFloorPrice.toFixed(0);
+                // ticketsCache[0].price = ticketsFloorPrice.toFixed(5);
+                // ticketsCache[0].cost = ticketsFloorPrice.toFixed(5);
+                // ticketsCache[0].portalsPrice = portalsFloorPrice.toFixed(0);
+
+                let averagePrices = response.map((item)=> {
+                    let prices = item.data.erc1155Listings.map((wei)=> parseInt(wei.priceInWei));
+                    let average = prices.reduce((a,b) => a + b, 0) / prices.length;
+                    let price = average / 10**18;
+                    return price.toFixed(2);
+                });
+
+                averagePrices.forEach((price, i) => {
+                    ticketsCache[i].price = price;
+                    ticketsCache[i].cost = price;
+                });
 
                 setTickets(ticketsCache);
                 setPricesSpinner(false);
@@ -176,48 +207,108 @@ export default function Raffle() {
 
     useEffect(() => {
         onFieldChange();
-    }, [dropQuantity]);
+    }, [commonQuantity, uncommonQuantity, rareQuantity, legendaryQuantity, mythicalQuantity, godlikeQuantity]);
 
-    useEffect(() => {
-        onFieldChange();
-        if (!snackbarShowsOnFirstLoading) {
-            showSnackbar('success', 'Tickets supply was successfully updated!')
-        }
-    }, [lastTicketInfo]);
+    // useEffect(() => {
+    //     onFieldChange();
+    //     if (!snackbarShowsOnFirstLoading) {
+    //         showSnackbar('success', 'Tickets supply was successfully updated!')
+    //     }
+    // }, [lastTicketInfo]);
 
-    useInterval(() => {
-        loadTickets();
-    }, 180000);
+    // useInterval(() => {
+    //     loadTickets();
+    // }, 180000);
 
     return (
         <Container maxWidth='lg' className={classes.raffle}>
-            {/* <Moment>{ts}</Moment> */}
-            {/* {ts} */}
             <Helmet>
-                <title>Raffle #5 Calculator</title>
+                <title>Raffle Calculator</title>
             </Helmet>
-            
+
             <Grid container alignContent={'center'} className={classes.titleWrapper}>
-                <Grid item xs={12} md={7}>
+                <Grid item xs={12} md={6}>
                     <Typography variant='h4' className={classes.title}>
-                        Raffle #5 calculator
+                        Raffle #6 calculator
                     </Typography>
                 </Grid>
-                <Grid item xs={12} md={5} className={classes.enterButtonWrapper}>
-                    <Link href={'https://www.aavegotchi.com/raffle/4'} className={classes.enterButton} target={'_blank'}>
-                        <Button variant={'contained'} color={'primary'} size={'large'}>
-                            Enter Raffle
-                        </Button>
-                    </Link>
+                <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
+                    <Box display='flex' alignItems='center' justifyContent='flex-end'>
+                        <Typography variant='h6' color='primary'>Starts in {'->'}</Typography>
+                        <Box paddingTop='18px'>
+                            <Countdown date={raffleStartDate} format='dd:hh:mm:ss' />
+                        </Box>
+                    </Box>
                 </Grid>
-                
             </Grid>
-            <RaffleDropTable
+
+            {/* <Box display='flex' justifyContent='center' textAlign='center' marginBottom='60px'>
+                <Box margin='0 8px' flexBasis={180}>
+                    <Button variant='outlined' color='primary' size='large' fullWidth>
+                        Raffle 4
+                    </Button>
+                    <Typography variant='caption'>29.03.21 {'<=>'} 01.04.21</Typography>
+                </Box>
+                <Box margin='0 8px' flexBasis={180}>
+                    <Button variant='contained' color='primary' size='large' fullWidth>
+                        Raffle 5
+                    </Button>
+                    <Typography variant='caption'>05.09.21 {'<=>'} 08.09.21</Typography>
+                </Box>
+                <Box margin='0 8px' flexBasis={180}>
+                    <Button variant='contained' color='primary' size='large' fullWidth disabled>
+                        Raffle 6
+                    </Button>
+                    <Typography variant='caption'>24.09.21 {'<=>'} 28.09.21</Typography>
+                </Box>
+            </Box>
+
+            <TabContext value={activeRaffle}>
+                <Box textAlign='center'>
+                    <TabList
+                        onChange={onTabsChange}
+                        variant='scrollable'
+                        scrollButtons='auto'
+                    >
+                        <Tab label='Raffle 4' value='4' />
+                        <Tab label='Raffle 5' value='5' />
+                        <Tab label='Raffle 6' value='6' disabled />
+                    </TabList>
+                </Box>
+
+                <TabPanel value='4'>
+                    RAFFLE 4 Panel
+                </TabPanel>
+                <TabPanel value='5'>
+                    RAFFLE 5 Panel
+                </TabPanel>
+                <TabPanel value='6'>
+                    RAFFLE 6 Panel
+                </TabPanel>
+            </TabContext> */}
+            
+            <Box position='fixed' right={18} bottom={18} zIndex={10}>
+                <Link href={'https://www.aavegotchi.com/raffle/5'} className={classes.enterButton} target={'_blank'}>
+                    <Button variant='contained' color='primary'>
+                        Enter Raffle
+                    </Button>
+                </Link>
+            </Box>
+
+            <RaffleTable
                 tickets={tickets}
                 supplySpinner={supplySpinner}
                 pricesSpinner={pricesSpinner}
-                dropQuantity={dropQuantity}
-                setDropQuantity={setDropQuantity}
+
+                setCommonQuantity={setCommonQuantity}
+                setUncommonQuantity={setUncommonQuantity}
+                setRareQuantity={setRareQuantity}
+                setLegendaryQuantity={setLegendaryQuantity}
+                setMythicalQuantity={setMythicalQuantity}
+                setGodlikeQuantity={setGodlikeQuantity}
+                // enteredSupplyType={enteredSupplyType}
+                // setEnteredSupplyType={setEnteredSupplyType}
+
                 enteredCombined={enteredCombined}
                 setEnteredCombined={setEnteredCombined}
             />

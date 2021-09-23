@@ -110,8 +110,8 @@ export default function AddressesSelect({ placeholder, onUpdate, newAddresess}) 
                     } else if (selected[0] === 'ghst_metamask_address') {
                         return [
                             <img src={metamaskIcon} className={classes.fieldMetamaskIcon} key="metamask icon"></img>,
-                            selected.slice(1).length ? ', ' : '',
-                            selected.slice(1).join(',')
+                            selected.slice(1).length ? ' * ' : '',
+                            selected.slice(1).join(' * ')
                         ]
                     }
                     else return selected.join(', ')

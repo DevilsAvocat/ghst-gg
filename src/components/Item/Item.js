@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.rarity.godlike, .1)
         },
     },
-    itemTitle: {
+    textHighlight: {
         '&.common': {
             color: theme.palette.rarity.common
         },
@@ -60,11 +60,11 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Item({item, owners}) {
+export default function Item({item, owners, raffleStats}) {
     const classes = useStyles();
     const name = itemUtils.getItemNameById(item.itemId);
     const rarity = itemUtils.getItemRarityById(item.itemId);
-    const stats = itemUtils.getItemStatsById(item.itemId);
+    const stats = itemUtils.getEmojiStatsById(item.itemId);
 
     const getItemImagePath = (id) => {
         try {
@@ -100,21 +100,42 @@ export default function Item({item, owners}) {
         }
     }
 
+    const renderRaffleStats = () => {
+        if(raffleStats) {
+            return (
+                <Box>
+                    <Typography variant='body2'>Quantity:
+                        <Box component='span' marginLeft='8px' className={classNames(classes.textHighlight, rarity)}>{raffleStats.amount}</Box>
+                    </Typography>
+                    <Typography
+                        variant={'subtitle1'}
+                        className={classNames(classes.textHighlight, rarity)}
+                    >
+                        {raffleStats.chance}
+                    </Typography>
+                </Box>
+            )
+        } else {
+            return null;
+        }
+    }
+
     return (
-        <Box className={classNames(classes.item, rarity)} style={{marginBottom: 20}}>
+        <Box className={classNames(classes.item, rarity)}>
             <img
                 src={getItemImagePath(item.itemId)}
                 alt={name}
                 height={75}
                 width={75}
             />
-            <Typography className={classNames(classes.itemTitle, rarity)}>
+            <Typography className={classNames(classes.textHighlight, rarity)}>
                 {name}
             </Typography>
-            <Typography variant={'body2'}>
+            <Typography variant='subtitle1'>
                 {stats}
             </Typography>
             {renderOwners()}
+            {renderRaffleStats()}
         </Box>
     )
 }

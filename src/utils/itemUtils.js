@@ -6,16 +6,31 @@ export default {
         return items[id]?.name || '';
     },
 
-    getItemStatsById(id) {
-        return items[id]?.stats || '';
-    },
-
     getItemRarityById(id) {
         return items[id]?.rarity || '';
     },
 
     getItemTypeById(id) {
         return items[id]?.type || '';
+    },
+
+    getItemStatsById(id) {
+        return items[id]?.stats || '';
+    },
+
+    getEmojiStatsById(id) {
+        let stats = items[id].stats;
+        let emojis = {'NRG':'⚡️', 'AGG':'👹', 'SPK':'👻', 'BRN':'🧠', 'EYS':'👀', 'EYC':'👁'};
+
+        Object.entries(emojis).forEach((item) => {
+            let [key, value] = item;
+
+            if(stats.includes(key)) {
+                stats = stats.replace(`${key} `, value);
+            }
+        });
+
+        return stats;
     },
 
     getItemType(item) {

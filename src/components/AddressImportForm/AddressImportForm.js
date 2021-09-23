@@ -83,7 +83,7 @@ export default function AddressImportForm({rebuildContent}) {
                     fullWidth
                     onClick={addNewAddress}
                 >
-                    Save address
+                    GM!
                 </Button>
             </Grid>
         </Grid>
