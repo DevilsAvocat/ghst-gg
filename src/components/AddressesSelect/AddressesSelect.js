@@ -5,7 +5,7 @@ import { useStyles } from './styles';
 
 import commonUtils from '../../utils/commonUtils';
 
-import useLocalStorage from '../../hooks/useLocalStorage';
+import { useLocalStorage } from '../../hooks/useLocalStorage';
 
 import { useMetamask } from 'use-metamask';
 import metamaskIcon from '../../assets/images/metamask-icon.png';
