@@ -61,7 +61,7 @@ export const raffle5TotalEnteredQuery = () => {
 
 export const raffle6TotalEnteredQuery = () => { 
     return `{
-        total(id: 6) {
+        total(id: 5) {
             totalCommon
             totalUncommon
             totalRare
