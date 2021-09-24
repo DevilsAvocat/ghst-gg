@@ -25,7 +25,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={3} style={{ position: 'relative' }}>
                     <Typography variant='h6' className={classes.subtitle}>Your Tickets</Typography>
-                    <Box position='absolute' top='100%' marginTop='-10px' whiteSpace='nowrap'>
+                    <Box className={classes.countEnteredCheckboxWrapper}>
                         <FormControlLabel
                             className={classes.countEnteredCheckbox}
                             control={
@@ -133,7 +133,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3} className={classes.toggleWrapper}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Tickets Entered
+                        Total tickets entered
                         <Tooltip
                             placement='right'
                             arrow
@@ -202,7 +202,7 @@ export default function RaffleTable({tickets, supplySpinner, pricesSpinner, setC
             <Grid container alignItems='center' justify='space-between' spacing={2} className={classes.row}>
                 <Grid item xs={12} md={4} lg={3}>
                     <Typography variant='h6' className={classes.subtitle}>
-                        Tickets Entered in FRENs
+                        Total tickets entered (in FRENs)
                         <Tooltip
                             placement='right'
                             arrow

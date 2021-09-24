@@ -295,6 +295,10 @@ export const useStyles = makeStyles((theme) => ({
         justifyContent: 'center'
     },
     countEnteredCheckbox: {
+        position: 'absolute',
+        top: '100%',
+        marginTop: '-24px',
+        whiteSpace: 'nowrap',
         '& span': {
             fontSize: 13,
             opacity: .7,
@@ -302,7 +306,10 @@ export const useStyles = makeStyles((theme) => ({
         },
         '&:hover span': {
             opacity: 1
-        }
+        },
+        [theme.breakpoints.up('md')]: {
+            marginTop: '-10px',
+        },
     },
     enteredValue: {
         position: 'relative',
