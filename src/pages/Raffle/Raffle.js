@@ -10,6 +10,23 @@ import {raffle6TotalEnteredQuery, raffleTicketPriceQuery} from './data/queries';
 import Countdown from '../../components/Countdown/Countdown';
 import { DateTime } from 'luxon';
 
+const raffleStartDate = DateTime.local(2021, 9, 24, 14, { zone: 'utc' });
+const raffleEndDate = DateTime.local(2021, 9, 27, 14, { zone: 'utc' });
+
+const countdowns = [
+    {
+        text: `Starts in ${'->'}`,
+        date: raffleStartDate
+    },
+    {
+        text: `Ends in ${'->'}`,
+        date: raffleEndDate
+    },
+    {
+        text: `Raffle ended`
+    }
+]
+
 export default function Raffle() {
     const classes = useStyles();
     const [tickets, setTickets] = useState([...ticketsData]);
@@ -21,6 +38,7 @@ export default function Raffle() {
     // const [lastTicketInfo, setLastTicketInfo] = useState('');
     // const [dropQuantity, setDropQuantity] = useState('');
     const [enteredCombined, setEnteredCombined] = useState(true);
+    const [currentCountdown, setCurrentCountdown] = useState(0);
 
 
     // const [activeRaffle, setActiveRaffle] = React.useState('5');
@@ -36,10 +54,6 @@ export default function Raffle() {
     const [mythicalQuantity, setMythicalQuantity] = useState('');
     const [godlikeQuantity, setGodlikeQuantity] = useState('');
     // const [enteredSupplyType, setEnteredSupplyType] = useState(true);
-
-
-    const raffleStartDate = DateTime.local(2021, 9, 24, 14, { zone: 'utc' });
-    const raffleEndDate = DateTime.local(2021, 9, 27, 14, { zone: 'utc' });
 
     const getTicketQuantity = (type) => {
         const map = {
@@ -193,6 +207,11 @@ export default function Raffle() {
             });
     }
 
+    const onEnd = (id) => {
+        console.log('END');
+        setCurrentCountdown(currentCountdown+1);
+    }
+
     useEffect(() => {
         loadTickets();
     },[]);
@@ -208,6 +227,10 @@ export default function Raffle() {
     useEffect(() => {
         onFieldChange();
     }, [commonQuantity, uncommonQuantity, rareQuantity, legendaryQuantity, mythicalQuantity, godlikeQuantity]);
+
+    useEffect( () => {
+        console.log(currentCountdown);
+    }, [currentCountdown])
 
     // useEffect(() => {
     //     onFieldChange();
@@ -234,9 +257,9 @@ export default function Raffle() {
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
                     <Box display='flex' alignItems='center' justifyContent='flex-end'>
-                        <Typography variant='h6' color='primary'>Starts in {'->'}</Typography>
+                        <Typography variant='h6' color='primary'>{countdowns[currentCountdown].text}</Typography>
                         <Box paddingTop='18px'>
-                            <Countdown date={raffleStartDate} format='dd:hh:mm:ss' />
+                            {countdowns[currentCountdown].date && <Countdown date={countdowns[currentCountdown].date} format='dd:hh:mm:ss' onEnd={onEnd} key={currentCountdown} />}
                         </Box>
                     </Box>
                 </Grid>
