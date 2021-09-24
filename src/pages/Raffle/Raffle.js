@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, Container, Link, Tab, Typography, Grid} from '@material-ui/core';
+import {Box, Button, Container, Link, Typography, Grid} from '@material-ui/core';
 import {Helmet} from 'react-helmet';
 import RaffleTable from './components/RaffleTable';
 import RaffleWearables from './components/RaffleWearables';
@@ -20,7 +20,8 @@ const countdowns = [
     },
     {
         text: `Ends in ${'->'}`,
-        date: raffleEndDate
+        date: raffleEndDate,
+        liveLabel: true
     },
     {
         text: `Raffle ended`
@@ -252,7 +253,14 @@ export default function Raffle() {
             <Grid container alignContent={'center'} className={classes.titleWrapper}>
                 <Grid item xs={12} md={6}>
                     <Typography variant='h4' className={classes.title}>
-                        Raffle #6 calculator
+                        <Box component='span' position='relative'>
+                            Raffle #6 calculator
+                            { countdowns[currentCountdown].liveLabel ? (
+                                <Box position='absolute' top='-18px' right='0' >
+                                    <Typography color='primary' variant='subtitle1'>Live</Typography>
+                                </Box>
+                            ) : null}
+                        </Box>
                     </Typography>
                 </Grid>
                 <Grid item xs={12} md={6} className={classes.enterButtonWrapper}>
