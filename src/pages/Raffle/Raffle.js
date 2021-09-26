@@ -254,7 +254,7 @@ export default function Raffle() {
                 <Grid item xs={12} md={6}>
                     <Typography variant='h4' className={classes.title}>
                         <Box component='span' position='relative'>
-                            Raffle #6 calculator
+                            Raffle #5 calculator
                             { countdowns[currentCountdown].liveLabel ? (
                                 <Box position='absolute' top='-18px' right='0' >
                                     <Typography color='primary' variant='subtitle1'>Live</Typography>
