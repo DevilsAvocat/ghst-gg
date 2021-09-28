@@ -15,10 +15,6 @@ var paginationConfigs = {
         limit: 24,
         noLimit: 1000
     },
-    defaults = {
-        defaultGoodsType: 'erc1155Listings-3',
-        defaultOrdering: 'timeCreated-desc'
-    },
     itemTypes = {
         closedPortal: 'erc721Listings-0',
         openedPortal: 'erc721Listings-2',
@@ -26,6 +22,10 @@ var paginationConfigs = {
         wearable: 'erc1155Listings-0',
         consumable: 'erc1155Listings-2',
         tickets: 'erc1155Listings-3'
+    },
+    defaults = {
+        defaultGoodsType: itemTypes.aavegotchi,
+        defaultOrdering: 'timeCreated-desc'
     };
 
 const useStyles = makeStyles((theme) => ({
@@ -360,15 +360,22 @@ export default function Baazaar() {
     };
 
     useEffect(() => {
-        const params = {
+        let params = {
             skip: (page - 1) * paginationConfigs.limit,
             limit: paginationConfigs.limit,
             type: defaults.defaultGoodsType,
             ordering: defaults.defaultOrdering
         };
 
-        getBaazaarItems(params);
-        setLastValidParams(params);
+        if (resultsForType === itemTypes.aavegotchi) {
+            params['limit'] = paginationConfigs.noLimit;
+            setLastValidParams(params);
+            getAllBaazaarItems(params);
+        } else {
+            params['limit'] = paginationConfigs.limit;
+            setLastValidParams(params);
+            getBaazaarItems(params);
+        }
     }, [getBaazaarItems]);
 
 
