@@ -17,6 +17,7 @@ import CountdownTest from './pages/CountdownTest/CountdownTest';
 import Client from './pages/Client/Client';
 import Raffle from './pages/Raffle/Raffle';
 import NotFound from './pages/NotFound/NotFound';
+import BaazaarContextProvider from "./contexts/BaazaarContext";
 
 const useStyles = makeStyles(() => ({
     wrap: {
@@ -54,7 +55,9 @@ export default function App() {
                 <Grid item className={classNames(classes.content, location.pathname === '/explorer' ? 'explorer' : '')}>
                     <Switch>
                         <Route exact path={`/`} component={ Main } />
-                        <Route exact path={`/market`} component={ Baazaar } />
+                        <BaazaarContextProvider>
+                            <Route exact path={`/market`} component={ Baazaar } />
+                        </BaazaarContextProvider>
                         <Route exact path={`/explorer`} component={ GhostExplorer } />
                         <Route exact path={`/client`} component={ Client } />
                         <Route exact path={`/raffle-calculator`} component={ Raffle } />
