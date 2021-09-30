@@ -11,6 +11,7 @@
 ## Run app locally
     npm i
     npm start
+    npm run start-prod  - 'for production version testing'
 
 ## Test
     npm test
