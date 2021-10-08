@@ -23,13 +23,14 @@ export default makeStyles((theme) => ({
         alignItems: 'center',
         borderRadius: 5,
         boxShadow: 'none',
-        '& img': {
-            filter: 'drop-shadow( 0px 0px 10px rgba(255,255,209,.5))'
-        },
-        '&:hover': {
-            textDecoration: 'none',
-            filter: 'drop-shadow( 0px 0px 5px rgba(255,255,209,.2))'
-        }
+        // '& .gotchi-body': {
+        //     filter: 'drop-shadow( 0px 0px 10px rgba(255,255,209,.5))',
+
+        //     '&:hover': {
+        //         textDecoration: 'none',
+        //         filter: 'drop-shadow( 0px 0px 5px rgba(255,255,209,.2))'
+        //     }
+        // }
     },
     aavegotchiName: {
         fontSize: 18,

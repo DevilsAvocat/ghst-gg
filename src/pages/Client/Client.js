@@ -26,6 +26,7 @@ export default function Client() {
     const getGotchiesByAddresses = (addresses) => {
         setIsGotchiesLoading(true);
         thegraph.getGotchiesByAddresses(addresses).then(async (response)=> {
+            console.log(response);
             let combinedGotchies = [];
 
             response.forEach( (item)=> {
