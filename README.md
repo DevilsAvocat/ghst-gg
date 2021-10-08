@@ -9,12 +9,12 @@
     Google Cloud SDK https://cloud.google.com/sdk/ (just download it)
 
 ## Run app locally
-    npm i
-    npm start
-    npm run start-prod  - 'for production version testing'
+    yarn
+    yarn start
+    yarn run start-prod  - 'for production version testing'
 
 ## Test
-    npm test
+    yarn test
 
 ## Production Deploy
     [frontend_deploy](https://ghst-gg.atlassian.net/wiki/spaces/GHSTGG/pages/66261/Frontend+Deploy)
