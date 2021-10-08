@@ -1,6 +1,7 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
-import {gotchiesQuery, svgQuery, userQuery} from './common/queries';
+import { logDOM } from '@testing-library/react';
+import {gotchiesQuery, svgQuery, userQuery, aavegotchiQuery} from './common/queries';
 
 var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic';
 var raffleUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-matic-raffle';
@@ -22,27 +23,20 @@ var svgsClient = new ApolloClient({
 });
 
 
-async function graphJoin(queries) {
+async function graphJoin(query) {
     try {
-        const queriesCounter = queries.length,
-            responseArray = [];
+        let response;
 
-        for (let i = 0; i < queriesCounter; i++) {
-            await responseArray.push(
-                await client
-                    .query({
-                        query: gql`${queries[i]}`
-                    })
-            )
-        }
+        response = await client
+            .query({
+                query: gql`${query}`
+            })
 
-        return responseArray;
+        return response;
     } catch (error) {
         return [];
     }
 }
-
-
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -53,8 +47,8 @@ export default {
             });
     },
 
-    async getJoinedData(queries) {
-        return await graphJoin(queries);
+    async getJoinedData(query) {
+        return await graphJoin(query);
     },
 
     async getAllGotchies() {
@@ -95,13 +89,35 @@ export default {
     },
 
     async getGotchiesByAddresses(addressesArray) {
-        let queries = [];
+        let gotchies = [];
 
-        addressesArray.forEach((address)=> {
-            queries.push(userQuery(address.toLowerCase()));
+        let promises = addressesArray.map( (address) => {
+            return this.getGotchiByAddress(address);
+        });
+        
+        await Promise.all(promises).then( (result) => {
+            gotchies = result;
         });
 
-        return await this.getJoinedData(queries);
+        return gotchies;
+    },
+
+    async getGotchiByAddress(address) {
+        let data;
+         await this.getJoinedData(userQuery(address.toLowerCase())).then( (result) => {
+            data = result;
+        });
+
+        return data;
+    },
+
+    async getGotchiById(id) {
+
+        let result = await client
+            .query({
+                query: gql`${aavegotchiQuery(id)}`
+            });
+        return result.data.aavegotchi;
     },
 
     async getRaffleData(query) {
