@@ -10,7 +10,7 @@ export default {
         // let result = await Moralis.Cloud.run("getSVG",{gotchies});
 
         let svgs = [];
-  
+
         for (let key in gotchies) {
             let cache = await contract.methods.previewAavegotchi(
                     parseInt(gotchies[key].hauntId),
@@ -38,8 +38,8 @@ export default {
                 return val.replace(/<\/?style>/g,'');
              });
              svgs = svgs[0].match(regexClass).map((styleBlock) => {
-                return `.gotchi-${gotchies[index].id} ${styleBlock}`;
-             }).join('')
+                return `.gotchi-svg-${gotchies[index].id} ${styleBlock}`;
+             }).join('');
 
             return htmlToElement(item.replace(regex, `<style>${svgs}</style>`));
         });

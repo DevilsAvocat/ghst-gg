@@ -13,6 +13,16 @@ const useStyles = makeStyles(() => ({
     baazaarBody: {
         padding: 30
     },
+    baazaarListItems: {
+        display: "grid",
+        gridTemplateColumns: 'repeat(auto-fill,minmax(192px,1fr))',
+        gridGap: 12,
+        width: '100%'
+    },
+    baazaarListItem: {
+        maxWidth: 192,
+        margin: 'auto'
+    },
     pagination: {
         display: 'flex',
         alignContent: 'center',
@@ -42,6 +52,20 @@ const useStyles = makeStyles(() => ({
         '& > div': {
             marginTop: 3
         }
+    },
+    carousel: {
+        '& .carousel:not(.carousel-slider)': {
+            display: 'none'
+        },
+        '& .control-dots': {
+            display: 'none'
+        },
+        '& .carousel .slider-wrapper': {
+            paddingTop: 10
+        },
+        '& .carousel-status': {
+            top: -17
+        }
     }
 }));
 
@@ -53,27 +77,38 @@ export default function BaazaarSortingBody({goods, page, limit, onNextPageClick,
         return theme.palette.haunt['h' + haunt];
     };
 
-
     return (
         <Grid className={classes.baazaarBody} item xs={12} sm={12} md={9} lg={9} xl={10}>
             <Filters handleFindClick={handleFindClick} />
-            <Grid container spacing={3}>
+            <div className={classes.baazaarListItems}>
                 {
                     // eslint-disable-next-line array-callback-return
                     goods.map((item, index) => {
-                        return <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={index}>
-                                <Grid container>
-                                    <Grid item xs={12}>
-                                        <Gotchi
-                                            className={classes.gotchi}
-                                            gotchi={item.gotchi}
-                                            title={item.gotchi.tokenId}
-                                            gotchiColor={getGotchiColor(item.hauntId)}
-                                            narrowed={false}
-                                        />
-                                    </Grid>
+                        return <div key={index}>
+                            <div className={classes.baazaarListItem}>
+                                <Grid item xs={12}>
+                                    {
+                                        item.gotchi.__typename === "Aavegotchi" ?
+                                                <Gotchi
+                                                className={classes.gotchi}
+                                                gotchi={item.gotchi}
+                                                title={item.gotchi.tokenId}
+                                                gotchiColor={getGotchiColor(item.hauntId)}
+                                                narrowed={false}
+                                            /> :
+                                            <Gotchi
+                                                key={item.gotchi.id}
+                                                className={classes.gotchi}
+                                                gotchi={item.gotchi}
+                                                title={item.gotchi.tokenId}
+                                                gotchiColor={getGotchiColor(item.hauntId)}
+                                                narrowed={false}
+                                                renderSvgByStats={true}
+                                            />
+                                    }
                                 </Grid>
-                                <Grid container className={classes.ghstFooter}>
+                            </div>
+                            <Grid container className={classes.ghstFooter}>
                                     <Grid item className={classes.price} xs={7}>
                                         <img className={classes.ghst} src={ghst} alt="ghst"/>
                                         <div>{web3.utils.fromWei(item.priceInWei)}</div>
@@ -88,22 +123,22 @@ export default function BaazaarSortingBody({goods, page, limit, onNextPageClick,
                                         >Buy</Button>
                                     </Grid>
                                 </Grid>
-                        </Grid>
+                        </div>
                     })
                 }
-                <Grid className={classes.pagination} item xs={12}>
-                    {
-                        goods.length ? <Pagination
-                                page={page}
-                                prevPageVisibility={page === 1}
-                                nextPageVisibility={goods.length < limit}
-                                onNextPageClick={onNextPageClick}
-                                onPrevPageClick={onPrevPageClick}
-                            /> :
-                            <Typography className={classes.noGoods} variant={'caption'}>Spooky Market has no such goods :(</Typography>
-                    }
-                </Grid>
-            </Grid>
+            </div>
+            <div className={classes.pagination}>
+                {
+                    goods.length ? <Pagination
+                            page={page}
+                            prevPageVisibility={page === 1}
+                            nextPageVisibility={goods.length < limit}
+                            onNextPageClick={onNextPageClick}
+                            onPrevPageClick={onPrevPageClick}
+                        /> :
+                        <Typography className={classes.noGoods} variant={'caption'}>Spooky Market has no such goods :(</Typography>
+                }
+            </div>
         </Grid>
     );
 }

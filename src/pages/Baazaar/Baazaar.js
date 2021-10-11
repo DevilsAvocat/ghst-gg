@@ -11,6 +11,7 @@ import Web3 from "web3";
 const web3 = new Web3();
 
 var paginationConfigs = {
+        gotchiLimit: 60,
         limit: 24,
         noLimit: 1000
     },
@@ -29,7 +30,8 @@ var paginationConfigs = {
 
 const useStyles = makeStyles((theme) => ({
     baazaar: {
-        padding: 24
+        padding: 24,
+        width: 'calc(100vw + 24px)'
     },
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
@@ -64,7 +66,7 @@ export default function Baazaar() {
         setResultsForType(selectedGoodsType);
 
         if (validParams) {
-            if (validParams.type === itemTypes.aavegotchi) {
+            if (validParams.type === itemTypes.aavegotchi || validParams.type === itemTypes.openedPortal) {
                 setPaginationToVisible(false);
 
                 paramsWithLimit = {
@@ -142,7 +144,7 @@ export default function Baazaar() {
         }`
     };
 
-    const getAllItemsQueryString = (params, skip, order) => {
+    const getAllItemsQueryString = (params, skip, type, order) => {
         return `{category: ${params.type ? params.type.split('-')[0] : defaults.defaultGoodsType.split('-')[0]} (
             first: ${paginationConfigs.noLimit},
             skip: ${skip},
@@ -152,7 +154,7 @@ export default function Baazaar() {
                 cancelled: false,
                 ${params.from ? `priceInWei_gte: "${exponentToString(params.from * 1000000000000000000).split('.')[0]}",` : ""}
                 priceInWei_lt: ${params.to ? `"${exponentToString(params.to * 1000000000000000000).split('.')[0]}"` : `"10000000000000000000000000"`},
-                ${'category: ' + (params.type ? params.type.split('-')[1] : defaults.defaultGoodsType.split('-')[1]) + ','}
+                ${'category: ' + (type ? type.split('-')[1] : defaults.defaultGoodsType.split('-')[1]) + ','}
                 ${
                     (params.type ? params.type.split('-')[0] : defaults.defaultGoodsType.split('-')[0]) === 'erc1155Listings' ?
                         `sold: false,
@@ -201,6 +203,22 @@ export default function Baazaar() {
                     claimedAt,
                     timesTraded,
                     historicalPrices
+                },
+                portal {
+                    id,
+                    gotchiId,
+                    options {
+                        id,
+                        owner {
+                            id
+                        },
+                        portal,
+                        randomNumber,
+                        numericTraits,
+                        collateralType,
+                        minimumStake,
+                        baseRarityScore
+                    }
                 }
             }
         }`
@@ -237,42 +255,78 @@ export default function Baazaar() {
         });
     }, []);
 
-    const getAllBaazaarItems = (params) => {
-        showBackdrop(true);
-        thegraph.getJoinedData([
-            getAllItemsQueryString(params, 0, 'asc'),
-            getAllItemsQueryString(params, 1000, 'asc'),
-            getAllItemsQueryString(params, 2000, 'asc'),
-            getAllItemsQueryString(params, 3000, 'asc'),
-            getAllItemsQueryString(params, 4000, 'asc'),
-            getAllItemsQueryString(params, 5000, 'asc'),
-            getAllItemsQueryString(params, 0, 'desc'),
-            getAllItemsQueryString(params, 1000, 'desc'),
-            getAllItemsQueryString(params, 2000, 'desc'),
-            getAllItemsQueryString(params, 3000, 'desc'),
-            getAllItemsQueryString(params, 4000, 'desc'),
-            getAllItemsQueryString(params, 5000, 'desc')
-        ]).then((response) => {
-            let processedItems = [],
-                items = [];
+    const makeQueriesForCategory = (params, type) => {
+        return [
+            getAllItemsQueryString(params, 0, type, 'asc'),
+            getAllItemsQueryString(params, 1000, type, 'asc'),
+            getAllItemsQueryString(params, 2000, type, 'asc'),
+            getAllItemsQueryString(params, 3000, type, 'asc'),
+            getAllItemsQueryString(params, 4000, type, 'asc'),
+            getAllItemsQueryString(params, 5000, type, 'asc'),
+            getAllItemsQueryString(params, 0, type, 'desc'),
+            getAllItemsQueryString(params, 1000, type, 'desc'),
+            getAllItemsQueryString(params, 2000, type, 'desc'),
+            getAllItemsQueryString(params, 3000, type, 'desc'),
+            getAllItemsQueryString(params, 4000, type, 'desc'),
+            getAllItemsQueryString(params, 5000, type, 'desc')
+        ];
+    };
 
-            // combine response data
-            response.forEach((item) => {
-                item.data.category.length && item.data.category.forEach((categoryItem) => {
+    const processResponse = (params, response) => {
+        let processedItems = [],
+            items = [];
+
+        // combine response data
+        response.forEach((item) => {
+            item.data.category.length && item.data.category.forEach((categoryItem) => {
+                if (categoryItem.gotchi) {
                     if (processedItems.indexOf(categoryItem.tokenId) === -1) {
                         processedItems.push(categoryItem.tokenId);
                         items.push(categoryItem);
                     }
-                });
+                } else {
+                    if (processedItems.indexOf(categoryItem.tokenId) === -1) {
+                        processedItems.push(categoryItem.tokenId);
+                        categoryItem.portal.options.forEach((option) => {
+                            items.push({
+                                ...categoryItem,
+                                gotchi: {
+                                    ...option,
+                                    tempId: option.id,
+                                    collateral: option.collateralType,
+                                    hauntId: categoryItem.hauntId,
+                                    id: option.id.split('-')[0],
+                                    kinship: '50',
+                                    modifiedNumericTraits: option.numericTraits,
+                                    withSetsNumericTraits: option.numericTraits,
+                                    level: '1',
+                                    equippedWearables: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+                                }
+                            });
+                        });
+                    }
+                }
             });
+        });
 
-            // process combined data
-            localGoods = items;
-            filterLocalGoods();
-            sortLocalGoods();
-            getShownItems();
+        localGoods = [...localGoods, ...items];
+    };
 
-            showBackdrop(false);
+    const getAllBaazaarItems = (params) => {
+        showBackdrop(true);
+        localGoods = [];
+        thegraph.getJoinedData(makeQueriesForCategory(params, itemTypes.aavegotchi)).then((response) => {
+            processResponse(params, response);
+            thegraph.getJoinedData(makeQueriesForCategory(params, itemTypes.openedPortal)).then((response) => {
+                processResponse(params, response);
+                // start render
+                filterLocalGoods();
+                sortLocalGoods();
+                getShownItems();
+                showBackdrop(false);
+            }).catch(() => {
+                showBackdrop(false);
+            });
         }).catch(() => {
             showBackdrop(false);
         });
@@ -330,23 +384,43 @@ export default function Baazaar() {
     const filterLocalGoods = () => {
         const filtersMap = [NRG || null, AGG || null, SPK || null, BRN || null, EYS || null, EYC || null];
 
-        filteredLocalGoods = localGoods.filter((item) => {
-            const gotchiTraits = item.gotchi.numericTraits;
+        const filterSingleGotchi = (item) => {
+            const gotchiTraits = item.numericTraits;
             let hasDifference = false;
 
-            filtersMap.forEach((item, index) => {
-                if (item !== null && !hasDifference) {
-                    hasDifference = parseInt(item) !== gotchiTraits[index];
+            filtersMap.forEach((trait, index) => {
+                if (trait !== null && !hasDifference) {
+                    hasDifference = parseInt(trait) !== gotchiTraits[index];
                 }
             });
 
             return !hasDifference;
+        };
+
+        const filterGotchiArray = (item) => {
+            let atLeastOneGotchiMatch = false;
+
+            item.gotchi.forEach((gotchiItem) => {
+                const gotchiMatch = !atLeastOneGotchiMatch ? filterSingleGotchi(gotchiItem) : false;
+
+                gotchiMatch && (atLeastOneGotchiMatch = true);
+            });
+
+            return atLeastOneGotchiMatch;
+        };
+
+        filteredLocalGoods = localGoods.filter((item) => {
+            if (item.gotchi instanceof Array) {
+                return filterGotchiArray(item);
+            } else {
+                return filterSingleGotchi(item.gotchi);
+            }
         });
     };
 
     const getShownItems = (newPage) => {
-        const itemsStart = ((newPage || page) - 1) * paginationConfigs.limit;
-        const newSelectedGoods = filteredLocalGoods.slice(itemsStart, itemsStart + paginationConfigs.limit);
+        const itemsStart = ((newPage || page) - 1) * paginationConfigs.gotchiLimit;
+        const newSelectedGoods = filteredLocalGoods.slice(itemsStart, itemsStart + paginationConfigs.gotchiLimit);
         setSelectedLocalGoods(newSelectedGoods);
     };
 
@@ -371,7 +445,7 @@ export default function Baazaar() {
             setLastValidParams(params);
             getAllBaazaarItems(params);
         } else {
-            params['limit'] = paginationConfigs.limit;
+            params['limit'] = paginationConfigs.gotchiLimit;
             setLastValidParams(params);
             getBaazaarItems(params);
         }
@@ -387,7 +461,7 @@ export default function Baazaar() {
                 setSelectedGoodsType={setSelectedGoodsType}
             />
             {
-                resultsForType !== itemTypes.aavegotchi ?
+                resultsForType !== itemTypes.aavegotchi && resultsForType !== itemTypes.openedPortal ?
                     <BaazaarBody
                         goods={goods}
                         page={page}
@@ -399,7 +473,7 @@ export default function Baazaar() {
                     : <BaazaarSortingBody
                         goods={selectedLocalGoods}
                         page={page}
-                        limit={paginationConfigs.limit}
+                        limit={paginationConfigs.gotchiLimit}
                         paginationIsVisible={paginationIsVisible}
                         onNextPageClick={onLocalNextPageClick}
                         onPrevPageClick={onLocalPrevPageClick}

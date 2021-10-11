@@ -10,10 +10,11 @@ import GotchiTraitsHighlight from './GotchiTraitsHighlight';
 import GotchiWearablesLine from './GotchiWearablesLine';
 import HighlightNumber from '../HighlightNumber';
 
-import CallMadeIcon from '@mui/icons-material/CallMade';
+import CallMade from '@mui/icons-material/CallMade';
 import GotchiSvg from './GotchiSvg';
+import GotchiSvgByStats from './GotchiSvgByStats';
 
-export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
+export default function Gotchi({gotchi, title, gotchiColor, narrowed, renderSvgByStats}) {
     const classes = useStyles();
 
     const calculateRarityType = (rarity) => {
@@ -80,8 +81,9 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
                 {title || commonUtils.cutAddress(gotchi.owner.id)}
             </p>
 
-            <GotchiSvg id={gotchi.id} size={120} />
-
+            {
+                renderSvgByStats ? <GotchiSvgByStats gotchi={gotchi} size={120} /> : <GotchiSvg id={gotchi.id} size={120} />
+            }
             <Link
                 className={classes.gotchiName}
                 style={{ backgroundColor: alpha(gotchiColor, .5)}}
@@ -96,7 +98,7 @@ export default function Gotchi({gotchi, title, gotchiColor, narrowed}) {
                         'Unnamed'
                     )}
                 </p>
-                <CallMadeIcon className={classes.callMadeIcon} />
+                <CallMade className={classes.callMadeIcon} />
             </Link>
 
             {renderNarrowed()}
