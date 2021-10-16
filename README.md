@@ -3,10 +3,10 @@
 
 ## LINCENSE clarification
 
-'''
-starting Octover 26 2021 GMT+2 this project is switching from private to MIT license
-check open-source workflow to help us build it
-'''
+Starting Octover 26 2021 GMT+2 this project is switching from private to MIT license
+
+Check open-source workflow to help us build it
+
 
 
 ## open source workflow 
