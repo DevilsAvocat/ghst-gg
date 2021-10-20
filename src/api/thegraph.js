@@ -4,7 +4,7 @@ import { gotchiesQuery, svgQuery, userQuery } from './common/queries';
 
 var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic';
 var raffleUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-matic-raffle';
-var gotchiSVGs = 'https://api.thegraph.com/subgraphs/name/froid1911/aavegotchi-svg';
+var gotchiSVGs = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-svg';
 
 var client = new ApolloClient({
     uri: baseUrl,
@@ -105,14 +105,8 @@ export default {
         });
     },
 
-    async getGotchiesByAddresses(addressesArray) {
-        let queries = [];
-
-        addressesArray.forEach((address)=> {
-            queries.push(userQuery(address.toLowerCase()));
-        });
-
-        return await this.getJoinedData(queries);
+    async getGotchiesByAddress(address) {
+        return await this.getData(userQuery(address.toLowerCase()));
     },
 
     async getRaffleData(query) {

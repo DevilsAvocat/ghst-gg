@@ -60,7 +60,7 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'flex-end',
+            justifyContent: 'flex-start',
             backgroundColor: 'transparent',
             position: 'static',
             transform: 'translateX(0)',
@@ -81,8 +81,9 @@ export const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('md')]: {
             display: 'flex',
             justifyContent: 'flex-end',
-            borderRight: '1px solid #3C404A',
-            paddingRight: 25,
+            borderLeft: '1px solid #3C404A',
+            paddingLeft: 12,
+            marginLeft: 24,
         }
     },
     navLink: {
@@ -124,20 +125,31 @@ export const useStyles = makeStyles((theme) => ({
     navHamburger: {
         position: 'relative',
         zIndex: theme.zIndex.appBar,
-        marginLeft: 10,
+        marginLeft: '24px !important',
         [theme.breakpoints.up('md')]: {
             display: 'none !important'
         }
     },
     socialLinkList: {
+        display: 'flex',
         justifyContent: 'center',
         flexWrap: 'nowrap',
         fontSize: '1rem',
         position: 'relative',
+        whiteSpace: 'nowrap',
+        '&.tablet': {
+            display: 'none'
+        },
         [theme.breakpoints.up('md')]: {
-            paddingLeft: 25,
+            paddingLeft: 12,
             width: 'unset',
-            margin: '5px 0'
+            margin: '5px 0',
+            '&.tablet': {
+                display: 'flex'
+            },
+            '&.mobile': {
+                display: 'none'
+            },
         }
     },
     socialLink: {
@@ -171,6 +183,6 @@ export const useStyles = makeStyles((theme) => ({
     group: {
         display: 'flex',
         alignItems: 'center',
-        marginLeft: 25
+        marginLeft: 12
     }
 }));
