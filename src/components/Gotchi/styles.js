@@ -7,7 +7,7 @@ export default makeStyles((theme) => ({
         display: 'block',
         borderRadius: theme.shape.borderRadius,
         color: '#fff',
-        padding: '24px 12px 16px',
+        padding: '0 8px 8px',
         textAlign: 'center',
         height: '100%',
         position: 'relative',
@@ -16,126 +16,87 @@ export default makeStyles((theme) => ({
         },
     },
     gotchiSvg: {
-        width: 120,
-        margin: 'auto',
-        '& .gotchi-wearable': {
-            transition: 'all .5s ease-in-out'
-        },
-        '& .gotchi-sleeves': {
-            transition: 'all .5s ease-in-out'
-        },
-        '&:hover': {
-            '& .gotchi-wearable:not(.wearable-bg)': {
-                opacity: 0,
-            },
-            '& .gotchi-sleeves': {
-                opacity: 0,
-            },
-            '& .wearable-head': {
-                transform: 'translateY(-5px) rotateZ(-45deg)'
-            },
-            '& .wearable-eyes': {
-                transform: 'translateX(10px) rotateZ(5deg)'
-            },
-            '& .wearable-face': {
-                transform: 'translateX(-10px) rotateZ(10deg)'
-            },
-            '& .wearable-body': {
-                transform: 'translateY(10px) rotateZ(-5deg)'
-            },
-            '& .wearable-hand-right': {
-                transform: 'translateX(5px) rotateZ(-5deg)'
-            },
-            '& .wearable-hand-left': {
-                transform: 'translateX(-5px) rotateZ(5deg)'
-            },
-            '& .wearable-pet': {
-                transform: 'translateY(5px)'
-            }
-        }
+        margin: '0 -8px',
+        padding: 8,
+        position: 'relative'
+    },
+    gotchiSetName: {
+        position: 'absolute',
+        bottom: 10,
+        right: 0,
+        left: 0,
+        pointerEvents: 'none'
     },
     gotchiInnerSection: {
         marginTop: 8
     },
-    gotchiCaption: {
-        display: 'block',
-        borderRadius: theme.shape.borderRadius,
-        color: theme.palette.common.white,
-        fontSize: 12,
-        fontWeight: 'bold',
-        padding: '0 4px',
-        position: 'absolute',
-        top: 0,
-        right: '50%',
-        minWidth: 60,
-        margin: 0,
-        transform: 'translate(50%, -50%)',
-        opacity: .8
+    gotchiId: {
+        backgroundColor: alpha(theme.palette.secondary.dark, .1),
+        border: `3px solid ${alpha(theme.palette.secondary.dark, .3)}`,
+        fontSize: 13,
+        fontWeight: '700',
+        minWidth: 70,
+        opacity: .8,
+        marginRight: 'auto',
     },
-    gotchiLvlWrapper: {
-        position: 'absolute',
-        top: 5,
-        right: 5,
+    gotchiBadges: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        margin: '0 -4px',
+        padding: '4px 0'
+
+    },
+    gotchiBadge: {
+        height: 25,
+        display: 'block',
+        marginLeft: 6,
+        '& img': {
+            display: 'block'
+        }
+    },
+    gotchiLvlTooltip: {
+        '& p': {
+            margin: 0
+        },
+        '& span': {
+            color: theme.palette.primary.main
+        }
     },
     gotchiLvl: {
         display: 'inline-flex',
         position: 'relative',
         backgroundColor: alpha(theme.palette.primary.main, .1),
         borderRadius: '50%',
-        cursor: 'default',
-        '&:hover .popover-core': {
-            opacity: 1
-        }
     },
-    gotchiLvlInner: {
+    gotchiLvlNumber: {
         position: 'absolute',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        inset: 0
-    },
-    gotchiLvlNumber: {
+        inset: 0,
+        fontSize: 14,
         color: theme.palette.primary.main,
-        fontWeight: 500,
-    },
-    gotchiLvlPopover: {
-        borderRadius: theme.shape.borderRadius,
-        position: 'absolute',
-        bottom: '100%',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.common.white,
-        padding: '4px 8px',
-        pointerEvents: 'none',
-        whiteSpace: 'nowrap',
-        textAlign: 'left',
-        transition: 'opacity .3s ease-in-out',
-        opacity: 0,
-        '& p': {
-            fontWeight: 500,
-            color: theme.palette.secondary.main,
-            margin: 0
-        }
+        fontWeight: 700,
     },
     gotchiName: {
         display: 'block',
-        borderRadius: theme.shape.borderRadius,
-        color: `${theme.palette.common.white} !important`,
+        backgroundColor: alpha(theme.palette.secondary.dark, .3),
+        color: `${theme.palette.text.primary} !important`,
         fontWeight: 'bold',
-        padding: '2px 4px',
-        margin: '8px 0 !important',
+        padding: '8px',
+        margin: '0 -8px !important',
         position: 'relative',
-        opacity: .9,
+        transition: 'all .2s ease-in-out',
         '&:hover': {
             textDecoration: 'none',
-            opacity: 1
+            backgroundColor: alpha(theme.palette.secondary.dark, .6),
         },
         '& p': {
             overflow: 'hidden',
             textOverflow: 'ellipsis',
             whiteSpace: 'nowrap',
-            fontSize: '15px !important',
+            fontSize: '16px !important',
             margin: 0
         }
     },
@@ -152,12 +113,19 @@ export default makeStyles((theme) => ({
         flexBasis: '49%',
         margin: '2px 0'
     },
+    gotchiMainTraits: {
+        margin: '8px 0'
+    },
     gotchiWLineWrapper: {
-        height: 16,
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        margin: '12px 0 4px',
+        '&:hover > div:not(:hover)': {
+            opacity: .25
+        }
     },
     gotchiWLineItem: {
+        cursor: 'pointer',
         flexGrow: 1,
         flexBasis: 0,
         maxWidth: '100%',
@@ -165,7 +133,7 @@ export default makeStyles((theme) => ({
         height: 8,
         position: 'relative',
         margin: '0 0.5px',
-        transition: 'all .1s ease-in-out',
+        transition: 'all .2s ease-in-out',
         '&:first-child': {
             borderTopLeftRadius: theme.shape.borderRadiusSmaller,
             borderBottomLeftRadius: theme.shape.borderRadiusSmaller
@@ -174,60 +142,6 @@ export default makeStyles((theme) => ({
             borderTopRightRadius: theme.shape.borderRadiusSmaller,
             borderBottomRightRadius: theme.shape.borderRadiusSmaller
         },
-        '&:hover': {
-            borderTopLeftRadius: 0,
-            borderTopRightRadius: 0,
-            height: 16,
-            flexBasis: '25%',
-            '& .popover-core': {
-                opacity: 1,
-                pointerEvents: 'all'
-            },
-            '& .name': {
-                opacity: '1 !important'
-            }
-        }
-    },
-    gotchiWLinePopover: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#e3e3e3',
-        borderRadius: theme.shape.borderRadiusSmaller,
-        position: 'absolute',
-        bottom: '100%',
-        left: '50%',
-        opacity: 0,
-        padding: 4,
-        pointerEvents: 'none',
-        height: 65,
-        width: 65,
-        textDecoration: 'none',
-        transform: 'translateX(-50%)',
-        transition: 'opacity .2s ease-in-out'
-    },
-    gotchiWLinePopoverName: {
-        position: 'absolute',
-        right: 0,
-        bottom: -1,
-        left: 0,
-        pointerEvents: 'none',
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: theme.palette.secondary.main,
-        whiteSpace: 'nowrap',
-        opacity: 0,
-        margin: 0,
-        transition: 'opacity .2s ease-in-out'
-    },
-    gotchiWLinePopoverEmpty: {
-        fontWeight: 'bold',
-        color: theme.palette.secondary.main,
-        margin: 0
-    },
-    gotchiWLineLink: {
-        display: 'block',
-        height: '100%'
     },
     callMadeIcon: {
         position: 'absolute',
@@ -241,7 +155,7 @@ export default makeStyles((theme) => ({
     },
     mainVal: {
         fontSize: 13,
-        fontWeight: 500,
+        fontWeight: 600,
         margin: 0,
         padding: '1px 0',
         whiteSpace: 'nowrap'
@@ -249,5 +163,9 @@ export default makeStyles((theme) => ({
     defaultVal: {
         fontSize: 10,
         marginLeft: 2
-    }
+    },
+    customTooltip: {
+        backgroundColor: `${theme.palette.secondary.dark} !important`,
+        marginBottom: '8px !important'
+    },
 }));

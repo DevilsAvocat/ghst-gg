@@ -33,7 +33,6 @@ export default function Stats() {
     };
 
     const onRangeChange = (event, indexInRange) => {
-        debugger
         const oldValue = sliderRange[indexInRange];
         const newValue = parseInt(event.target.value);
         const cachedRange = [...sliderRange];

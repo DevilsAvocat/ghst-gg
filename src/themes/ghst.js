@@ -27,26 +27,27 @@ export const theme = createTheme({
             legendary: 'rgb(255, 195, 107)',
             mythical: 'rgb(255, 150, 255)',
             godlike: 'rgb(81, 255, 168)',
-            drop: 'rgb(238, 232, 170)'
+            drop: 'rgb(0, 0, 0)'
         },
-        accounts: {
-            color1: '#E76F51',
-            color2: '#2A9D8F',
-            color3: '#D00000',
-            color4: '#8338EC',
-            color5: '#000000',
-            color6: '#E500A4',
-            color7: '#8AC926',
-            color8: '#5b6d5b',
-            color9: '#161d6f',
-            color10: '#219EBC'
+        realm: {
+            // humble: '#320fc7',
+            humble: '#6c4bfb',
+            reasonable: '#119773',
+            spacious: '#8840b7',
+            partner: '#bf91ff'
+        },
+        alchemica: {
+            fud: 'rgb(0, 255, 0)',
+            fomo: 'rgb(255, 30, 0)',
+            alpha: 'rgb(55, 255, 255)',
+            kek: '#fa34f3'
         },
         customColors: {
             lightGray: '#9A9EAA',
             grayBorder: '#C3C5CB',
             gray: '#94969a'
         },
-        haunt: {
+        haunts: {
             h1: 'rgb(193, 95, 255)',
             h2: 'rgb(0, 224, 199)'
         }

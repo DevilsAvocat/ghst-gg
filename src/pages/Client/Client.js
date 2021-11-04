@@ -1,121 +1,92 @@
-import React, {useContext, useEffect, useState} from 'react';
-import { Container, Backdrop, CircularProgress, useTheme, } from '@mui/material';
-import {Helmet} from 'react-helmet';
-import thegraph from '../../api/thegraph';
-import web3 from '../../api/web3';
-import itemUtils from '../../utils/itemUtils';
-import commonUtils from '../../utils/commonUtils';
+import React, { useContext, useEffect } from 'react';
+import { Alert, AlertTitle } from '@mui/material';
+import { Box } from '@mui/system';
+import { Helmet } from 'react-helmet';
+import { Route, Switch, Redirect, useRouteMatch, useHistory } from 'react-router';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string'
 import { useStyles } from './styles';
-import ClientContent from './components/ClientContent';
-import { LoginContext } from "../../contexts/LoginContext";
+
+import { LoginContext } from '../../contexts/LoginContext';
+import { ClientContext } from '../../contexts/ClientContext';
+
+import LoginNavigation from '../../components/Login/LoginNavigation';
+import ClientProfile from './components/ClientProfile';
+import ClientNav from './components/ClientNav';
+import ClientGotchis from './routes/ClientGotchis';
+import ClientWarehouse from './routes/ClientWarehouse';
+import ClientTickets from './routes/ClientTickets';
+import ClientRealm from './routes/ClientRealm';
 
 export default function Client() {
     const classes = useStyles();
-    const theme = useTheme();
-    const [gotchies, setGotchies] = useState([]);
-    const [gotchiesFilter, setGotchiesFilter] = useState('withSetsRarityScore');
-    const [isGotchiesLoading, setIsGotchiesLoading] = useState(false);
-    const [inventory, setInventory] = useState([]);
-    const [inventoryFilter, setInventoryFilter] = useState('desc');
-    const [isInventoryLoading, setIsInventoryLoading] = useState(false);
+    const match = useRouteMatch();
+    const location = useLocation();
+    const history = useHistory();
+
+    const params = queryString.parse(location.search)
+
     const { activeAddress } = useContext(LoginContext);
+    const { clientActive, setClientActive, getClientData } = useContext(ClientContext);
 
-    const getGotchiesByAddress = (address) => {
-        setIsGotchiesLoading(true);
-        thegraph.getGotchiesByAddress(address).then(async (response)=> {
-            setGotchies(commonUtils.basicSort(response.data.user?.gotchisOwned, gotchiesFilter));
-            setIsGotchiesLoading(false);
-        }).catch(()=> {
-            setIsGotchiesLoading(false);
-        });
-    };
-
-    const getInventoryByAddress = (address) => {
-        setIsInventoryLoading(true);
-        web3.getInventoryByAddress(address).then((response) => {
-            let combinedArray = [];
-
-            response.items.forEach((item) => {
-                let index = combinedArray.findIndex(el => el.itemId === item.itemId);
-                let owner = {
-                    id: response.owner,
-                    balance: +item.balance,
-                    color: theme.palette.accounts.color1
-                };
-
-                if (index !== -1) {
-                    combinedArray[index].balance = +combinedArray[index].balance + +item.balance;
-                    combinedArray[index].owners.push(owner);
-                } else {
-                    combinedArray.push({
-                        itemId: item.itemId,
-                        rarity: itemUtils.getItemRarityById(item.itemId),
-                        rarityId: itemUtils.getItemRarityId(itemUtils.getItemRarityById(item.itemId)),
-                        balance: +item.balance,
-                        owners: [owner]
-                    });
-                }
-            });
-
-            setIsInventoryLoading(false);
-            setInventoryFilter('desc');
-            setInventory(commonUtils.basicSort(combinedArray, 'rarityId', 'desc'));
-        }).catch(() => {
-            setIsInventoryLoading(false);
-        });
-    };
-
-    const getData = () => {
-        if (activeAddress) {
-            getGotchiesByAddress(activeAddress.toLowerCase());
-            getInventoryByAddress(activeAddress.toLowerCase());
+    useEffect(() => {
+        if(activeAddress) {
+            setClientActive(activeAddress);
         }
-    };
-
-    const onGotchiesSort = (event) => {
-        // TODO: add filter by owner
-        setGotchies(commonUtils.basicSort(gotchies, event.target.value));
-        setGotchiesFilter(event.target.value);
-    };
-
-    const onInventorySort = (event) => {
-        setInventory(commonUtils.basicSort(
-            inventory,
-            event.target.value === 'balance' ? 'balance' : 'rarityId',
-            event.target.value === 'balance' ? 'desc' : event.target.value)
-        );
-        setInventoryFilter(event.target.value);
-    };
-
-    const isDataLoading = () => {
-        return isGotchiesLoading || isInventoryLoading;
-    };
-
-    useEffect( () => {
-        getData();
     }, [activeAddress]);
 
+    useEffect(() => {
+        if(params.address) {
+            setClientActive(params.address);
+        }
+    }, [params.address]);
+
+    useEffect(() => {
+        if(clientActive) {
+            getClientData();
+            history.push({ path: location.pathname, search: `?address=${clientActive}` });
+        } else {
+            history.push({ path: location.pathname });
+        }
+    }, [clientActive]);
+
     return (
-        <Container maxWidth='lg' className={classes.container}>
+        <Box className={classes.container}>
             <Helmet>
                 <title>Client</title>
             </Helmet>
 
-            <ClientContent
-                signedInAddress={activeAddress}
-                gotchies={gotchies}
-                gotchiesFilter={gotchiesFilter}
-                onGotchiesSort={onGotchiesSort}
-                inventory={inventory}
-                inventoryFilter={inventoryFilter}
-                onInventorySort={onInventorySort}
-                isDataLoading={isDataLoading}
-            />
+            {!clientActive?.length ? (
+                <Box display='flex' alignItems='center' justifyContent='center' minHeight='calc(100vh - 192px)'>
+                    <Box bgcolor='secondary.dark' maxWidth={400} margin='auto' padding='24px' borderRadius='4px'>
+                        <Alert severity='info' sx={{ marginBottom: '24px' }}>
+                            <AlertTitle>Fren, provide the address!</AlertTitle>
+                            You cannot use the client without a valid ETH address.
+                        </Alert>
 
-            <Backdrop className={classes.backdrop} open={isDataLoading()}>
-                <CircularProgress color='primary' />
-            </Backdrop>
+                        <LoginNavigation />
+                    </Box>
+                </Box>
+            ) : (
+                <>
+                    <Box marginBottom='12px'>
+                        <ClientProfile />
+                    </Box>
 
-        </Container>
+                    <Box marginBottom='12px'>
+                        <ClientNav />
+                    </Box>
+
+                    <Switch>
+                        <Route path={`${match.path}/gotchis`} component={ ClientGotchis } />
+                        <Route path={`${match.path}/warehouse`} component={ ClientWarehouse } />
+                        <Route path={`${match.path}/tickets`} component={ ClientTickets } />
+                        <Route path={`${match.path}/realm`} component={ ClientRealm } />
+                        <Redirect from={match.path} to={`${match.path}/gotchis`} />
+                    </Switch>
+                </>
+            )}
+
+        </Box>
     );
 }

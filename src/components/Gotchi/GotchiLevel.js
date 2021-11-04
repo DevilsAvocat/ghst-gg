@@ -1,7 +1,6 @@
 import React from 'react';
-import { CircularProgress } from '@mui/material';
+import { CircularProgress, Tooltip } from '@mui/material';
 import useStyles from './styles';
-import classNames from 'classnames';
 
 const expFormula = (lvl) => {
     return lvl * lvl / 0.02;
@@ -13,24 +12,23 @@ export default function GotchiLevel({level, toNextLevel, experience, size}) {
     const percentageFormula = 100 - Math.floor(toNextLevel * 100 / diff);
 
     return (
-        <div className={classes.gotchiLvl}>
-            <CircularProgress variant='determinate' value={percentageFormula} size={size} />
-
-            <div className={classes.gotchiLvlInner}>
-
-                <p className={classes.gotchiLvlNumber}>
-                    {level}
-                </p>
-
-                <div className={classNames(classes.gotchiLvlPopover, 'popover-core')}>
-                    <p>
-                        Summary {'=>'} {experience} XP
-                    </p>
-                    <p>
-                        To level {+level + 1} {'=>'} {toNextLevel} XP
-                    </p>
-                </div>
+        <Tooltip
+            title={
+                <React.Fragment>
+                    <div className={classes.gotchiLvlTooltip}>
+                        <p>[<span>{experience}</span> XP] lvl <span>{+level + 1}</span> in <span>{toNextLevel}</span> XP</p>
+                    </div>
+                </React.Fragment>
+            }
+            classes={{ tooltip: classes.customTooltip }}
+            enterTouchDelay={0}
+            placement='top'
+            followCursor
+        >
+            <div className={classes.gotchiLvl}>
+                <CircularProgress variant='determinate' value={percentageFormula} size={size} />
+                <div className={classes.gotchiLvlNumber}>{level}</div>
             </div>
-        </div>
+        </Tooltip>
     );
 }

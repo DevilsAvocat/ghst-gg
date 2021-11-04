@@ -18,6 +18,10 @@ export default {
         return items[id]?.stats || '';
     },
 
+    getItemSlotById(id) {
+        return items[id]?.slot || '';
+    },
+
     getEmojiStatsById(id) {
         let stats = items[id].stats;
         let emojis = {'NRG':'⚡️', 'AGG':'👹', 'SPK':'👻', 'BRN':'🧠', 'EYS':'👀', 'EYC':'👁'};
@@ -159,6 +163,14 @@ export default {
         }
     },
 
+    getTicketImg(name) {
+        try {
+            return require(`../assets/tickets/${name}.svg`).default;
+        } catch (error) {
+            return require(`../assets/images/no-image2.svg`).default;
+        }
+    },
+
     getItemUrl(item) {
         try {
             return `https://aavegotchi.com/baazaar/${item.__typename === "ERC1155Listing" ? 'erc1155' : 'erc721'}/${item.id}`;
@@ -166,5 +178,51 @@ export default {
             console.error(error);
             return 'https://aavegotchi.com/baazaar';
         }
-    }
+    },
+
+    getSlotCaption(name) {
+        switch (name) {
+            case 'body':
+                return 'b';
+            case 'face':
+                return 'f';
+            case 'eyes':
+                return 'e';
+            case 'head':
+                return 'hd';
+            case 'right hand':
+                return 'rh';
+            case 'hands':
+                return 'hs';
+            case 'pet':
+                return 'p';
+            default:
+                return name;
+        }
+    },
+
+    getParcelSize(id) {
+        switch (id) {
+            case '0':
+                return 'humble';
+            case '1':
+                return 'reasonable';
+            case '2': // 32x64
+                return 'spacious';
+            case '3': // 64x32
+                return 'spacious';
+            case '4':
+                return 'partner';
+            default:
+                return '';
+        }
+    },
+
+    getAlchemicaImg(name) {
+        try {
+            return require(`../assets/images/icons/${name}.png`).default;
+        } catch (error) {
+            return require(`../assets/images/no-image2.svg`).default;
+        }
+    },
 }

@@ -8,6 +8,9 @@ import gotchiLoading from '../../assets/images/gotchi-loading.gif';
 const useStyles = makeStyles((theme) => ({
     svgWrapper: {
         margin: 'auto',
+        '& svg, & img': {
+            display: 'block'
+        },
         '& .gotchi-wearable': {
             transition: 'all .5s ease-in-out'
         },
@@ -51,9 +54,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     svgPlaceholder: {
-        width: '140%',
-        transform: 'translate(-15%, -15%)',
-        pointerEvents: 'none'
+        width: '100%'
     }
 }));
 
@@ -97,7 +98,7 @@ export default function GotchiSvg({id, size, hideWearables, hideBg}) {
     }, [id]);
 
     return (
-        <div className={classNames(classes.svgWrapper, hideWearables && 'hide-wearables', hideBg && 'hide-bg' )} style={{ width: size, height: size }}>
+        <div className={classNames(classes.svgWrapper, hideWearables && 'hide-wearables', hideBg && 'hide-bg' )} style={{ width: size }}>
             {loadingSvg ? (
                 <img
                     className={classes.svgPlaceholder}

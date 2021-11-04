@@ -10,10 +10,6 @@ export default makeStyles((theme) => ({
         gridGap: 12,
         width: '100%'
     },
-    baazaarListItem: {
-        maxWidth: 192,
-        margin: 'auto'
-    },
     pagination: {
         display: 'flex',
         alignContent: 'center',

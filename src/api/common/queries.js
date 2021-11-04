@@ -9,9 +9,11 @@ export const gotchiesQuery = (skip, orderDir, hauntId) => {
         ) {
           id
           name
-          withSetsNumericTraits
           numericTraits
+          modifiedNumericTraits
+          withSetsNumericTraits
           baseRarityScore
+          modifiedRarityScore
           withSetsRarityScore
           kinship
           level
@@ -19,6 +21,11 @@ export const gotchiesQuery = (skip, orderDir, hauntId) => {
           equippedWearables
           collateral
           hauntId
+          createdAt
+          possibleSets
+          equippedSetID
+          equippedSetName
+          usedSkillPoints
           owner {
             id
           }
@@ -37,16 +44,18 @@ export const gotchiByIdQuery = (id) => {
   }`
 }
 
-export const userQuery = (id) => {
+export const userQuery = (id, skip) => {
     return `{
         user(id: "${id}") {
           id
-          gotchisOwned(first: 1000, where: {status: 3}) {
+          gotchisOwned(first: 1000, skip: ${skip}, where: {status: 3}) {
             id
             name
             numericTraits
+            modifiedNumericTraits
             withSetsNumericTraits
             baseRarityScore
+            modifiedRarityScore
             withSetsRarityScore
             kinship
             equippedWearables
@@ -55,6 +64,11 @@ export const userQuery = (id) => {
             toNextLevel
             collateral
             hauntId
+            createdAt
+            possibleSets
+            equippedSetID
+            equippedSetName
+            usedSkillPoints
             owner {
               id
             }
@@ -70,4 +84,52 @@ export const svgQuery = (id) => {
           svg
         }
       }`
+};
+
+export const erc1155Query = (id, sold, category, orderBy, orderDireciton) => {
+  return `{ 
+      erc1155Listings (
+          first: 1, 
+          orderBy: ${orderBy},
+          orderDirection: ${orderDireciton},
+          where: {
+              cancelled: false,
+              sold: ${sold},
+              category: ${category},
+              erc1155TypeId: ${id}
+          }
+      ){
+          id
+          priceInWei
+          timeLastPurchased
+      }
+  }`
+};
+
+export const realmQuery = (address, skip) => {
+    return `{
+      parcels(first: 1000, skip: ${skip} where: { owner: "${address}" }) {
+        parcelId
+        parcelHash
+        tokenId
+        coordinateX
+        coordinateY
+        district
+        fudBoost
+        fomoBoost
+        alphaBoost
+        kekBoost
+        size
+        auctionId
+      }
+    }`
+};
+
+export const auctionQuery = (id) => {
+    return `{
+      auctions(first: 1, where: { id: "${id}" }) {
+        id
+        highestBid
+      }
+    }`
 };

@@ -1,10 +1,15 @@
 import { ApolloClient, InMemoryCache } from '@apollo/client';
 import { gql } from '@apollo/client';
-import { gotchiesQuery, svgQuery, userQuery } from './common/queries';
+import graphUtils from '../utils/graphUtils';
+import { gotchiesQuery, svgQuery, erc1155Query, userQuery, realmQuery, auctionQuery } from './common/queries';
+import Web3 from 'web3';
+
+const web3 = new Web3();
 
 var baseUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-core-matic';
 var raffleUrl = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-matic-raffle';
 var gotchiSVGs = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-svg';
+var realm = 'https://api.thegraph.com/subgraphs/name/aavegotchi/aavegotchi-realm-matic';
 
 var client = new ApolloClient({
     uri: baseUrl,
@@ -18,6 +23,11 @@ var raffleClient = new ApolloClient({
 
 var svgsClient = new ApolloClient({
     uri: gotchiSVGs,
+    cache: new InMemoryCache()
+});
+
+var realmClient = new ApolloClient({
+    uri: realm,
     cache: new InMemoryCache()
 });
 
@@ -69,9 +79,6 @@ export default {
     },
 
     async getAllGotchies() {
-        debugger
-        // NOTE: to reduce loading speed current gotchies max amount is 7000
-        // We should add new queries when there will be more than 7000 unique gotchies
         return await graphJoin(this.getGotchiQueries()).then((response)=> {
             let responseArray = [];
 
@@ -79,7 +86,7 @@ export default {
                 responseArray = [...response[i].data.aavegotchis, ...responseArray];
             }
 
-            return responseArray.reduce((unique, item) => {
+            let filteredArray = responseArray.reduce((unique, item) => {
                 const index = unique.findIndex(el => el.id === item.id);
 
                 if (index === -1) {
@@ -88,6 +95,23 @@ export default {
 
                 return unique;
             }, []);
+
+            let gotchis = JSON.parse(JSON.stringify(filteredArray));
+
+            gotchis.forEach((gotchi, index) => { // NOTE: Temporary solution to resolve subgraph issue with withSetsNumericTraits data (it's not correct)
+                if(gotchi.equippedSetID) {
+                    let modifiers = graphUtils.getSetModifiers(gotchi.equippedSetID);
+                    let brsBoots = modifiers.reduce((a, b) => Math.abs(a) + Math.abs(b), 0);
+
+                    gotchis[index].modifiedRarityScore = +gotchis[index].modifiedRarityScore + brsBoots;
+                    gotchis[index].modifiedNumericTraits[0] += modifiers[1];
+                    gotchis[index].modifiedNumericTraits[1] += modifiers[2];
+                    gotchis[index].modifiedNumericTraits[2] += modifiers[3];
+                    gotchis[index].modifiedNumericTraits[3] += modifiers[4];
+                };
+            });
+
+            return gotchis;
         });
     },
 
@@ -105,8 +129,49 @@ export default {
         return queries;
     },
 
-    async getGotchiesByAddress(address) {
-        return await this.getData(userQuery(address.toLowerCase()));
+    async getGotchisByAddress(address) {
+        let data = [];
+
+        for(let i = 0; i < 5; i++) {
+            let queryData = await this.getData(userQuery(address.toLowerCase(), i * 1000)).then((response) => {
+                let gotchis = JSON.parse(JSON.stringify([...response.data.user.gotchisOwned]));
+    
+                gotchis.forEach((gotchi, index) => { // NOTE: Temporary solution to resolve subgraph issue with withSetsNumericTraits data (it's not correct)
+                    if(gotchi.equippedSetID) {
+                        let modifiers = graphUtils.getSetModifiers(gotchi.equippedSetID);
+                        let brsBoots = modifiers.reduce((a, b) => Math.abs(a) + Math.abs(b), 0);
+    
+                        gotchis[index].modifiedRarityScore = +gotchis[index].modifiedRarityScore + brsBoots;
+                        gotchis[index].modifiedNumericTraits[0] += modifiers[1];
+                        gotchis[index].modifiedNumericTraits[1] += modifiers[2];
+                        gotchis[index].modifiedNumericTraits[2] += modifiers[3];
+                        gotchis[index].modifiedNumericTraits[3] += modifiers[4];
+                    };
+                });
+    
+                return gotchis;
+            });
+    
+            data.push(...queryData);
+    
+            if(queryData.length < 1000) { // break loop if there is less than 1000 items comes from query
+                break;
+            }
+        }
+
+        return data;
+    },
+
+    async getErc1155Price(id, sold, category, orderBy, orderDireciton) {
+        return await this.getData(erc1155Query(id, sold, category, orderBy, orderDireciton)).then((response) => {
+            let erc1155 = response.data.erc1155Listings;
+
+            return {
+                listing: erc1155[0]?.id || null,
+                price: erc1155[0]?.priceInWei ? +web3.utils.fromWei(erc1155[0].priceInWei) : 0,
+                lastSale: erc1155[0]?.timeLastPurchased || null
+            };
+        }).catch((error) => console.log(error));
     },
 
     async getRaffleData(query) {
@@ -121,5 +186,40 @@ export default {
             .query({
                 query: gql`${svgQuery(id)}`
             });
+    },
+
+    async getRealmData(query) {
+        return await realmClient
+            .query({
+                query: gql`${query}`
+            });
+    },
+
+    async getRealmByAddress(address) {
+        let data = [];
+
+        for(let i = 0; i < 6; i++) {
+            let queryData = await this.getRealmData(realmQuery(address.toLowerCase(), i * 1000)).then((response) => {
+                return [...response.data.parcels];
+            });
+    
+            data.push(...queryData);
+    
+            if(queryData.length < 1000) { // break loop if there is less than 1000 items comes from query
+                break;
+            }
+        }
+
+        return data;
+    },
+
+    async getRealmAuctionPrice(id) {
+        return await this.getRealmData(auctionQuery(id)).then((response) => {
+            let erc721 = response.data.auctions;
+
+            return {
+                price: erc721[0]?.highestBid / 10**18 || 0
+            };
+        });
     },
 }
