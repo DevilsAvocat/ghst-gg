@@ -11,7 +11,7 @@ import { LoginContext } from '../../contexts/LoginContext';
 import { ClientContext } from '../../contexts/ClientContext';
 
 import LoginNavigation from '../../components/Login/LoginNavigation';
-import ClientProfile from './components/ClientProfile';
+import ProfilePane from '../../components/ProfilePane/ProfilePane';
 import ClientNav from './components/ClientNav';
 import ClientGotchis from './routes/ClientGotchis';
 import ClientWarehouse from './routes/ClientWarehouse';
@@ -69,13 +69,9 @@ export default function Client() {
                 </Box>
             ) : (
                 <>
-                    <Box marginBottom='12px'>
-                        <ClientProfile />
-                    </Box>
+                    <ProfilePane address={clientActive} />
 
-                    <Box marginBottom='12px'>
-                        <ClientNav />
-                    </Box>
+                    <ClientNav />
 
                     <Switch>
                         <Route path={`${match.path}/gotchis`} component={ ClientGotchis } />
