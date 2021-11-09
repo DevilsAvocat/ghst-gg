@@ -30,16 +30,5 @@ export default makeStyles((theme) => ({
     },
     sliderContainer: {
         paddingTop: 4
-    },
-    field: {
-        '& img': {
-            width: 20,
-            marginRight: 5
-        },
-        '& .booster': {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-        }
     }
 }));

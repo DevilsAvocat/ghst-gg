@@ -1,4 +1,5 @@
 import React, {createContext, useState} from 'react';
+import { listingTypes } from "../data/types";
 
 export const BaazaarContext = createContext({});
 
@@ -9,7 +10,14 @@ const BaazaarContextProvider = (props) => {
         timeDESC: 'timeCreated-desc',
         timeASC: 'timeCreated-asc'
     });
-    const [sortingOrder, setSortingOrder] = useState('timeCreated-desc');
+    const [districtFilter, setDistrictFilter] = useState(0)
+    const [sizeFilter, setSizeFilter] = useState('4');
+    const [alphaFilter, setAlphaFilter] = useState('');
+    const [kekFilter, setKekFilter] = useState('');
+    const [fomoFilter, setFomoFilter] = useState('');
+    const [fudFilter, setFudFilter] = useState('');
+    const [sortingOrder, setSortingOrder] = useState(orderingTypes.timeDESC);
+    const [selectedGoodsType, setSelectedGoodsType] = useState(listingTypes.aavegotchi)
     const [filteringType, setFilteringType] = useState('stats');
     const [name, setName] = useState(null);
     const [id, setId] = useState(null);
@@ -17,6 +25,9 @@ const BaazaarContextProvider = (props) => {
     const [minBRS, setMinBRS] = useState(null);
     const [selectedTraits, setSelectedTraits] = useState('NRG');
     const [sliderRange, setSliderRange] = useState([0, 99]);
+    const [priceFrom, setPriceFrom] = useState('');
+    const [priceTo, setPriceTo] = useState('');
+    const [rarity, setRarity] = useState('');
     const [stats, setStats] = useState({
         "NRG": [],
         "AGG": [],
@@ -65,7 +76,27 @@ const BaazaarContextProvider = (props) => {
             setSliderRange,
             orderingTypes,
             sortingOrder,
-            setSortingOrder
+            setSortingOrder,
+            selectedGoodsType,
+            setSelectedGoodsType,
+            priceFrom,
+            setPriceFrom,
+            priceTo,
+            setPriceTo,
+            rarity,
+            setRarity,
+            districtFilter,
+            setDistrictFilter,
+            sizeFilter,
+            setSizeFilter,
+            alphaFilter,
+            setAlphaFilter,
+            kekFilter,
+            setKekFilter,
+            fomoFilter,
+            setFomoFilter,
+            fudFilter,
+            setFudFilter
         }}>
             { props.children }
         </BaazaarContext.Provider>

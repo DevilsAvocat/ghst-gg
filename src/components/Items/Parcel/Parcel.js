@@ -12,8 +12,12 @@ import itemUtils from '../../../utils/itemUtils';
 import CallMade from '@mui/icons-material/CallMade';
 import ghstIcon from '../../../assets/images/ghst-doubleside.gif';
 import commonUtils from '../../../utils/commonUtils';
+import Web3 from "web3";
+import ParcelImage from "../ParcelImage/ParcelImage";
 
-export default function Parcel({parcel}) {
+var web3 = new Web3();
+
+export default function Parcel({parcel, isBaazaarCard}) {
     const classes = useStyles();
     const theme = useTheme();
     const [current, setCurrent] = useState(null);
@@ -46,13 +50,18 @@ export default function Parcel({parcel}) {
             <div className={classes.labels}>
 
                 {current ? (
-                    <Tooltip title='Auction price' classes={{ tooltip: classes.customTooltip }} placement='top' followCursor>
+                    <Tooltip title='Price' classes={{ tooltip: classes.customTooltip }} placement='top' followCursor>
                         <div
                             className={classNames(classes.label, classes.labelTotal)}
                             style={{ backgroundColor: theme.palette.realm[size], color: theme.palette.secondary.main }}
                         >
                             <Typography variant='subtitle2'>
-                                {commonUtils.formatPrice(current.price)}
+                                {
+                                    isBaazaarCard ? commonUtils.formatPrice(
+                                            parseFloat(web3.utils.fromWei(parcel.priceInWei))
+                                        ) :
+                                        commonUtils.formatPrice(current.price)
+                                }
                             </Typography>
                             <img src={ghstIcon} width='18' alt='GHST Token Icon' />
                         </div>
@@ -85,11 +94,21 @@ export default function Parcel({parcel}) {
                 </Tooltip>
             </div>
 
+            <ParcelImage key={parcel.parcelId} parcel={parcel} />
+
             <div className={classNames(classes.label, classes.labelSlot)}>
                 [{parcel.tokenId}]
             </div>
 
-            <Link href={`https://gotchiverse.io/auction?tokenId=${parcel.tokenId}`} target='_blank' underline='none' className={classNames(classes.nameWrapper, 'two-lined')}>
+            <Link
+                href={
+                    isBaazaarCard ? `https://aavegotchi.com/baazaar/erc721/${parcel.baazaarId}` :
+                    `https://gotchiverse.io/auction?tokenId=${parcel.tokenId}`
+                }
+                target='_blank'
+                underline='none'
+                className={classNames(classes.nameWrapper, 'two-lined')}
+            >
                 <Typography className={classNames(classes.name, classes.textHighlight, size)}>
                     {name}
                 </Typography>
