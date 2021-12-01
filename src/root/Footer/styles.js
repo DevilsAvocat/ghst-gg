@@ -1,4 +1,4 @@
-import { makeStyles } from "@mui/styles";
+import { makeStyles } from '@mui/styles';
 
 const styles = makeStyles( theme => ({
     footerWrapper: {
@@ -21,7 +21,17 @@ const styles = makeStyles( theme => ({
     },
     footerCopyright: {
         '& a': {
-            textDecoration: "none",
+            textDecoration: 'none',
+            color: theme.palette.primary.main
+        }
+    },
+    stats: {
+        fontSize: 12,
+        marginLeft: 'auto',
+        marginRight: 48,
+        whiteSpace: 'nowrap',
+        '& a': {
+            textDecoration: 'none',
             color: theme.palette.primary.main
         }
     }

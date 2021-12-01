@@ -16,12 +16,13 @@ export default function Footer() {
     return (
         <Box className={classes.footerWrapper}>
             <Toolbar className={classes.toolbar}>
-                <Typography>
-                    <Box component='span' className={classes.highlight}>v0.3</Box>
-                    <Box component='span' className={classes.footerCopyright}>
-                        <a href='https://ghst.gg/'>ghst.gg</a> is aavegotchi.com client developed by orden DAO | <a href='https://simpleanalytics.com/ghst.gg' rel='noreferrer' target='_blank'>stats</a>
-                    </Box>
-                </Typography>
+                <Box display='flex' alignItems='center' width='100%'>
+                    <span className={classes.highlight}>v0.3</span>
+                    <span className={classes.footerCopyright}>
+                        ghst.gg is the <a href='https://github.com/orden-gg/ghst-gg' rel='noreferrer' target='_blank'>open-source</a> <a href='https://www.aavegotchi.com/' rel='noreferrer' target='_blank'>gotchiverse</a> client focused on game {'&&'} market transparency. Developed by <a href='https://twitter.com/orden_gg' rel='noreferrer' target='_blank'>orden DAO</a> {'&'} contributors.
+                    </span>
+                    <span className={classes.stats}><a href='https://simpleanalytics.com/ghst.gg' rel='noreferrer' target='_blank'>SIMPLE ANALYTICS</a></span>
+                </Box>
             </Toolbar>
             <Snackbar open={isOpen} autoHideDuration={3000} onClose={() => onSnackbarClose()}>
                 <FooterAlert onClose={() => onSnackbarClose()} severity={type}>
