@@ -1,9 +1,9 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import axios from "axios";
-import useStyles from "../styles";
+import styles from '../styles';
 
 export default function ParcelImage({parcel}) {
-    const classes = useStyles();
+    const classes = styles();
     const canvasRef = useRef(null);
 
     const processColorsMap = (map) => {

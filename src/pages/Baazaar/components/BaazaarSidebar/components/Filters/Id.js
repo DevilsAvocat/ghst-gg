@@ -1,10 +1,12 @@
 import React, { useContext } from "react";
 import { TextField } from "@mui/material";
 import { BaazaarContext } from "../../../../../../contexts/BaazaarContext";
-import useStyles from "./styles";
+
+import styles from "./styles";
+
 
 export default function Id({runFilterWatcher}) {
-    const classes = useStyles();
+    const classes = styles();
     const { id, setId } = useContext(BaazaarContext);
 
     const onIdChange = (event) => {

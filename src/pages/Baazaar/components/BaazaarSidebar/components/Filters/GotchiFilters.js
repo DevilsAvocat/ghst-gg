@@ -7,15 +7,17 @@ import {
     ToggleButtonGroup
 } from "@mui/material";
 import { BaazaarContext } from "../../../../../../contexts/BaazaarContext";
-import useStyles from "./styles";
 import Stats from "./Stats";
 import Name from "./Name";
 import Id from "./Id";
 import classNames from 'classnames';
 import { baazaarFilteringTypes } from '../../../../../../data/types';
 
+import styles from "./styles";
+
+
 export default function GotchiFilters({runFilterWatcher, runInstantFiltering}) {
-    const classes = useStyles();
+    const classes = styles();
     const [chips, setChips] = useState([]);
     const [fastSearch, setFastSearch] = useState(true);
     const {filteringType, setFilteringType, exactMatch, setExactMatch, stats, removeStat, clearAllStats} = useContext(BaazaarContext);

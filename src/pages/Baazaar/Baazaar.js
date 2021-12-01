@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Backdrop, CircularProgress } from "@mui/material";
-import useStyles from "./style";
+import styles from "./styles";
 import thegraph from "../../api/thegraph";
 import BaazaarBody from "./components/BaazaarBody/BaazaarBody";
 import BaazaarSortingBody from './components/BaazaarSortingBody/BaazaarSortingBody';
@@ -27,7 +27,7 @@ let localGoods = [],
     filteredLocalGoods = [];
 
 export default function Baazaar() {
-    const classes = useStyles();
+    const classes = styles();
     // server pagination
     const [goods, setGoods] = useState([]);
     // local pagination
@@ -492,7 +492,7 @@ export default function Baazaar() {
     }, [selectedGoodsType]);
 
     return (
-        <Grid className={classes.baazaar} container spacing={3}>
+        <Grid classes={{root: classes.baazaar}} container spacing={3}>
             <BaazaarSidebar
                 runFilterWatcher={runFilterWatcher}
                 runInstantFiltering={runInstantFiltering}
@@ -516,7 +516,7 @@ export default function Baazaar() {
                         onPrevPageClick={onLocalPrevPageClick}
                     />
             }
-            <Backdrop className={classes.backdrop} open={backdropIsOpen}>
+            <Backdrop classes={{root: classes.backdrop }} open={backdropIsOpen}>
                 <CircularProgress color='primary' />
             </Backdrop>
         </Grid>

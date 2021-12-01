@@ -8,10 +8,12 @@ import {
     ToggleButton,
     ToggleButtonGroup, Tooltip
 } from "@mui/material";
-import useStyles from "./styles";
+
+import styles from "./styles";
+
 
 export default function AdvancedSearch({selectedTraits, onTraitsChange, sliderRange, onSliderChange, onRangeChange, sliderIsValid, onAddTraitClick}) {
-    const classes = useStyles();
+    const classes = styles();
 
     return (
         <Grid container spacing={2}>
