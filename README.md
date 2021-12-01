@@ -31,4 +31,4 @@ Check open-source workflow to help us build it
 
 * homepage: https://ghst.gg
 * twitter: https://twitter.com/orden_gg
-* discord 
+* discord: https://discord.gg/NXEEETxSkC
