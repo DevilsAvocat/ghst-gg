@@ -1,34 +1,15 @@
-# ghst.gg // aavegotchi client 
+# Basic Sample Hardhat Project
 
+This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
 
-## LINCENSE clarification
+Try running some of the following tasks:
 
-Starting Octover 26 2021 00:00 GMT+2 this project is switching from private to MIT license
-
-Check open-source workflow to help us build it
-
-
-
-## open source workflow 
-
--  languages: JavaScript/Python
-- frameworks React
-- UI Library: Material-UI 5.0.3
-- Icons: Material-UI Icons 5.0.3
-
-
-
-## local deploy (ubuntu & macos)
-
-* use yarn lock for versions
-* yarn
-* yarn start
-* yarn run start-prod  - 'for production version testing'
-* yarn test
-
-
-## Links
-
-* homepage: https://ghst.gg
-* twitter: https://twitter.com/orden_gg
-* discord: https://discord.gg/NXEEETxSkC
+```shell
+npx hardhat accounts
+npx hardhat compile
+npx hardhat clean
+npx hardhat test
+npx hardhat node
+node scripts/sample-script.js
+npx hardhat help
+```

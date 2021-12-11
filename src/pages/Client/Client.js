@@ -15,6 +15,10 @@ import ProfilePane from '../../components/ProfilePane/ProfilePane';
 import ClientNav from './components/ClientNav';
 import ClientGotchis from './routes/ClientGotchis';
 import ClientWarehouse from './routes/ClientWarehouse';
+import CheckWinnings from './routes/CheckWinnings';
+
+import ClientRaffleWarehouse from './routes/ClientRaffleWarehouse';
+
 import ClientTickets from './routes/ClientTickets';
 import ClientRealm from './routes/ClientRealm';
 
@@ -69,14 +73,18 @@ export default function Client() {
                 </Box>
             ) : (
                 <>
-                    <ProfilePane address={clientActive} />
+                    <ProfilePane address={activeAddress} />
 
-                    <ClientNav />
+                <ClientNav />
                     <Switch>
                         <Route path={`${match.path}/gotchis`} component={ ClientGotchis } />
                         <Route path={`${match.path}/warehouse`} component={ ClientWarehouse } />
+                        <Route path={`${match.path}/raffleWarehouse`} component={ ClientRaffleWarehouse } />
+                        <Route path={`${match.path}/winnings`} component={ CheckWinnings } />
+
                         <Route path={`${match.path}/tickets`} component={ ClientTickets } />
                         <Route path={`${match.path}/realm`} component={ ClientRealm } />
+                        
                         <Redirect from={match.path} to={`${match.path}/gotchis`} />
                     </Switch>
                 </>

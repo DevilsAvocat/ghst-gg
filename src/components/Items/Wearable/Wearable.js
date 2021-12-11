@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
+import { Link, Box, Typography } from '@mui/material';
 import classNames from 'classnames';
 
 import { ERC1155InnerStyles } from '../styles';
@@ -25,7 +25,7 @@ export default function Wearable({wearable, raffleStats, tooltip}) {
             slot: slot,
             tooltip: tooltip
         }}>
-
+            
             <div className={classes.iconWrapper}>
                 <img
                     src={itemUtils.getWearableImg(wearable.id)}

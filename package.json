@@ -11,12 +11,13 @@
     "@mui/lab": "^5.0.0-alpha.50",
     "@mui/material": "^5.0.6",
     "@mui/styles": "^5.0.2",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/contracts-upgradeable": "^4.4.0",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.1",
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
-    "ethers": "^5.4.6",
     "graphql": "^15.5.0",
     "luxon": "^2.0.2",
     "react": "^17.0.2",
@@ -61,5 +62,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.3",
+    "@nomiclabs/hardhat-etherscan": "^2.1.8",
+    "@openzeppelin/hardhat-upgrades": "^1.12.0",
+    "ethers": "^5.5.2",
+    "hardhat": "^2.7.0"
   }
 }

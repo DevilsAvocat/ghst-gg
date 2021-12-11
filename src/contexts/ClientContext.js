@@ -18,6 +18,10 @@ const ClientContextProvider = (props) => {
     const [warehouseFilter, setWarehouseFilter] = useState('rarityIdDesc');
     const [loadingWarehouse, setLoadingWarehouse] = useState(false);
 
+    const [raffleWarehouse, setRaffleWarehouse] = useState([]);
+    const [raffleWarehouseFilter, setRaffleWarehouseFilter] = useState('rarityIdDesc');
+    const [loadingRaffleWarehouse, setLoadingRaffleWarehouse] = useState(false);
+
     const [tickets, setTickets] = useState([]);
     const [loadingTickets, setLoadingTickets] = useState(true);
 
@@ -32,6 +36,7 @@ const ClientContextProvider = (props) => {
     const getClientData = () => {
         getGotchis(clientActive);
         getInventory(clientActive);
+        getRaffleInventory(clientActive);
         getTickets(clientActive);
         getRealm(clientActive);
 
@@ -164,6 +169,44 @@ const ClientContextProvider = (props) => {
         });
     };
 
+    const getRaffleInventory = (address) => {
+        setLoadingRaffleWarehouse(true);
+
+        web3.getInventoryByAddress('0x3a229e65028924E242cDb52da35aFFf87E5A51ca').then((response) => {
+            let modified = [];
+            let [wFilter, wDir] = getFilter(warehouseFilter);
+
+            response.items.forEach((item) => {
+                modified.push({
+                    id: +item.itemId,
+                    rarity: itemUtils.getItemRarityById(item.itemId),
+                    rarityId: itemUtils.getItemRarityId(itemUtils.getItemRarityById(item.itemId)),
+                    balance: +item.balance,
+                    category: item.itemId >= 126 && item.itemId <= 129 ? 2 : 0 // TODO: temporary solution to determine if item is consumable or not
+                });
+            });
+
+            setRaffleWarehouse((existing) => commonUtils.basicSort(
+                [...existing, ...modified].reduce((items, current) => {
+                    let duplicated = items.find(item => item.id === current.id);
+        
+                    if(duplicated) {
+                        duplicated.balance += current.balance;
+                        duplicated.holders = current.holders;
+                        return items;
+                    }
+        
+                    return items.concat(current);
+                }, []), wFilter, wDir));
+            setLoadingRaffleWarehouse(false);
+
+        }).catch((error) => {
+            console.log(error);
+            setRaffleWarehouse([]);
+            setLoadingRaffleWarehouse(false);
+        });
+    };
+
     const getTickets = (address) => {
         setLoadingTickets(true);
 
@@ -234,6 +277,11 @@ const ClientContextProvider = (props) => {
             gotchisFilter,
             loadingGotchis,
             setGotchis,
+
+            raffleWarehouse,
+            raffleWarehouseFilter,
+            loadingRaffleWarehouse,
+            setRaffleWarehouse,
 
             warehouse,
             warehouseFilter,

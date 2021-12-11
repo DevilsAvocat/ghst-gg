@@ -24,39 +24,14 @@ export default function ClientNav() {
         clientActive,
         gotchis, loadingGotchis,
         warehouse, loadingWarehouse,
+        raffleWarehouse, loadingRaffleWarehouse,
         tickets, loadingTickets,
         realm, loadingRealm
      } = useContext(ClientContext);
 
     return (
         <div className={classes.container}>
-            <Button
-                disabled={!gotchis.length}
-                startIcon={
-                    <img src={gotchiPlaceholder} alt='gotchi' width={20} />
-                }
-                component={NavLink}
-                className={classes.button}
-                activeClassName='active'
-                to={{ pathname: `${match.url}/gotchis`, search: `?address=${clientActive}` }}
-            >
-                Gotchis
-                {
-                    loadingGotchis ? (
-                        <ContentLoader
-                            speed={2}
-                            viewBox='0 0 28 14'
-                            backgroundColor={theme.palette.secondary.main}
-                            foregroundColor={theme.palette.primary.dark}
-                            className={classes.buttonLoader}
-                        >
-                            <rect x='0' y='0' width='28' height='14' />
-                        </ContentLoader>
-                    ) : (
-                        <span className={classes.label}>[{gotchis.length}]</span>
-                    )
-                }
-            </Button>
+            
 
             <Button
                 disabled={!warehouse.length}
@@ -68,7 +43,7 @@ export default function ClientNav() {
                 activeClassName='active'
                 to={{ pathname: `${match.url}/warehouse`, search: `?address=${clientActive}` }}
             >
-                Warehouse
+                Your Wearables
                 {
                     loadingGotchis || loadingWarehouse ? (
                         <ContentLoader
@@ -87,18 +62,18 @@ export default function ClientNav() {
             </Button>
 
             <Button
-                disabled={!tickets.length}
+                
                 startIcon={
-                    <img src={ticketsPlaceholder} alt='gotchi' width={22} />
+                    <img src={warehousePlaceholder} alt='gotchi' width={25} />
                 }
                 component={NavLink}
                 className={classes.button}
                 activeClassName='active'
-                to={{ pathname: `${match.url}/tickets`, search: `?address=${clientActive}` }}
+                to={{ pathname: `${match.url}/raffleWarehouse`, search: `?address=${clientActive}` }}
             >
-                Tickets
+                Entered Wearables
                 {
-                    loadingTickets ? (
+                    loadingGotchis || loadingRaffleWarehouse ? (
                         <ContentLoader
                             speed={2}
                             viewBox='0 0 28 14'
@@ -109,38 +84,26 @@ export default function ClientNav() {
                             <rect x='0' y='0' width='28' height='14' />
                         </ContentLoader>
                     ) : (
-                        <span className={classes.label}>[{tickets.length}]</span>
+                        <span className={classes.label}>[{raffleWarehouse.length}]</span>
                     )
                 }
             </Button>
 
             <Button
-                disabled={!realm.length}
+                
                 startIcon={
-                    <img src={realmPlaceholder} alt='gotchi' width={20} />
+                    <img src={warehousePlaceholder} alt='gotchi' width={25} />
                 }
                 component={NavLink}
                 className={classes.button}
                 activeClassName='active'
-                to={{ pathname: `${match.url}/realm`, search: `?address=${clientActive}` }}
+                to={{ pathname: `${match.url}/winnings`, search: `?address=${clientActive}` }}
             >
-                Realm
-                {
-                    loadingRealm ? (
-                        <ContentLoader
-                            speed={2}
-                            viewBox='0 0 28 14'
-                            backgroundColor={theme.palette.secondary.main}
-                            foregroundColor={theme.palette.primary.dark}
-                            className={classes.buttonLoader}
-                        >
-                            <rect x='0' y='0' width='28' height='14' />
-                        </ContentLoader>
-                    ) : (
-                        <span className={classes.label}>[{realm.length}]</span>
-                    )
-                }
+                Check Winnings
+                
             </Button>
+
+            
         </div>
     );
 }

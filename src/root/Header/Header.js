@@ -65,9 +65,8 @@ export default function Header() {
             <NavLink className={classes.logoWrapper} to='/'>
                 <img className={classes.logo} src={logo} alt='logo' />
                 <Typography className={classes.logoText}>
-                    <Box component='span'>ghst</Box>
-                    <Box component='span' className={classes.highlight}>_</Box>
-                    <Box component='span'>gg</Box>
+                    <Box component='span'>bearded</Box>
+                    
                 </Typography>
             </NavLink>
             <Box className={classNames(classes.navWrapper, navOpen ? 'opened' : 'closed')} ref={navRef}>
@@ -78,18 +77,9 @@ export default function Header() {
                             <Typography variant={'caption'}>Beta</Typography>
                         </Box>
                     </NavLink>
-                    <NavLink className={classes.navLink} to='/market'>
-                        <Box className={classes.navLinkBox}>
-                            Market
-                            <Typography variant={'caption'}>Filter</Typography>
-                        </Box>
-                    </NavLink>
-                    <NavLink className={classes.navLink} to='/explorer'>
-                        Explorer
-                    </NavLink>
-                    <NavLink className={classes.navLink} to='/raffle-calculator'>
-                        Raffle Calculator
-                    </NavLink>
+                    
+                    
+                    
                 </nav>
                 {renderSocials('mobile')}
             </Box>
@@ -104,7 +94,6 @@ export default function Header() {
                 >
                     <MenuIcon />
                 </IconButton>
-                {renderSocials('tablet')}
             </Box>
         </Toolbar>
     )
