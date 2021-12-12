@@ -10,7 +10,7 @@ import GotchiSvg from '../../../../components/Gotchi/GotchiSvg';
 import Subtitle from '../../../../components/Subtitle/Subtitle';
 import { Box } from '@mui/system';
 
-const gotchiesId = [4271, 8005, 4282, 23470, 13998];
+const gotchiesId = [8062, 3267, 23921, 13536];
 
 export default function Team() {
     const classes = styles();
@@ -22,8 +22,7 @@ export default function Team() {
             gotchiByIdQuery(gotchiesId[0]),
             gotchiByIdQuery(gotchiesId[1]),
             gotchiByIdQuery(gotchiesId[2]),
-            gotchiByIdQuery(gotchiesId[3]),
-            gotchiByIdQuery(gotchiesId[4])
+            gotchiByIdQuery(gotchiesId[3])
         ]).then((response) => {
             let formattedArray = [];
 
@@ -41,7 +40,7 @@ export default function Team() {
             <Grid container justifyContent='center'>
                 <Grid item xs={12} md={10}>
                     <Subtitle variant='h4' innerBg='rgb(39, 42, 48)' margin='0 0 40px'>
-                        orden DAO
+                        Bearded DAO
                     </Subtitle>
                 </Grid>
             </Grid>

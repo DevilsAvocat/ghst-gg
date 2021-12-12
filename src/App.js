@@ -71,11 +71,7 @@ export default function App() {
                             <Box className={classNames(classes.content, location.pathname === '/explorer' ? 'explorer' : '')}>
                                 <Switch>
                                     <Route exact path={`/`} component={ Main } />
-                                    <Route exact path={`/market`} component={ Baazaar } />
-                                    <Route exact path={`/explorer`} component={ GhostExplorer } />
                                     <Route path={`/client`} component={ Client } />
-                                    <Route path={`/raffle-calculator`} component={ Raffle } />
-                                    <Route exact path={`/countdown-test`} component={ CountdownTest } />
                                     <Route exact path={`/404`} component={ NotFound } />
                                     <Redirect from='*' to='/404' />
                                 </Switch>
