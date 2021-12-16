@@ -34,7 +34,7 @@ const ClientContextProvider = (props) => {
     const [rewardCalculated, setRewardCalculated] = useState(false);
 
     const getClientData = () => {
-        getGotchis(clientActive);
+        //getGotchis(clientActive);
         getInventory(clientActive);
         getRaffleInventory(clientActive);
         getTickets(clientActive);
