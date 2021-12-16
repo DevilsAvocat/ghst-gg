@@ -34,7 +34,7 @@ const ClientContextProvider = (props) => {
     const [rewardCalculated, setRewardCalculated] = useState(false);
 
     const getClientData = () => {
-        //getGotchis(clientActive);
+        getGotchis(clientActive);
         getInventory(clientActive);
         getRaffleInventory(clientActive);
         getTickets(clientActive);
@@ -89,7 +89,7 @@ const ClientContextProvider = (props) => {
                 let equipped = item.equippedWearables.filter((item) => item > 0);
 
                 for(let wearable of equipped) {
-                    let index = wearables.findIndex(item => item.id === wearable);
+                    /*let index = wearables.findIndex(item => item.id === wearable);
 
                     if((wearable >= 162 && wearable <= 198) || wearable === 210) continue; // skip badges or h1 bg
 
@@ -106,7 +106,7 @@ const ClientContextProvider = (props) => {
                         wearables[index].balance += 1;
                         wearables[index].holders.push(item.id);
                     }
-                }
+                }*/
             });
 
             setWarehouse((existing) => commonUtils.basicSort(
