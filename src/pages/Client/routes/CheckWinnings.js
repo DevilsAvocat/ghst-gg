@@ -4,7 +4,9 @@ import ReactPlayer from "react-player";
 import { ethers } from 'ethers';
 import contract from '../../../contracts/RafflesContract.json';
 
-import myVideo from '../../../assets/images/VRF-loading.mp4'
+import winnerVideo from '../../../assets/images/Winner.mp4'
+import loserVideo from '../../../assets/images/Not_Winner.mp4'
+
 
 const contractAddress = "0x3a229e65028924E242cDb52da35aFFf87E5A51ca";
 const diamondAddress = '0x86935F11C86623deC8a25696E1C19a8659CbF95d';
@@ -87,7 +89,7 @@ async claimWinnings() {
   )
 }
 
-video = () => {
+video = (myVideo) => {
   return (
     <div className='player-wrapper' >
     <ReactPlayer
@@ -95,7 +97,7 @@ video = () => {
       playing={true} 
     loop={false} 
     controls={false}
-    muted={true}
+    muted={false}
     onEnded={() => {this.setState({playedVideo: true})}}
     />
   </div>
@@ -113,12 +115,14 @@ video = () => {
   render(){
     return(
       this.state.clicked ? 
-      (this.state.hasWinnings ? (this.state.playedVideo ? this.winner() : this.video() ) : (this.state.playedVideo ? this.loser() : this.video() )) :
-      (<div onClick = {this.checkWinnings}>
-       <div>
-           Check here to see if you've won anything (Click here)
-       </div>
-    </div>)
+          (this.state.hasWinnings ?   
+              (this.state.playedVideo ? this.winner() : this.video(winnerVideo) ) : 
+              (this.state.playedVideo ? this.loser() : this.video(loserVideo) )) 
+          : (<div onClick = {this.checkWinnings}>
+                <div>
+                  Check here to see if you've won anything (Click here)
+                  </div>
+                </div>)
     )
   }
 
