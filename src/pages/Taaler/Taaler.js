@@ -69,7 +69,7 @@ async handleSubmit(event) {
     console.log("Mining...please wait");
     await claimTxn.wait();
     console.log(`Mined, see transaction: ${claimTxn.hash}`);
-    alert('Deposited '+ this.state.value+' common wizard hats');
+    alert('Deposited '+ this.state.numDeposit+' common wizard hats');
 }
 
 async handleWithdraw(event) {
@@ -87,7 +87,7 @@ async handleWithdraw(event) {
     console.log("Mining...please wait");
     await claimTxn.wait();
     console.log(`Mined, see transaction: ${claimTxn.hash}`);
-    alert('Deposited '+ this.state.value+' common wizard hats');
+    alert('Withdrew '+ this.state.numWithdraw+' common wizard hats');
 }
 
 
