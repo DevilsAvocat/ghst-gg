@@ -16,6 +16,7 @@ import Main from './pages/Main/Main';
 import Baazaar from './pages/Baazaar/Baazaar';
 import GhostExplorer from './pages/GhostExplorer/GhostExplorer';
 import CountdownTest from './pages/CountdownTest/CountdownTest';
+import Taaler from './pages/Taaler/Taaler';
 import Client from './pages/Client/Client';
 import Raffle from './pages/Raffle/Raffle';
 import NotFound from './pages/NotFound/NotFound';
@@ -72,6 +73,7 @@ export default function App() {
                                 <Switch>
                                     <Route exact path={`/`} component={ Main } />
                                     <Route path={`/client`} component={ Client } />
+                                    <Route exact path={'/taaler'} component={ Taaler } />
                                     <Route exact path={`/404`} component={ NotFound } />
                                     <Redirect from='*' to='/404' />
                                 </Switch>

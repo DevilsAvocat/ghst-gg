@@ -1967,6 +1967,665 @@
           }
         }
       }
+    },
+    "4d1fde9fecb3420c8533651b808112a9505eaff2163f92e29efb0e7f3e108579": {
+      "address": "0xbF0aAd882362Ab55094b0d075CCD2dd3a28aC3b5",
+      "txHash": "0x22e8d2b2fc41f0606b8005872fa1f0f99910e7877bf4c6a0efbb8bb0722ec4a1",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:37"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:42"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "s",
+            "type": "t_struct(AppStorage)82_storage",
+            "src": "contracts/WearableRaffle2.sol:101"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_link",
+            "type": "t_contract(LinkTokenInterface)1637",
+            "src": "contracts/WearableRaffle2.sol:103"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_vrfCoordinator",
+            "type": "t_address",
+            "src": "contracts/WearableRaffle2.sol:104"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_diamondAddress",
+            "type": "t_address",
+            "src": "contracts/WearableRaffle2.sol:105"
+          }
+        ],
+        "types": {
+          "t_struct(AppStorage)82_storage": {
+            "label": "struct AppStorage",
+            "members": [
+              {
+                "label": "supportedInterfaces",
+                "type": "t_mapping(t_bytes4,t_bool)"
+              },
+              {
+                "label": "raffles",
+                "type": "t_array(t_struct(Raffle)138_storage)6_storage"
+              },
+              {
+                "label": "nonces",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              },
+              {
+                "label": "requestIdToRaffleId",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              },
+              {
+                "label": "keyHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "fee",
+                "type": "t_uint96"
+              },
+              {
+                "label": "contractOwner",
+                "type": "t_address"
+              },
+              {
+                "label": "aavegotchiDiamond",
+                "type": "t_contract(IAavegotchi)1658"
+              }
+            ]
+          },
+          "t_mapping(t_bytes4,t_bool)": {
+            "label": "mapping(bytes4 => bool)"
+          },
+          "t_bytes4": {
+            "label": "bytes4"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_struct(Raffle)138_storage)6_storage": {
+            "label": "struct Raffle[6]"
+          },
+          "t_struct(Raffle)138_storage": {
+            "label": "struct Raffle",
+            "members": [
+              {
+                "label": "itemsEntered",
+                "type": "t_array(t_uint256)dyn_storage"
+              },
+              {
+                "label": "entrantsMapping",
+                "type": "t_mapping(t_address,t_uint256)"
+              },
+              {
+                "label": "entrants",
+                "type": "t_array(t_address)dyn_storage"
+              },
+              {
+                "label": "brsMultiplier",
+                "type": "t_uint256"
+              },
+              {
+                "label": "randomNumber",
+                "type": "t_uint256"
+              },
+              {
+                "label": "randomNumberPending",
+                "type": "t_bool"
+              },
+              {
+                "label": "raffleActive",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_uint96": {
+            "label": "uint96"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IAavegotchi)1658": {
+            "label": "contract IAavegotchi"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_contract(LinkTokenInterface)1637": {
+            "label": "contract LinkTokenInterface"
+          }
+        }
+      }
+    },
+    "455f7450c603a098832d958087ac027c75fbd7b04f8ddf350fd538614b806ed8": {
+      "address": "0x0B6543DFa0167649Ab3acCDdFfAf1009e50a78d4",
+      "txHash": "0xa7f8142da7814de3d5b3cf172069c41fe7a41ddbce25b5c20a70c79996550df5",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:37"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:42"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "s",
+            "type": "t_struct(AppStorage)82_storage",
+            "src": "contracts/WearableRaffle2.sol:102"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_link",
+            "type": "t_contract(LinkTokenInterface)1686",
+            "src": "contracts/WearableRaffle2.sol:104"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_vrfCoordinator",
+            "type": "t_address",
+            "src": "contracts/WearableRaffle2.sol:105"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_diamondAddress",
+            "type": "t_address",
+            "src": "contracts/WearableRaffle2.sol:106"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "isAuthorized",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "contracts/WearableRaffle2.sol:108"
+          }
+        ],
+        "types": {
+          "t_struct(AppStorage)82_storage": {
+            "label": "struct AppStorage",
+            "members": [
+              {
+                "label": "supportedInterfaces",
+                "type": "t_mapping(t_bytes4,t_bool)"
+              },
+              {
+                "label": "raffles",
+                "type": "t_array(t_struct(Raffle)138_storage)6_storage"
+              },
+              {
+                "label": "nonces",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              },
+              {
+                "label": "requestIdToRaffleId",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              },
+              {
+                "label": "keyHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "fee",
+                "type": "t_uint96"
+              },
+              {
+                "label": "contractOwner",
+                "type": "t_address"
+              },
+              {
+                "label": "aavegotchiDiamond",
+                "type": "t_contract(IAavegotchi)1707"
+              }
+            ]
+          },
+          "t_mapping(t_bytes4,t_bool)": {
+            "label": "mapping(bytes4 => bool)"
+          },
+          "t_bytes4": {
+            "label": "bytes4"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_struct(Raffle)138_storage)6_storage": {
+            "label": "struct Raffle[6]"
+          },
+          "t_struct(Raffle)138_storage": {
+            "label": "struct Raffle",
+            "members": [
+              {
+                "label": "itemsEntered",
+                "type": "t_array(t_uint256)dyn_storage"
+              },
+              {
+                "label": "entrantsMapping",
+                "type": "t_mapping(t_address,t_uint256)"
+              },
+              {
+                "label": "entrants",
+                "type": "t_array(t_address)dyn_storage"
+              },
+              {
+                "label": "brsMultiplier",
+                "type": "t_uint256"
+              },
+              {
+                "label": "randomNumber",
+                "type": "t_uint256"
+              },
+              {
+                "label": "randomNumberPending",
+                "type": "t_bool"
+              },
+              {
+                "label": "raffleActive",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_uint96": {
+            "label": "uint96"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IAavegotchi)1707": {
+            "label": "contract IAavegotchi"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_contract(LinkTokenInterface)1686": {
+            "label": "contract LinkTokenInterface"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          }
+        }
+      }
+    },
+    "88f6e950da4bef02e7b7f0b68ef4614160159b16b66b407be449d5923df1f7d2": {
+      "address": "0x777124524d287Da223AbF3A2A2a57B01389D25ac",
+      "txHash": "0x744739b63ae126136c75d1944e840ed7e1a730d1fcfaf70708d0f043d2e18621",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:37"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:42"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "s",
+            "type": "t_struct(AppStorage)82_storage",
+            "src": "contracts/WearableRaffle2.sol:102"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_link",
+            "type": "t_contract(LinkTokenInterface)1698",
+            "src": "contracts/WearableRaffle2.sol:104"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_vrfCoordinator",
+            "type": "t_address",
+            "src": "contracts/WearableRaffle2.sol:105"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_diamondAddress",
+            "type": "t_address",
+            "src": "contracts/WearableRaffle2.sol:106"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "isAuthorized",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "contracts/WearableRaffle2.sol:108"
+          }
+        ],
+        "types": {
+          "t_struct(AppStorage)82_storage": {
+            "label": "struct AppStorage",
+            "members": [
+              {
+                "label": "supportedInterfaces",
+                "type": "t_mapping(t_bytes4,t_bool)"
+              },
+              {
+                "label": "raffles",
+                "type": "t_array(t_struct(Raffle)138_storage)6_storage"
+              },
+              {
+                "label": "nonces",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              },
+              {
+                "label": "requestIdToRaffleId",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              },
+              {
+                "label": "keyHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "fee",
+                "type": "t_uint96"
+              },
+              {
+                "label": "contractOwner",
+                "type": "t_address"
+              },
+              {
+                "label": "aavegotchiDiamond",
+                "type": "t_contract(IAavegotchi)1719"
+              }
+            ]
+          },
+          "t_mapping(t_bytes4,t_bool)": {
+            "label": "mapping(bytes4 => bool)"
+          },
+          "t_bytes4": {
+            "label": "bytes4"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_struct(Raffle)138_storage)6_storage": {
+            "label": "struct Raffle[6]"
+          },
+          "t_struct(Raffle)138_storage": {
+            "label": "struct Raffle",
+            "members": [
+              {
+                "label": "itemsEntered",
+                "type": "t_array(t_uint256)dyn_storage"
+              },
+              {
+                "label": "entrantsMapping",
+                "type": "t_mapping(t_address,t_uint256)"
+              },
+              {
+                "label": "entrants",
+                "type": "t_array(t_address)dyn_storage"
+              },
+              {
+                "label": "brsMultiplier",
+                "type": "t_uint256"
+              },
+              {
+                "label": "randomNumber",
+                "type": "t_uint256"
+              },
+              {
+                "label": "randomNumberPending",
+                "type": "t_bool"
+              },
+              {
+                "label": "raffleActive",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_uint96": {
+            "label": "uint96"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IAavegotchi)1719": {
+            "label": "contract IAavegotchi"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_contract(LinkTokenInterface)1698": {
+            "label": "contract LinkTokenInterface"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          }
+        }
+      }
+    },
+    "f96ce95aca564b2c7c6ad6c3a986dead590d780cdd31647066e4ddae81653731": {
+      "address": "0xAa7d4630de8F004E99F5Dd5bEFaC223c5F804a58",
+      "txHash": "0x4a5d4423ee9b6892aaf3e4a98074646ad292203c1e20d20311ac1cb214223749",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "_initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:37"
+          },
+          {
+            "contract": "Initializable",
+            "label": "_initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:42"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "s",
+            "type": "t_struct(AppStorage)82_storage",
+            "src": "contracts/WearableRaffle2.sol:102"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_link",
+            "type": "t_contract(LinkTokenInterface)1611",
+            "src": "contracts/WearableRaffle2.sol:104"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_vrfCoordinator",
+            "type": "t_address",
+            "src": "contracts/WearableRaffle2.sol:105"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "im_diamondAddress",
+            "type": "t_address",
+            "src": "contracts/WearableRaffle2.sol:106"
+          },
+          {
+            "contract": "RafflesContract",
+            "label": "isAuthorized",
+            "type": "t_mapping(t_address,t_bool)",
+            "src": "contracts/WearableRaffle2.sol:108"
+          }
+        ],
+        "types": {
+          "t_struct(AppStorage)82_storage": {
+            "label": "struct AppStorage",
+            "members": [
+              {
+                "label": "supportedInterfaces",
+                "type": "t_mapping(t_bytes4,t_bool)"
+              },
+              {
+                "label": "raffles",
+                "type": "t_array(t_struct(Raffle)138_storage)6_storage"
+              },
+              {
+                "label": "nonces",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              },
+              {
+                "label": "requestIdToRaffleId",
+                "type": "t_mapping(t_bytes32,t_uint256)"
+              },
+              {
+                "label": "keyHash",
+                "type": "t_bytes32"
+              },
+              {
+                "label": "fee",
+                "type": "t_uint96"
+              },
+              {
+                "label": "contractOwner",
+                "type": "t_address"
+              },
+              {
+                "label": "aavegotchiDiamond",
+                "type": "t_contract(IAavegotchi)1632"
+              }
+            ]
+          },
+          "t_mapping(t_bytes4,t_bool)": {
+            "label": "mapping(bytes4 => bool)"
+          },
+          "t_bytes4": {
+            "label": "bytes4"
+          },
+          "t_bool": {
+            "label": "bool"
+          },
+          "t_array(t_struct(Raffle)138_storage)6_storage": {
+            "label": "struct Raffle[6]"
+          },
+          "t_struct(Raffle)138_storage": {
+            "label": "struct Raffle",
+            "members": [
+              {
+                "label": "itemsEntered",
+                "type": "t_array(t_uint256)dyn_storage"
+              },
+              {
+                "label": "entrantsMapping",
+                "type": "t_mapping(t_address,t_uint256)"
+              },
+              {
+                "label": "entrants",
+                "type": "t_array(t_address)dyn_storage"
+              },
+              {
+                "label": "brsMultiplier",
+                "type": "t_uint256"
+              },
+              {
+                "label": "randomNumber",
+                "type": "t_uint256"
+              },
+              {
+                "label": "randomNumberPending",
+                "type": "t_bool"
+              },
+              {
+                "label": "raffleActive",
+                "type": "t_bool"
+              }
+            ]
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_uint96": {
+            "label": "uint96"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_contract(IAavegotchi)1632": {
+            "label": "contract IAavegotchi"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]"
+          },
+          "t_contract(LinkTokenInterface)1611": {
+            "label": "contract LinkTokenInterface"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)"
+          }
+        }
+      }
     }
   }
 }

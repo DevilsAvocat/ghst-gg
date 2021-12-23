@@ -10,6 +10,7 @@ import "./interfaces/IAavegotchi.sol";
 import "./libraries/LibAppStorage.sol";
 //import "@openzeppelin/contracts-upgradeable";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "hardhat/console.sol";
 
 
 // All state variables are accessed through this struct
@@ -28,6 +29,7 @@ struct AppStorage {
     uint96 fee;
     address contractOwner;
     IAavegotchi aavegotchiDiamond;
+
 
 }
 
@@ -103,7 +105,8 @@ contract RafflesContract is IERC173, IERC165, Initializable {
     address internal  im_vrfCoordinator;
     address internal  im_diamondAddress;
     bytes4 internal constant ERC1155_ACCEPTED = 0xf23a6e61; // Return value from `onERC1155Received` call if a contract accepts receipt (i.e `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`).
-    
+    mapping(address => bool) isAuthorized;
+
      function getCoordinator() public view returns(address){
          return im_vrfCoordinator;
      }
@@ -111,6 +114,23 @@ contract RafflesContract is IERC173, IERC165, Initializable {
      modifier onlyOwner{
          require(msg.sender == s.contractOwner,"Failed: not contract owner");
          _;
+     }
+
+     modifier onlyAuthorized{
+         require(isAuthorized[msg.sender] || msg.sender == s.contractOwner);
+         _;
+     }
+
+     function getAuthorized(address _user) public view returns(bool){
+         return isAuthorized[_user];
+     }
+
+     function setAuthorized(address _user) public onlyOwner{
+         isAuthorized[_user] = true;
+     }
+
+     function removeAuthorized(address _user) public onlyOwner{
+         isAuthorized[_user] = false;
      }
   
     function initialize (
@@ -250,7 +270,19 @@ contract RafflesContract is IERC173, IERC165, Initializable {
         token.transfer(msg.sender, _amount);
     }
 
-    function drawRandomNumber(uint256 _raffleId) public onlyOwner {
+    /*function setRandomNumber(uint256 _raffleId) public onlyOwner {
+        uint256 raffleId = _raffleId;
+        require(raffleId < s.raffles.length, "Raffle: Raffle does not exist");
+        Raffle storage raffle = s.raffles[raffleId];
+        require(raffle.randomNumber == 0, "Raffle: Random number already generated");
+        s.raffles[raffleId].randomNumber = uint(keccak256(abi.encodePacked(block.difficulty, block.timestamp)));
+        console.log("Random number is: ", s.raffles[raffleId].randomNumber);
+        address winner = getWinner(_raffleId);
+        console.log("Winner should be: ",winner);
+        raffle.randomNumberPending = false;
+    }*/
+
+    function drawRandomNumber(uint256 _raffleId) public onlyAuthorized {
         require(_raffleId < s.raffles.length, "Raffle: Raffle does not exist");
         Raffle storage raffle = s.raffles[_raffleId];
         require(raffle.randomNumber == 0, "Raffle: Random number already generated");
@@ -262,6 +294,10 @@ contract RafflesContract is IERC173, IERC165, Initializable {
         s.requestIdToRaffleId[requestId] = _raffleId;
         
         s.raffles[_raffleId].raffleActive = false;
+    }
+
+    function getRandomNumber(uint256 _raffleId) public view returns (uint256){
+        return s.raffles[_raffleId].randomNumber;
     }
 
     // rawFulfillRandomness is called by VRFCoordinator when it receives a valid VRFproof.
@@ -353,7 +389,7 @@ contract RafflesContract is IERC173, IERC165, Initializable {
 
     }
 
-    function resetRaffle(uint256 _raffleId) public onlyOwner{
+    function resetRaffle(uint256 _raffleId) public onlyAuthorized{
 
         //check how many entrants there were
         uint256 numEntrants = s.raffles[_raffleId].entrants.length;
@@ -411,17 +447,24 @@ contract RafflesContract is IERC173, IERC165, Initializable {
 
     }
 
+    function getWinningIndex(uint256 _raffleId) public view returns(uint256){
+        Raffle storage raffle = s.raffles[_raffleId];
+        uint256 randomNumber = raffle.randomNumber;
+        //if(randomNumber == 0){return address(0);}
+        return uint256(
+                        keccak256(abi.encodePacked(randomNumber, _raffleId))
+                    ) % raffle.entrants.length;
+    }
+
     function getWinner(uint256 _raffleId) public view returns(address _winner){
         require(_raffleId < s.raffles.length, "Raffle: Raffle does not exist");
         Raffle storage raffle = s.raffles[_raffleId];
-        uint256 randomNumber = raffle.randomNumber;
-        if(randomNumber == 0){return address(0);}
-
-        uint256 winningIndex = uint256(
-                        keccak256(abi.encodePacked(randomNumber, _raffleId))
-                    ) % raffle.entrants.length;
+        require(raffle.raffleActive == false, "raffle still active");
+        require(raffle.randomNumberPending == false, "waiting on VRF");
+    
+        uint256 winningIndex = getWinningIndex(_raffleId);
                     
-        return raffle.entrants[winningIndex];
+        return s.raffles[_raffleId].entrants[winningIndex];
     }
 
     function claimAllPrizes(address _entrant) public{

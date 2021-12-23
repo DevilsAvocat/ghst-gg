@@ -12,7 +12,7 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
   }
 });
 
-const PRIVATE_KEY = 'ADD PRIVKEY HERE' //
+const PRIVATE_KEY = '' //
 
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
@@ -21,7 +21,7 @@ const PRIVATE_KEY = 'ADD PRIVKEY HERE' //
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.10",
+  solidity: "0.8.11",
   networks: {
     /*kovan: {
       url: 'https://kovan.infura.io/v3/097ab5579ae54ebca3206b5e83354c0c' ,
