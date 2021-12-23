@@ -55,7 +55,8 @@ handleChange2(event) {
 }
 
 async handleSubmit(event) {
-  
+  event.preventDefault();
+
   const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum);
 
@@ -69,15 +70,15 @@ async handleSubmit(event) {
     await claimTxn.wait();
     console.log(`Mined, see transaction: ${claimTxn.hash}`);
     alert('Deposited '+ this.state.value+' common wizard hats');
-  event.preventDefault();
 }
 
 async handleWithdraw(event) {
-  
+  event.preventDefault();
+
   const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum);
 
-    const signer = provider.getSigner();
+    const signer = await provider.getSigner();
 
     const taalerContract = new ethers.Contract(contractAddress,taalerAbi,signer);
     console.log("Withdrawing wearable...");
@@ -87,7 +88,6 @@ async handleWithdraw(event) {
     await claimTxn.wait();
     console.log(`Mined, see transaction: ${claimTxn.hash}`);
     alert('Deposited '+ this.state.value+' common wizard hats');
-  event.preventDefault();
 }
 
 
