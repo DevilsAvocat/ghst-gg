@@ -456,10 +456,27 @@ contract RafflesContract is IERC173, IERC165, Initializable {
                     ) % raffle.entrants.length;
     }
 
+    function getAuctionState(uint256 _raffleId) public view returns(uint256){
+        Raffle storage raffle = s.raffles[_raffleId];
+        if(raffle.raffleActive == true){
+            return 0;
+        }
+        else if(raffle.randomNumberPending == true){
+            return 1;
+        }
+        else{
+            return 2;
+        }
+        
+    }
+
     function getWinner(uint256 _raffleId) public view returns(address _winner){
         require(_raffleId < s.raffles.length, "Raffle: Raffle does not exist");
         Raffle storage raffle = s.raffles[_raffleId];
-        require(raffle.raffleActive == false, "raffle still active");
+        //require(raffle.raffleActive == false, "raffle still active");
+        if(raffle.raffleActive == true){
+            return address(0);
+            }
         require(raffle.randomNumberPending == false, "waiting on VRF");
     
         uint256 winningIndex = getWinningIndex(_raffleId);
