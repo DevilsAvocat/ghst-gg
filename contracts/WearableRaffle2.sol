@@ -52,7 +52,6 @@ interface ERC20 {
 
 
 struct Raffle {
-    
     //an array of all the itemIds that have been entered
     uint256[] itemsEntered;
     
@@ -68,8 +67,18 @@ struct Raffle {
     bool randomNumberPending;
     
     bool raffleActive;
- 
-    
+
+}
+
+//a struct that can be returned in external view function (no nested mapping)
+struct RaffleLite {
+    uint256 brsMultiplier;
+    uint256[] itemsEntered;
+    address[] entrants;
+    uint256 randomNumber;
+    uint256 winningIndex;
+    address winner;
+    uint blockReset;
 }
 
 // The minimum rangeStart is 0
@@ -106,6 +115,16 @@ contract RafflesContract is IERC173, IERC165, Initializable {
     address internal  im_diamondAddress;
     bytes4 internal constant ERC1155_ACCEPTED = 0xf23a6e61; // Return value from `onERC1155Received` call if a contract accepts receipt (i.e `bytes4(keccak256("onERC1155Received(address,address,uint256,uint256,bytes)"))`).
     mapping(address => bool) isAuthorized;
+    ERC20 ghst;
+
+    RaffleLite[] completedRaffles;
+
+    function getHistoricalRaffles() public view returns(RaffleLite[] memory){
+        return completedRaffles;
+    }
+    function getHistoricalRaffle(uint256 _index) public view returns(RaffleLite memory){
+        return completedRaffles[_index];
+    }
 
      function getCoordinator() public view returns(address){
          return im_vrfCoordinator;
@@ -162,6 +181,8 @@ contract RafflesContract is IERC173, IERC165, Initializable {
         for(uint256 i = 0; i < 6; i++){
             s.raffles[i].raffleActive = true;
         }
+
+        
 
     }
 
@@ -256,6 +277,10 @@ contract RafflesContract is IERC173, IERC165, Initializable {
         
     }
 
+    function setGhst() public{
+        ghst =  ERC20(0x385Eeac5cB85A38A9a07A70c73e0a3271CfB54A7);
+    }
+
     function getFeeAmt() public view returns(uint96){
         return s.fee;
     }
@@ -270,6 +295,33 @@ contract RafflesContract is IERC173, IERC165, Initializable {
         token.transfer(msg.sender, _amount);
     }
 
+    function withdrawEntry(uint256 _raffleId) public{
+        IERC1155 wearables = IERC1155(im_diamondAddress);
+
+        //get the item type the entrant entered
+        uint256 itemId = s.raffles[_raffleId].entrantsMapping[msg.sender];
+
+        //send back the wearable the entrant entered
+        wearables.safeTransferFrom(address(this), msg.sender, itemId, 1, "0x");
+
+        //now we need to remove this entrant's info from this raffle
+        s.raffles[_raffleId].entrantsMapping[msg.sender] = 0;
+        for(uint i = 0; i < s.raffles[_raffleId].entrants.length; i++){
+            if(s.raffles[_raffleId].entrants[i] == msg.sender){
+                //if the entrant was the last entrant, we can just delete him from the array
+                if(i == s.raffles[_raffleId].entrants.length-1){delete s.raffles[_raffleId].entrants[i];}
+
+                //otherwise, deleting him will leave a gap, so we copy in the last entrant to his spot
+                else{
+                    delete s.raffles[_raffleId].entrants[i];
+                    s.raffles[_raffleId].entrants[i] = s.raffles[_raffleId].entrants[s.raffles[_raffleId].entrants.length-1];
+                    delete s.raffles[_raffleId].entrants[s.raffles[_raffleId].entrants.length-1];
+                }
+            }
+        }
+
+    }
+
     /*function setRandomNumber(uint256 _raffleId) public onlyOwner {
         uint256 raffleId = _raffleId;
         require(raffleId < s.raffles.length, "Raffle: Raffle does not exist");
@@ -282,12 +334,44 @@ contract RafflesContract is IERC173, IERC165, Initializable {
         raffle.randomNumberPending = false;
     }*/
 
-    function drawRandomNumber(uint256 _raffleId) public onlyAuthorized {
-        require(_raffleId < s.raffles.length, "Raffle: Raffle does not exist");
+    //this returns true if the raffle has surpassed the threshhold number of wearables
+    //10 for common, 7 for uncommon, 5 for rare, 3 for legendary, 3 for mythical, 2 for godlike
+    function threshholdReached(uint256 _raffleId) public view returns(bool){
         Raffle storage raffle = s.raffles[_raffleId];
-        require(raffle.randomNumber == 0, "Raffle: Random number already generated");
-        require(raffle.randomNumberPending == false || msg.sender == s.contractOwner, "Raffle: Random number is pending");
-        raffle.randomNumberPending = true;
+
+        if(_raffleId == 0){
+            return(raffle.entrants.length >= 10);
+        }
+        else if(_raffleId == 0){
+            return(raffle.entrants.length >= 7);
+        }
+        else if(_raffleId == 0){
+            return(raffle.entrants.length >= 5);
+        }
+        else if(_raffleId == 0){
+            return(raffle.entrants.length >= 3);
+        }
+        else if(_raffleId == 0){
+            return(raffle.entrants.length >= 3);
+        }
+        else if(_raffleId == 0){
+            return(raffle.entrants.length >= 2);
+        }
+
+        return false;
+    }
+
+    function drawRandomNumber(uint256 _raffleId) public {
+        //raffle can only be triggered by an authorized user/the owner, OR if the raffle-specific threshhold is reach
+        require(
+            isAuthorized[msg.sender] || 
+            msg.sender == s.contractOwner ||
+            threshholdReached(_raffleId)
+            );
+        require(_raffleId < s.raffles.length, "Raffle: Raffle does not exist");
+        require(s.raffles[_raffleId].randomNumber == 0, "Raffle: Random number already generated");
+        require(s.raffles[_raffleId].randomNumberPending == false || msg.sender == s.contractOwner, "Raffle: Random number is pending");
+        s.raffles[_raffleId].randomNumberPending = true;
         // Use Chainlink VRF to generate random number
         //require(im_link.balanceOf(address(this)) >= s.fee, "Not enough LINK, need");
         bytes32 requestId = requestRandomness(s.keyHash, s.fee, 0);
@@ -311,10 +395,9 @@ contract RafflesContract is IERC173, IERC165, Initializable {
         require(msg.sender == im_vrfCoordinator, "Only VRFCoordinator can fulfill");
         uint256 raffleId = s.requestIdToRaffleId[_requestId];
         require(raffleId < s.raffles.length, "Raffle: Raffle does not exist");
-        Raffle storage raffle = s.raffles[raffleId];
-        require(raffle.randomNumber == 0, "Raffle: Random number already generated");
+        require(s.raffles[raffleId].randomNumber == 0, "Raffle: Random number already generated");
         s.raffles[raffleId].randomNumber = _randomness;
-        raffle.randomNumberPending = false;
+        s.raffles[raffleId].randomNumberPending = false;
     }
 
     // Change the fee amount that is paid for VRF random numbers
@@ -389,7 +472,21 @@ contract RafflesContract is IERC173, IERC165, Initializable {
 
     }
 
-    function resetRaffle(uint256 _raffleId) public onlyAuthorized{
+    function resetRaffle(uint256 _raffleId) internal {
+
+        //add this raffle to the list of historical completed raffles
+        RaffleLite memory tempEntry;
+        tempEntry.brsMultiplier = s.raffles[_raffleId].brsMultiplier;
+        tempEntry.entrants = s.raffles[_raffleId].entrants;
+        tempEntry.itemsEntered = new uint256[](tempEntry.entrants.length);
+        for(uint256 i = 0; i<tempEntry.entrants.length; i++){
+            tempEntry.itemsEntered[i] = s.raffles[_raffleId].entrantsMapping[tempEntry.entrants[i]];
+        }
+        tempEntry.randomNumber =s.raffles[_raffleId].randomNumber;
+        tempEntry.winningIndex = uint256(keccak256(abi.encodePacked(tempEntry.randomNumber, _raffleId))) % tempEntry.entrants.length;
+        tempEntry.winner = tempEntry.entrants[tempEntry.winningIndex];   
+        tempEntry.blockReset = block.number;
+        completedRaffles.push(tempEntry);
 
         //check how many entrants there were
         uint256 numEntrants = s.raffles[_raffleId].entrants.length;
@@ -498,14 +595,15 @@ contract RafflesContract is IERC173, IERC165, Initializable {
                 getWinner(i) == _entrant
             ){
                     //cycle through each entry and send wearable to the winner
-                    for(uint256 i = 0; i<raffle.entrants.length; i++){
-                        uint256 entrantItem = raffle.entrantsMapping[raffle.entrants[i]];
+                    for(uint256 j = 0; j<raffle.entrants.length; j++){
+                        uint256 entrantItem = raffle.entrantsMapping[raffle.entrants[j]];
                         IERC1155(im_diamondAddress).safeTransferFrom(address(this),_entrant,entrantItem,1,"");
                     }
-            }
-
-            
-            
+                    resetRaffle(i);
+                    if(msg.sender == _entrant){
+                        ghst.transferFrom(msg.sender, address(this), 10000000000000000000);
+                    }
+            }        
         }
         
     }
@@ -540,6 +638,7 @@ contract RafflesContract is IERC173, IERC165, Initializable {
             uint256 entrantItem = raffle.entrantsMapping[raffle.entrants[i]];
             IERC1155(im_diamondAddress).safeTransferFrom(address(this),_entrant,entrantItem,1,"");
         }
+        resetRaffle(_raffleId);
         
         
         
