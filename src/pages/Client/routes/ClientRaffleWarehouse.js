@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import {Link, Box, Typography, ToggleButtonGroup, ToggleButton, Tooltip  } from '@mui/material';
+import {Link, Box, Typography, ToggleButtonGroup, ToggleButton, Tooltip, Grid  } from '@mui/material';
 
 import { routersStyles } from '../styles';
 
@@ -8,6 +8,19 @@ import { ClientContext } from '../../../contexts/ClientContext';
 import Wearable from '../../../components/Items/Wearable/Wearable';
 import Consumable from '../../../components/Items/Consumable/Consumable';
 import GhostLoader from '../../../components/GhostLoader/GhostLoader';
+
+function getQuant(_type){
+    const {raffleWarehouse} = useContext(ClientContext);
+    let quant = 0;
+
+    raffleWarehouse.map((item, i)=>{
+        if(item.rarity == _type){
+            quant+=item.balance;
+        }
+    });
+
+    return quant;
+}
 
 export default function ClientRaffleWarehouse() {
     const classes = routersStyles();
@@ -24,33 +37,39 @@ export default function ClientRaffleWarehouse() {
 
     return (
         <>
-            <Box className={classes.sortWrapper}>
-                <Typography className={classes.sortText} variant='subtitle1'>Sort: </Typography>
-
-                <ToggleButtonGroup
-                    value={warehouseFilter}
-                    exclusive
-                    onChange={(event, value) => sortData(event, value, 'warehouse')}
-                    color='primary'
-                    aria-label='gotchis sort'
-                >
-                    <ToggleButton className={classes.filtersButton} value='rarityIdDesc' aria-label='rarity ↓'>
-                        <Tooltip title='Rarity ↓' placement='top' followCursor>
-                            <Box className={classes.filtersInner} component='span'><span>🔽</span></Box>
-                        </Tooltip>
-                    </ToggleButton>
-                    <ToggleButton className={classes.filtersButton} value='rarityIdAsce' aria-label='rarity ↑'>
-                        <Tooltip title='Rarity ↑' placement='top' followCursor>
-                            <Box className={classes.filtersInner} component='span'><span>🔼</span></Box>
-                        </Tooltip>
-                    </ToggleButton>
-                    <ToggleButton className={classes.filtersButton} value='balance' aria-label='quantity'>
-                        <Tooltip title='Quantity' placement='top' followCursor>
-                            <Box className={classes.filtersInner} component='span'><span>*️⃣</span></Box>
-                        </Tooltip>
-                    </ToggleButton>
-                </ToggleButtonGroup>
-            </Box>
+            <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
+                <Grid item xs={2} sm={4} md={4}>
+                    <item>
+                        Commons entered: {getQuant('common')}
+                    </item>
+                </Grid> 
+                <Grid item xs={2} sm={4} md={4}>
+                    <item>
+                        Uncommons entered: {getQuant('uncommon')}
+                    </item>
+                </Grid> 
+                <Grid item xs={2} sm={4} md={4}>
+                    <item>
+                        Rares entered: {getQuant('rare')}
+                    </item>
+                </Grid> 
+                <Grid item xs={2} sm={4} md={4}>
+                    <item>
+                        Legendaries entered: {getQuant('legendary')}
+                    </item>
+                </Grid> 
+                <Grid item xs={2} sm={4} md={4}>
+                    <item>
+                        Mythicals entered: {getQuant('mythical')}
+                    </item>
+                </Grid> 
+                <Grid item xs={2} sm={4} md={4}>
+                    <item>
+                        Godlikes entered: {getQuant('godlike')}
+                    </item>
+                </Grid> 
+            </Grid>   
+            <br/>
 
             <Box className={classes.list}>
                 {
