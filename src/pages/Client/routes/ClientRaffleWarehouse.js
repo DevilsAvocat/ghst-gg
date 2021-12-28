@@ -9,9 +9,10 @@ import Wearable from '../../../components/Items/Wearable/Wearable';
 import Consumable from '../../../components/Items/Consumable/Consumable';
 import GhostLoader from '../../../components/GhostLoader/GhostLoader';
 
-function getQuant(_type){
+function useGetQuant(_type){
     const {raffleWarehouse} = useContext(ClientContext);
     let quant = 0;
+    //change
 
     raffleWarehouse.map((item, i)=>{
         if(item.rarity == _type){
@@ -40,32 +41,32 @@ export default function ClientRaffleWarehouse() {
             <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                 <Grid item xs={2} sm={4} md={4}>
                     <item>
-                        Commons entered: {getQuant('common')}
+                        Commons entered: {useGetQuant('common')}
                     </item>
                 </Grid> 
                 <Grid item xs={2} sm={4} md={4}>
                     <item>
-                        Uncommons entered: {getQuant('uncommon')}
+                        Uncommons entered: {useGetQuant('uncommon')}
                     </item>
                 </Grid> 
                 <Grid item xs={2} sm={4} md={4}>
                     <item>
-                        Rares entered: {getQuant('rare')}
+                        Rares entered: {useGetQuant('rare')}
                     </item>
                 </Grid> 
                 <Grid item xs={2} sm={4} md={4}>
                     <item>
-                        Legendaries entered: {getQuant('legendary')}
+                        Legendaries entered: {useGetQuant('legendary')}
                     </item>
                 </Grid> 
                 <Grid item xs={2} sm={4} md={4}>
                     <item>
-                        Mythicals entered: {getQuant('mythical')}
+                        Mythicals entered: {useGetQuant('mythical')}
                     </item>
                 </Grid> 
                 <Grid item xs={2} sm={4} md={4}>
                     <item>
-                        Godlikes entered: {getQuant('godlike')}
+                        Godlikes entered: {useGetQuant('godlike')}
                     </item>
                 </Grid> 
             </Grid>   
